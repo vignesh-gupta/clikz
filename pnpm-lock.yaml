@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@next/eslint-plugin-next':
+      specifier: ^14.2.10
+      version: 14.2.16
     '@types/eslint':
       specifier: ^8
       version: 8.56.2
@@ -18,6 +21,9 @@ catalogs:
     lucide-react:
       specifier: ^0.451.0
       version: 0.451.0
+    next:
+      specifier: ^14.2.10
+      version: 14.2.10
     prettier:
       specifier: ^3.3.3
       version: 3.3.3
@@ -64,7 +70,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       next:
-        specifier: 14.2.10
+        specifier: 'catalog:'
         version: 14.2.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: catalog:react18
@@ -74,8 +80,60 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@next/eslint-plugin-next':
-        specifier: 14.2.8
-        version: 14.2.8
+        specifier: 'catalog:'
+        version: 14.2.16
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      '@types/eslint':
+        specifier: 'catalog:'
+        version: 8.56.2
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.11.6
+      '@types/react':
+        specifier: catalog:react18
+        version: 18.3.11
+      '@types/react-dom':
+        specifier: catalog:react18
+        version: 18.3.1
+      autoprefixer:
+        specifier: ^10
+        version: 10.4.19(postcss@8.4.38)
+      eslint:
+        specifier: 'catalog:'
+        version: 8.57.0
+      postcss:
+        specifier: ^8
+        version: 8.4.38
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 3.4.13
+      typescript:
+        specifier: 'catalog:'
+        version: 5.6.3
+
+  apps/web:
+    dependencies:
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      next:
+        specifier: 'catalog:'
+        version: 14.2.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: catalog:react18
+        version: 18.3.1
+      react-dom:
+        specifier: catalog:react18
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@next/eslint-plugin-next':
+        specifier: 'catalog:'
+        version: 14.2.16
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
@@ -120,7 +178,7 @@ importers:
         version: 7.13.1(eslint@8.57.0)(typescript@5.6.3)
       '@vercel/style-guide':
         specifier: ^6.0.0
-        version: 6.0.0(@next/eslint-plugin-next@14.2.8)(eslint@8.57.0)(prettier@3.3.3)(typescript@5.6.3)
+        version: 6.0.0(@next/eslint-plugin-next@14.2.16)(eslint@8.57.0)(prettier@3.3.3)(typescript@5.6.3)
       eslint-config-turbo:
         specifier: 2.1.1
         version: 2.1.1(eslint@8.57.0)
@@ -386,8 +444,8 @@ packages:
   '@next/env@14.2.10':
     resolution: {integrity: sha512-dZIu93Bf5LUtluBXIv4woQw2cZVZ2DJTjax5/5DOs3lzEOeKLy7GxRSr4caK9/SCPdaW6bCgpye6+n4Dh9oJPw==}
 
-  '@next/eslint-plugin-next@14.2.8':
-    resolution: {integrity: sha512-ue5vcq9Fjk3asACRDrzYjcGMEN7pMMDQ5zUD+FenkqvlPCVUD1x7PxBNOLfPYDZOrk/Vnl4GHmjj2mZDqPW8TQ==}
+  '@next/eslint-plugin-next@14.2.16':
+    resolution: {integrity: sha512-noORwKUMkKc96MWjTOwrsUCjky0oFegHbeJ1yEnQBGbMHAaTEIgLZIIfsYF0x3a06PiS+2TXppfifR+O6VWslg==}
 
   '@next/swc-darwin-arm64@14.2.10':
     resolution: {integrity: sha512-V3z10NV+cvMAfxQUMhKgfQnPbjw+Ew3cnr64b0lr8MDiBJs3eLnM6RpGC46nhfMZsiXgQngCJKWGTC/yDcgrDQ==}
@@ -2740,7 +2798,7 @@ snapshots:
 
   '@next/env@14.2.10': {}
 
-  '@next/eslint-plugin-next@14.2.8':
+  '@next/eslint-plugin-next@14.2.16':
     dependencies:
       glob: 10.3.10
 
@@ -2970,7 +3028,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@14.2.8)(eslint@8.57.0)(prettier@3.3.3)(typescript@5.6.3)':
+  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@14.2.16)(eslint@8.57.0)(prettier@3.3.3)(typescript@5.6.3)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/eslint-parser': 7.24.7(@babel/core@7.24.7)(eslint@8.57.0)
@@ -2993,7 +3051,7 @@ snapshots:
       eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@7.13.1(@typescript-eslint/parser@7.13.1(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3)
       prettier-plugin-packagejson: 2.5.0(prettier@3.3.3)
     optionalDependencies:
-      '@next/eslint-plugin-next': 14.2.8
+      '@next/eslint-plugin-next': 14.2.16
       eslint: 8.57.0
       prettier: 3.3.3
       typescript: 5.6.3
