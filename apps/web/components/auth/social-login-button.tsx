@@ -5,13 +5,13 @@ import { BuiltInProviderType } from "next-auth/providers";
 import { LiteralUnion, signIn } from "next-auth/react";
 import { IconType } from "react-icons";
 
-type SocialLoginProps = {
+type SocialLoginButtonProps = {
   provider: LiteralUnion<BuiltInProviderType>;
   label: string;
   Icon: IconType;
 };
 
-const SocialLogin = ({ Icon, provider, label }: SocialLoginProps) => {
+const SocialLoginButton = ({ Icon, provider, label }: SocialLoginButtonProps) => {
   return (
     <Button
       variant="outline"
@@ -24,4 +24,4 @@ const SocialLogin = ({ Icon, provider, label }: SocialLoginProps) => {
   );
 };
 
-export default SocialLogin;
+export default SocialLoginButton;
