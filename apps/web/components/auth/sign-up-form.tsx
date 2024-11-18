@@ -20,6 +20,7 @@ import {
 } from "@repo/ui/components/ui/form";
 import { Input } from "@repo/ui/components/ui/input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -27,7 +28,9 @@ import { signUp } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
 import { signInSchema } from "~/lib/zod-schemas";
 
-const SingUpForm = () => {
+const SignUpForm = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -35,15 +38,19 @@ const SingUpForm = () => {
       password: "",
     },
   });
+
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
-    console.log(values);
+    console.log("Sign up",values);
     const user = await signUp(values.email, values.password);
 
     if (!user) {
       toast.error("User already exists");
-    } else {
-      toast.success("Sign up successful");
+      router.push("/sign-in");
+      return;
     }
+
+    toast.success("Verification email sent");
+    router.push(`/verify?to=${values.email}`);
   };
 
   return (
@@ -124,4 +131,4 @@ const SingUpForm = () => {
   );
 };
 
-export default SingUpForm;
+export default SignUpForm;

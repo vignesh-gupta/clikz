@@ -5,6 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": ["AUTH_RESEND_KEY"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
@@ -14,5 +15,6 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalEnv": ["AUTH_RESEND_KEY"]
 }

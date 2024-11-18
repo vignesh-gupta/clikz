@@ -1,9 +1,8 @@
 import type { NextAuthConfig } from "next-auth";
-import GitHub from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
-import { saltAndHash } from "./utils";
-import { signInSchema } from "./zod-schemas";
+import GitHub from "next-auth/providers/github";
 import { prisma } from "./prisma";
+import { signInSchema } from "./zod-schemas";
 
 export default {
   providers: [
@@ -14,18 +13,19 @@ export default {
         password: {},
       },
       authorize: async (credentials) => {
+        console.log("credentials", credentials);
+
         const { email, password } = await signInSchema.parseAsync(credentials);
 
-        const hashedPassword = await saltAndHash(password);
+        console.log("email", email);
 
         const user = await prisma.user.findFirst({
           where: {
             email,
-            password: hashedPassword,
           },
         });
 
-        if (!user) {
+        if (!user || user.password !== password) {
           return null;
         }
 

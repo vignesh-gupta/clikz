@@ -23,6 +23,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import SocialLogins from "~/components/auth/social-logins";
+import { saltAndHash } from "~/lib/utils";
 import { signInSchema } from "~/lib/zod-schemas";
 
 const SignInForm = () => {
@@ -33,7 +34,11 @@ const SignInForm = () => {
       password: "",
     },
   });
-  const onSubmit = (values: z.infer<typeof signInSchema>) => {
+  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
+    values = {
+      email: values.email,
+      password: await saltAndHash(values.password),
+    };
     console.log(values);
   };
 

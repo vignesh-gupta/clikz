@@ -1,7 +1,13 @@
-import { NextResponse } from "next/server"
-import { auth } from "~/lib/auth"
+import { NextResponse } from "next/server";
+import { prisma } from "~/lib/prisma";
 
-export const GET = auth(function GET(req) {
-  if (req.auth) return NextResponse.json(req.auth)
-  return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
-})
+export const GET = async function GET() {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: "vighneshguptapubg@gmail.com",
+      password: "$2a$10$I6uLquE62SgtHK4RtI3/BuFgf1rMH85T8dHgZF44qit1xWcCdJtpK",
+    },
+  });
+
+  return NextResponse.json({ user });
+};

@@ -1,7 +1,7 @@
 /**
  * An array of routes that are public and do not require authentication.
  */
-export const publicRoutes = ["/", "/verify-email"];
+export const publicRoutes = ["/", "/api/hello"];
 
 /**
  * An array of routes that are used for authentication.
@@ -12,6 +12,7 @@ export const authRoutes = [
   "/sign-up",
   "/error",
   "/reset",
+  "/verify"
 ];
 
 /**
