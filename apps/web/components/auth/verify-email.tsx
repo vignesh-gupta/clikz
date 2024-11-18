@@ -21,14 +21,15 @@ import { toast } from "sonner";
 type VerifyEmailProps = {
   to: string;
   code?: string;
+  pwd: string;
 };
 
 const RETRY_INTERVAL = 60;
 
-export default function VerifyEmail({ code, to }: VerifyEmailProps) {
-  const [resendStatus, setResendStatus] = useState<
-    "idle" | "sending" | "sent" | "error"
-  >("sent");
+export default function VerifyEmail({ code, to, pwd }: VerifyEmailProps) {
+  const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent">(
+    "sent",
+  );
   const [countdown, setCountdown] = useState(RETRY_INTERVAL);
   const [otp, setOtp] = useState(code ?? "");
   const [verificationStatus, setVerificationStatus] = useState<
@@ -56,35 +57,32 @@ export default function VerifyEmail({ code, to }: VerifyEmailProps) {
 
   const handleResendOtp = async () => {
     setResendStatus("sending");
-    try {
-      await fetch("/api/auth/verify", {
-        method: "POST",
-        body: JSON.stringify({ to: to }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setResendStatus("sent");
-    } catch (error) {
-      setResendStatus("error");
-    }
+    await fetch("/api/auth/verify", {
+      method: "POST",
+      body: JSON.stringify({ to, pwd }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => setResendStatus("sent"))
+      .catch(() => setResendStatus("idle"));
   };
 
   const handleVerifyOtp = () => {
-    if (otp.length === 6) {
-      setVerificationStatus("verifying");
-      fetch(`/api/auth/verify?to=${to}&code=${otp}`)
-        .then(async (res) =>
-          res.ok
-            ? toast.success("Email verified successfully")
-            : toast.error(
-                (await res.json()).error ?? "Invalid OTP. Please try again.",
-              ),
-        )
-        .catch(() => toast.error("An error occurred. Please try again."))
-        .finally(() => setVerificationStatus("idle"));
-    }
-  };
+    if (otp.length !== 6 || verificationStatus === "verifying") return;
+
+    setVerificationStatus("verifying");
+    fetch(`/api/auth/verify?to=${to}&code=${otp}&pwd=${pwd}`)
+      .then(async (res) =>
+        res.ok
+          ? toast.success("Email verified successfully") 
+          : toast.error(
+              (await res.json()).error ?? "Invalid OTP. Please try again.",
+            ),
+      )
+      .catch(() => toast.error("An error occurred. Please try again."))
+      .finally(() => setVerificationStatus("idle"));
+  }; 
 
   return (
     <Card className="w-full max-w-md">
@@ -123,7 +121,7 @@ export default function VerifyEmail({ code, to }: VerifyEmailProps) {
               Verifying...
             </>
           ) : (
-            <>Verify OTP</>
+            "Verify OTP"
           )}
         </Button>
         <div className="text-center">

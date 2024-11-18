@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { signIn } from "~/lib/auth";
 import { sendOtpEmail } from "~/lib/email";
 import { prisma } from "~/lib/prisma";
+import { decode } from "~/lib/utils";
 
 export const POST = async (req: NextRequest) => {
   const toEmail = (await req.json()).to;
@@ -24,9 +25,10 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) => {
   const code = req.nextUrl.searchParams.get("code");
   const to = req.nextUrl.searchParams.get("to");
-  if (!code || !to) {
+  const pwd = decodeURI(decode(req.nextUrl.searchParams.get("pwd") ?? ""));
+  if (!code || !to || !pwd) {
     return NextResponse.json(
-      { error: "code and to params are required" },
+      { error: "code , to and pwd params are required" },
       {
         status: 400,
         statusText: "Bad Request",
@@ -48,8 +50,9 @@ export const GET = async (req: NextRequest) => {
   }
 
   const [user] = await Promise.all([
-    prisma.user.findFirst({
+    prisma.user.update({
       where: { email: to },
+      data: { emailVerified: new Date() },
     }),
     prisma.passcode.delete({
       where: { id: passcode.id },
@@ -69,7 +72,7 @@ export const GET = async (req: NextRequest) => {
   await signIn("credentials", {
     redirect: false,
     email: user.email,
-    password: user.password ?? "",
+    password: pwd,
   });
 
   return NextResponse.json({ success: true });

@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import { prisma } from "./prisma";
 import { signInSchema } from "./zod-schemas";
+import { comparePassword } from "./utils";
 
 export default {
   providers: [
@@ -17,23 +18,27 @@ export default {
 
         const { email, password } = await signInSchema.parseAsync(credentials);
 
-        console.log("email", email);
-
         const user = await prisma.user.findFirst({
           where: {
             email,
           },
         });
+        if (!user) throw new Error("User not found");
 
-        if (!user || user.password !== password) {
-          return null;
+        const isPasswordValid = await comparePassword(password, user.password);
+
+        console.log({
+          isPasswordValid,
+          password,
+          user,
+        });
+
+        if (!isPasswordValid) {
+          throw new Error("Invalid password");
         }
 
         return user;
       },
     }),
   ],
-  callbacks: {
-    authorized: async ({ auth }) => !!auth,
-  },
 } satisfies NextAuthConfig;

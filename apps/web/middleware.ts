@@ -6,7 +6,7 @@ import {
 } from "~/routes";
 import { auth } from "./lib/auth";
 
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
@@ -19,10 +19,8 @@ export default auth((req) => {
   }
 
   if (isAuthRoute) {
-    if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-    }
-    return;
+    if (!isLoggedIn) return;
+    return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
   }
 
   if (!isLoggedIn && !isPublicRoute) {

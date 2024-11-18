@@ -1,13 +1,22 @@
+import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { prisma } from "~/lib/prisma";
+import { saltAndHash } from "~/lib/utils";
 
 export const GET = async function GET() {
-  const user = await prisma.user.findFirst({
-    where: {
-      email: "vighneshguptapubg@gmail.com",
-      password: "$2a$10$I6uLquE62SgtHK4RtI3/BuFgf1rMH85T8dHgZF44qit1xWcCdJtpK",
-    },
-  });
+  const password = "12345678#2310";
 
-  return NextResponse.json({ user });
+  const hashedPassword = await saltAndHash(password);
+
+  const hashedPassword2 = await saltAndHash(password);
+
+  const val = await bcrypt.compare(password, hashedPassword);
+  const val2 = await bcrypt.compare(password, hashedPassword2);
+
+  return NextResponse.json({
+    password,
+    hashedPassword,
+    val,
+    hashedPassword2,
+    val2,
+  });
 };

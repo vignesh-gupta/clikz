@@ -19,11 +19,12 @@ import {
   FormMessage,
 } from "@repo/ui/components/ui/form";
 import { Input } from "@repo/ui/components/ui/input";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import SocialLogins from "~/components/auth/social-logins";
-import { saltAndHash } from "~/lib/utils";
 import { signInSchema } from "~/lib/zod-schemas";
 
 const SignInForm = () => {
@@ -35,11 +36,16 @@ const SignInForm = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
-    values = {
-      email: values.email,
-      password: await saltAndHash(values.password),
-    };
-    console.log(values);
+    const { email, password } = values;
+    await signIn("credentials", {
+      email,
+      password,
+    })
+      .then((res) => {
+        if (res?.ok) toast.success("Signed in successfully!");
+        else toast.error("Invalid credentials, please try again!");
+      })
+      .catch(() => toast.error("Invalid credentials, please try again!"));
   };
 
   return (

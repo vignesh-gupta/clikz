@@ -1,12 +1,16 @@
-import React from 'react'
-import { auth } from '~/lib/auth';
+import React from "react";
+import SignOut from "~/components/auth/sign-out";
+import { auth } from "~/lib/auth";
 
 const PrivatePage = async () => {
   const session = await auth();
 
   return (
-    <div>{JSON.stringify(session)}</div>
-  )
-}
+    <div>
+      {JSON.stringify(session)}
+      <SignOut />
+    </div>
+  );
+};
 
-export default PrivatePage
+export default PrivatePage;

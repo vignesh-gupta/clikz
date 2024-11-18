@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { signUp } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
+import { encode } from "~/lib/utils";
 import { signInSchema } from "~/lib/zod-schemas";
 
 const SignUpForm = () => {
@@ -40,7 +41,7 @@ const SignUpForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
-    console.log("Sign up",values);
+    console.log("Sign up", values);
     const user = await signUp(values.email, values.password);
 
     if (!user) {
@@ -50,7 +51,7 @@ const SignUpForm = () => {
     }
 
     toast.success("Verification email sent");
-    router.push(`/verify?to=${values.email}`);
+    router.push(`/verify?to=${values.email}&pwd=${encodeURI(encode(values.password))}`);
   };
 
   return (
@@ -107,7 +108,7 @@ const SignUpForm = () => {
                 )}
               />
               <Button type="submit" className="w-full bg-primary">
-                Sign In
+                Create account
               </Button>
             </div>
           </form>
