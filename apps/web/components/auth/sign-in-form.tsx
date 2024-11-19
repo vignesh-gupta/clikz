@@ -19,33 +19,29 @@ import {
   FormMessage,
 } from "@repo/ui/components/ui/form";
 import { Input } from "@repo/ui/components/ui/input";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
+import { login } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
-import { signInSchema } from "~/lib/zod-schemas";
+import { SignInSchema, signInSchema } from "~/lib/zod-schemas";
 
 const SignInForm = () => {
-  const form = useForm<z.infer<typeof signInSchema>>({
+  const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
-    const { email, password } = values;
-    await signIn("credentials", {
-      email,
-      password,
-    })
-      .then((res) => {
-        if (res?.ok) toast.success("Signed in successfully!");
-        else toast.error("Invalid credentials, please try again!");
+
+  const onSubmit = async (values: SignInSchema) => {
+    await login(values)
+      .then((data) => {
+        if (data?.error) return toast.error(data.error);
+        if (data?.success) return toast.success(data.success);
       })
-      .catch(() => toast.error("Invalid credentials, please try again!"));
+      .catch(() => toast.error("Something went wrong"));
   };
 
   return (

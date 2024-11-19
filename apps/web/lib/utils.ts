@@ -5,15 +5,6 @@ export const saltAndHash = async (password: string) => {
   return bcrypt.hash(password, salt);
 };
 
-export const comparePassword = async (
-  password: string,
-  hashedPassword: string | null,
-) => {
-  if (!hashedPassword) return false;
-
-  return bcrypt.compare(password, hashedPassword);
-};
-
 export const encode = (data: string) => Buffer.from(data).toString("base64");
 export const decode = (data: string) => Buffer.from(data, "base64").toString();
 

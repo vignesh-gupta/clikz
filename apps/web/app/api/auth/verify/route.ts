@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { signIn } from "~/lib/auth";
+import { signIn } from "~/auth";
 import { sendOtpEmail } from "~/lib/email";
 import { prisma } from "~/lib/prisma";
 import { decode } from "~/lib/utils";

@@ -4,7 +4,7 @@ import {
   authRoutes,
   publicRoutes,
 } from "~/routes";
-import { auth } from "./lib/auth";
+import { auth } from "./auth";
 
 export default auth(async (req) => {
   const { nextUrl } = req;

@@ -23,16 +23,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 import { signUp } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
 import { encode } from "~/lib/utils";
-import { signInSchema } from "~/lib/zod-schemas";
+import { SignInSchema, signInSchema } from "~/lib/zod-schemas";
 
 const SignUpForm = () => {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof signInSchema>>({
+  const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
@@ -40,7 +39,7 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
+  const onSubmit = async (values: SignInSchema) => {
     console.log("Sign up", values);
     const user = await signUp(values.email, values.password);
 
@@ -51,7 +50,9 @@ const SignUpForm = () => {
     }
 
     toast.success("Verification email sent");
-    router.push(`/verify?to=${values.email}&pwd=${encodeURI(encode(values.password))}`);
+    router.push(
+      `/verify?to=${values.email}&pwd=${encodeURI(encode(values.password))}`,
+    );
   };
 
   return (

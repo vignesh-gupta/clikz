@@ -1,6 +1,6 @@
 import React from "react";
 import SignOut from "~/components/auth/sign-out";
-import { auth } from "~/lib/auth";
+import { auth } from "~/auth";
 
 const PrivatePage = async () => {
   const session = await auth();
