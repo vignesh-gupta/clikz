@@ -5,16 +5,13 @@ type VerifyPageProps = {
   searchParams: {
     to?: string;
     code?: string;
-    pwd?: string;
   };
 };
 
-const VerifyPage = async ({
-  searchParams: { to, code, pwd },
-}: VerifyPageProps) => {
-  if (!to || !pwd) redirect("/sign-up");
+const VerifyPage = async ({ searchParams: { to, code } }: VerifyPageProps) => {
+  if (!to) redirect("/sign-up");
 
-  return <VerifyEmail to={to} code={code} pwd={pwd} />;
+  return <VerifyEmail to={to} code={code} />;
 };
 
 export default VerifyPage;

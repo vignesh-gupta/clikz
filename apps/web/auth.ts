@@ -1,15 +1,23 @@
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import NextAuth from "next-auth"
-import authConfig from "~/auth.config"
-import { prisma } from "./lib/prisma"
- 
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import NextAuth from "next-auth";
+import authConfig from "~/auth.config";
+import { db } from "~/lib/db";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   pages: {
     signIn: "/sign-in",
   },
-  session:{
-    strategy: "jwt"
+  session: {
+    strategy: "jwt",
   },
-  ...authConfig
-})
+  events: {
+    linkAccount: async ({ user }) => {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
+  ...authConfig,
+});

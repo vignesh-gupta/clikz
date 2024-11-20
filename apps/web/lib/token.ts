@@ -1,20 +1,20 @@
-import { prisma } from "./prisma";
+import { db } from "./db";
 import { generateOTP } from "./utils";
 
 export const generatePasscode = async (email: string) => {
   const passcode = generateOTP();
 
-  await prisma.passcode.deleteMany({
+  await db.passcode.deleteMany({
     where: {
       email,
     },
   });
 
-  return await prisma.passcode.create({
+  return await db.passcode.create({
     data: {
       email,
       otp: passcode,
       expiresAt: new Date(Date.now() + 1000 * 60 * 5),
     },
-  });
+  })
 };

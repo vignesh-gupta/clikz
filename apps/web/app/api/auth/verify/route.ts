@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { signIn } from "~/auth";
-import { sendOtpEmail } from "~/lib/email";
-import { prisma } from "~/lib/prisma";
-import { decode } from "~/lib/utils";
+import { db } from "~/lib/db";
+import { sendVerificationEmail } from "~/lib/email";
+import { generatePasscode } from "~/lib/token";
 
 export const POST = async (req: NextRequest) => {
   const toEmail = (await req.json()).to;
@@ -16,8 +15,8 @@ export const POST = async (req: NextRequest) => {
       },
     );
   }
-
-  sendOtpEmail(toEmail);
+  const passcode = await generatePasscode(toEmail);
+  await sendVerificationEmail(toEmail, passcode.otp);
 
   return NextResponse.json({ success: true });
 };
@@ -25,10 +24,9 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) => {
   const code = req.nextUrl.searchParams.get("code");
   const to = req.nextUrl.searchParams.get("to");
-  const pwd = decodeURI(decode(req.nextUrl.searchParams.get("pwd") ?? ""));
-  if (!code || !to || !pwd) {
+  if (!code || !to) {
     return NextResponse.json(
-      { error: "code , to and pwd params are required" },
+      { error: "Missing required data" },
       {
         status: 400,
         statusText: "Bad Request",
@@ -36,10 +34,10 @@ export const GET = async (req: NextRequest) => {
     );
   }
 
-  const passcode = await prisma.passcode.findFirst({
+  const passcode = await db.passcode.findFirst({
     where: { email: to, otp: code },
   });
-  if (!passcode || passcode.expiresAt < new Date() || passcode.otp !== code) {
+  if (!passcode || passcode.otp !== code) {
     return NextResponse.json(
       { error: "Invalid code" },
       {
@@ -49,12 +47,22 @@ export const GET = async (req: NextRequest) => {
     );
   }
 
+  if (passcode.expiresAt < new Date()) {
+    return NextResponse.json(
+      { error: "Code expired" },
+      {
+        status: 400,
+        statusText: "Bad Request",
+      },
+    );
+  }
+
   const [user] = await Promise.all([
-    prisma.user.update({
+    db.user.update({
       where: { email: to },
       data: { emailVerified: new Date() },
     }),
-    prisma.passcode.delete({
+    db.passcode.delete({
       where: { id: passcode.id },
     }),
   ]);
@@ -69,11 +77,5 @@ export const GET = async (req: NextRequest) => {
     );
   }
 
-  await signIn("credentials", {
-    redirect: false,
-    email: user.email,
-    password: pwd,
-  });
-
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: "Email Successfully verified" });
 };

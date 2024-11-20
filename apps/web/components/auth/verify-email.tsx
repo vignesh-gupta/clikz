@@ -14,27 +14,28 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@repo/ui/components/ui/input-otp";
-import { RefreshCw } from "lucide-react";
+import { BadgeCheck, CircleX, RefreshCw } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 type VerifyEmailProps = {
   to: string;
   code?: string;
-  pwd: string;
 };
 
-const RETRY_INTERVAL = 60;
+const RETRY_INTERVAL = 0;
 
-export default function VerifyEmail({ code, to, pwd }: VerifyEmailProps) {
+export default function VerifyEmail({ code, to }: VerifyEmailProps) {
   const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent">(
     "sent",
   );
   const [countdown, setCountdown] = useState(RETRY_INTERVAL);
   const [otp, setOtp] = useState(code ?? "");
   const [verificationStatus, setVerificationStatus] = useState<
-    "idle" | "verifying"
+    "idle" | "verifying" | "verified" | "failed"
   >("idle");
+  const [message, setMessage] = useState<string | null>(null);
 
   // Handle countdown for resend OTP
   useEffect(() => {
@@ -59,7 +60,7 @@ export default function VerifyEmail({ code, to, pwd }: VerifyEmailProps) {
     setResendStatus("sending");
     await fetch("/api/auth/verify", {
       method: "POST",
-      body: JSON.stringify({ to, pwd }),
+      body: JSON.stringify({ to }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -72,17 +73,20 @@ export default function VerifyEmail({ code, to, pwd }: VerifyEmailProps) {
     if (otp.length !== 6 || verificationStatus === "verifying") return;
 
     setVerificationStatus("verifying");
-    fetch(`/api/auth/verify?to=${to}&code=${otp}&pwd=${pwd}`)
-      .then(async (res) =>
-        res.ok
-          ? toast.success("Email verified successfully") 
-          : toast.error(
-              (await res.json()).error ?? "Invalid OTP. Please try again.",
-            ),
-      )
-      .catch(() => toast.error("An error occurred. Please try again."))
-      .finally(() => setVerificationStatus("idle"));
-  }; 
+    fetch(`/api/auth/verify?to=${to}&code=${otp}`)
+      .then(async (res) => {
+        if (res.ok) {
+          setVerificationStatus("verified");
+          setMessage("Email verified successfully.");
+        } else {
+          setVerificationStatus("failed");
+          const data = await res.json();
+          console.log(data);
+          setMessage(data.error);
+        }
+      })
+      .catch(() => toast.error("An error occurred. Please try again."));
+  };
 
   return (
     <Card className="w-full max-w-md">
@@ -110,39 +114,58 @@ export default function VerifyEmail({ code, to, pwd }: VerifyEmailProps) {
           </InputOTP>
         </div>
 
-        <Button
-          onClick={handleVerifyOtp}
-          disabled={otp.length !== 6 || verificationStatus === "verifying"}
-          className="w-full flex items-center justify-center"
-        >
-          {verificationStatus === "verifying" ? (
-            <>
-              <RefreshCw className="mr-1 h-4 w-4 animate-spin" />
-              Verifying...
-            </>
-          ) : (
-            "Verify OTP"
-          )}
-        </Button>
-        <div className="text-center">
-          <Button
-            variant="outline"
-            onClick={handleResendOtp}
-            disabled={resendStatus === "sending" || resendStatus === "sent"}
-            className="w-full"
-          >
-            {resendStatus === "sending" ? (
-              <>
-                <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                Sending...
-              </>
-            ) : resendStatus === "sent" ? (
-              <>Resend in {countdown}s</>
-            ) : (
-              "Resend OTP"
-            )}
+        {verificationStatus === "verified" && (
+          <div className="bg-emerald-500/15 p-3 rounded-md flex items-center gap-x-2 text-emerald-500 w-full justify-center">
+            <BadgeCheck className="size-4" />
+            <p>{message}</p>
+          </div>
+        )}
+        {verificationStatus === "failed" && (
+          <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-destructive-foreground w-full justify-center">
+            <CircleX className="size-4" />
+            <p>{message}</p>
+          </div>
+        )}
+
+        {verificationStatus !== "verified" ? (
+          <div className="text-center space-y-3">
+            <Button
+              onClick={handleVerifyOtp}
+              disabled={otp.length !== 6 || verificationStatus === "verifying"}
+              className="w-full flex items-center justify-center"
+            >
+              {verificationStatus === "verifying" ? (
+                <>
+                  <RefreshCw className="mr-1 h-4 w-4 animate-spin" />
+                  Verifying...
+                </>
+              ) : (
+                "Verify OTP"
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleResendOtp}
+              disabled={resendStatus === "sending" || resendStatus === "sent"}
+              className="w-full"
+            >
+              {resendStatus === "sending" ? (
+                <>
+                  <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                  Sending...
+                </>
+              ) : resendStatus === "sent" ? (
+                <>Resend in {countdown}s</>
+              ) : (
+                "Resend OTP"
+              )}
+            </Button>
+          </div>
+        ) : (
+          <Button asChild className="w-full">
+            <Link href="/sign-in">Back to login</Link>
           </Button>
-        </div>
+        )}
       </CardContent>
       <CardFooter className="flex flex-col items-center justify-center">
         <p className="text-sm text-muted-foreground">

@@ -21,38 +21,37 @@ import {
 import { Input } from "@repo/ui/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { signUp } from "~/app/(auth)/actions";
+import { register } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
-import { encode } from "~/lib/utils";
-import { SignInSchema, signInSchema } from "~/lib/zod-schemas";
+import { SignUpSchema, signUpSchema } from "~/lib/zod-schemas";
 
 const SignUpForm = () => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
-  const form = useForm<SignInSchema>({
-    resolver: zodResolver(signInSchema),
+  const form = useForm<SignUpSchema>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
       password: "",
+      name: "",
     },
   });
 
-  const onSubmit = async (values: SignInSchema) => {
-    console.log("Sign up", values);
-    const user = await signUp(values.email, values.password);
-
-    if (!user) {
-      toast.error("User already exists");
-      router.push("/sign-in");
-      return;
-    }
-
-    toast.success("Verification email sent");
-    router.push(
-      `/verify?to=${values.email}&pwd=${encodeURI(encode(values.password))}`,
-    );
+  const onSubmit = async (values: SignUpSchema) => {
+    startTransition(() => {
+      register(values).then((res) => {
+        if (res?.error) {
+          toast.error(res?.error);
+        } else if (res?.success) {
+          router.push(`/verify?to=${values.email}`);
+          toast.success(res.success);
+        }
+      });
+    });
   };
 
   return (
@@ -78,6 +77,19 @@ const SignUpForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="John Deo" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -108,7 +120,11 @@ const SignUpForm = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full bg-primary">
+              <Button
+                type="submit"
+                className="w-full bg-primary"
+                disabled={isPending}
+              >
                 Create account
               </Button>
             </div>
