@@ -1,0 +1,16 @@
+services:
+  local-postgres:
+    image: postgres
+    restart: always
+    container_name: postgres-db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - PGDATA=/data/postgres
+    volumes:
+      - postgres:/data/postgres
+
+volumes:
+  postgres:
