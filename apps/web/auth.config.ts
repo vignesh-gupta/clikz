@@ -1,13 +1,16 @@
+import { compare } from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Discord from "next-auth/providers/discord";
 import GitHub from "next-auth/providers/github";
+
 import { getUserByEmail, getUserById } from "~/data/user";
 import { signInSchema } from "./lib/zod-schemas";
-import { compare } from "bcryptjs";
 
 export default {
   providers: [
     GitHub,
+    Discord,
     Credentials({
       authorize: async (credentials) => {
         const { email, password } = await signInSchema.parseAsync(credentials);

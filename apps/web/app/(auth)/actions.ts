@@ -75,7 +75,7 @@ export const login = async (values: SignInSchema, callback?: string | null) => {
         case "CredentialsSignin":
           return { error: "Invalid credentials!" };
         default:
-          return { error: "Something went wrong!" };
+          return { error: error.message ?? "Something went wrong!" };
       }
     }
 
