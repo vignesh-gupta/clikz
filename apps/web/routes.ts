@@ -1,13 +1,13 @@
 /**
  * An array of routes that are public and do not require authentication.
  */
-export const publicRoutes = ["/", "/api/hello"];
+export const PUBLIC_ROUTE = ["/", "/api/hello"];
 
 /**
  * An array of routes that are used for authentication.
  * These route will redirect logged in users to settings page.
  */
-export const authRoutes = [
+export const AUTH_ROUTES = [
   "/sign-in",
   "/sign-up",
   "/error",
@@ -19,7 +19,7 @@ export const authRoutes = [
  * The prefix for API authentication routes.
  * Routes that start with this prefix are used for authentication purpose.
  */
-export const apiAuthPrefix = "/api/auth";
+export const AUTH_API_ROUTE = "/api/auth";
 
 /**
  * The default redirect URL after login.

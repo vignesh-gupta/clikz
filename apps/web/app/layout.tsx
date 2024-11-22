@@ -8,7 +8,7 @@ import { Toaster } from "@repo/ui/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Zap",
+  title: "Clikz - Your team's link management",
   description: "Link management and branding for teams",
 };
 

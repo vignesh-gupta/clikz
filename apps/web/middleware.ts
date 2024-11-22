@@ -1,45 +1,28 @@
-import {
-  DEFAULT_LOGIN_REDIRECT,
-  apiAuthPrefix,
-  authRoutes,
-  publicRoutes,
-} from "~/routes";
-import { auth } from "./auth";
+import { NextRequest, NextResponse } from "next/server";
 
-export default auth(async (req) => {
-  const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
+import { parse } from "~/lib/middleware/utils";
+import { APP_NAMES } from "./lib/constants";
+import AppMiddleware from "./lib/middleware/app";
 
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-
-  if (isApiAuthRoute) {
-    return;
-  }
-
-  if (isAuthRoute) {
-    if (!isLoggedIn) return;
-    return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-  }
-
-  if (!isLoggedIn && !isPublicRoute) {
-    let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) {
-      callbackUrl += nextUrl.search;
-    }
-
-    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-
-    return Response.redirect(
-      new URL(`/sign-in?callbackUrl=${encodedCallbackUrl}`, nextUrl),
-    );
-  }
-
-  return;
-});
-
-// Optionally, don't invoke Middleware on some paths
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/api(.*)"],
+  matcher: [
+    /*
+     * Match all paths except for:
+     * 1. /api/ routes
+     * 2. /_next/ (Next.js internals)
+     * 3. /_proxy/ (proxies for third-party services)
+     * 4. Metadata files: favicon.ico, sitemap.xml, robots.txt, manifest.webmanifest, .well-known
+     */
+    "/((?!api/|_next/|_proxy/|favicon.ico|sitemap.xml|robots.txt|manifest.webmanifest|.well-known).*)",
+  ],
 };
+
+export default async function middleware(req: NextRequest) {
+  const { domain } = parse(req);
+
+  if (APP_NAMES.has(domain)) {
+    return AppMiddleware(req);
+  }
+
+  return NextResponse.next();
+}

@@ -42,5 +42,13 @@ export default {
 
       return true;
     },
+    session: async ({ session, token }) => {
+      session.user = {
+        id: token.sub,
+        // @ts-ignore
+        ...(token || session).user,
+      };
+      return session;
+    },
   },
 } satisfies NextAuthConfig;

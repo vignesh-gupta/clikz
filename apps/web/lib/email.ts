@@ -3,7 +3,7 @@ import { Resend } from "resend";
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 export const resend = new Resend(process.env.AUTH_RESEND_KEY);
 
-const MAIL_SENDER = "ZAP <zap@vigneshgupta.tech>";
+const MAIL_SENDER = "clikz <clikz@vigneshgupta.tech>";
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const baseUrl = process.env.NEXT_URL || "http://localhost:3000";
 
