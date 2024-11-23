@@ -1,8 +1,10 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest, NextResponse } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
-import { APP_NAMES } from "./lib/constants";
+import { APP_NAMES, DEFAULT_REDIRECTS } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
+import { LinkMiddleware } from "./lib/middleware/link";
 
 export const config = {
   matcher: [
@@ -18,11 +20,19 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest) {
-  const { domain } = parse(req);
+  const { domain, fullPath, key, nextUrl } = parse(req);
+
+  if (domain === process.env.NEXT_PUBLIC_APP_DOMAIN) {
+    if (fullPath === "/") return NextResponse.next();
+    if (DEFAULT_REDIRECTS.has(key))
+      return NextResponse.redirect(
+        new URL(DEFAULT_REDIRECTS.get(key)!, nextUrl),
+      );
+  }
 
   if (APP_NAMES.has(domain)) {
     return AppMiddleware(req);
   }
 
-  return NextResponse.next();
+  return LinkMiddleware(req);
 }

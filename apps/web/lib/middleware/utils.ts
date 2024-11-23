@@ -1,5 +1,4 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { User } from "@prisma/client";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 
@@ -21,20 +20,21 @@ export const parse = (req: NextRequest) => {
   const key = decodeURIComponent(path.split("/")[1] ?? "");
   const fullKey = decodeURIComponent(path.slice(1));
 
-  return { domain, path, fullPath, key, fullKey, searchParamsString };
+  return {
+    domain,
+    path,
+    fullPath,
+    key,
+    fullKey,
+    searchParamsString,
+    nextUrl: req.nextUrl,
+  };
 };
 
 export async function getUserViaToken(req: NextRequest) {
-  const session = (await getToken({
+  const session = await getToken({
     req,
     secret: process.env.AUTH_SECRET,
-  })) as {
-    email?: string;
-    user?: User;
-  };
-
-  console.log("Session", session);
-  
-
+  });
   return session;
 }

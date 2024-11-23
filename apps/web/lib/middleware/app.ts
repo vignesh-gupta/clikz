@@ -6,22 +6,17 @@ import {
   PUBLIC_ROUTE,
 } from "~/routes";
 import { getUserViaToken } from "./utils";
+import { NextURL } from "next/dist/server/web/next-url";
+
+export const appRedirect = (url: NextURL) =>
+  new URL(`/app.clikz${url.pathname}`, url);
 
 export const AppMiddleware = async (req: NextRequest) => {
-
-  console.log("AppMiddleware");
-  
-
   const { nextUrl } = req;
 
-  const user = await getUserViaToken(req)
+  const user = await getUserViaToken(req);
 
-  console.log("User", user);
-  
-  const isLoggedIn = !!user
-
-
-
+  const isLoggedIn = !!user;
   const isApiAuthRoute = nextUrl.pathname.startsWith(AUTH_API_ROUTE);
   const isPublicRoute = PUBLIC_ROUTE.includes(nextUrl.pathname);
   const isAuthRoute = AUTH_ROUTES.includes(nextUrl.pathname);
@@ -32,7 +27,11 @@ export const AppMiddleware = async (req: NextRequest) => {
 
   if (isAuthRoute) {
     if (!isLoggedIn) return NextResponse.next();
-    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+
+    const callbackUrl = decodeURIComponent(
+      nextUrl.searchParams.get("callbackUrl") ?? DEFAULT_LOGIN_REDIRECT,
+    );
+    return NextResponse.redirect(new URL(callbackUrl, nextUrl));
   }
 
   if (!isLoggedIn && !isPublicRoute) {
@@ -50,7 +49,7 @@ export const AppMiddleware = async (req: NextRequest) => {
     );
   }
 
-  return NextResponse.rewrite(new URL(`/app.clikz${nextUrl.pathname}`, nextUrl));
+  return NextResponse.rewrite(appRedirect(nextUrl));
 };
 
 export default AppMiddleware;

@@ -22,7 +22,7 @@ import { Input } from "@repo/ui/components/ui/input";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { login } from "~/app/app.clikz/(auth)/actions";
+import { login } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
 import { SignInSchema, signInSchema } from "~/lib/zod-schemas";
 

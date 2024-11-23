@@ -1,14 +1,13 @@
 import { Button } from "@repo/ui/components/ui/button";
 import Link from "next/link";
-import SignOut from "~/components/auth/sign-out";
 
-export default function Page() {
+export default function HomePage() {
   return (
     <main>
+      <p>This is landing page</p>
       <Button asChild>
-        <Link href="/private">Go to private page</Link>
+        <Link href="/dashboard">Go to dashboard page</Link>
       </Button>
-      <SignOut />
     </main>
   );
 }

@@ -24,7 +24,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { register } from "~/app/app.clikz/(auth)/actions";
+import { register } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
 import { SignUpSchema, signUpSchema } from "~/lib/zod-schemas";
 

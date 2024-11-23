@@ -7,7 +7,7 @@ const PrivatePage = async () => {
 
   return (
     <div>
-      {JSON.stringify(session)}
+      {JSON.stringify(session?.user)}
       <SignOut />
     </div>
   );

@@ -5,6 +5,7 @@ import Discord from "next-auth/providers/discord";
 import GitHub from "next-auth/providers/github";
 
 import { getUserByEmail, getUserById } from "~/data/user";
+import { db } from "./lib/db";
 import { signInSchema } from "./lib/zod-schemas";
 
 export default {
@@ -19,13 +20,6 @@ export default {
         if (!user || !user.password) throw null;
 
         const isPasswordValid = await compare(password, user.password);
-
-        console.log({
-          isPasswordValid,
-          password,
-          user,
-        });
-
         if (!isPasswordValid) return null;
 
         return user;
@@ -41,6 +35,25 @@ export default {
       if (!existingUser || !existingUser.emailVerified) return false;
 
       return true;
+    },
+    jwt: async ({ token, user, trigger }) => {
+      if (user) {
+        token.user = user;
+      }
+
+      // refresh the user's data if they update their name / email
+      if (trigger === "update") {
+        const refreshedUser = await db.user.findUnique({
+          where: { id: token.sub },
+        });
+        if (refreshedUser) {
+          token.user = refreshedUser;
+        } else {
+          return {};
+        }
+      }
+
+      return token;
     },
     session: async ({ session, token }) => {
       session.user = {

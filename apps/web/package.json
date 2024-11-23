@@ -14,6 +14,8 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.3",
     "@hookform/resolvers": "^3.9.1",
+    "@neondatabase/serverless": "^0.10.3",
+    "@prisma/adapter-neon": "^5.22.0",
     "@prisma/client": "^5.22.0",
     "@repo/ui": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
