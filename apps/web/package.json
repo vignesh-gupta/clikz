@@ -20,6 +20,7 @@
     "@repo/ui": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
+    "framer-motion": "^11.11.17",
     "lucide-react": "^0.456.0",
     "next": "catalog:",
     "next-auth": "5.0.0-beta.25",

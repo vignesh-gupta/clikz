@@ -5,14 +5,15 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   PUBLIC_ROUTE,
 } from "~/routes";
-import { getUserViaToken } from "./utils";
+import { getUserViaToken, parse } from "./utils";
 import { NextURL } from "next/dist/server/web/next-url";
+import { db } from "../db";
 
-export const appRedirect = (url: NextURL) =>
-  new URL(`/app.clikz${url.pathname}`, url);
+export const appRedirect = (path: string, url: NextURL) =>
+  new URL(`/app.clikz${path}`, url);
 
 export const AppMiddleware = async (req: NextRequest) => {
-  const { nextUrl } = req;
+  const { nextUrl, fullPath } = parse(req);
 
   const user = await getUserViaToken(req);
 
@@ -42,14 +43,32 @@ export const AppMiddleware = async (req: NextRequest) => {
 
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
-    console.log("Redirecting to sign-in", encodedCallbackUrl);
-
     return NextResponse.redirect(
       nextUrl.origin + "/sign-in?callbackUrl=" + encodedCallbackUrl,
     );
   }
 
-  return NextResponse.rewrite(appRedirect(nextUrl));
+  if (!nextUrl.pathname.includes("/onboarding")) {
+    const workspace = await db.workspace.findFirst({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    if (!workspace) {
+      return NextResponse.redirect(new URL("/onboarding/workspace", nextUrl));
+    }
+  }
+
+  if (fullPath === "/onboarding/") {
+    return NextResponse.redirect(new URL("/onboarding/workspace", nextUrl));
+  }
+
+  if (fullPath === "/") {
+    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+  }
+
+  return NextResponse.rewrite(appRedirect(nextUrl.pathname, nextUrl));
 };
 
 export default AppMiddleware;

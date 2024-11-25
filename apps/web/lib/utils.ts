@@ -11,3 +11,7 @@ export const decode = (data: string) => Buffer.from(data, "base64").toString();
 export const generateOTP = (): string => {
   return Math.random().toString().slice(2, 8);
 };
+
+export const generateSlug = (name: string) => {
+  return name.toLowerCase().replace(/ /g, "-");
+};

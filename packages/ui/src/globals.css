@@ -29,6 +29,14 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -56,6 +64,14 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -64,6 +80,32 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-screen antialiased;
   }
+}
+
+.bg-gradient-custom {
+  background:
+    radial-gradient(
+      at 46.051131354687044% 60.35340755735492%,
+      #ffffff 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 92.09050837496326% 19.192813765182187%,
+      #5aceaf 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 24.912136350279166% 21.891869095816464%,
+      #e7e7a6 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+        at 19.42051131354687% 73.44382591093117%,
+        #81f5ff 0px,
+        transparent 50%
+      )
+      #fedaec;
+  mix-blend-mode: var(--_mesh-gradient-blend-mode);
 }

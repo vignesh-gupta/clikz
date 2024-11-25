@@ -24,4 +24,4 @@ export const AUTH_API_ROUTE = "/api/auth";
 /**
  * The default redirect URL after login.
  */
-export const DEFAULT_LOGIN_REDIRECT = "/";
+export const DEFAULT_LOGIN_REDIRECT = "/dashboard";

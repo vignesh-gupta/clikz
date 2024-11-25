@@ -14,3 +14,10 @@ export const signUpSchema = z.object({
 });
 
 export type SignUpSchema = z.infer<typeof signUpSchema>;
+
+export const workspaceSchema = z.object({
+  name: z.string().min(1, "Workspace name is required").max(100, "Workspace name is too long"),
+  slug: z.string().min(1, "Workspace slug is required").max(100, "Workspace slug is too long"),
+});
+
+export type WorkspaceSchema = z.infer<typeof workspaceSchema>;

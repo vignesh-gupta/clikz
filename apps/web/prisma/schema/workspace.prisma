@@ -1,0 +1,12 @@
+model Workspace {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@index([userId])
+  @@unique([slug])
+}

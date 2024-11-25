@@ -1,4 +1,5 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
+import { User } from "@prisma/client";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 
@@ -36,5 +37,5 @@ export async function getUserViaToken(req: NextRequest) {
     req,
     secret: process.env.AUTH_SECRET,
   });
-  return session;
+  return session?.user as User;
 }
