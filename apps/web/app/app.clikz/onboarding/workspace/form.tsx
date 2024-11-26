@@ -1,6 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
+
 import {
   Alert,
   AlertDescription,
@@ -17,10 +21,8 @@ import {
   FormMessage,
 } from "@repo/ui/components/ui/form";
 import { Input } from "@repo/ui/components/ui/input";
-import { AlertCircle, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
 import { useForm, useWatch } from "react-hook-form";
+
 import { createWorkspace } from "~/lib/actions/onboarding";
 import { textToSlug } from "~/lib/utils";
 import { workspaceSchema, WorkspaceSchema } from "~/lib/zod-schemas";
@@ -28,6 +30,7 @@ import { workspaceSchema, WorkspaceSchema } from "~/lib/zod-schemas";
 const WorkspaceForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, startTransaction] = useTransition();
+  const [isSlugAvailable, setSlugAvailable] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -60,11 +63,14 @@ const WorkspaceForm = () => {
         type: "manual",
         message: `The slug "${slug}" is already taken`,
       });
-    } else if (
-      form.formState.errors.slug &&
-      form.formState.errors.slug.type === "manual"
-    ) {
-      form.clearErrors("slug");
+    } else {
+      setSlugAvailable(true);
+      if (
+        form.formState.errors.slug &&
+        form.formState.errors.slug.type === "manual"
+      ) {
+        form.clearErrors("slug");
+      }
     }
   };
 
@@ -74,11 +80,11 @@ const WorkspaceForm = () => {
 
       if (res.error) {
         setError(res.error);
-        return;
-      }
-      if (res.success) {
+      } else if (res.success) {
         router.push("/onboarding/invite?workspaceId=" + values.slug);
       }
+
+      setSlugAvailable(false);
     });
   };
 
@@ -123,7 +129,11 @@ const WorkspaceForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full mt-6" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full mt-6"
+              disabled={isLoading || !isSlugAvailable}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

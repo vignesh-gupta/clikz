@@ -1,22 +1,13 @@
-import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { saltAndHash } from "~/lib/utils";
+import ogs from "open-graph-scraper";
 
 export const GET = async function GET() {
-  const password = "12345678#2310";
-
-  const hashedPassword = await saltAndHash(password);
-
-  const hashedPassword2 = await saltAndHash(password);
-
-  const val = await bcrypt.compare(password, hashedPassword);
-  const val2 = await bcrypt.compare(password, hashedPassword2);
-
+  const data = await fetchMeta("https://github.com/vignesh-gupta/");
   return NextResponse.json({
-    password,
-    hashedPassword,
-    val,
-    hashedPassword2,
-    val2,
+    data,
   });
+};
+
+const fetchMeta = async (url: string) => {
+  return await ogs({ url });
 };

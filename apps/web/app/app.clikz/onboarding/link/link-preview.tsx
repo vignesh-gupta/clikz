@@ -3,8 +3,13 @@
 import { ImageIcon, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { FetchMetadata, fetchMetadata } from "~/lib/actions/fetch-metadata";
 import { getUrlWithoutUTMParams } from "~/lib/utils";
+
+type FetchMetadata = {
+  title: string;
+  description: string;
+  image: string;
+};
 
 type LinkPreviewProps = {
   url: string;
@@ -19,15 +24,26 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
   useEffect(() => {
     if (!debouncedUrl) return;
 
+    const controller = new AbortController();
     setLoading(true);
-    fetchMetadata(debouncedUrl)
-      .then((data) => setMetadata(data))
+    fetch("/api/metadata?url=" + encodeURIComponent(debouncedUrl), {
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch metadata");
+        }
+        const data = await res.json();
+        setMetadata(data);
+      })
       .catch(() => setMetadata(null))
       .finally(() => setLoading(false));
+
+    return () => controller.abort();
   }, [debouncedUrl]);
 
   return (
-    <div className="relative aspect-[1.91/1] w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100">
+    <div className="relative aspect-[2/1] w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100">
       {metadata?.image ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img

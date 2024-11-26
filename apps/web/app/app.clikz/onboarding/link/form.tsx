@@ -114,7 +114,7 @@ const CreateLinkForm = () => {
                   Creating...
                 </>
               ) : (
-                "Create Workspace"
+                "Create Link"
               )}
             </Button>
           </form>
