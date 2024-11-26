@@ -15,7 +15,7 @@ const MaxWidthContainer: FC<MaxWidthContainerProps> = ({
   return (
     <main
       className={cn(
-        "animate-fade-in h-screen relative overflow-hidden",
+        "h-screen relative overflow-hidden",
         className,
       )}
     >
@@ -28,7 +28,7 @@ const MaxWidthContainer: FC<MaxWidthContainerProps> = ({
           )}
         />
       )}
-      <div className="max-w-4xl mx-auto px-8 z-20">{children}</div>
+      <div className="max-w-4xl mx-auto px-4 z-20">{children}</div>
     </main>
   );
 };

@@ -12,6 +12,10 @@ export const generateOTP = (): string => {
   return Math.random().toString().slice(2, 8);
 };
 
-export const generateSlug = (name: string) => {
+export const textToSlug = (name: string) => {
   return name.toLowerCase().replace(/ /g, "-");
 };
+
+export const generateInviteCode = () => {
+  return Math.random().toString(36).substring(7);
+}

@@ -48,7 +48,7 @@ export const AppMiddleware = async (req: NextRequest) => {
     );
   }
 
-  if (!nextUrl.pathname.includes("/onboarding")) {
+  if (!fullPath.includes("/onboarding")) {
     const workspace = await db.workspace.findFirst({
       where: {
         userId: user.id,
@@ -56,12 +56,8 @@ export const AppMiddleware = async (req: NextRequest) => {
     });
 
     if (!workspace) {
-      return NextResponse.redirect(new URL("/onboarding/workspace", nextUrl));
+      return NextResponse.redirect(new URL("/onboarding", nextUrl));
     }
-  }
-
-  if (fullPath === "/onboarding/") {
-    return NextResponse.redirect(new URL("/onboarding/workspace", nextUrl));
   }
 
   if (fullPath === "/") {

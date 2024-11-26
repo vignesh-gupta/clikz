@@ -6,7 +6,19 @@ model Workspace {
   updatedAt DateTime @updatedAt
   User      User     @relation(fields: [userId], references: [id])
   userId    String
+  Invite    Invite[]
 
-  @@index([userId])
   @@unique([slug])
+  @@index([userId])
+}
+
+model Invite {
+  id          String    @id @default(cuid())
+  email       String
+  token       String
+  expires     DateTime
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+
+  @@index([workspaceId])
 }

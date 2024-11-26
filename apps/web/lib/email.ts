@@ -17,3 +17,17 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     html: `<p>Hi there,</p><p>Please verify your email address by clicking on the link below:</p><p><a href="${confirmLink}">Click here</a></p>`,
   });
 };
+
+export const sendWorkspaceInvite = async (
+  email: string,
+  inviteCode: string,
+) => {
+  const workspaceLink = `${baseUrl}/invite/${inviteCode}`;
+
+  await resend.emails.send({
+    from: MAIL_SENDER,
+    to: email,
+    subject: "You've been invited to a workspace",
+    html: `<p>Hi there,</p><p>You've been invited to a workspace. Click on the link below to join:</p><p><a href="${workspaceLink}">Click here</a></p>`,
+  });
+};

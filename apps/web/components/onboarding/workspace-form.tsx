@@ -21,8 +21,8 @@ import { AlertCircle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { createWorkspace } from "~/lib/actions/workspace";
-import { generateSlug } from "~/lib/utils";
+import { createWorkspace } from "~/lib/actions/onboarding";
+import { textToSlug } from "~/lib/utils";
 import { workspaceSchema, WorkspaceSchema } from "~/lib/zod-schemas";
 
 const WorkspaceForm = () => {
@@ -43,12 +43,30 @@ const WorkspaceForm = () => {
   const slug = useWatch({ control: form.control, name: "slug" });
 
   useEffect(() => {
-    form.setValue("slug", generateSlug(name)); // Automatically update the slug field
+    form.setValue("slug", textToSlug(name)); // Automatically update the slug field
   }, [name]);
 
   useEffect(() => {
-    form.setValue("slug", generateSlug(slug)); // Automatically update the slug field
+    form.setValue("slug", textToSlug(slug)); // Automatically update the slug field
   }, [slug]);
+
+  const checkSlug = async (slug: string) => {
+    const data = await fetch(`/api/workspace/${slug}/exist`).then((res) =>
+      res.json(),
+    );
+
+    if (data.exists) {
+      form.setError("slug", {
+        type: "manual",
+        message: `The slug "${slug}" is already taken`,
+      });
+    } else if (
+      form.formState.errors.slug &&
+      form.formState.errors.slug.type === "manual"
+    ) {
+      form.clearErrors("slug");
+    }
+  };
 
   const onSubmit = (values: WorkspaceSchema) => {
     startTransaction(async () => {
@@ -59,14 +77,14 @@ const WorkspaceForm = () => {
         return;
       }
       if (res.success) {
-        router.push("/onboarding/invite");
+        router.push("/onboarding/invite?workspaceId=" + values.slug);
       }
     });
   };
 
   return (
     <Card className="bg-transparent border-0 text-gray-800">
-      <CardContent>
+      <CardContent className="p-0">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <FormField
@@ -93,7 +111,12 @@ const WorkspaceForm = () => {
                       <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                         app.clikz.com/
                       </span>
-                      <Input placeholder="my-workspace" className="focus-visible:ring-gray-400 focus-visible:ring-offset-1" {...field} />
+                      <Input
+                        placeholder="my-workspace"
+                        className="focus-visible:ring-gray-400 focus-visible:ring-offset-1"
+                        {...field}
+                        onBlur={() => checkSlug(slug)}
+                      />
                     </div>
                   </FormControl>
                   <FormMessage className="text-xs ml-2" />
