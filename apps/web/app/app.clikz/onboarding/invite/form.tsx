@@ -1,13 +1,15 @@
 "use client";
 
+import { PlusIcon, XIcon } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
+
 import { Button } from "@repo/ui/components/ui/button";
 import { Input } from "@repo/ui/components/ui/input";
 import { Label } from "@repo/ui/components/ui/label";
-import { PlusIcon, XIcon } from "lucide-react";
+
 import { inviteUser } from "~/lib/actions/onboarding";
-import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export function InviteTeamForm() {
   const searchParams = useSearchParams();

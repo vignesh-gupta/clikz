@@ -20,6 +20,7 @@
     "@repo/ui": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
+    "cheerio": "^1.0.0",
     "framer-motion": "^11.11.17",
     "lucide-react": "^0.456.0",
     "next": "catalog:",

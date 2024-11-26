@@ -1,8 +1,8 @@
-import React from "react";
-import PageLayout from "../page-layout";
 import { UsersIcon } from "lucide-react";
-import { InviteTeamForm } from "~/components/onboarding/invite-team-form";
-import LaterButton from "~/components/onboarding/later-button";
+
+import LaterButton from "../later-button";
+import PageLayout from "../page-layout";
+import { InviteTeamForm } from "./form";
 
 const InvitePage = () => {
   return (

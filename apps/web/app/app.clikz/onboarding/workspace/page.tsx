@@ -1,6 +1,7 @@
-import WorkspaceForm from "~/components/onboarding/workspace-form";
-import PageLayout from "../page-layout";
 import { BriefcaseIcon } from "lucide-react";
+
+import PageLayout from "../page-layout";
+import WorkspaceForm from "./form";
 
 const OnboardingWorkspacePage = () => {
   return (
