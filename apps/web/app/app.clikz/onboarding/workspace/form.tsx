@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
 
 import {
   Alert,
@@ -21,8 +22,8 @@ import {
   FormMessage,
 } from "@repo/ui/components/ui/form";
 import { Input } from "@repo/ui/components/ui/input";
-import { useForm, useWatch } from "react-hook-form";
 
+import { useDebounce } from "use-debounce";
 import { createWorkspace } from "~/lib/actions/onboarding";
 import { textToSlug } from "~/lib/utils";
 import { workspaceSchema, WorkspaceSchema } from "~/lib/zod-schemas";
@@ -42,8 +43,10 @@ const WorkspaceForm = () => {
     },
   });
 
-  const name = useWatch({ control: form.control, name: "name" });
-  const slug = useWatch({ control: form.control, name: "slug" });
+  const name = form.watch("name");
+  const slug = form.watch("slug");
+
+  const [debouncedSlug] = useDebounce(slug, 500);
 
   useEffect(() => {
     form.setValue("slug", textToSlug(name)); // Automatically update the slug field
@@ -53,26 +56,32 @@ const WorkspaceForm = () => {
     form.setValue("slug", textToSlug(slug)); // Automatically update the slug field
   }, [slug]);
 
-  const checkSlug = async (slug: string) => {
-    const data = await fetch(`/api/workspace/${slug}/exist`).then((res) =>
-      res.json(),
-    );
+  useEffect(() => {
+    const controller = new AbortController();
+    const checkSlug = async (slug: string) => {
+      const data = await fetch(`/api/workspace/${debouncedSlug}/exist`, {
+        signal: controller.signal,
+      }).then((res) => res.json());
 
-    if (data.exists) {
-      form.setError("slug", {
-        type: "manual",
-        message: `The slug "${slug}" is already taken`,
-      });
-    } else {
-      setSlugAvailable(true);
-      if (
-        form.formState.errors.slug &&
-        form.formState.errors.slug.type === "manual"
-      ) {
-        form.clearErrors("slug");
+      if (data.exists) {
+        form.setError("slug", {
+          type: "manual",
+          message: `The slug "${slug}" is already taken`,
+        });
+      } else {
+        setSlugAvailable(true);
+        if (
+          form.formState.errors.slug &&
+          form.formState.errors.slug.type === "manual"
+        ) {
+          form.clearErrors("slug");
+        }
       }
-    }
-  };
+    };
+
+    checkSlug(debouncedSlug);
+    return () => controller.abort("Sending a new request");
+  }, [debouncedSlug]);
 
   const onSubmit = (values: WorkspaceSchema) => {
     startTransaction(async () => {
@@ -121,7 +130,6 @@ const WorkspaceForm = () => {
                         placeholder="my-workspace"
                         className="focus-visible:ring-gray-400 focus-visible:ring-offset-1"
                         {...field}
-                        onBlur={() => checkSlug(slug)}
                       />
                     </div>
                   </FormControl>

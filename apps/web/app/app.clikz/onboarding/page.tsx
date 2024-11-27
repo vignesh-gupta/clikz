@@ -6,8 +6,8 @@ import Link from "next/link";
 const OnboardingPage = () => {
   return (
     <PageLayout
-      title="Create your workspace"
-      subtitle="Start collaborating with your team in minutes"
+      title="Welcome to Clikz"
+      subtitle="Let's get you started with your workspace"
       icon={
         <div className="p-2 bg-white rounded-full text-black">
           <FlameIcon className="size-6" />

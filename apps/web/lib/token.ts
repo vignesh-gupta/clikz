@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { generateOTP } from "./utils";
+import { generateOTP } from "./utils/generate";
 
 export const generatePasscode = async (email: string) => {
   const passcode = generateOTP();

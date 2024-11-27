@@ -3,7 +3,7 @@
 import { auth } from "~/auth";
 import { db } from "../db";
 import { WorkspaceSchema } from "../zod-schemas";
-import { generateInviteCode } from "../utils";
+import { generateInviteCode } from "~/lib/utils/generate";
 import { sendWorkspaceInvite } from "../email";
 
 export const createWorkspace = async (data: WorkspaceSchema) => {

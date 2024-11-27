@@ -7,7 +7,7 @@ import { getUserByEmail } from "~/data/user";
 import { sendVerificationEmail } from "~/lib/email";
 import { db } from "~/lib/db";
 import { generatePasscode } from "~/lib/token";
-import { saltAndHash } from "~/lib/utils";
+import { saltAndHash } from "~/lib/utils/password";
 import {
   SignInSchema,
   signInSchema,

@@ -3,7 +3,7 @@
 import { ImageIcon, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { getUrlWithoutUTMParams } from "~/lib/utils";
+import { getUrlWithoutUTMParams } from "~/lib/utils/url";
 
 type FetchMetadata = {
   title: string;

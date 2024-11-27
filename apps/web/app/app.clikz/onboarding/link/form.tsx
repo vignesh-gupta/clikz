@@ -19,7 +19,7 @@ import {
 import { Input } from "@repo/ui/components/ui/input";
 
 import { createLink } from "~/lib/actions/link";
-import { generateRandomSlug } from "~/lib/utils";
+import { generateRandomSlug } from "~/lib/utils/generate";
 import { linkSchema, LinkSchema } from "~/lib/zod-schemas";
 import LinkPreview from "./link-preview";
 

@@ -4,7 +4,7 @@
 import { db } from "~/lib/db";
 import { LinkSchema } from "~/lib/zod-schemas";
 import { checkUser } from "./utils";
-import { generateRandomSlug } from "../utils";
+import { generateRandomSlug } from "~/lib/utils/generate";
 
 export const createLink = async (data: LinkSchema) => {
   const user = await checkUser();
