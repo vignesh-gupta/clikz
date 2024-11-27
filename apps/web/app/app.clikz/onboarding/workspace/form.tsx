@@ -57,6 +57,7 @@ const WorkspaceForm = () => {
   }, [slug]);
 
   useEffect(() => {
+    setSlugAvailable(false);
     const controller = new AbortController();
     const checkSlug = async (slug: string) => {
       const data = await fetch(`/api/workspace/${debouncedSlug}/exist`, {

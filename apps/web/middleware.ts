@@ -29,15 +29,16 @@ export default async function middleware(req: NextRequest) {
         new URL(DEFAULT_REDIRECTS.get(key)!, nextUrl),
       );
 
-    const protocol = process.env.NEXT_PUBLIC_APP_DOMAIN.includes("localhost")
-      ? "http"
-      : "https";
+    // const protocol = process.env.NEXT_PUBLIC_APP_DOMAIN.includes("localhost")
+    //   ? "http"
+    //   : "https";
 
-    const fullUrl = new URL(
-      `${protocol}://app.${process.env.NEXT_PUBLIC_APP_DOMAIN}${fullPath}`,
-    );
+    // const fullUrl = new URL(
+    //   `${protocol}://app.${process.env.NEXT_PUBLIC_APP_DOMAIN}${fullPath}`,
+    //   nextUrl,
+    // );
 
-    return NextResponse.redirect(fullUrl);
+    // return NextResponse.redirect(fullUrl);
   }
 
   if (APP_NAMES.has(domain)) {

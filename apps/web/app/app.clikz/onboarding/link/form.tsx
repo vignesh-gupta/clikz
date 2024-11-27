@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dices, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -25,6 +25,9 @@ import LinkPreview from "./link-preview";
 
 const CreateLinkForm = () => {
   const [isLoading, startTransaction] = useTransition();
+  
+  const searchParams = useSearchParams()
+  const workspaceSlug = searchParams.get("workspaceId")
 
   const router = useRouter();
 
@@ -40,7 +43,7 @@ const CreateLinkForm = () => {
 
   const onSubmit = (values: LinkSchema) => {
     startTransaction(async () => {
-      const data = await createLink(values);
+      const data = await createLink(values, workspaceSlug);
       if (data.error) {
         toast.error(data.error);
       } else {

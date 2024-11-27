@@ -6,13 +6,24 @@ import { LinkSchema } from "~/lib/zod-schemas";
 import { checkUser } from "./utils";
 import { generateRandomSlug } from "~/lib/utils/generate";
 
-export const createLink = async (data: LinkSchema) => {
+export const createLink = async (
+  data: LinkSchema,
+  workspaceId: string | null,
+) => {
   const user = await checkUser();
 
   if (!user || !user.id)
     return { error: "You must be signed in to create a link" };
 
-  console.log("Creating link", data);
+  if (!workspaceId) return { error: "Workspace id is required" };
+
+  const workspace = await db.workspace.findUnique({
+    where: {
+      slug: workspaceId,
+    },
+  });
+
+  if (!workspace) return { error: "Workspace not found" };
 
   await db.link.create({
     data: {
@@ -20,6 +31,7 @@ export const createLink = async (data: LinkSchema) => {
       key: data.slug === "" ? generateRandomSlug() : data.slug,
       url: data.destination,
       userId: user.id,
+      workspaceId: workspace.id,
     },
   });
 

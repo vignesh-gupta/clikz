@@ -1,12 +1,14 @@
 model Link {
-  id        String   @id @default(cuid())
-  domain    String
-  url       String
-  key       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id])
-  userId    String 
+  id          String    @id @default(cuid())
+  domain      String
+  url         String
+  key         String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  User        User      @relation(fields: [userId], references: [id])
+  userId      String
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
 
   @@index([userId])
 }
