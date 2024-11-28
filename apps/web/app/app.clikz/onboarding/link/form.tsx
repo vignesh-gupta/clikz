@@ -6,8 +6,8 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { Button } from "@repo/ui/components/ui/button";
-import { Card, CardContent } from "@repo/ui/components/ui/card";
+import { Button } from "@clikz/ui/components/ui/button";
+import { Card, CardContent } from "@clikz/ui/components/ui/card";
 import {
   Form,
   FormControl,
@@ -15,8 +15,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@repo/ui/components/ui/form";
-import { Input } from "@repo/ui/components/ui/input";
+} from "@clikz/ui/components/ui/form";
+import { Input } from "@clikz/ui/components/ui/input";
 
 import { createLink } from "~/lib/actions/link";
 import { generateRandomSlug } from "~/lib/utils/generate";

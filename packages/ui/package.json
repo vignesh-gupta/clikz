@@ -1,5 +1,5 @@
 {
-  "name": "@repo/ui",
+  "name": "@clikz/ui",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -10,8 +10,8 @@
     "react": "^18"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@clikz/eslint-config": "workspace:*",
+    "@clikz/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:react18",
     "autoprefixer": "^10",
@@ -26,6 +26,7 @@
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-progress": "^1.1.0",
     "@radix-ui/react-scroll-area": "^1.2.0",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.0.2",

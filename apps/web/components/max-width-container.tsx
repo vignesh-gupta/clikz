@@ -1,9 +1,10 @@
-import { cn } from "@repo/ui/lib/utils";
-import { GridPattern } from "@repo/ui/components/ui/grid-pattern";
+import { cn } from "@clikz/ui/lib/utils";
+import { GridPattern } from "@clikz/ui/components/ui/grid-pattern";
 import React, { FC, PropsWithChildren } from "react";
 
 type MaxWidthContainerProps = PropsWithChildren<{
   className?: string;
+  containerClassName?: string;
   showPattern?: boolean;
 }>;
 
@@ -11,14 +12,10 @@ const MaxWidthContainer: FC<MaxWidthContainerProps> = ({
   children,
   className,
   showPattern,
+  containerClassName
 }) => {
   return (
-    <main
-      className={cn(
-        "h-screen relative overflow-hidden",
-        className,
-      )}
-    >
+    <main className={cn("h-screen relative overflow-hidden", containerClassName)}>
       {showPattern && (
         <GridPattern
           width={20}
@@ -28,7 +25,9 @@ const MaxWidthContainer: FC<MaxWidthContainerProps> = ({
           )}
         />
       )}
-      <div className="max-w-4xl mx-auto px-4 z-20">{children}</div>
+      <div className={cn("max-w-4xl mx-auto px-4 z-20", className)}>
+        {children}
+      </div>
     </main>
   );
 };

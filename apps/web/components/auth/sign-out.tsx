@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@repo/ui/components/ui/button";
+import { Button } from "@clikz/ui/components/ui/button";
 import { signOut } from "next-auth/react";
 import React from "react";
 

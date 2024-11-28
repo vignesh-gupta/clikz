@@ -11,10 +11,10 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@repo/ui/components",
-    "ui": "@repo/ui/components/ui",
-    "utils": "@repo/ui/lib/utils",
-    "lib": "@repo/ui/lib",
-    "hooks": "@repo/ui/hooks"
+    "components": "@clikz/ui/components",
+    "ui": "@clikz/ui/components/ui",
+    "utils": "@clikz/ui/lib/utils",
+    "lib": "@clikz/ui/lib",
+    "hooks": "@clikz/ui/hooks"
   }
 }

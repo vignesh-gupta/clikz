@@ -10,9 +10,9 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@repo/ui/components/ui/alert";
-import { Button } from "@repo/ui/components/ui/button";
-import { Card, CardContent, CardFooter } from "@repo/ui/components/ui/card";
+} from "@clikz/ui/components/ui/alert";
+import { Button } from "@clikz/ui/components/ui/button";
+import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
 import {
   Form,
   FormControl,
@@ -20,8 +20,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@repo/ui/components/ui/form";
-import { Input } from "@repo/ui/components/ui/input";
+} from "@clikz/ui/components/ui/form";
+import { Input } from "@clikz/ui/components/ui/input";
 
 import { useDebounce } from "use-debounce";
 import { createWorkspace } from "~/lib/actions/onboarding";

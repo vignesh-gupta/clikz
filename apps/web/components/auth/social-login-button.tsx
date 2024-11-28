@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@repo/ui/components/ui/button";
+import { Button } from "@clikz/ui/components/ui/button";
 import { BuiltInProviderType } from "next-auth/providers";
 import { LiteralUnion, signIn } from "next-auth/react";
 import { IconType } from "react-icons";

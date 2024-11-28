@@ -1,19 +1,19 @@
 "use client";
 
-import { Button } from "@repo/ui/components/ui/button";
+import { Button } from "@clikz/ui/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/ui/card";
+} from "@clikz/ui/components/ui/card";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@repo/ui/components/ui/input-otp";
+} from "@clikz/ui/components/ui/input-otp";
 import { BadgeCheck, CircleX, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";

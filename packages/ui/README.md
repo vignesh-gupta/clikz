@@ -1,1 +1,1 @@
-# `@repo/ui`
+# `@clikz/ui`

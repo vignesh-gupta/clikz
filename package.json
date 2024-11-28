@@ -8,13 +8,13 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "ui": "pnpm --filter @repo/ui ui",
+    "ui": "pnpm --filter @clikz/ui ui",
     "db:push": "pnpm --filter web db:push",
     "db:studio": "pnpm --filter web db:studio"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@clikz/eslint-config": "workspace:*",
+    "@clikz/typescript-config": "workspace:*",
     "prettier": "catalog:",
     "turbo": "2.1.1"
   },

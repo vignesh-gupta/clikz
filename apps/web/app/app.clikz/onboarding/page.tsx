@@ -1,4 +1,4 @@
-import { Button } from "@repo/ui/components/ui/button";
+import { Button } from "@clikz/ui/components/ui/button";
 import { ArrowRight, FlameIcon } from "lucide-react";
 import PageLayout from "./page-layout";
 import Link from "next/link";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@repo/ui/components/ui/button";
+import { Button } from "@clikz/ui/components/ui/button";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 

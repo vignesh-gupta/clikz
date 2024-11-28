@@ -5,9 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { Button } from "@repo/ui/components/ui/button";
-import { Input } from "@repo/ui/components/ui/input";
-import { Label } from "@repo/ui/components/ui/label";
+import { Button } from "@clikz/ui/components/ui/button";
+import { Input } from "@clikz/ui/components/ui/input";
+import { Label } from "@clikz/ui/components/ui/label";
 
 import { inviteUser } from "~/lib/actions/onboarding";
 
