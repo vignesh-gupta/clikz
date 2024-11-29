@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@clikz/ui/components/ui/button";
+import { Button, buttonVariants } from "@clikz/ui/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@clikz/ui/components/ui/input-otp";
+import { cn } from "@clikz/ui/lib/utils";
 import { BadgeCheck, CircleX, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -162,9 +163,12 @@ export default function VerifyEmail({ code, to }: VerifyEmailProps) {
             </Button>
           </div>
         ) : (
-          <Button asChild className="w-full">
-            <Link href="/sign-in">Back to login</Link>
-          </Button>
+          <Link
+            href="/sign-in"
+            className={cn(buttonVariants({ className: "w-full" }))}
+          >
+            Back to login
+          </Link>
         )}
       </CardContent>
       <CardFooter className="flex flex-col items-center justify-center">

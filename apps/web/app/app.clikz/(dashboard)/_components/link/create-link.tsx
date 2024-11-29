@@ -12,7 +12,7 @@ const CreateLink = () => {
   return (
     <ResponsiveModal>
       <ResponsiveModalTrigger asChild>
-        <Button>Create</Button>
+        <Button shortcut="c">Create</Button>
       </ResponsiveModalTrigger>
       <ResponsiveModalContent>
         <ResponsiveModalHeader>

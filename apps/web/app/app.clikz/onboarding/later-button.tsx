@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@clikz/ui/components/ui/button";
+import { buttonVariants } from "@clikz/ui/components/ui/button";
+import { cn } from "@clikz/ui/lib/utils";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
@@ -20,9 +21,17 @@ const LaterButton = () => {
   const nextStepUrl = `${STEPS[STEPS.indexOf(pathname) + 1]}${workspaceId ? `?workspaceId=${workspaceId}` : ""}`;
 
   return (
-    <Button variant="link" asChild className="w-full text-center mt-4">
-      <Link href={nextStepUrl}>I'll do it later</Link>
-    </Button>
+    <Link
+      href={nextStepUrl}
+      className={cn(
+        buttonVariants({
+          variant: "link",
+          className: "w-full text-center mt-4",
+        }),
+      )}
+    >
+      I'll do it later
+    </Link>
   );
 };
 
