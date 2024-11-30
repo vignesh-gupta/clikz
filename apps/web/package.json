@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.3",
+    "@clikz/ui": "workspace:*",
     "@hookform/resolvers": "^3.9.1",
     "@neondatabase/serverless": "^0.10.3",
     "@prisma/adapter-neon": "^5.22.0",
-    "@prisma/client": "^5.22.0",
-    "@clikz/ui": "workspace:*",
+    "@prisma/client": "^6.0.0",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
     "framer-motion": "^11.11.17",
@@ -37,9 +37,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "catalog:",
     "@clikz/eslint-config": "workspace:*",
     "@clikz/typescript-config": "workspace:*",
+    "@next/eslint-plugin-next": "catalog:",
     "@types/eslint": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:react18",
@@ -47,7 +47,7 @@
     "autoprefixer": "^10",
     "eslint": "catalog:",
     "postcss": "^8",
-    "prisma": "^5.22.0",
+    "prisma": "^6.0.0",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   }

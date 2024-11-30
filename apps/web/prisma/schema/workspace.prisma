@@ -12,6 +12,7 @@ model Workspace {
 
   @@unique([slug])
   @@index([userId])
+  @@unique([id, slug])
 }
 
 model Invite {
