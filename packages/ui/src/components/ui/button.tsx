@@ -1,14 +1,14 @@
 "use client";
 
-import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@clikz/ui/lib/utils";
-import { Kbd } from "./kbd";
 import { Loader2 } from "lucide-react";
+import * as React from "react";
+import { cn } from "../../lib/utils";
+import { Kbd } from "./kbd";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium  transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -92,16 +92,20 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {loading ? <Loader2 className="size-6 mr-2" /> : (icon ?? null)}
-        {props.children}
-        {shortcut && variant !== "link" && (
-          <Kbd
-            variant={shortcutVariant ?? variant ?? "default"}
-            className="ml-2 hidden sm:inline-flex"
-          >
-            {shortcut.toUpperCase()}
-          </Kbd>
-        )}
+        <>
+          <span className="*:size-4 mr-2">
+            {loading ? <Loader2 /> : (icon ?? null)}
+          </span>
+          {props.children}
+          {shortcut && variant !== "link" && (
+            <Kbd
+              variant={shortcutVariant ?? variant ?? "default"}
+              className="ml-2 hidden sm:inline-flex"
+            >
+              {shortcut.toUpperCase()}
+            </Kbd>
+          )}
+        </>
       </Comp>
     );
   },

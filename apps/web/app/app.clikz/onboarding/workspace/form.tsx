@@ -110,7 +110,7 @@ const WorkspaceForm = () => {
                 <FormItem>
                   <FormLabel>Workspace Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="My Awesome Workspace" {...field} />
+                    <Input placeholder="My Awesome Workspace" className="focus-visible:ring-0" {...field} />
                   </FormControl>
                   <FormMessage className="text-xs ml-2" />
                 </FormItem>
@@ -122,16 +122,12 @@ const WorkspaceForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Workspace Slug</FormLabel>
-                  <FormControl className="flex">
+                  <FormControl>
                     <div className="flex rounded-md shadow-sm">
                       <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                         app.clikz.com/
                       </span>
-                      <Input
-                        placeholder="my-workspace"
-                        className="focus-visible:ring-gray-400 focus-visible:ring-offset-1"
-                        {...field}
-                      />
+                      <Input placeholder="my-workspace" {...field} />
                     </div>
                   </FormControl>
                   <FormMessage className="text-xs ml-2" />

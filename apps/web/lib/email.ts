@@ -1,14 +1,13 @@
 import { Resend } from "resend";
+import { BASE_URL } from "./constants";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 export const resend = new Resend(process.env.AUTH_RESEND_KEY);
 
 const MAIL_SENDER = "clikz <clikz@vigneshgupta.tech>";
-// eslint-disable-next-line turbo/no-undeclared-env-vars
-const baseUrl = process.env.NEXT_URL || "http://localhost:3000";
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `${baseUrl}/verify?to=${email}&code=${token}`;
+  const confirmLink = `${BASE_URL}/verify?to=${email}&code=${token}`;
 
   await resend.emails.send({
     from: MAIL_SENDER,
@@ -22,7 +21,7 @@ export const sendWorkspaceInvite = async (
   email: string,
   inviteCode: string,
 ) => {
-  const workspaceLink = `${baseUrl}/invite/${inviteCode}`;
+  const workspaceLink = `${BASE_URL}/invite/${inviteCode}`;
 
   await resend.emails.send({
     from: MAIL_SENDER,

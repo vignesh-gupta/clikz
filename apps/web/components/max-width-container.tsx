@@ -25,7 +25,7 @@ const MaxWidthContainer: FC<MaxWidthContainerProps> = ({
           )}
         />
       )}
-      <div className={cn("max-w-4xl mx-auto px-4 z-20", className)}>
+      <div className={cn("max-w-screen-xl mx-auto px-4 z-20", className)}>
         {children}
       </div>
     </main>

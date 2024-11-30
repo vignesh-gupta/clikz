@@ -21,3 +21,5 @@ export const DEFAULT_REDIRECTS = new Map([
   ["app", `${protocol}://app.${APP_DOMAIN}`],
   ["dashboard", `${protocol}://app.${APP_DOMAIN}/dashboard`],
 ]);
+
+export const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";

@@ -48,7 +48,7 @@ const CreateLinkForm = () => {
         toast.error(data.error);
       } else {
         toast.success(data.success);
-        router.push("/done");
+        router.push("done");
       }
     });
   };

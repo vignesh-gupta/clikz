@@ -5,6 +5,7 @@ import { db } from "~/lib/db";
 import { LinkSchema } from "~/lib/zod-schemas";
 import { checkUser } from "./utils";
 import { generateRandomSlug } from "~/lib/utils/generate";
+import { BASE_URL } from "../constants";
 
 export const createLink = async (
   data: LinkSchema,
@@ -25,13 +26,21 @@ export const createLink = async (
 
   if (!workspace) return { error: "Workspace not found" };
 
+  const slug = data.slug === "" ? generateRandomSlug() : data.slug;
+
+
+  console.log("slug", new URL(`/${slug}`, BASE_URL).toString());
+  
+
   await db.link.create({
     data: {
       domain: process.env.NEXT_PUBLIC_APP_DOMAIN ?? "clikz.co",
-      key: data.slug === "" ? generateRandomSlug() : data.slug,
+      key: slug,
+      shortLink: new URL(`/${slug}`, BASE_URL).toString(),
       url: data.destination,
       userId: user.id,
       workspaceId: workspace.id,
+      workspaceSlug: workspace.slug,
     },
   });
 
