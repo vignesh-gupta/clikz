@@ -1,10 +1,15 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
+import MaxWidthContainer from "~/components/max-width-container";
 
 const AuthLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <MaxWidthContainer
+      showPattern
+      className="min-h-screen flex items-center justify-center p-4"
+      containerClassName="bg-gradient-custom"
+    >
       {children}
-    </div>
+    </MaxWidthContainer>
   );
 };
 

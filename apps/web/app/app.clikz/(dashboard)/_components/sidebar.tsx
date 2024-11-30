@@ -15,7 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@clikz/ui/components/ui/sidebar";
-import { useWorkspaceSlug } from "~/lib/hooks/use-workspace-slug";
+import { useWorkspaceSlug } from "~/hooks/use-workspace-slug";
 
 const navigation = [
   {

@@ -6,7 +6,7 @@ import CreateLink from "./link/create-link";
 
 const PageFilters = () => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between my-6">
       <div className="flex items-center gap-4">
         <Button variant="outline" size="sm">
           Filter
