@@ -49,6 +49,7 @@
     "autoprefixer": "^10",
     "eslint": "catalog:",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-check-file": "^2.8.0",
     "postcss": "^8",
     "prettier": "^3.4.1",
     "prettier-plugin-tailwindcss": "^0.6.9",

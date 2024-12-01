@@ -6,8 +6,19 @@ module.exports = {
   parserOptions: {
     project: true,
   },
+  plugins: ["check-file"],
   rules: {
     "prefer-arrow-callback": ["error"],
     "prefer-template": ["error"],
+    "check-file/filename-naming-convention": [
+      "error",
+      {
+        "**/*.{ts,tsx}": "KEBAB_CASE",
+      },
+      {
+        // ignore the middle extensions of the filename to support filename like abc.config.js or smoke.spec.ts
+        ignoreMiddleExtensions: true,
+      },
+    ],
   },
 };
