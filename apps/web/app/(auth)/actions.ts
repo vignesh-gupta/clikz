@@ -4,15 +4,15 @@ import { AuthError } from "next-auth";
 
 import { signIn } from "~/auth";
 import { getUserByEmail } from "~/data/user";
-import { sendVerificationEmail } from "~/lib/email";
 import { db } from "~/lib/db";
+import { sendVerificationEmail } from "~/lib/email";
 import { generatePasscode } from "~/lib/token";
 import { saltAndHash } from "~/lib/utils/password";
 import {
   SignInSchema,
+  SignUpSchema,
   signInSchema,
   signUpSchema,
-  SignUpSchema,
 } from "~/lib/zod-schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 

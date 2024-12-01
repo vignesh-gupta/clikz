@@ -1,9 +1,11 @@
-"use client"
+"use client";
+
+import { Search } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Separator } from "@clikz/ui/components/ui/separator";
-import { Search } from "lucide-react";
+
 import CreateLink from "./link/create-link";
 import DisplayFilter from "./link/filters/display";
 

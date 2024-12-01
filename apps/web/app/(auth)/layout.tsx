@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+
 import MaxWidthContainer from "~/components/max-width-container";
 
 const AuthLayout = ({ children }: PropsWithChildren) => {

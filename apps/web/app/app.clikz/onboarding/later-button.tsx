@@ -1,9 +1,10 @@
 "use client";
 
-import { buttonVariants } from "@clikz/ui/components/ui/button";
-import { cn } from "@clikz/ui/lib/utils";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+
+import { buttonVariants } from "@clikz/ui/components/ui/button";
+import { cn } from "@clikz/ui/lib/utils";
 
 const STEPS = [
   "/onboarding/welcome",
@@ -27,7 +28,7 @@ const LaterButton = () => {
         buttonVariants({
           variant: "link",
           className: "w-full text-center mt-4",
-        }),
+        })
       )}
     >
       I'll do it later

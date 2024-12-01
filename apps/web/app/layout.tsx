@@ -1,6 +1,7 @@
-import "@clikz/ui/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+
+import "@clikz/ui/globals.css";
 
 import Provider from "../components/provider";
 

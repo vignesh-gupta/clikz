@@ -1,7 +1,8 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
+import { NextRequest } from "next/server";
+
 import { User } from "@prisma/client";
 import { getToken } from "next-auth/jwt";
-import { NextRequest } from "next/server";
 
 const SHORT_DOMAIN = "clikz.sh";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { FaDiscord, FaGithub, FaGoogle } from "react-icons/fa";
+
 import SocialLoginButton from "./social-login-button";
 
 const SocialLogins = () => {

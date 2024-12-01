@@ -1,9 +1,10 @@
 "use client";
 
-import { Button } from "@clikz/ui/components/ui/button";
 import { BuiltInProviderType } from "next-auth/providers";
 import { LiteralUnion, signIn } from "next-auth/react";
 import { IconType } from "react-icons";
+
+import { Button } from "@clikz/ui/components/ui/button";
 
 type SocialLoginButtonProps = {
   provider: LiteralUnion<BuiltInProviderType>;
@@ -11,7 +12,11 @@ type SocialLoginButtonProps = {
   Icon: IconType;
 };
 
-const SocialLoginButton = ({ Icon, provider, label }: SocialLoginButtonProps) => {
+const SocialLoginButton = ({
+  Icon,
+  provider,
+  label,
+}: SocialLoginButtonProps) => {
   return (
     <Button
       variant="outline"

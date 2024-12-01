@@ -1,8 +1,10 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Dices, Loader2 } from "lucide-react";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Dices, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -20,14 +22,15 @@ import { Input } from "@clikz/ui/components/ui/input";
 
 import { createLink } from "~/lib/actions/link";
 import { generateRandomSlug } from "~/lib/utils/generate";
-import { linkSchema, LinkSchema } from "~/lib/zod-schemas";
+import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
+
 import LinkPreview from "./link-preview";
 
 const CreateLinkForm = () => {
   const [isLoading, startTransaction] = useTransition();
-  
-  const searchParams = useSearchParams()
-  const workspaceSlug = searchParams.get("workspaceId")
+
+  const searchParams = useSearchParams();
+  const workspaceSlug = searchParams.get("workspaceId");
 
   const router = useRouter();
 

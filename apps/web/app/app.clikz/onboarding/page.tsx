@@ -1,7 +1,10 @@
-import { Button } from "@clikz/ui/components/ui/button";
-import { ArrowRight, FlameIcon } from "lucide-react";
-import PageLayout from "./page-layout";
 import Link from "next/link";
+
+import { ArrowRight, FlameIcon } from "lucide-react";
+
+import { Button } from "@clikz/ui/components/ui/button";
+
+import PageLayout from "./page-layout";
 
 const OnboardingPage = () => {
   return (
@@ -14,7 +17,10 @@ const OnboardingPage = () => {
         </div>
       }
     >
-      <Link href="onboarding/workspace" className="flex items-center justify-center">
+      <Link
+        href="onboarding/workspace"
+        className="flex items-center justify-center"
+      >
         <Button className="flex-1 group">
           Get started
           <ArrowRight className="group-hover:translate-x-2 transition" />

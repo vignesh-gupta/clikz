@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { db } from "~/lib/db";
 import { sendVerificationEmail } from "~/lib/email";
 import { generatePasscode } from "~/lib/token";
@@ -12,7 +13,7 @@ export const POST = async (req: NextRequest) => {
       {
         status: 400,
         statusText: "Bad Request",
-      },
+      }
     );
   }
   const passcode = await generatePasscode(toEmail);
@@ -30,7 +31,7 @@ export const GET = async (req: NextRequest) => {
       {
         status: 400,
         statusText: "Bad Request",
-      },
+      }
     );
   }
 
@@ -43,7 +44,7 @@ export const GET = async (req: NextRequest) => {
       {
         status: 400,
         statusText: "Bad Request",
-      },
+      }
     );
   }
 
@@ -53,7 +54,7 @@ export const GET = async (req: NextRequest) => {
       {
         status: 400,
         statusText: "Bad Request",
-      },
+      }
     );
   }
 
@@ -73,7 +74,7 @@ export const GET = async (req: NextRequest) => {
       {
         status: 400,
         statusText: "Bad Request",
-      },
+      }
     );
   }
 

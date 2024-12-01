@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import { BarChart2, Link2, Settings, Zap } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
@@ -15,6 +16,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@clikz/ui/components/ui/sidebar";
+
 import { useWorkspaceSlug } from "~/hooks/use-workspace-slug";
 
 const navigation = [

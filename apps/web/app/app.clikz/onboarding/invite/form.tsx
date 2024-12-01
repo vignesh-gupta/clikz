@@ -1,8 +1,9 @@
 "use client";
 
-import { PlusIcon, XIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+
+import { PlusIcon, XIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@clikz/ui/components/ui/button";

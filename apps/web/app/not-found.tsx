@@ -1,5 +1,7 @@
-import { Button } from "@clikz/ui/components/ui/button";
 import Link from "next/link";
+
+import { Button } from "@clikz/ui/components/ui/button";
+
 import MaxWidthContainer from "~/components/max-width-container";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 

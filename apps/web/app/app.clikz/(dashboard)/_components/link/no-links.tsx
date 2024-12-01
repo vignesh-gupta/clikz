@@ -1,5 +1,6 @@
-import { Button } from "@clikz/ui/components/ui/button";
 import { Link2, PlusIcon } from "lucide-react";
+
+import { Button } from "@clikz/ui/components/ui/button";
 
 const NoLinks = () => {
   return (

@@ -1,9 +1,10 @@
+import React from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@clikz/ui/components/ui/dropdown-menu";
-import React from "react";
 
 type FilterDropdownProps = {
   trigger: React.ReactNode;

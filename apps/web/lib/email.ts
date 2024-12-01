@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+
 import { BASE_URL } from "./constants";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -19,7 +20,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
 export const sendWorkspaceInvite = async (
   email: string,
-  inviteCode: string,
+  inviteCode: string
 ) => {
   const workspaceLink = `${BASE_URL}/invite/${inviteCode}`;
 

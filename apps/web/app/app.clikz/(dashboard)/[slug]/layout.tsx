@@ -1,10 +1,13 @@
-import { SidebarInset, SidebarProvider } from "@clikz/ui/components/ui/sidebar";
-import { DashboardSidebar } from "../_components/sidebar";
-import MaxWidthContainer from "~/components/max-width-container";
-import { PropsWithChildren } from "react";
-import { PageWithSlugParams } from "./page";
-import { db } from "~/lib/db";
 import { notFound } from "next/navigation";
+import { PropsWithChildren } from "react";
+
+import { SidebarInset, SidebarProvider } from "@clikz/ui/components/ui/sidebar";
+
+import MaxWidthContainer from "~/components/max-width-container";
+import { db } from "~/lib/db";
+
+import { DashboardSidebar } from "../_components/sidebar";
+import { PageWithSlugParams } from "./page";
 
 type DashboardLayoutProps = PropsWithChildren<PageWithSlugParams>;
 

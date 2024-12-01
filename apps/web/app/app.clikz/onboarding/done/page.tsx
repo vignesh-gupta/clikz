@@ -1,6 +1,9 @@
-import { Button } from "@clikz/ui/components/ui/button";
-import { ArrowRight, SparklesIcon } from "lucide-react";
 import Link from "next/link";
+
+import { ArrowRight, SparklesIcon } from "lucide-react";
+
+import { Button } from "@clikz/ui/components/ui/button";
+
 import PageLayout from "../page-layout";
 
 const OnboardingCompletedPage = () => {
@@ -14,10 +17,7 @@ const OnboardingCompletedPage = () => {
         </div>
       }
     >
-      <Link
-        href="/dashboard"
-        className="flex items-center justify-center"
-      >
+      <Link href="/dashboard" className="flex items-center justify-center">
         <Button className="flex-1 group">
           Go to workspace
           <ArrowRight className="group-hover:translate-x-2 transition" />

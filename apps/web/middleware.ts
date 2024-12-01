@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
+
 import { APP_NAMES, DEFAULT_REDIRECTS } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
 import { LinkMiddleware } from "./lib/middleware/link";
@@ -26,7 +27,7 @@ export default async function middleware(req: NextRequest) {
     if (fullPath === "/") return NextResponse.next();
     if (DEFAULT_REDIRECTS.has(key))
       return NextResponse.redirect(
-        new URL(DEFAULT_REDIRECTS.get(key)!, nextUrl),
+        new URL(DEFAULT_REDIRECTS.get(key)!, nextUrl)
       );
   }
 

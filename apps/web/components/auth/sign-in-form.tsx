@@ -1,6 +1,11 @@
 "use client";
 
+import Link from "next/link";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
 import { Button } from "@clikz/ui/components/ui/button";
 import {
   Card,
@@ -19,9 +24,7 @@ import {
   FormMessage,
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+
 import { login } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
 import { SignInSchema, signInSchema } from "~/lib/zod-schemas";

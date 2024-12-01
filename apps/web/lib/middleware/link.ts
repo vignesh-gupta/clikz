@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { parse } from "./utils";
+
 import { db } from "../db";
+import { parse } from "./utils";
 
 // eslint-disable-next-line no-unused-vars
 export const LinkMiddleware = async (req: NextRequest) => {
-  const { key, domain, fullPath } = parse(req);  
+  const { key, domain, fullPath } = parse(req);
 
   if (!key && !domain)
     return NextResponse.redirect(`https://${domain}${fullPath}`);
@@ -16,8 +17,7 @@ export const LinkMiddleware = async (req: NextRequest) => {
     },
   });
 
-  if(!link) return NextResponse.next();
-  
+  if (!link) return NextResponse.next();
 
   return NextResponse.redirect(link.url);
 };

@@ -1,6 +1,13 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
 import { Button } from "@clikz/ui/components/ui/button";
 import {
   Card,
@@ -19,11 +26,7 @@ import {
   FormMessage,
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+
 import { register } from "~/app/(auth)/actions";
 import SocialLogins from "~/components/auth/social-logins";
 import { SignUpSchema, signUpSchema } from "~/lib/zod-schemas";

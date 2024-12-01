@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import ogs from "open-graph-scraper";
 
 export const GET = async function GET(req: NextRequest) {

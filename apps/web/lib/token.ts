@@ -16,5 +16,5 @@ export const generatePasscode = async (email: string) => {
       otp: passcode,
       expiresAt: new Date(Date.now() + 1000 * 60 * 5),
     },
-  })
+  });
 };

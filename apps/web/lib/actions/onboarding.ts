@@ -1,10 +1,11 @@
 "use server";
 
 import { auth } from "~/auth";
-import { db } from "../db";
-import { WorkspaceSchema } from "../zod-schemas";
 import { generateInviteCode } from "~/lib/utils/generate";
+
+import { db } from "../db";
 import { sendWorkspaceInvite } from "../email";
+import { WorkspaceSchema } from "../zod-schemas";
 
 export const createWorkspace = async (data: WorkspaceSchema) => {
   const session = await auth();
@@ -64,12 +65,12 @@ export const inviteUser = async (emails: string[], workspaceSlug: string) => {
             // Expires in 15 days
             expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
           },
-        }),
-      ),
+        })
+      )
     );
 
     await Promise.all(
-      invites.map((invite) => sendWorkspaceInvite(invite.email, invite.token)),
+      invites.map((invite) => sendWorkspaceInvite(invite.email, invite.token))
     );
     return { success: "Invites sent successfully" };
   } catch (error) {

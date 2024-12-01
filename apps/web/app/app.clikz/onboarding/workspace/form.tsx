@@ -1,10 +1,12 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useDebounce } from "use-debounce";
 
 import {
   Alert,
@@ -23,10 +25,9 @@ import {
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
 
-import { useDebounce } from "use-debounce";
 import { createWorkspace } from "~/lib/actions/onboarding";
 import { textToSlug } from "~/lib/utils";
-import { workspaceSchema, WorkspaceSchema } from "~/lib/zod-schemas";
+import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 
 const WorkspaceForm = () => {
   const [error, setError] = useState<string | null>(null);
@@ -110,7 +111,11 @@ const WorkspaceForm = () => {
                 <FormItem>
                   <FormLabel>Workspace Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="My Awesome Workspace" className="focus-visible:ring-0" {...field} />
+                    <Input
+                      placeholder="My Awesome Workspace"
+                      className="focus-visible:ring-0"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage className="text-xs ml-2" />
                 </FormItem>

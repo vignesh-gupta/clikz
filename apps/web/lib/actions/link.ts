@@ -2,14 +2,17 @@
 "use server";
 
 import { db } from "~/lib/db";
-import { LinkSchema } from "~/lib/zod-schemas";
-import { checkUser } from "./utils";
 import { generateRandomSlug } from "~/lib/utils/generate";
+import { LinkSchema } from "~/lib/zod-schemas";
+
 import { BASE_URL } from "../constants";
+import { checkUser } from "./utils";
+
+/* eslint-disable turbo/no-undeclared-env-vars */
 
 export const createLink = async (
   data: LinkSchema,
-  workspaceId: string | null,
+  workspaceId: string | null
 ) => {
   const user = await checkUser();
 
@@ -27,8 +30,6 @@ export const createLink = async (
   if (!workspace) return { error: "Workspace not found" };
 
   const slug = data.slug === "" ? generateRandomSlug() : data.slug;
-
-
 
   await db.link.create({
     data: {

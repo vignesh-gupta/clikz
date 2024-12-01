@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+
 import VerifyEmail from "~/components/auth/verify-email";
 
 type VerifyPageProps = {

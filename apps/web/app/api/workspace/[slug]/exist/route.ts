@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { db } from "~/lib/db";
 
 export const GET = async (
   req: NextRequest,
-  { params }: { params: Promise<{ slug: string }> },
+  { params }: { params: Promise<{ slug: string }> }
 ) => {
   const { slug } = await params;
 

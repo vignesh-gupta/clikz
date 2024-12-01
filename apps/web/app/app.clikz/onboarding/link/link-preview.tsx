@@ -1,8 +1,10 @@
 "use client";
 
-import { ImageIcon, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
+
+import { ImageIcon, LoaderCircle } from "lucide-react";
 import { useDebounce } from "use-debounce";
+
 import { getUrlWithoutUTMParams } from "~/lib/utils/url";
 
 type FetchMetadata = {

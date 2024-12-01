@@ -1,5 +1,11 @@
 "use client";
 
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import { BadgeCheck, CircleX, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
+
 import { Button, buttonVariants } from "@clikz/ui/components/ui/button";
 import {
   Card,
@@ -15,10 +21,6 @@ import {
   InputOTPSlot,
 } from "@clikz/ui/components/ui/input-otp";
 import { cn } from "@clikz/ui/lib/utils";
-import { BadgeCheck, CircleX, RefreshCw } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 type VerifyEmailProps = {
   to: string;
@@ -29,7 +31,7 @@ const RETRY_INTERVAL = 0;
 
 export default function VerifyEmail({ code, to }: VerifyEmailProps) {
   const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent">(
-    "sent",
+    "sent"
   );
   const [countdown, setCountdown] = useState(RETRY_INTERVAL);
   const [otp, setOtp] = useState(code ?? "");
