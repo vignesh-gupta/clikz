@@ -1,5 +1,7 @@
 {
-  "cSpell.words": [
-    "clikz"
-  ]
+  "cSpell.words": ["clikz", "trivago"],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }
 }
