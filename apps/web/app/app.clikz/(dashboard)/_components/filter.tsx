@@ -1,8 +1,11 @@
+"use client"
+
 import { Button } from "@clikz/ui/components/ui/button";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Separator } from "@clikz/ui/components/ui/separator";
 import { Search } from "lucide-react";
 import CreateLink from "./link/create-link";
+import DisplayFilter from "./link/filters/display";
 
 const PageFilters = () => {
   return (
@@ -11,9 +14,7 @@ const PageFilters = () => {
         <Button variant="outline" size="sm">
           Filter
         </Button>
-        <Button variant="outline" size="sm">
-          Display
-        </Button>
+        <DisplayFilter />
         <Separator orientation="vertical" className="h-4" />
       </div>
 

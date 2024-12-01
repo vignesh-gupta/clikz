@@ -5,7 +5,7 @@
   "trailingComma": "es5",
   "importOrder": [
     "^(react|next?/?([a-zA-Z/]*))$",
-    "^<THIRD_PARTY_MODULES>",
+    "<THIRD_PARTY_MODULES>",
     "^@clikz/(.*)$",
     "^~/(.*)$",
     "^[./]"

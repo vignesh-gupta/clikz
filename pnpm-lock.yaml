@@ -61,8 +61,8 @@ importers:
         specifier: 'catalog:'
         version: 3.3.3
       turbo:
-        specifier: 2.1.1
-        version: 2.1.1
+        specifier: 2.3.3
+        version: 2.3.3
 
   apps/web:
     dependencies:
@@ -132,6 +132,9 @@ importers:
       use-debounce:
         specifier: ^10.0.4
         version: 10.0.4(react@18.3.1)
+      ws:
+        specifier: ^8.18.0
+        version: 8.18.0
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -160,6 +163,9 @@ importers:
       '@types/react-dom':
         specifier: catalog:react18
         version: 18.3.1
+      '@types/ws':
+        specifier: ^8.5.13
+        version: 8.5.13
       autoprefixer:
         specifier: ^10
         version: 10.4.19(postcss@8.4.38)
@@ -1150,6 +1156,9 @@ packages:
 
   '@types/semver@7.5.6':
     resolution: {integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==}
+
+  '@types/ws@8.5.13':
+    resolution: {integrity: sha512-osM/gWBTPKgHV8XkTunnegTRIsvF6owmf5w+JtAfOw472dptdm0dlGv4xCt6GwQRcC2XVOvvRE/0bAoQcL2QkA==}
 
   '@typescript-eslint/eslint-plugin@7.13.1':
     resolution: {integrity: sha512-kZqi+WZQaZfPKnsflLJQCz6Ze9FFSMfXrrIOcyargekQxG37ES7DJNpJUE9Q/X5n3yTIP/WPutVNzgknQ7biLg==}
@@ -3370,38 +3379,38 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
 
-  turbo-darwin-64@2.1.1:
-    resolution: {integrity: sha512-aYNuJpZlCoi0Htd79fl/2DywpewGKijdXeOfg9KzNuPVKzSMYlAXuAlNGh0MKjiOcyqxQGL7Mq9LFhwA0VpDpQ==}
+  turbo-darwin-64@2.3.3:
+    resolution: {integrity: sha512-bxX82xe6du/3rPmm4aCC5RdEilIN99VUld4HkFQuw+mvFg6darNBuQxyWSHZTtc25XgYjQrjsV05888w1grpaA==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.1.1:
-    resolution: {integrity: sha512-tifJKD8yHY48rHXPMcM8o1jI/Jk2KCaXiNjTKvvy9Zsim61BZksNVLelIbrRoCGwAN6PUBZO2lGU5iL/TQJ5Pw==}
+  turbo-darwin-arm64@2.3.3:
+    resolution: {integrity: sha512-DYbQwa3NsAuWkCUYVzfOUBbSUBVQzH5HWUFy2Kgi3fGjIWVZOFk86ss+xsWu//rlEAfYwEmopigsPYSmW4X15A==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.1.1:
-    resolution: {integrity: sha512-Js6d/bSQe9DuV9c7ITXYpsU/ADzFHABdz1UIHa7Oqjj9VOEbFeA9WpAn0c+mdJrVD+IXJFbbDZUjN7VYssmtcg==}
+  turbo-linux-64@2.3.3:
+    resolution: {integrity: sha512-eHj9OIB0dFaP6BxB88jSuaCLsOQSYWBgmhy2ErCu6D2GG6xW3b6e2UWHl/1Ho9FsTg4uVgo4DB9wGsKa5erjUA==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.1.1:
-    resolution: {integrity: sha512-LidzTCq0yvQ+N8w8Qub9FmhQ/mmEIeoqFi7DSupekEV2EjvE9jw/zYc9Pk67X+g7dHVfgOnvVzmrjChdxpFePw==}
+  turbo-linux-arm64@2.3.3:
+    resolution: {integrity: sha512-NmDE/NjZoDj1UWBhMtOPmqFLEBKhzGS61KObfrDEbXvU3lekwHeoPvAMfcovzswzch+kN2DrtbNIlz+/rp8OCg==}
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.1.1:
-    resolution: {integrity: sha512-GKc9ZywKwy4xLDhwXd6H07yzl0TB52HjXMrFLyHGhCVnf/w0oq4sLJv2sjbvuarPjsyx4xnCBJ3m3oyL2XmFtA==}
+  turbo-windows-64@2.3.3:
+    resolution: {integrity: sha512-O2+BS4QqjK3dOERscXqv7N2GXNcqHr9hXumkMxDj/oGx9oCatIwnnwx34UmzodloSnJpgSqjl8iRWiY65SmYoQ==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.1.1:
-    resolution: {integrity: sha512-oFKkMj11KKUv3xSK9/fhAEQTxLUp1Ol1EOktwc32+SFtEU0uls7kosAz0b+qe8k3pJGEMFdDPdqoEjyJidbxtQ==}
+  turbo-windows-arm64@2.3.3:
+    resolution: {integrity: sha512-dW4ZK1r6XLPNYLIKjC4o87HxYidtRRcBeo/hZ9Wng2XM/MqqYkAyzJXJGgRMsc0MMEN9z4+ZIfnSNBrA0b08ag==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.1.1:
-    resolution: {integrity: sha512-u9gUDkmR9dFS8b5kAYqIETK4OnzsS4l2ragJ0+soSMHh6VEeNHjTfSjk1tKxCqLyziCrPogadxP680J+v6yGHw==}
+  turbo@2.3.3:
+    resolution: {integrity: sha512-DUHWQAcC8BTiUZDRzAYGvpSpGLiaOQPfYXlCieQbwUvmml/LRGIe3raKdrOPOoiX0DYlzxs2nH6BoWJoZrj8hA==}
     hasBin: true
 
   type-check@0.4.0:
@@ -3554,6 +3563,18 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  ws@8.18.0:
+    resolution: {integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
@@ -4427,6 +4448,10 @@ snapshots:
       csstype: 3.1.3
 
   '@types/semver@7.5.6': {}
+
+  '@types/ws@8.5.13':
+    dependencies:
+      '@types/node': 20.11.6
 
   '@typescript-eslint/eslint-plugin@7.13.1(@typescript-eslint/parser@7.13.1(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3)':
     dependencies:
@@ -6895,32 +6920,32 @@ snapshots:
       tslib: 1.14.1
       typescript: 5.6.3
 
-  turbo-darwin-64@2.1.1:
+  turbo-darwin-64@2.3.3:
     optional: true
 
-  turbo-darwin-arm64@2.1.1:
+  turbo-darwin-arm64@2.3.3:
     optional: true
 
-  turbo-linux-64@2.1.1:
+  turbo-linux-64@2.3.3:
     optional: true
 
-  turbo-linux-arm64@2.1.1:
+  turbo-linux-arm64@2.3.3:
     optional: true
 
-  turbo-windows-64@2.1.1:
+  turbo-windows-64@2.3.3:
     optional: true
 
-  turbo-windows-arm64@2.1.1:
+  turbo-windows-arm64@2.3.3:
     optional: true
 
-  turbo@2.1.1:
+  turbo@2.3.3:
     optionalDependencies:
-      turbo-darwin-64: 2.1.1
-      turbo-darwin-arm64: 2.1.1
-      turbo-linux-64: 2.1.1
-      turbo-linux-arm64: 2.1.1
-      turbo-windows-64: 2.1.1
-      turbo-windows-arm64: 2.1.1
+      turbo-darwin-64: 2.3.3
+      turbo-darwin-arm64: 2.3.3
+      turbo-linux-64: 2.3.3
+      turbo-linux-arm64: 2.3.3
+      turbo-windows-64: 2.3.3
+      turbo-windows-arm64: 2.3.3
 
   type-check@0.4.0:
     dependencies:
@@ -7118,6 +7143,8 @@ snapshots:
       strip-ansi: 7.1.0
 
   wrappy@1.0.2: {}
+
+  ws@8.18.0: {}
 
   yallist@3.1.1: {}
 

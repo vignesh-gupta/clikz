@@ -48,20 +48,20 @@ export const AppMiddleware = async (req: NextRequest) => {
     );
   }
 
-  if (!fullPath.includes("/onboarding")) {
-    const workspace = await db.workspace.findFirst({
-      where: {
-        userId: user.id,
-      },
-    });
+  if (fullPath.includes("/onboarding")) return NextResponse.next();
 
-    if (!workspace) {
-      return NextResponse.redirect(new URL("/onboarding", nextUrl));
-    }
+  const workspace = await db.workspace.findFirst({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  if (!workspace) {
+    return NextResponse.redirect(new URL("/onboarding", nextUrl));
   }
 
   if (fullPath === "/") {
-    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    return NextResponse.redirect(new URL(`/${workspace.slug}`, nextUrl));
   }
 
   return NextResponse.rewrite(appRedirect(nextUrl.pathname, nextUrl));

@@ -29,8 +29,6 @@ export const createLink = async (
   const slug = data.slug === "" ? generateRandomSlug() : data.slug;
 
 
-  console.log("slug", new URL(`/${slug}`, BASE_URL).toString());
-  
 
   await db.link.create({
     data: {

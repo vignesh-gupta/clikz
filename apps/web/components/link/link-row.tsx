@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import {
-  CornerDownRight,
+  ArrowRightIcon,
   GlobeIcon,
   MoreHorizontal,
   MousePointerClickIcon,
@@ -17,16 +17,9 @@ import {
   DropdownMenuTrigger,
 } from "@clikz/ui/components/ui/dropdown-menu";
 
-export type LinkProps = {
-  shortUrl: string;
-  domain: string;
-  slug: string;
-  longUrl: string;
-  totalClicks: number;
-  faviconUrl?: string;
-};
+import { LinkProps } from "./link-card";
 
-export function LinkCard({
+export function LinkRow({
   shortUrl,
   longUrl,
   totalClicks,
@@ -35,9 +28,9 @@ export function LinkCard({
   domain,
 }: LinkProps) {
   return (
-    <Card className="w-full max-w-md transition hover:-translate-y-1 hover:shadow-lg">
-      <CardContent className="pt-6">
-        <div className="flex  items-center space-x-4">
+    <Card className="w-full transition hover:-translate-y-1 hover:shadow-lg flex justify-between flex-col sm:flex-row">
+      <CardContent className="p-4">
+        <div className="flex items-center space-x-4">
           <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
             {faviconUrl ? (
               <Image
@@ -52,12 +45,12 @@ export function LinkCard({
               </div>
             )}
           </div>
-          <div className="flex-grow min-w-0">
+          <div className="flex-1 flex items-center gap-2">
             <Link href={shortUrl} target="_blank">
               <h3 className="truncate">{`${domain}/${slug}`}</h3>
             </Link>
             <div className="flex items-center">
-              <CornerDownRight className="size-3 mr-1" />
+              <ArrowRightIcon className="size-4 mr-1" />
               <Link href={longUrl} target="_blank">
                 <p className="text-sm text-muted-foreground truncate hover:underline underline-offset-2">
                   {longUrl}
@@ -67,7 +60,7 @@ export function LinkCard({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between items-center">
+      <CardFooter className="flex justify-between items-center sm:p-4">
         <div className="text-sm text-muted-foreground flex items-center border p-1 rounded-lg">
           <MousePointerClickIcon className="size-4 mr-1" />
           {totalClicks} {totalClicks === 1 ? "click" : "clicks"}
