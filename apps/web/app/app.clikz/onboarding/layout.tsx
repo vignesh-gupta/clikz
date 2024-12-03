@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from "react";
 
-import MaxWidthContainer from "~/app/components/max-width-container";
+import MaxWidthContainer from "~/components/max-width-container";
 
 const OnboardingLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
