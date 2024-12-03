@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import { BASE_URL } from "./constants";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
-export const resend = new Resend(process.env.AUTH_RESEND_KEY);
+export const resend = new Resend(process.env.RESEND_API_KEY);
 
 const MAIL_SENDER = "clikz <clikz@vigneshgupta.tech>";
 
