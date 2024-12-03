@@ -92,7 +92,7 @@ const WorkspaceForm = () => {
       if (res.error) {
         setError(res.error);
       } else if (res.success) {
-        router.push("/onboarding/invite?workspaceId=" + values.slug);
+        router.push(`/onboarding/invite?workspaceId=${values.slug}`);
       }
 
       setSlugAvailable(false);

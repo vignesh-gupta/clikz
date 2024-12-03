@@ -47,7 +47,7 @@ export const AppMiddleware = async (req: NextRequest) => {
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
     return NextResponse.redirect(
-      nextUrl.origin + "/sign-in?callbackUrl=" + encodedCallbackUrl
+      `${nextUrl.origin}/sign-in?callbackUrl=${encodedCallbackUrl}`
     );
   }
 

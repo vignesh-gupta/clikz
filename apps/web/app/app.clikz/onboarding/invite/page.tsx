@@ -1,4 +1,6 @@
-import { UsersIcon } from "lucide-react";
+import { Suspense } from "react";
+
+import { Loader2, UsersIcon } from "lucide-react";
 
 import LaterButton from "../later-button";
 import PageLayout from "../page-layout";
@@ -15,8 +17,10 @@ const InvitePage = () => {
         </div>
       }
     >
-      <InviteTeamForm />
-      <LaterButton />
+      <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
+        <InviteTeamForm />
+        <LaterButton />
+      </Suspense>
     </PageLayout>
   );
 };

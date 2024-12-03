@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
+    "postinstall": "prisma generate",
     "db:push": "prisma generate && prisma db push",
     "db:reset": "prisma migrate reset --force && prisma generate && prisma db push",
     "db:studio": "prisma studio",

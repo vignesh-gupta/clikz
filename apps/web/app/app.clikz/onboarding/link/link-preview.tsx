@@ -28,7 +28,7 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
 
     const controller = new AbortController();
     setLoading(true);
-    fetch("/api/metadata?url=" + encodeURIComponent(debouncedUrl), {
+    fetch(`/api/metadata?url=${encodeURIComponent(debouncedUrl)}`, {
       signal: controller.signal,
     })
       .then(async (res) => {

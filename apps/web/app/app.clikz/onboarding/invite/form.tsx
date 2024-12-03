@@ -54,7 +54,7 @@ export function InviteTeamForm() {
           // Reset form
           setEmails([""]);
           toast.success(res.success);
-          router.push("/onboarding/link?workspaceId=" + workspaceId);
+          router.push(`/onboarding/link?workspaceId=${workspaceId}`);
         }
       })
       .catch(() => {
