@@ -1,3 +1,5 @@
+import { withAxiom } from "next-axiom";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@clikz/ui"],
@@ -23,4 +25,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withAxiom(nextConfig);

@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
+import { AxiomRequest, withAxiom } from "next-axiom";
 import ogs from "open-graph-scraper";
 
-export const GET = async function GET(req: NextRequest) {
+export const GET = withAxiom(async (req: AxiomRequest) => {
   try {
     const url = decodeURIComponent(req.nextUrl.searchParams.get("url") || "");
 
@@ -20,6 +21,7 @@ export const GET = async function GET(req: NextRequest) {
       image,
     });
   } catch (error) {
+    req.log.error("Failed to fetch metadata", { error });
     return NextResponse.json(null, { status: 500 });
   }
-};
+});
