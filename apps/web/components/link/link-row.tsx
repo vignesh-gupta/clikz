@@ -1,9 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import {
   ArrowRightIcon,
-  GlobeIcon,
   MoreHorizontal,
   MousePointerClickIcon,
 } from "lucide-react";
@@ -18,12 +16,12 @@ import {
 } from "@clikz/ui/components/ui/dropdown-menu";
 
 import { LinkProps } from "./link-card";
+import { LinkFavIcon } from "./link-fav-icon";
 
 export function LinkRow({
   shortUrl,
   longUrl,
   totalClicks,
-  faviconUrl,
   slug,
   domain,
 }: LinkProps) {
@@ -32,18 +30,11 @@ export function LinkRow({
       <CardContent className="p-4">
         <div className="flex items-center space-x-4">
           <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
-            {faviconUrl ? (
-              <Image
-                src={faviconUrl}
-                alt={`Favicon for ${shortUrl}`}
-                fill
-                className="object-cover"
-              />
-            ) : (
-              <div className="bg-gray-200 w-full h-full flex items-center justify-center">
-                <GlobeIcon className="text-gray-500 size-6" />
-              </div>
-            )}
+            <LinkFavIcon
+              host={new URL(longUrl).host}
+              imageProps={{ loading: "lazy" }}
+              className="object-cover"
+            />
           </div>
           <div className="flex-1 flex items-center gap-2">
             <Link href={shortUrl} target="_blank">

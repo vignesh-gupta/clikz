@@ -1,9 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import {
   CornerDownRight,
-  GlobeIcon,
   MoreHorizontal,
   MousePointerClickIcon,
 } from "lucide-react";
@@ -17,40 +15,35 @@ import {
   DropdownMenuTrigger,
 } from "@clikz/ui/components/ui/dropdown-menu";
 
+import { LinkFavIcon } from "./link-fav-icon";
+
 export type LinkProps = {
   shortUrl: string;
   domain: string;
   slug: string;
   longUrl: string;
   totalClicks: number;
-  faviconUrl?: string;
 };
 
 export function LinkCard({
   shortUrl,
   longUrl,
   totalClicks,
-  faviconUrl,
   slug,
   domain,
 }: LinkProps) {
+  const host = new URL(longUrl).host;
+
   return (
     <Card className="w-full max-w-md transition hover:-translate-y-1 hover:shadow-lg">
       <CardContent className="pt-6">
         <div className="flex  items-center space-x-4">
           <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
-            {faviconUrl ? (
-              <Image
-                src={faviconUrl}
-                alt={`Favicon for ${shortUrl}`}
-                fill
-                className="object-cover"
-              />
-            ) : (
-              <div className="bg-gray-200 w-full h-full flex items-center justify-center">
-                <GlobeIcon className="text-gray-500 size-6" />
-              </div>
-            )}
+            <LinkFavIcon
+              host={host}
+              imageProps={{ loading: "lazy" }}
+              className="object-cover"
+            />
           </div>
           <div className="flex-grow min-w-0">
             <Link href={shortUrl} target="_blank">
