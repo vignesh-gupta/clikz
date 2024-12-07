@@ -60,15 +60,10 @@ export const AppMiddleware = async (req: NextRequest) => {
     },
   });
 
-  console.log("workspace", workspace);
+  if (!workspace) return NextResponse.redirect(new URL("/onboarding", nextUrl));
 
-  if (!workspace) {
-    return NextResponse.redirect(new URL("/onboarding", nextUrl));
-  }
-
-  if (fullPath === "/") {
+  if (fullPath === "/")
     return NextResponse.redirect(new URL(`/${workspace.slug}`, nextUrl));
-  }
 
   return NextResponse.rewrite(appRedirect(nextUrl.pathname, nextUrl));
 };

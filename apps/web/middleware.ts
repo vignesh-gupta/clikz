@@ -5,6 +5,7 @@ import { parse } from "~/lib/middleware/utils";
 
 import { APP_NAMES } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
+import AxiomMiddleware from "./lib/middleware/axiom";
 import { LinkMiddleware } from "./lib/middleware/link";
 
 export const config = {
@@ -24,7 +25,7 @@ export default async function middleware(
   req: NextRequest,
   event: NextFetchEvent
 ) {
-  // AxiomMiddleware(req, event);
+  AxiomMiddleware(req, event);
 
   const { domain } = parse(req);
 

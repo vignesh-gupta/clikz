@@ -17,8 +17,6 @@ export function LinkFavIcon({
   className?: string;
   imageProps?: Partial<ImageProps>;
 }) {
-  console.log("host", host);
-
   return host ? (
     <BlurImage
       src={`${GOOGLE_FAVICON_URL_V2}${host}`}

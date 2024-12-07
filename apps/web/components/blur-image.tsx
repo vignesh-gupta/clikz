@@ -12,8 +12,6 @@ export function BlurImage(props: ImageProps) {
     setLoading(false);
     const target = e.target as HTMLImageElement;
     if (target.naturalWidth <= 16 && target.naturalHeight <= 16) {
-      console.log("Image is too small, using default avatar");
-
       setSrc(`https://avatar.vercel.sh/${encodeURIComponent(props.alt)}`);
     }
   };
@@ -25,11 +23,9 @@ export function BlurImage(props: ImageProps) {
       alt={props.alt}
       className={cn(loading ? "blur-[2px]" : "blur-0", props.className)}
       onLoad={handleLoad}
-      onError={(e: any) => {
-        console.log("Error loading image", e);
-
-        setSrc(`https://avatar.vercel.sh/${encodeURIComponent(props.alt)}`); // if the image fails to load, use the default avatar
-      }}
+      onError={() =>
+        setSrc(`https://avatar.vercel.sh/${encodeURIComponent(props.alt)}`)
+      }
       unoptimized
     />
   );
