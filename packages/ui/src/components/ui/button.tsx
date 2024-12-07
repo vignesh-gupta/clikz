@@ -41,6 +41,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   icon?: React.ReactNode;
+  iconWrapperClassName?: string;
   shortcut?: string;
   loading?: boolean;
   shortcutVariant?:
@@ -64,6 +65,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       shortcut,
       loading,
       shortcutVariant,
+      iconWrapperClassName,
       ...props
     },
     ref,
@@ -93,7 +95,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         <>
-          <span className="*:size-4 mr-2">
+          <span className={cn("*:size-4 mr-2", iconWrapperClassName)}>
             {loading ? <Loader2 /> : (icon ?? null)}
           </span>
           {props.children}

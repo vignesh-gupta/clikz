@@ -1,11 +1,10 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import { NextFetchEvent, NextRequest } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
-import { APP_NAMES, DEFAULT_REDIRECTS } from "./lib/constants";
+import { APP_NAMES } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
-import AxiomMiddleware from "./lib/middleware/axiom";
 import { LinkMiddleware } from "./lib/middleware/link";
 
 export const config = {
@@ -25,17 +24,9 @@ export default async function middleware(
   req: NextRequest,
   event: NextFetchEvent
 ) {
-  AxiomMiddleware(req, event);
+  // AxiomMiddleware(req, event);
 
-  const { domain, fullPath, key, nextUrl } = parse(req);
-
-  if (domain === process.env.NEXT_PUBLIC_APP_DOMAIN) {
-    if (fullPath === "/") return NextResponse.next();
-    if (DEFAULT_REDIRECTS.has(key))
-      return NextResponse.redirect(
-        new URL(DEFAULT_REDIRECTS.get(key)!, nextUrl)
-      );
-  }
+  const { domain } = parse(req);
 
   if (APP_NAMES.has(domain)) {
     return AppMiddleware(req);

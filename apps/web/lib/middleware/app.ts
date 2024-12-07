@@ -51,13 +51,16 @@ export const AppMiddleware = async (req: NextRequest) => {
     );
   }
 
-  if (fullPath.includes("/onboarding")) return NextResponse.next();
+  if (fullPath.includes("/onboarding"))
+    return NextResponse.rewrite(appRedirect(fullPath, nextUrl));
 
   const workspace = await db.workspace.findFirst({
     where: {
       userId: user.id,
     },
   });
+
+  console.log("workspace", workspace);
 
   if (!workspace) {
     return NextResponse.redirect(new URL("/onboarding", nextUrl));
