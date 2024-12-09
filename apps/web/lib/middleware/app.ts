@@ -18,18 +18,18 @@ export const appRedirect = (path: string, url: NextURL) =>
 export const AppMiddleware = async (req: NextRequest) => {
   const { nextUrl, fullPath } = parse(req);
 
-  const user = await getUserViaToken(req);
-
-  const isLoggedIn = !!user;
-  const isApiAuthRoute = nextUrl.pathname.startsWith(AUTH_API_ROUTE);
-  const isPublicRoute = PUBLIC_ROUTE.includes(nextUrl.pathname);
-  const isAuthRoute = AUTH_ROUTES.includes(nextUrl.pathname);
-
-  if (isApiAuthRoute) {
+  if (PUBLIC_ROUTE.includes(nextUrl.pathname)) {
     return NextResponse.next();
   }
 
-  if (isAuthRoute) {
+  const user = await getUserViaToken(req);
+  const isLoggedIn = !!(user && user.id);
+
+  if (nextUrl.pathname.startsWith(AUTH_API_ROUTE)) {
+    return NextResponse.next();
+  }
+
+  if (AUTH_ROUTES.includes(nextUrl.pathname)) {
     if (!isLoggedIn) return NextResponse.next();
 
     const callbackUrl = decodeURIComponent(
@@ -38,7 +38,7 @@ export const AppMiddleware = async (req: NextRequest) => {
     return NextResponse.redirect(new URL(callbackUrl, nextUrl));
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
+  if (!isLoggedIn) {
     let callbackUrl = nextUrl.pathname;
     if (nextUrl.search) {
       callbackUrl += nextUrl.search;

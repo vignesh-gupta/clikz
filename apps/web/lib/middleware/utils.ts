@@ -9,7 +9,7 @@ const SHORT_DOMAIN = "clikz.sh";
 export const parse = (req: NextRequest) => {
   let domain = req.headers.get("host") as string;
   domain = domain.replace(/^www./, "").toLowerCase();
-  if (domain === "clikz.localhost:3000" || domain.endsWith(".vercel.app")) {
+  if (domain === "clikz.localhost:8888" || domain.endsWith(".vercel.app")) {
     domain = SHORT_DOMAIN;
   }
 

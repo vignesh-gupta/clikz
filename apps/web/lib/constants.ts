@@ -3,9 +3,10 @@ export const APP_NAMES = new Set([
   `app.${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
   `preview.${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
   "localhost:3000",
+  "localhost",
 ]);
 
-export const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+export const BASE_URL = process.env.NEXT_PUBLIC_APP_URL!;
 
 export const DEFAULT_REDIRECTS = new Map([
   ["home", BASE_URL],

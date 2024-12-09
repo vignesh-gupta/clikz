@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import { db } from "../db";
@@ -17,7 +18,8 @@ export const LinkMiddleware = async (req: NextRequest) => {
     },
   });
 
-  if (!link) return NextResponse.next();
-
-  return NextResponse.redirect(link.url);
+  if (!link) return notFound();
+  return NextResponse.redirect(link.url, {
+    status: 302,
+  });
 };

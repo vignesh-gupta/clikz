@@ -95,7 +95,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         <>
-          <span className={cn("*:size-4 mr-2", iconWrapperClassName)}>
+          <span className={cn("*:size-4 *:mr-2", iconWrapperClassName)}>
             {loading ? <Loader2 /> : (icon ?? null)}
           </span>
           {props.children}
