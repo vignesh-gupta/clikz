@@ -1,7 +1,7 @@
 import { Button } from "@clikz/ui/components/ui/button";
 import { DropdownMenuItem } from "@clikz/ui/components/ui/dropdown-menu";
 
-import { useView } from "~/hooks/use-view";
+import { useView } from "~/lib/hooks/use-view";
 
 import FilterDropdown from "./filter-dropdown";
 

@@ -2,7 +2,7 @@
 
 import { Link } from "@prisma/client";
 
-import { useView } from "~/hooks/use-view";
+import { useView } from "~/lib/hooks/use-view";
 
 import { LinkCard } from "./link-card";
 import { LinkRow } from "./link-row";
@@ -16,7 +16,7 @@ const LinkList = ({ links }: LinksProps) => {
 
   if (view === "grid") {
     return (
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
+      <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
         {links.map(({ id, domain, shortLink, key, url }) => (
           <LinkCard
             key={id}

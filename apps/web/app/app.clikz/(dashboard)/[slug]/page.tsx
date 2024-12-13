@@ -1,4 +1,4 @@
-import LinkList from "~/components/link/links-list";
+import LinkList from "~/features/link/components/links-list";
 import { db } from "~/lib/db";
 
 import PageFilters from "../_components/filter";

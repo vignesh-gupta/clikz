@@ -6,7 +6,8 @@ import { Button } from "@clikz/ui/components/ui/button";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Separator } from "@clikz/ui/components/ui/separator";
 
-import CreateLink from "./link/create-link";
+import CreateLinkButton from "~/features/link/components/create-link-button";
+
 import DisplayFilter from "./link/filters/display";
 
 const PageFilters = () => {
@@ -28,7 +29,7 @@ const PageFilters = () => {
           />
           <Search className="size-4 absolute top-3 left-2 text-gray-600" />
         </div>
-        <CreateLink />
+        <CreateLinkButton />
       </div>
     </div>
   );

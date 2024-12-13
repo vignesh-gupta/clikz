@@ -6,7 +6,7 @@ import { cn } from "@clikz/ui/lib/utils";
 
 import { GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
 
-import { BlurImage } from "../blur-image";
+import { BlurImage } from "../../../components/blur-image";
 
 export function LinkFavIcon({
   host,

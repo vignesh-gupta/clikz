@@ -51,7 +51,7 @@ export function LinkCard({
             </Link>
             <div className="flex items-center">
               <CornerDownRight className="size-3 mr-1" />
-              <Link href={longUrl} target="_blank">
+              <Link href={longUrl} target="_blank" className="flex-1 truncate">
                 <p className="text-sm text-muted-foreground truncate hover:underline underline-offset-2">
                   {longUrl}
                 </p>
