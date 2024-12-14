@@ -109,3 +109,12 @@
       #fedaec;
   mix-blend-mode: var(--_mesh-gradient-blend-mode);
 }
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

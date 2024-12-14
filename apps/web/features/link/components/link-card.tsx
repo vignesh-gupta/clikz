@@ -37,7 +37,7 @@ export function LinkCard({
   return (
     <Card className="w-full max-w-md transition hover:-translate-y-1 hover:shadow-lg">
       <CardContent className="pt-6">
-        <div className="flex  items-center space-x-4">
+        <div className="flex items-center gap-4">
           <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
             <LinkFavIcon
               host={host}
@@ -50,7 +50,7 @@ export function LinkCard({
               <h3 className="truncate">{`${domain}/${slug}`}</h3>
             </Link>
             <div className="flex items-center">
-              <CornerDownRight className="size-3 mr-1" />
+              <CornerDownRight height={16} width={16} className=" mr-1" />
               <Link href={longUrl} target="_blank" className="flex-1 truncate">
                 <p className="text-sm text-muted-foreground truncate hover:underline underline-offset-2">
                   {longUrl}

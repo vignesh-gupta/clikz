@@ -4,9 +4,8 @@ import { Globe2 } from "lucide-react";
 
 import { cn } from "@clikz/ui/lib/utils";
 
+import { BlurImage } from "~/components/blur-image";
 import { GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
-
-import { BlurImage } from "../../../components/blur-image";
 
 export function LinkFavIcon({
   host,

@@ -5,11 +5,8 @@ import CreateLinkForm from "./create-link-form";
 
 const LinkModal = () => {
   const { isOpen, setIsOpen } = useCreateLinkModel();
-
-  console.log("LinkModal rendered");
-
   return (
-    <ResponsiveModal open={isOpen} onOpen={setIsOpen}>
+    <ResponsiveModal open={isOpen} onOpen={setIsOpen} className="rounded-xl">
       <CreateLinkForm />
     </ResponsiveModal>
   );

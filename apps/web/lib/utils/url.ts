@@ -16,3 +16,12 @@ export const getUrlWithoutUTMParams = (url: string) => {
     return url;
   }
 };
+
+export function isValidUrl(string: string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}

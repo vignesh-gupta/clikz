@@ -19,12 +19,12 @@ import {
   FormMessage,
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
+import { Label } from "@clikz/ui/components/ui/label";
 
+import LinkPreview from "~/components/preview/link-preview";
 import { createLink } from "~/lib/actions/link";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
-
-import LinkPreview from "./link-preview";
 
 const CreateLinkForm = () => {
   const [isLoading, startTransaction] = useTransition();
@@ -112,8 +112,11 @@ const CreateLinkForm = () => {
               )}
             />
 
-            <LinkPreview url={destination} />
-            <Button type="submit" className="w-full mt-6" disabled={isLoading}>
+            <div>
+              <Label>Preview</Label>
+              <LinkPreview url={destination} />
+            </div>
+            <Button type="submit" className="w-full mt-3" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
