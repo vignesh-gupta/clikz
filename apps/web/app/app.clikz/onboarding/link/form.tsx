@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,6 +22,7 @@ import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 
 import LinkPreview from "~/components/preview/link-preview";
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { createLink } from "~/lib/actions/link";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
@@ -29,9 +30,7 @@ import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 const CreateLinkForm = () => {
   const [isLoading, startTransaction] = useTransition();
 
-  const searchParams = useSearchParams();
-  const workspaceSlug = searchParams.get("workspaceId");
-
+  const workspaceSlug = useWorkspaceSlug();
   const router = useRouter();
 
   const form = useForm<LinkSchema>({

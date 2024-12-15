@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import QRCode from "qrcode";
+import { DicesIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { toast } from "sonner";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import {
@@ -18,59 +18,59 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
-import { Label } from "@clikz/ui/components/ui/label";
 import { Textarea } from "@clikz/ui/components/ui/textarea";
 
 import LinkPreview from "~/components/preview/link-preview";
+import QRPreview from "~/components/preview/qr-preview";
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
+import { createLink } from "~/lib/actions/link";
+import { generateRandomSlug } from "~/lib/utils/generate";
+import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
-const formSchema = z.object({
-  destinationUrl: z.string().url({ message: "Please enter a valid URL" }),
-  shortUrl: z
-    .string()
-    .min(3, { message: "Short URL must be at least 3 characters" }),
-  tags: z.string(),
-  comments: z.string(),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import { useCreateLinkModel } from "../hooks/use-create-link-modal";
 
 const CreateLinkForm = () => {
-  const [qrCode, setQrCode] = useState<string | null>(null);
+  const [isLoading, startTransaction] = useTransition();
+  const router = useRouter();
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const workspace = useWorkspaceSlug();
+  const { close } = useCreateLinkModel();
+
+  const form = useForm<LinkSchema>({
+    resolver: zodResolver(linkSchema),
     defaultValues: {
-      destinationUrl: "",
-      shortUrl: "",
-      tags: "",
-      comments: "",
+      destination: "",
+      slug: "",
+      comment: "",
     },
   });
 
   const { watch } = form;
 
-  const destinationUrl = watch("destinationUrl");
+  const destination = watch("destination");
+  const slug = watch("slug");
 
-  useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (name === "shortUrl" && value.shortUrl) {
-        QRCode.toDataURL(`https://clikz.com/${value.shortUrl}`)
-          .then((url) => setQrCode(url))
-          .catch((err) => console.error(err));
+  const onSubmit = async (value: LinkSchema) => {
+    startTransaction(async () => {
+      const data = await createLink(value, workspace);
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        toast.success(data.success);
+        router.refresh();
+        close();
       }
     });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  };
 
-  const onSubmit = async (data: FormValues) => {
-    console.log(data);
+  const onGenerateRandomSlug = () => {
+    form.setValue("slug", generateRandomSlug());
   };
 
   return (
@@ -81,11 +81,11 @@ const CreateLinkForm = () => {
       <CardContent className="p-5">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-4 col-span-2">
                 <FormField
                   control={form.control}
-                  name="destinationUrl"
+                  name="destination"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Destination URL</FormLabel>
@@ -98,21 +98,39 @@ const CreateLinkForm = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="shortUrl"
+                  name="slug"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Short URL</FormLabel>
-                      <FormControl>
-                        <Input placeholder="my-awesome-link" {...field} />
+                      <div className="flex justify-between items-center">
+                        <FormLabel>Short Link</FormLabel>
+                        <Button
+                          disabled={isLoading}
+                          variant="ghost"
+                          type="button"
+                          size="sm"
+                          className="size-6"
+                          iconWrapperClassName="mr-0"
+                          onClick={onGenerateRandomSlug}
+                          icon={<DicesIcon className="size-4 mr-0" />}
+                        />
+                      </div>
+                      <FormControl className="flex">
+                        <div className="flex rounded-md shadow-sm">
+                          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                            clikz.com/
+                          </span>
+                          <Input
+                            placeholder="(optional)"
+                            className="focus-visible:ring-gray-400 focus-visible:ring-offset-1"
+                            {...field}
+                          />
+                        </div>
                       </FormControl>
-                      <FormDescription>
-                        This will be appended to your custom domain
-                      </FormDescription>
-                      <FormMessage />
+                      <FormMessage className="text-xs ml-2" />
                     </FormItem>
                   )}
                 />
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="tags"
                   render={({ field }) => (
@@ -127,13 +145,13 @@ const CreateLinkForm = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   control={form.control}
-                  name="comments"
+                  name="comment"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Comments</FormLabel>
+                      <FormLabel>Comment</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Add any additional notes here"
@@ -146,28 +164,11 @@ const CreateLinkForm = () => {
                 />
               </div>
               <div className="space-y-4">
-                <Card>
-                  <CardContent className="pt-6">
-                    <Label>QR Code</Label>
-                    {qrCode ? (
-                      <Image
-                        src={qrCode}
-                        alt="QR Code"
-                        className="object-contain h-full w-auto mx-auto"
-                        width={200}
-                        height={200}
-                      />
-                    ) : (
-                      <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
-                        QR Code will appear here
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-                <LinkPreview url={destinationUrl} />
+                <QRPreview slug={slug} />
+                <LinkPreview url={destination} />
               </div>
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isLoading}>
               Create Link
             </Button>
           </form>
