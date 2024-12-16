@@ -127,11 +127,13 @@ export const LinkedInPreview = ({
             <LoaderCircle className="animate-spin size-5" />
           </div>
         ) : image ? (
-          <img
-            src={image}
-            alt="Preview"
-            className="w-full object-contain rounded-md"
-          />
+          <div className="relative flex items-center justify-center">
+            <img
+              src={image}
+              alt="Preview"
+              className="w-full object-contain rounded-md"
+            />
+          </div>
         ) : (
           <div className="flex size-full flex-col items-center justify-center space-y-2 text-center bg-gray-200 p-4">
             <ImageIcon className="size-5 text-gray-400" />

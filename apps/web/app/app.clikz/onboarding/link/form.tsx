@@ -1,12 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dices, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useDebounce } from "use-debounce";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
@@ -28,6 +29,7 @@ import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
 const CreateLinkForm = () => {
+  const [slugAvailable, setSlugAvailable] = useState(false);
   const [isLoading, startTransaction] = useTransition();
 
   const workspaceSlug = useWorkspaceSlug();
@@ -41,7 +43,28 @@ const CreateLinkForm = () => {
     },
   });
 
-  const destination = form.watch("destination");
+  const [destination, slug] = form.watch(["destination", "slug"]);
+
+  const [debouncedSlug] = useDebounce(slug, 500);
+
+  useEffect(() => {
+    if (!debouncedSlug) return;
+    setSlugAvailable(false);
+    const controller = new AbortController();
+    fetch(`/api/link/${debouncedSlug}/exist`, {
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch metadata");
+        }
+        const data = await res.json();
+        setSlugAvailable(!data.exists);
+      })
+      .catch(() => setSlugAvailable(false));
+  }, [debouncedSlug]);
+
+  useEffect(() => {}, []);
 
   const onSubmit = (values: LinkSchema) => {
     startTransaction(async () => {
@@ -115,7 +138,11 @@ const CreateLinkForm = () => {
               <Label>Preview</Label>
               <LinkPreview url={destination} />
             </div>
-            <Button type="submit" className="w-full mt-3" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full mt-3"
+              disabled={isLoading || !slugAvailable}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
