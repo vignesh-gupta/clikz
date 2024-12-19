@@ -43,3 +43,7 @@ pg-data
 
 #Webstorm
 .idea
+
+#tinybird
+.venv
+.tinyb
