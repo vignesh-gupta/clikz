@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-inner-declarations */
 /**
  * @license QR Code generator library (TypeScript)
  * Copyright (c) Project Nayuki.
@@ -639,7 +642,7 @@ namespace qrcodegen {
       data: Readonly<Array<byte>>,
       divisor: Readonly<Array<byte>>
     ): Array<byte> {
-      let result: Array<byte> = divisor.map((_) => 0);
+      let result: Array<byte> = divisor.map(() => 0);
       for (const b of data) {
         // Polynomial division
         const factor: byte = b ^ (result.shift() as byte);
@@ -774,6 +777,7 @@ namespace qrcodegen {
 
   // Appends the given number of low-order bits of the given value
   // to the given buffer. Requires 0 <= len <= 31 and 0 <= val < 2^len.
+  // eslint-disable-next-line no-inner-declarations
   function appendBits(val: int, len: int, bb: Array<bit>): void {
     if (len < 0 || len > 31 || val >>> len != 0)
       throw new RangeError("Value out of range");

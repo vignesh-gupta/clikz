@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import { GridPattern } from "@clikz/ui/components/ui/grid-pattern";
 import { cn } from "@clikz/ui/lib/utils";

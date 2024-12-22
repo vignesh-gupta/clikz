@@ -1,3 +1,5 @@
+"use client";
+
 import { useId } from "react";
 
 import { cn } from "@clikz/ui/lib/utils";

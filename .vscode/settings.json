@@ -1,5 +1,19 @@
 {
-  "cSpell.words": ["clikz", "qrcode", "trivago"],
+  "cSpell.words": [
+    "ccbits",
+    "Chebyshev",
+    "clikz",
+    "codegen",
+    "coef",
+    "FGCOLOR",
+    "Nayuki",
+    "O'Shannessy",
+    "qrcode",
+    "qrcodegen",
+    "segs",
+    "trivago",
+    "unencodable"
+  ],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
