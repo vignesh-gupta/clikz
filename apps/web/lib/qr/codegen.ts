@@ -3,8 +3,7 @@
  * Copyright (c) Project Nayuki.
  * SPDX-License-Identifier: MIT
  */
-
-"use strict";
+// @ts-nocheck
 
 namespace qrcodegen {
   type bit = number;
