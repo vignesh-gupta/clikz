@@ -5,12 +5,12 @@ import PageFilters from "../_components/filter";
 import NoLinks from "../_components/link/no-links";
 
 export type PageWithSlugParams = {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 };
 
-const WorkspaceLinkPage = async ({ params: { slug } }: PageWithSlugParams) => {
+const WorkspaceLinkPage = async ({ params }: PageWithSlugParams) => {
+  const { slug } = await params;
+
   const links = await db.link.findMany({
     where: {
       workspaceSlug: slug,

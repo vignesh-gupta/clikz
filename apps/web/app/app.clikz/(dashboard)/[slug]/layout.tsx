@@ -12,13 +12,12 @@ import { PageWithSlugParams } from "./page";
 type DashboardLayoutProps = PropsWithChildren<PageWithSlugParams>;
 
 export default async function DashboardLayout({
-  params: { slug },
+  params,
   children,
 }: DashboardLayoutProps) {
+  const { slug } = await params;
   const workspace = await db.workspace.findUnique({
-    where: {
-      slug: slug,
-    },
+    where: { slug },
   });
 
   if (!workspace) return notFound();

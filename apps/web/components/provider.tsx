@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, Suspense } from "react";
 
 import { AxiomWebVitals } from "next-axiom";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -11,7 +11,9 @@ const Provider: FC<PropsWithChildren> = ({ children }) => {
     <NuqsAdapter>
       {children}
       <Toaster />
-      <Modals />
+      <Suspense fallback={null}>
+        <Modals />
+      </Suspense>
       <AxiomWebVitals />
     </NuqsAdapter>
   );
