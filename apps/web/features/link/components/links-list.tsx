@@ -17,13 +17,13 @@ const LinkList = ({ links }: LinksProps) => {
   if (view === "grid") {
     return (
       <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
-        {links.map(({ id, domain, shortLink, key, url }) => (
+        {links.map(({ id, domain, shortLink, key, url, clicks }) => (
           <LinkCard
             key={id}
             slug={key}
             longUrl={url}
             domain={domain}
-            totalClicks={0}
+            totalClicks={clicks}
             shortUrl={shortLink}
           />
         ))}
@@ -34,13 +34,13 @@ const LinkList = ({ links }: LinksProps) => {
   if (view === "row") {
     return (
       <div className="space-y-1">
-        {links.map(({ id, domain, shortLink, key, url }) => (
+        {links.map(({ id, domain, shortLink, key, url, clicks }) => (
           <LinkRow
             key={id}
             slug={key}
             longUrl={url}
             domain={domain}
-            totalClicks={0}
+            totalClicks={clicks}
             shortUrl={shortLink}
           />
         ))}

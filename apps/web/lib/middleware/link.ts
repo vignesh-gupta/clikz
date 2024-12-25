@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
+import { recordClickEvent } from "../analytics/click-events";
 import { db } from "../db";
 import { parse } from "./utils";
 
@@ -8,8 +8,7 @@ import { parse } from "./utils";
 export const LinkMiddleware = async (req: NextRequest) => {
   const { key, domain, fullPath } = parse(req);
 
-  if (!key && !domain)
-    return NextResponse.redirect(`https://${domain}${fullPath}`);
+  if (!key) return NextResponse.redirect(`https://${domain}${fullPath}`);
 
   const link = await db.link.findFirst({
     where: {
@@ -18,7 +17,15 @@ export const LinkMiddleware = async (req: NextRequest) => {
     },
   });
 
-  if (!link) return notFound();
+  if (!link)
+    return NextResponse.rewrite(new URL(`/${domain}/not-found`, req.url));
+
+  recordClickEvent({
+    linkId: link.id,
+    req,
+    url: link.url,
+  });
+
   return NextResponse.redirect(link.url, {
     status: 302,
   });

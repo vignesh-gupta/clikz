@@ -1,5 +1,3 @@
-// Express Boiler plate code
-
 import express from "express";
 import httpProxy from "http-proxy";
 

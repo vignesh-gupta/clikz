@@ -1,0 +1,35 @@
+DESCRIPTION >
+    Click Event analytics of short urls
+
+SCHEMA >
+    `timestamp` DateTime `json:$.timestamp`,
+    `link_id` String `json:$.link_id`,
+    `url` String `json:$.url`,
+    `vercel_region` String `json:$.vercel_region`,
+    `country` LowCardinality(String) `json:$.country`,
+    `city` String `json:$.city`,
+    `region` String `json:$.region`,
+    `continent` LowCardinality(String) `json:$.continent`,
+    `latitude` String `json:$.latitude`,
+    `longitude` String `json:$.longitude`,
+    `device` LowCardinality(String) `json:$.device`,
+    `device_model` LowCardinality(String) `json:$.device_model`,
+    `device_vendor` LowCardinality(String) `json:$.device_vendor`,
+    `browser` LowCardinality(String) `json:$.browser`,
+    `browser_version` String `json:$.browser_version`,
+    `os` LowCardinality(String) `json:$.os`,
+    `os_version` String `json:$.os_version`,
+    `engine` LowCardinality(String) `json:$.engine`,
+    `engine_version` String `json:$.engine_version`,
+    `cpu_architecture` LowCardinality(String) `json:$.cpu_architecture`,
+    `ua` String `json:$.ua`,
+    `bot` UInt8 `json:$.bot`,
+    `referer` String `json:$.referer`,
+    `referer_url` String `json:$.referer_url`,
+    `ip` String `json:$.ip`,
+    `qr` UInt8 `json:$.qr`
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(timestamp)"
+ENGINE_SORTING_KEY "link_id"
+ENGINE_TTL "toDateTime(timestamp) + toIntervalDay(180)"
