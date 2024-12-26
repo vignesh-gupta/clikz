@@ -5,8 +5,22 @@ import { db } from "~/lib/db";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema } from "~/lib/zod-schemas";
 
-import { BASE_URL } from "../constants";
+import { BASE_URL, DEFAULT_REDIRECT_DOMAIN } from "../constants";
 import { checkUser } from "./utils";
+
+/* eslint-disable turbo/no-undeclared-env-vars */
+
+/* eslint-disable turbo/no-undeclared-env-vars */
+
+/* eslint-disable turbo/no-undeclared-env-vars */
+
+/* eslint-disable turbo/no-undeclared-env-vars */
+
+/* eslint-disable turbo/no-undeclared-env-vars */
+
+/* eslint-disable turbo/no-undeclared-env-vars */
+
+/* eslint-disable turbo/no-undeclared-env-vars */
 
 /* eslint-disable turbo/no-undeclared-env-vars */
 
@@ -33,7 +47,7 @@ export const createLink = async (
 
   await db.link.create({
     data: {
-      domain: process.env.NEXT_PUBLIC_APP_DOMAIN ?? "clikz.co",
+      domain: DEFAULT_REDIRECT_DOMAIN ?? "clikz.co",
       key: slug,
       shortLink: new URL(`/${slug}`, BASE_URL).toString(),
       url: data.destination,

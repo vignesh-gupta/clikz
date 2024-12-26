@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { DicesIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -34,10 +34,11 @@ import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
 import { useCreateLinkModel } from "../hooks/use-create-link-modal";
+import { WORKSPACE_LINK_QUERY_KEYS } from "../hooks/use-get-workspace-links";
 
 const CreateLinkForm = () => {
   const [isLoading, startTransaction] = useTransition();
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const workspace = useWorkspaceSlug();
   const { close } = useCreateLinkModel();
@@ -51,10 +52,8 @@ const CreateLinkForm = () => {
     },
   });
 
-  const { watch } = form;
-
-  const destination = watch("destination");
-  const slug = watch("slug");
+  const destination = form.watch("destination");
+  const slug = form.watch("slug");
 
   const onSubmit = async (value: LinkSchema) => {
     startTransaction(async () => {
@@ -63,7 +62,9 @@ const CreateLinkForm = () => {
         toast.error(data.error);
       } else {
         toast.success(data.success);
-        router.refresh();
+        queryClient.invalidateQueries({
+          queryKey: [...WORKSPACE_LINK_QUERY_KEYS, workspace],
+        });
         close();
       }
     });

@@ -6,6 +6,9 @@ export const APP_NAMES = new Set([
   "localhost",
 ]);
 
+export const DEFAULT_REDIRECT_DOMAIN =
+  process.env.NEXT_PUBLIC_DEFAULT_REDIRECT_DOMAIN!;
+
 export const BASE_URL = process.env.NEXT_PUBLIC_APP_URL!;
 
 export const DEFAULT_REDIRECTS = new Map([

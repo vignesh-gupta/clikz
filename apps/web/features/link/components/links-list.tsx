@@ -2,22 +2,36 @@
 
 import { Link } from "@prisma/client";
 
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { useView } from "~/lib/hooks/use-view";
 
+import { useGetWorkspaceLinks } from "../hooks/use-get-workspace-links";
 import { LinkCard } from "./link-card";
 import { LinkRow } from "./link-row";
 
 export type LinksProps = {
-  links: Link[];
+  initialLinks: Link[];
 };
 
-const LinkList = ({ links }: LinksProps) => {
+const LinkList = ({ initialLinks }: LinksProps) => {
+  const workspaceSlug = useWorkspaceSlug();
+
+  const {
+    data: links,
+    status,
+    error,
+  } = useGetWorkspaceLinks({
+    workspaceSlug,
+  });
+
+  console.log({ links, status, error });
+
   const { view } = useView();
 
   if (view === "grid") {
     return (
       <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
-        {links.map(({ id, domain, shortLink, key, url, clicks }) => (
+        {links?.map(({ id, domain, shortLink, key, url, clicks }) => (
           <LinkCard
             key={id}
             slug={key}
@@ -34,7 +48,7 @@ const LinkList = ({ links }: LinksProps) => {
   if (view === "row") {
     return (
       <div className="space-y-1">
-        {links.map(({ id, domain, shortLink, key, url, clicks }) => (
+        {links?.map(({ id, domain, shortLink, key, url, clicks }) => (
           <LinkRow
             key={id}
             slug={key}

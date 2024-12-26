@@ -5,15 +5,18 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "sonner";
 
 import Modals from "./modals";
+import QueryProviders from "./query-provider";
 
 const Provider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <NuqsAdapter>
-      {children}
+      <QueryProviders>
+        {children}
+        <Suspense fallback={null}>
+          <Modals />
+        </Suspense>
+      </QueryProviders>
       <Toaster />
-      <Suspense fallback={null}>
-        <Modals />
-      </Suspense>
       <AxiomWebVitals />
     </NuqsAdapter>
   );
