@@ -30,8 +30,10 @@ export default async function middleware(
   const { domain } = parse(req);
 
   if (APP_NAMES.has(domain)) {
+    console.log("Routing to AppMiddleware");
     return AppMiddleware(req);
   }
 
+  console.log("Routing to LinkMiddleware");
   return LinkMiddleware(req);
 }

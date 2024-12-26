@@ -15,6 +15,9 @@ const WorkspaceLinkPage = async ({ params }: PageWithSlugParams) => {
     where: {
       workspaceSlug: slug,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return (

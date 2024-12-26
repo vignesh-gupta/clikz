@@ -91,14 +91,14 @@ export const recordClickEvent = async ({
     qr: isQR,
   };
 
-  const [analytics] = await Promise.allSettled([
+  await Promise.allSettled([
     fetch("https://api.tinybird.co/v0/events?name=clikz_click_events", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.TINYBIRD_API_KEY}`,
       },
       body: JSON.stringify(clickData),
-    }),
+    }).then((res) => res.json()),
     db.link.update({
       data: {
         clicks: {
@@ -110,6 +110,4 @@ export const recordClickEvent = async ({
       },
     }),
   ]);
-
-  console.log(analytics);
 };
