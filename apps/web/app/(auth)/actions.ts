@@ -3,7 +3,7 @@
 import { AuthError } from "next-auth";
 
 import { signIn } from "~/auth";
-import { getUserByEmail } from "~/data/user";
+import { getUserByEmail } from "~/features/auth/data";
 import { db } from "~/lib/db";
 import { sendVerificationEmail } from "~/lib/email";
 import { generatePasscode } from "~/lib/token";

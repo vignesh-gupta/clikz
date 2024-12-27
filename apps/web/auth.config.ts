@@ -4,7 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import Discord from "next-auth/providers/discord";
 import GitHub from "next-auth/providers/github";
 
-import { getUserByEmail, getUserById } from "~/data/user";
+import { getUserByEmail, getUserById } from "~/features/auth/data";
 
 import { db } from "./lib/db";
 import { signInSchema } from "./lib/zod-schemas";
