@@ -30,10 +30,10 @@ import LinkPreview from "~/components/preview/link-preview";
 import QRPreview from "~/components/preview/qr-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { createLink } from "~/lib/actions/link";
+import { QUERY_KEYS } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
-import { WORKSPACE_LINK_QUERY_KEYS } from "../api/use-get-workspace-links";
 import { useCreateLinkModel } from "../hooks/use-create-link-modal";
 
 const CreateLinkForm = () => {
@@ -63,7 +63,7 @@ const CreateLinkForm = () => {
       } else {
         toast.success(data.success);
         queryClient.invalidateQueries({
-          queryKey: [...WORKSPACE_LINK_QUERY_KEYS, workspace],
+          queryKey: [...QUERY_KEYS.LINKS, workspace],
         });
         close();
       }

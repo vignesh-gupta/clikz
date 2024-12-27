@@ -1,7 +1,7 @@
 import React from "react";
 import { useMediaQuery } from "../hooks/use-media-query";
 import { cn } from "../lib/utils";
-import { Dialog, DialogContent } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Drawer, DrawerClose, DrawerContent } from "./ui/drawer";
 
 type ResponsiveModelProps = {
@@ -29,6 +29,7 @@ const ResponsiveModel = ({
             className,
           )}
         >
+          <DialogTitle className="sr-only">Dialog</DialogTitle>
           {children}
         </DialogContent>
       </Dialog>

@@ -16,15 +16,10 @@ export type LinksProps = {
 const LinkList = ({ initialLinks }: LinksProps) => {
   const workspaceSlug = useWorkspaceSlug();
 
-  const {
-    data: links,
-    status,
-    error,
-  } = useGetWorkspaceLinks({
+  const { data: links } = useGetWorkspaceLinks({
     workspaceSlug,
+    initialLinks,
   });
-
-  console.log({ links, status, error });
 
   const { view } = useView();
 

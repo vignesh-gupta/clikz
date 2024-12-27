@@ -1,15 +1,24 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-export const APP_NAMES = new Set([
-  `app.${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
-  `preview.${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
-  "localhost:3000",
-  "localhost",
-]);
 
 export const DEFAULT_REDIRECT_DOMAIN =
   process.env.NEXT_PUBLIC_DEFAULT_REDIRECT_DOMAIN!;
+export const DEFAULT_REDIRECT_URL = DEFAULT_REDIRECT_DOMAIN.includes(
+  "localhost"
+)
+  ? `http://${DEFAULT_REDIRECT_DOMAIN}`
+  : `https://${DEFAULT_REDIRECT_DOMAIN}`;
 
-export const BASE_URL = process.env.NEXT_PUBLIC_APP_URL!;
+export const BASE_DOMAIN = process.env.NEXT_PUBLIC_APP_DOMAIN!;
+export const BASE_URL = BASE_DOMAIN.includes("localhost")
+  ? `http://${BASE_DOMAIN}`
+  : `https://${BASE_DOMAIN}`;
+
+export const APP_NAMES = new Set([
+  `app.${BASE_DOMAIN}`,
+  `preview.${BASE_DOMAIN}`,
+  "localhost:3000",
+  "localhost",
+]);
 
 export const DEFAULT_REDIRECTS = new Map([
   ["home", BASE_URL],
@@ -26,3 +35,7 @@ export const DEFAULT_REDIRECTS = new Map([
 export const GOOGLE_FAVICON_URL = "https://www.google.com/s2/favicons?domain=";
 export const GOOGLE_FAVICON_URL_V2 =
   "https://www.google.com/s2/favicons?sz=64&domain_url=";
+
+export const QUERY_KEYS = {
+  LINKS: ["links"],
+};

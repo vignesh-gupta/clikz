@@ -1,28 +1,11 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 "use server";
 
 import { db } from "~/lib/db";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema } from "~/lib/zod-schemas";
 
-import { BASE_URL, DEFAULT_REDIRECT_DOMAIN } from "../constants";
+import { DEFAULT_REDIRECT_DOMAIN, DEFAULT_REDIRECT_URL } from "../constants";
 import { checkUser } from "./utils";
-
-/* eslint-disable turbo/no-undeclared-env-vars */
-
-/* eslint-disable turbo/no-undeclared-env-vars */
-
-/* eslint-disable turbo/no-undeclared-env-vars */
-
-/* eslint-disable turbo/no-undeclared-env-vars */
-
-/* eslint-disable turbo/no-undeclared-env-vars */
-
-/* eslint-disable turbo/no-undeclared-env-vars */
-
-/* eslint-disable turbo/no-undeclared-env-vars */
-
-/* eslint-disable turbo/no-undeclared-env-vars */
 
 export const createLink = async (
   data: LinkSchema,
@@ -45,11 +28,13 @@ export const createLink = async (
 
   const slug = data.slug === "" ? generateRandomSlug() : data.slug;
 
+  console.log(DEFAULT_REDIRECT_DOMAIN);
+
   await db.link.create({
     data: {
       domain: DEFAULT_REDIRECT_DOMAIN ?? "clikz.co",
       key: slug,
-      shortLink: new URL(`/${slug}`, BASE_URL).toString(),
+      shortLink: new URL(`/${slug}`, DEFAULT_REDIRECT_URL).toString(),
       url: data.destination,
       userId: user.id,
       workspaceId: workspace.id,

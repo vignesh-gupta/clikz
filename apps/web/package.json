@@ -16,6 +16,7 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.3",
     "@clikz/ui": "workspace:*",
+    "@hono/zod-validator": "^0.4.2",
     "@hookform/resolvers": "^3.9.1",
     "@neondatabase/serverless": "^0.10.3",
     "@prisma/adapter-neon": "^5.22.0",
