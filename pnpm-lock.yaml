@@ -4,49 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    '@next/eslint-plugin-next':
-      specifier: ^15.1.2
-      version: 15.1.2
-    '@types/eslint':
-      specifier: ^8
-      version: 8.56.2
-    '@types/node':
-      specifier: ^20
-      version: 20.11.6
-    eslint:
-      specifier: ^8.57.0
-      version: 8.57.0
-    lucide-react:
-      specifier: ^0.451.0
-      version: 0.451.0
-    next:
-      specifier: ^15.1.2
-      version: 15.1.2
-    prettier:
-      specifier: ^3.3.3
-      version: 3.3.3
-    tailwindcss:
-      specifier: ^3.4.13
-      version: 3.4.13
-    typescript:
-      specifier: ^5.6.3
-      version: 5.6.3
-  react18:
-    '@types/react':
-      specifier: ^18.3.11
-      version: 18.3.11
-    '@types/react-dom':
-      specifier: ^18.3.0
-      version: 18.3.1
-    react:
-      specifier: ^18.3.1
-      version: 18.3.1
-    react-dom:
-      specifier: ^18.3.1
-      version: 18.3.1
-
 importers:
 
   .:
