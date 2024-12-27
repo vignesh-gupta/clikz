@@ -8,8 +8,8 @@ export const runtime = "edge";
 
 const app = new Hono()
   .basePath("/api")
-  .route("/workspace", workspaceApp)
-  .route("/link", linkApp);
+  .route("/workspaces", workspaceApp)
+  .route("/links", linkApp);
 
 app.get("/metadata", async (c) => {
   const url = c.req.query("url");

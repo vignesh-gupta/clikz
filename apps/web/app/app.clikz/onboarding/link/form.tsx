@@ -51,7 +51,7 @@ const CreateLinkForm = () => {
     if (!debouncedSlug) return;
     setSlugAvailable(false);
     const controller = new AbortController();
-    fetch(`/api/link/${debouncedSlug}/exist`, {
+    fetch(`/api/links/${debouncedSlug}/exist`, {
       signal: controller.signal,
     })
       .then(async (res) => {

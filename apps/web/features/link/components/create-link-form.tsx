@@ -33,8 +33,8 @@ import { createLink } from "~/lib/actions/link";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
+import { WORKSPACE_LINK_QUERY_KEYS } from "../api/use-get-workspace-links";
 import { useCreateLinkModel } from "../hooks/use-create-link-modal";
-import { WORKSPACE_LINK_QUERY_KEYS } from "../hooks/use-get-workspace-links";
 
 const CreateLinkForm = () => {
   const [isLoading, startTransaction] = useTransition();

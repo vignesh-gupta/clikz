@@ -5,7 +5,7 @@ import { Link } from "@prisma/client";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { useView } from "~/lib/hooks/use-view";
 
-import { useGetWorkspaceLinks } from "../hooks/use-get-workspace-links";
+import { useGetWorkspaceLinks } from "../api/use-get-workspace-links";
 import { LinkCard } from "./link-card";
 import { LinkRow } from "./link-row";
 
