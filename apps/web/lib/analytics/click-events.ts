@@ -8,7 +8,7 @@ import { capitalize } from "@clikz/ui/lib/utils";
 import { db } from "../db";
 import { detectBot, detectQR } from "../middleware/utils/link-utlis";
 import { getDomainWithoutWWW } from "../utils/url";
-import { EU_COUNTRY_CODES } from "./contries";
+import { EU_COUNTRY_CODES } from "./countries";
 
 type RecordClickEventProps = {
   req: NextRequest;
