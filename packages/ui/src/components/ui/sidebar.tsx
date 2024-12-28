@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
@@ -5,6 +6,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { PanelLeft } from "lucide-react";
 import * as React from "react";
 
+import { useMediaQuery } from "@clikz/ui";
 import { Button } from "@clikz/ui/components/ui/button";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Separator } from "@clikz/ui/components/ui/separator";
@@ -16,7 +18,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@clikz/ui/components/ui/tooltip";
-import { useMediaQuery } from "@clikz/ui/hooks/use-media-query";
 import { cn } from "@clikz/ui/lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";

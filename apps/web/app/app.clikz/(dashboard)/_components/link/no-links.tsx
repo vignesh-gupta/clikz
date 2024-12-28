@@ -1,6 +1,8 @@
-import { Link2, PlusIcon } from "lucide-react";
+import { Link2 } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
+
+import CreateLinkButton from "~/features/link/components/create-link-button";
 
 const NoLinks = () => {
   return (
@@ -15,7 +17,7 @@ const NoLinks = () => {
           programs, and more.
         </p>
         <div className="mt-6 flex gap-2">
-          <Button icon={<PlusIcon />}>Create Link</Button>
+          <CreateLinkButton />
           <Button variant="outline">Learn more</Button>
         </div>
       </div>

@@ -112,10 +112,10 @@ const CreateLinkForm = () => {
                       type="button"
                       size="sm"
                       className="size-6"
-                      iconWrapperClassName="mr-0"
                       onClick={onGenerateRandomSlug}
-                      icon={<Dices className="size-4 mr-0" />}
-                    />
+                    >
+                      <Dices className="size-4" />
+                    </Button>
                   </div>
                   <FormControl className="flex">
                     <div className="flex rounded-md shadow-sm">
