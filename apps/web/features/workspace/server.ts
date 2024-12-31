@@ -15,4 +15,4 @@ const workspacesApp = new Hono()
   return c.json({ exists: workspace > 0 });
 });
 
-export default workspaceApp;
+export default workspacesApp;
