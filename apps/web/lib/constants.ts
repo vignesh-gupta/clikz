@@ -38,4 +38,5 @@ export const GOOGLE_FAVICON_URL_V2 =
 
 export const QUERY_KEYS = {
   LINKS: ["links"],
+  WORKSPACES: ["workspaces"],
 };

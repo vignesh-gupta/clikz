@@ -1,5 +1,7 @@
 "use server";
 
+import { MemberRole } from "@prisma/client";
+
 import { auth } from "~/auth";
 import { generateInviteCode } from "~/lib/utils/generate";
 
@@ -10,11 +12,11 @@ import { WorkspaceSchema } from "../zod-schemas";
 export const createWorkspace = async (data: WorkspaceSchema) => {
   const session = await auth();
 
-  if (!session || !session.user || !session.user.id) {
+  if (!session || !session.user || !session.user.id || !session.user.email) {
     return { error: "You must be signed in to create a workspace" };
   }
 
-  await db.workspace.create({
+  const workspace = await db.workspace.create({
     data: {
       name: data.name,
       slug: data.slug,
@@ -22,6 +24,14 @@ export const createWorkspace = async (data: WorkspaceSchema) => {
     },
   });
 
+  await db.membership.create({
+    data: {
+      userId: session.user.id,
+      workspaceId: workspace.id,
+      role: MemberRole.ADMIN,
+      email: session.user.email,
+    },
+  });
   return { success: "Workspace create successfully" };
 };
 

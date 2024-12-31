@@ -1,18 +1,18 @@
 model Workspace {
-  id        String   @id @default(cuid())
-  name      String
-  slug      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id])
-  userId    String
-  Invite    Invite[]
-  Link      Link[]
-  Member    Member[]
+  id         String       @id @default(cuid())
+  name       String
+  slug       String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  User       User         @relation(fields: [userId], references: [id])
+  userId     String
+  Invite     Invite[]
+  Link       Link[]
+  Membership Membership[]
 
   @@unique([slug])
-  @@index([userId])
   @@unique([id, slug])
+  @@index([userId])
 }
 
 model Invite {
@@ -26,14 +26,19 @@ model Invite {
   @@index([workspaceId])
 }
 
-model Member {
-  id          String    @id @default(cuid())
+model Membership {
+  id          String     @id @default(cuid())
   email       String
-  User        User      @relation(fields: [userId], references: [id])
+  User        User       @relation(fields: [userId], references: [id])
   userId      String
-  role        String
-  Workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  role        MemberRole
+  Workspace   Workspace  @relation(fields: [workspaceId], references: [id])
   workspaceId String
 
   @@index([workspaceId])
+}
+
+enum MemberRole {
+  ADMIN
+  MEMBER
 }

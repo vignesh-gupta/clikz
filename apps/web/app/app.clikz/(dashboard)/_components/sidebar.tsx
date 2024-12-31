@@ -17,6 +17,7 @@ import {
   SidebarMenuItem,
 } from "@clikz/ui/components/ui/sidebar";
 
+import WorkspaceSwitcher from "~/features/workspace/components/workspace-switcher";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 
 const navigation = [
@@ -61,6 +62,9 @@ export function DashboardSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent className="px-4">
+        <div className="my-4">
+          <WorkspaceSwitcher />
+        </div>
         <SidebarMenu>
           {navigation.map((item) => (
             <SidebarMenuItem key={`/${slug}${item.href}`}>
