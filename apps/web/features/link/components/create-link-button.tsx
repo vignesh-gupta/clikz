@@ -10,7 +10,11 @@ const CreateLinkButton = () => {
 
   useKeyboardShortcut("c", () => open());
 
-  return <Button onClick={() => open()}>Create</Button>;
+  return (
+    <Button onClick={() => open()} shortcut="c">
+      Create
+    </Button>
+  );
 };
 
 export default CreateLinkButton;
