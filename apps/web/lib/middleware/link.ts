@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { recordClickEvent } from "../analytics/click-events";
-import { db } from "../db";
-import { parse } from "./utils";
+import { getLinkViaEdge, parse } from "./utils";
 
 // eslint-disable-next-line no-unused-vars
 export const LinkMiddleware = async (req: NextRequest) => {
@@ -10,12 +9,7 @@ export const LinkMiddleware = async (req: NextRequest) => {
 
   if (!key) return NextResponse.redirect(`https://${domain}${fullPath}`);
 
-  const link = await db.link.findFirst({
-    where: {
-      domain,
-      key,
-    },
-  });
+  const link = await getLinkViaEdge(key, domain);
 
   if (!link)
     return NextResponse.rewrite(new URL(`/${domain}/not-found`, req.url));

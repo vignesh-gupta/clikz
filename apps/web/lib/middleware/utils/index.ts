@@ -1,8 +1,11 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest } from "next/server";
 
-import { User } from "@prisma/client";
+import { User } from "next-auth";
 import { getToken } from "next-auth/jwt";
+
+import { conn } from "~/lib/edge-db";
+import { LinkProp, WorkspaceProp } from "~/lib/types";
 
 const SHORT_DOMAIN = "clikz.sh";
 
@@ -40,3 +43,17 @@ export async function getUserViaToken(req: NextRequest) {
   });
   return session?.user as User;
 }
+
+export const getUserFirstWorkspaceViaEdge = async (userId: string) => {
+  const query = `SELECT * FROM "Workspace" WHERE "userId" = '${userId}' ORDER BY "createdAt" ASC LIMIT 1`;
+  const result = await conn(query);
+
+  return result[0] as WorkspaceProp;
+};
+
+export const getLinkViaEdge = async (key: string, domain: string) => {
+  const query = `SELECT * FROM "Link" WHERE "key" = '${key}' AND "domain" = '${domain}'`;
+  const result = await conn(query);
+
+  return result[0] as LinkProp;
+};

@@ -5,7 +5,7 @@ import { geolocation, ipAddress } from "@vercel/functions";
 
 import { capitalize } from "@clikz/ui/lib/utils";
 
-import { db } from "../db";
+import { conn } from "../edge-db";
 import { detectBot, detectQR } from "../middleware/utils/link-utlis";
 import { getDomainWithoutWWW } from "../utils/url";
 import { EU_COUNTRY_CODES } from "./countries";
@@ -99,15 +99,6 @@ export const recordClickEvent = async ({
       },
       body: JSON.stringify(clickData),
     }).then((res) => res.json()),
-    db.link.update({
-      data: {
-        clicks: {
-          increment: 1,
-        },
-      },
-      where: {
-        id: linkId,
-      },
-    }),
+    conn(`UPDATE "Link" SET clicks = clicks + 1 WHERE id = '${linkId}'`),
   ]);
 };

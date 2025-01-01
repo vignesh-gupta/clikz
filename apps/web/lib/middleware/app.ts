@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { NextURL } from "next/dist/server/web/next-url";
-
 import {
   AUTH_API_ROUTE,
   AUTH_ROUTES,
@@ -9,11 +7,10 @@ import {
   PUBLIC_ROUTE,
 } from "~/routes";
 
-import { db } from "../db";
-import { getUserViaToken, parse } from "./utils";
+import { getUserFirstWorkspaceViaEdge, getUserViaToken, parse } from "./utils";
 
-export const appRedirect = (path: string, url: NextURL) =>
-  new URL(`/app.clikz${path}`, url);
+export const appRedirect = (path: string, req: NextRequest) =>
+  new URL(`/app.clikz${path}`, req.nextUrl);
 
 export const AppMiddleware = async (req: NextRequest) => {
   const { nextUrl, fullPath } = parse(req);
@@ -23,22 +20,23 @@ export const AppMiddleware = async (req: NextRequest) => {
   }
 
   const user = await getUserViaToken(req);
-  const isLoggedIn = !!(user && user.id);
 
   if (nextUrl.pathname.startsWith(AUTH_API_ROUTE)) {
     return NextResponse.next();
   }
 
   if (AUTH_ROUTES.includes(nextUrl.pathname)) {
-    if (!isLoggedIn) return NextResponse.next();
+    if (!(user && user?.id)) return NextResponse.next();
 
+    // if user is logged in, redirect to callbackUrl
     const callbackUrl = decodeURIComponent(
       nextUrl.searchParams.get("callbackUrl") ?? DEFAULT_LOGIN_REDIRECT
     );
     return NextResponse.redirect(new URL(callbackUrl, nextUrl));
   }
 
-  if (!isLoggedIn) {
+  if (!(user && user.id)) {
+    // If not a auth route and user is not logged in, redirect to sign-in
     let callbackUrl = nextUrl.pathname;
     if (nextUrl.search) {
       callbackUrl += nextUrl.search;
@@ -52,20 +50,16 @@ export const AppMiddleware = async (req: NextRequest) => {
   }
 
   if (fullPath.includes("/onboarding"))
-    return NextResponse.rewrite(appRedirect(fullPath, nextUrl));
+    return NextResponse.rewrite(appRedirect(fullPath, req));
 
-  const workspace = await db.workspace.findFirst({
-    where: {
-      userId: user.id,
-    },
-  });
+  const workspace = await getUserFirstWorkspaceViaEdge(user.id);
 
   if (!workspace) return NextResponse.redirect(new URL("/onboarding", nextUrl));
 
   if (fullPath === "/")
     return NextResponse.redirect(new URL(`/${workspace.slug}`, nextUrl));
 
-  return NextResponse.rewrite(appRedirect(nextUrl.pathname, nextUrl));
+  return NextResponse.rewrite(appRedirect(nextUrl.pathname, req));
 };
 
 export default AppMiddleware;

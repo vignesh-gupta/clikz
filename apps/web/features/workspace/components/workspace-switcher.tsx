@@ -34,8 +34,6 @@ const WorkspaceSwitcher = () => {
     }
   };
 
-  console.log("workspaces", workspaces);
-
   return (
     <div className="flex flex-col gap-y-2">
       <div className="flex items-center justify-between">

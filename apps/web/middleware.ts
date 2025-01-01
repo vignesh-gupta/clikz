@@ -1,11 +1,10 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { NextFetchEvent, NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
 import { APP_NAMES } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
-import AxiomMiddleware from "./lib/middleware/axiom";
 import { LinkMiddleware } from "./lib/middleware/link";
 
 export const config = {
@@ -21,11 +20,8 @@ export const config = {
   ],
 };
 
-export default async function middleware(
-  req: NextRequest,
-  event: NextFetchEvent
-) {
-  AxiomMiddleware(req, event);
+export default async function middleware(req: NextRequest) {
+  // AxiomMiddleware(req, event);
 
   const { domain } = parse(req);
 
