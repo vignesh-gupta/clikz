@@ -4,7 +4,7 @@ import { handle } from "hono/vercel";
 import linkApp from "~/features/link/server";
 import workspacesApp from "~/features/workspace/server";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 const app = new Hono()
   .basePath("/api")

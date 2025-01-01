@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 const { withAxiom } = require("next-axiom");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -29,6 +30,4 @@ const nextConfig = {
   },
 };
 
-const nextConfigWithBundleAnalyzer = withBundleAnalyzer(nextConfig);
-
-module.exports = withAxiom(nextConfigWithBundleAnalyzer);
+module.exports = withAxiom(withBundleAnalyzer(nextConfig));
