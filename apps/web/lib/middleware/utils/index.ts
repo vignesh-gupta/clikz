@@ -41,6 +41,9 @@ export async function getUserViaToken(req: NextRequest) {
     req,
     secret: process.env.AUTH_SECRET,
   });
+
+  console.log("Session", session);
+
   return session?.user as User;
 }
 

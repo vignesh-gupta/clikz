@@ -37,6 +37,8 @@ export const AppMiddleware = async (req: NextRequest) => {
 
   if (!(user && user.id)) {
     // If not a auth route and user is not logged in, redirect to sign-in
+    console.log("Redirecting to sign-in");
+
     let callbackUrl = nextUrl.pathname;
     if (nextUrl.search) {
       callbackUrl += nextUrl.search;
