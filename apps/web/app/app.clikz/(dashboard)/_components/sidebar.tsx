@@ -16,6 +16,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@clikz/ui/components/ui/sidebar";
+import { cn } from "@clikz/ui/lib/utils";
 
 import WorkspaceSwitcher from "~/features/workspace/components/workspace-switcher";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
@@ -51,15 +52,7 @@ export function DashboardSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-4 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <Link2 className="h-4 w-4" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold">Clikz</span>
-            <span className="text-xs text-muted-foreground">Free Plan</span>
-          </div>
-        </div>
+        <p className={cn("px-4 py-2 text-3xl")}>Clikz</p>
       </SidebarHeader>
       <SidebarContent className="px-4">
         <div className="my-4">

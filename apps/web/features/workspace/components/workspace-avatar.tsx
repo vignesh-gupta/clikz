@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { memo } from "react";
 
-import { Avatar, AvatarFallback } from "@clikz/ui/components/ui/avatar";
+import { Avatar, AvatarImage } from "@clikz/ui/components/ui/avatar";
 import { cn } from "@clikz/ui/lib/utils";
 
 type WorkspaceAvatarProps = {
@@ -19,13 +20,13 @@ const WorkspaceAvatar = ({ name, className, image }: WorkspaceAvatarProps) => {
       </div>
     );
 
+  const defaultAvatarUrl = `https://api.dicebear.com/5.x/initials/svg?backgroundType=gradientLinear&fontFamily=Helvetica&fontSize=40&seed=${name}`;
+
   return (
-    <Avatar className={cn("size-8 rounded-md", className)}>
-      <AvatarFallback className="text-white bg-blue-600 font-semibold  uppercase rounded-md">
-        {name[0]}
-      </AvatarFallback>
+    <Avatar className={cn("size-8 rounded-full", className)}>
+      <AvatarImage src={defaultAvatarUrl} alt={name} />
     </Avatar>
   );
 };
 
-export default WorkspaceAvatar;
+export default memo(WorkspaceAvatar);
