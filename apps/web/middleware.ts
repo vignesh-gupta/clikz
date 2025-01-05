@@ -1,9 +1,9 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
-import { APP_NAMES } from "./lib/constants";
+import { APP_NAMES, BASE_DOMAIN } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
 import { LinkMiddleware } from "./lib/middleware/link";
 
@@ -23,7 +23,12 @@ export const config = {
 export default async function middleware(req: NextRequest) {
   // AxiomMiddleware(req, event);
 
-  const { domain } = parse(req);
+  const { domain, fullKey, fullPath, key, path } = parse(req);
+
+  console.log({ domain, fullKey, fullPath, key, path });
+
+  if (domain === `www.${BASE_DOMAIN}` && fullKey === "/")
+    return NextResponse.next();
 
   if (APP_NAMES.has(domain)) {
     console.log("Routing to AppMiddleware");
