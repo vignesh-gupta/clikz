@@ -3,7 +3,7 @@
  * Copyright (c) Paul O'Shannessy
  * SPDX-License-Identifier: ISC
  */
-import { useEffect, useRef } from "react";
+import { JSX, useEffect, useRef } from "react";
 
 import qrcodegen from "./codegen";
 import {

@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
