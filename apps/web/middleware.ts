@@ -1,5 +1,5 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
@@ -27,10 +27,7 @@ export default async function middleware(req: NextRequest) {
 
   console.log({ domain, fullKey, fullPath, key, path });
 
-  if (domain === `www.${BASE_DOMAIN}` && fullKey === "/")
-    return NextResponse.next();
-
-  if (APP_NAMES.has(domain)) {
+  if (APP_NAMES.has(domain) || (domain === BASE_DOMAIN && fullKey === "/")) {
     console.log("Routing to AppMiddleware");
     return AppMiddleware(req);
   }
