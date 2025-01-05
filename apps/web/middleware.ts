@@ -27,7 +27,7 @@ export default async function middleware(req: NextRequest) {
 
   console.log({ domain, fullKey, fullPath, key, path });
 
-  if (APP_NAMES.has(domain) || (domain === BASE_DOMAIN && fullKey === "/")) {
+  if (APP_NAMES.has(domain) || (domain === BASE_DOMAIN && fullPath === "/")) {
     console.log("Routing to AppMiddleware");
     return AppMiddleware(req);
   }
