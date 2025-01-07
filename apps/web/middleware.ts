@@ -23,15 +23,10 @@ export const config = {
 export default async function middleware(req: NextRequest) {
   // AxiomMiddleware(req, event);
 
-  const { domain, fullKey, fullPath, key, path } = parse(req);
+  const { domain, fullPath } = parse(req);
 
-  console.log({ domain, fullKey, fullPath, key, path });
-
-  if (APP_NAMES.has(domain) || (domain === BASE_DOMAIN && fullPath === "/")) {
-    console.log("Routing to AppMiddleware");
+  if (APP_NAMES.has(domain) || (domain === BASE_DOMAIN && fullPath === "/"))
     return AppMiddleware(req);
-  }
 
-  console.log("Routing to LinkMiddleware");
   return LinkMiddleware(req);
 }

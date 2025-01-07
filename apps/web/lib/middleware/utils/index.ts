@@ -36,16 +36,11 @@ export const parse = (req: NextRequest) => {
 };
 
 export async function getUserViaToken(req: NextRequest) {
-  const useSecureCookies = process.env.NODE_ENV === "production";
   const session = await getToken({
     req,
     secret: process.env.AUTH_SECRET,
-    secureCookie: useSecureCookies,
+    secureCookie: process.env.NODE_ENV === "production",
   });
-
-  const cookiePrefix = useSecureCookies ? "__Secure-" : "";
-  console.log({ session, cookiesName: `${cookiePrefix}authjs.session-token` });
-
   return session?.user as User;
 }
 
