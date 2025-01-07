@@ -2,18 +2,17 @@
 import { NextRequest } from "next/server";
 
 import { User } from "next-auth";
-import { getToken } from "next-auth/jwt";
 
+import { auth } from "~/auth";
+import { BASE_DOMAIN } from "~/lib/constants";
 import { conn } from "~/lib/edge-db";
 import { LinkProp, WorkspaceProp } from "~/lib/types";
-
-const SHORT_DOMAIN = "clikz.sh";
 
 export const parse = (req: NextRequest) => {
   let domain = req.headers.get("host") as string;
   domain = domain.replace(/^www./, "").toLowerCase();
   if (domain === "clikz.localhost:8888" || domain.endsWith(".vercel.app")) {
-    domain = SHORT_DOMAIN;
+    domain = BASE_DOMAIN;
   }
 
   let path = req.nextUrl.pathname;
@@ -36,11 +35,11 @@ export const parse = (req: NextRequest) => {
   };
 };
 
-export async function getUserViaToken(req: NextRequest) {
-  const session = await getToken({
-    req,
-    secret: process.env.AUTH_SECRET,
-  });
+export async function getUserViaToken() {
+  const session = await auth();
+
+  console.log("Session", session);
+
   return session?.user as User;
 }
 

@@ -26,7 +26,7 @@ export const AppMiddleware = async (req: NextRequest) => {
     return NextResponse.next();
   }
 
-  const user = await getUserViaToken(req);
+  const user = await getUserViaToken();
 
   if (nextUrl.pathname.startsWith(AUTH_API_ROUTE)) {
     return NextResponse.next();
