@@ -11,7 +11,7 @@ const app = new Hono()
   .use(
     "/api",
     cors({
-      origin: ["https://app.clikz.live/"],
+      origin: "https://app.clikz.live",
     })
   )
   .basePath("/api")
