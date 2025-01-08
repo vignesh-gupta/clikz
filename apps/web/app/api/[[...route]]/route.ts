@@ -9,6 +9,7 @@ export const runtime = "nodejs";
 
 const app = new Hono()
   .use(
+    "/api",
     cors({
       origin: ["https://app.clikz.live/"],
     })
