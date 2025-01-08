@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { handle } from "hono/vercel";
 
 import linkApp from "~/features/link/server";
@@ -7,6 +8,11 @@ import workspacesApp from "~/features/workspace/server";
 export const runtime = "nodejs";
 
 const app = new Hono()
+  .use(
+    cors({
+      origin: ["https://app.clikz.live/"],
+    })
+  )
   .basePath("/api")
   .route("/workspaces", workspacesApp)
   .route("/links", linkApp);
