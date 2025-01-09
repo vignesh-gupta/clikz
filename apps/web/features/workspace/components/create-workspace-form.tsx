@@ -1,19 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@clikz/ui/components/ui/alert";
 import { Button } from "@clikz/ui/components/ui/button";
-import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
+import { Card, CardContent, CardHeader } from "@clikz/ui/components/ui/card";
 import {
   Form,
   FormControl,
@@ -24,16 +19,14 @@ import {
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
 
-import WorkspaceSlugField from "~/features/workspace/components/workspace-slug-field";
 import { createWorkspace } from "~/lib/actions/onboarding";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 
-const WorkspaceForm = () => {
-  const [error, setError] = useState<string | null>(null);
+import WorkspaceSlugField from "./workspace-slug-field";
+
+const CreateWorkspaceForm = () => {
   const [isLoading, startTransaction] = useTransition();
   const [isSlugAvailable, setSlugAvailable] = useState<boolean>(false);
-
-  const router = useRouter();
 
   const form = useForm<WorkspaceSchema>({
     resolver: zodResolver(workspaceSchema),
@@ -48,9 +41,9 @@ const WorkspaceForm = () => {
       const res = await createWorkspace(values);
 
       if (res.error) {
-        setError(res.error);
+        toast.error(res.error);
       } else if (res.success) {
-        router.push(`/onboarding/invite?workspaceId=${values.slug}`);
+        toast.success("Workspace created successfully");
       }
 
       setSlugAvailable(false);
@@ -58,8 +51,12 @@ const WorkspaceForm = () => {
   };
 
   return (
-    <Card className="bg-transparent border-0 text-gray-800">
-      <CardContent className="p-0">
+    <Card className="w-full max-w-md mx-auto">
+      <CardHeader className="space-y-3 text-center">
+        <p>Clikz</p>
+        <p className="text-xl font-semibold">Create a new workspace</p>
+      </CardHeader>
+      <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <FormField
@@ -97,17 +94,8 @@ const WorkspaceForm = () => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter>
-        {error && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-      </CardFooter>
     </Card>
   );
 };
 
-export default WorkspaceForm;
+export default CreateWorkspaceForm;

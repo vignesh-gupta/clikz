@@ -2,8 +2,9 @@
 
 import { useRouter } from "next/navigation";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, PlusIcon } from "lucide-react";
 
+import { Button } from "@clikz/ui/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -13,12 +14,15 @@ import {
 } from "@clikz/ui/components/ui/select";
 
 import { useGetWorkspaces } from "../api/use-get-workspaces";
+import { useWorkspaceModel } from "../hooks/use-workspace-modal";
 import { useWorkspaceSlug } from "../hooks/use-workspace-slug";
 import WorkspaceAvatar from "./workspace-avatar";
 
 const WorkspaceSwitcher = () => {
   const { data: workspaces, isLoading } = useGetWorkspaces();
   const workspaceId = useWorkspaceSlug();
+
+  const { open } = useWorkspaceModel();
 
   const router = useRouter();
 
@@ -64,6 +68,13 @@ const WorkspaceSwitcher = () => {
           )}
         </SelectContent>
       </Select>
+      <Button
+        className="flex gap-2"
+        variant="outline"
+        onClick={() => open("new")}
+      >
+        <PlusIcon className="size-4" /> Create Workspace
+      </Button>
     </div>
   );
 };

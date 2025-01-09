@@ -25,7 +25,7 @@ const ResponsiveModel = ({
       <Dialog open={open} onOpenChange={onOpen} modal={true}>
         <DialogContent
           className={cn(
-            "w-full max-w-screen-lg p-0 border-none overflow-y-auto hide-scrollbar",
+            "w-auto max-w-screen-lg p-0 border-none overflow-y-auto hide-scrollbar",
             className,
           )}
         >

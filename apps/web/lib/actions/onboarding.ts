@@ -32,7 +32,7 @@ export const createWorkspace = async (data: WorkspaceSchema) => {
       email: session.user.email,
     },
   });
-  return { success: "Workspace create successfully" };
+  return { success: "Workspace create successfully", workspace };
 };
 
 export const inviteUser = async (emails: string[], workspaceSlug: string) => {

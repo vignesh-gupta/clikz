@@ -6,7 +6,11 @@ import CreateLinkForm from "./create-link-form";
 const LinkModal = () => {
   const { isOpen, setIsOpen } = useCreateLinkModel();
   return (
-    <ResponsiveModal open={isOpen} onOpen={setIsOpen} className="rounded-xl">
+    <ResponsiveModal
+      open={isOpen}
+      onOpen={setIsOpen}
+      className="rounded-xl w-full"
+    >
       <CreateLinkForm />
     </ResponsiveModal>
   );
