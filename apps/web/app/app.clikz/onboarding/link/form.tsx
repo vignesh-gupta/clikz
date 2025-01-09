@@ -25,6 +25,7 @@ import { Label } from "@clikz/ui/components/ui/label";
 import LinkPreview from "~/components/preview/link-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { createLink } from "~/lib/actions/link";
+import { BASE_DOMAIN } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
@@ -120,7 +121,7 @@ const CreateLinkForm = () => {
                   <FormControl className="flex">
                     <div className="flex rounded-md shadow-sm">
                       <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                        clikz.com/
+                        {`${BASE_DOMAIN}/`}
                       </span>
                       <Input
                         placeholder="(optional)"

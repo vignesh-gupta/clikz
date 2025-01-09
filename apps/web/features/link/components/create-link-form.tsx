@@ -30,7 +30,7 @@ import LinkPreview from "~/components/preview/link-preview";
 import QRPreview from "~/components/preview/qr-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { createLink } from "~/lib/actions/link";
-import { QUERY_KEYS } from "~/lib/constants";
+import { BASE_DOMAIN, QUERY_KEYS } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
@@ -118,7 +118,7 @@ const CreateLinkForm = () => {
                       <FormControl className="flex">
                         <div className="flex rounded-md shadow-sm">
                           <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                            clikz.com/
+                            {`${BASE_DOMAIN}/`}
                           </span>
                           <Input
                             placeholder="(optional)"

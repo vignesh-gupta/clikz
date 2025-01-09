@@ -5,6 +5,7 @@ import { useDebounce } from "use-debounce";
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
 import { Label } from "@clikz/ui/components/ui/label";
 
+import { BASE_URL } from "~/lib/constants";
 import { getUrlWithoutUTMParams } from "~/lib/utils/url";
 
 import { QRCode } from "./qr-code";
@@ -22,7 +23,7 @@ const QRPreview = ({ slug }: QRPreviewProps) => {
         <Label>QR Code</Label>
         <div className="w-full h-36 bg-gray-200 flex items-center justify-center text-gray-500">
           {debouncedSlug ? (
-            <QRCode url={`https://clikz.com/${debouncedSlug}`} scale={1} />
+            <QRCode url={`${BASE_URL}/${debouncedSlug}`} scale={1} />
           ) : (
             <p>QR Code will appear here</p>
           )}

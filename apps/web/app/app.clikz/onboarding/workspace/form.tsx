@@ -26,6 +26,7 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 
 import { createWorkspace } from "~/lib/actions/onboarding";
+import { BASE_DOMAIN } from "~/lib/constants";
 import { textToSlug } from "~/lib/utils";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 
@@ -130,7 +131,7 @@ const WorkspaceForm = () => {
                   <FormControl>
                     <div className="flex rounded-md shadow-sm">
                       <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                        app.clikz.com/
+                        {`app.${BASE_DOMAIN}/`}
                       </span>
                       <Input placeholder="my-workspace" {...field} />
                     </div>

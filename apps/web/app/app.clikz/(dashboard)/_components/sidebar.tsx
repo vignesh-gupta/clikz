@@ -66,7 +66,7 @@ export function DashboardSidebar() {
                 isActive={pathname === `/${slug}${item.href}`}
                 className="gap-2"
               >
-                <Link href={`/${slug}${item.href}`}>
+                <Link href={`/${slug}${item.href}`} prefetch={false}>
                   <item.icon className="h-4 w-4" />
                   {item.title}
                 </Link>
