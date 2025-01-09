@@ -3,15 +3,17 @@
 import { useKeyboardShortcut } from "@clikz/ui";
 import { Button } from "@clikz/ui/components/ui/button";
 
-import { useCreateLinkModel } from "../hooks/use-create-link-modal";
+import { useLinkModel } from "../hooks/use-link-modal";
 
 const CreateLinkButton = () => {
-  const { open } = useCreateLinkModel();
+  const { open } = useLinkModel();
 
-  useKeyboardShortcut("c", () => open());
+  const handleCreate = () => open("new");
+
+  useKeyboardShortcut("c", handleCreate);
 
   return (
-    <Button onClick={() => open()} shortcut="c">
+    <Button onClick={handleCreate} shortcut="c">
       Create
     </Button>
   );

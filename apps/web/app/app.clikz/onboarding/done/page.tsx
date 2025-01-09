@@ -4,7 +4,7 @@ import { ArrowRight, SparklesIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 
-import { NEW_LINK_QUERY_PARAM } from "~/features/link/hooks/use-create-link-modal";
+import { NEW_LINK_QUERY_PARAM } from "~/features/link/hooks/use-link-modal";
 
 import PageLayout from "../page-layout";
 

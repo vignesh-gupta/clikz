@@ -34,14 +34,14 @@ import { BASE_DOMAIN, QUERY_KEYS } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
-import { useCreateLinkModel } from "../hooks/use-create-link-modal";
+import { useLinkModel } from "../hooks/use-link-modal";
 
 const CreateLinkForm = () => {
   const [isLoading, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
   const workspace = useWorkspaceSlug();
-  const { close } = useCreateLinkModel();
+  const { close } = useLinkModel();
 
   const form = useForm<LinkSchema>({
     resolver: zodResolver(linkSchema),

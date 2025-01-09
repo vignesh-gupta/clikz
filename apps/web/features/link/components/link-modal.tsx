@@ -1,14 +1,14 @@
 import ResponsiveModal from "@clikz/ui/components/responsive-dialog";
 
-import { useCreateLinkModel } from "../hooks/use-create-link-modal";
+import { useLinkModel } from "../hooks/use-link-modal";
 import CreateLinkForm from "./create-link-form";
 
 const LinkModal = () => {
-  const { isOpen, setIsOpen } = useCreateLinkModel();
+  const { linkId, close } = useLinkModel();
   return (
     <ResponsiveModal
-      open={isOpen}
-      onOpen={setIsOpen}
+      open={!!linkId}
+      onOpen={close}
       className="rounded-xl w-full"
     >
       <CreateLinkForm />
