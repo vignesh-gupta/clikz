@@ -15,8 +15,8 @@ export type LinkProp = {
   shortLink: string;
   comment: string | null;
   clicks: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   userId: string;
   workspaceId: string;
   workspaceSlug: string;

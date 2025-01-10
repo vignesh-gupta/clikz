@@ -5,7 +5,7 @@ import { LinkIcon, Loader2 } from "lucide-react";
 import LaterButton from "~/app/app.clikz/onboarding/later-button";
 
 import PageLayout from "../page-layout";
-import CreateLinkForm from "./form";
+import LinkForm from "./form";
 
 const CreateLinkPage = () => {
   return (
@@ -19,7 +19,7 @@ const CreateLinkPage = () => {
       }
     >
       <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
-        <CreateLinkForm />
+        <LinkForm />
         <LaterButton />
       </Suspense>
     </PageLayout>

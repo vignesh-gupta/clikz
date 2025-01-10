@@ -37,14 +37,14 @@ import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 import { useGetLink } from "../api/use-get-link";
 import { useLinkModel } from "../hooks/use-link-modal";
 
-const CreateLinkForm = () => {
+const LinkForm = () => {
   const [isLoading, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
   const workspace = useWorkspaceSlug();
   const { close, linkId } = useLinkModel();
 
-  const { data: linkData } = useGetLink({ linkId });
+  const { data: linkData, isLoading: isFetching } = useGetLink({ linkId });
 
   const form = useForm<LinkSchema>({
     resolver: zodResolver(linkSchema),
@@ -80,7 +80,7 @@ const CreateLinkForm = () => {
   return (
     <Card className="rounded-xl">
       <CardHeader>
-        <CardTitle>Create Link</CardTitle>
+        <CardTitle>{linkId === "new" ? "Create" : "Edit"} Link</CardTitle>
       </CardHeader>
       <CardContent className="p-5">
         <Form {...form}>
@@ -94,7 +94,11 @@ const CreateLinkForm = () => {
                     <FormItem>
                       <FormLabel>Destination URL</FormLabel>
                       <FormControl>
-                        <Input placeholder="https://example.com" {...field} />
+                        <Input
+                          placeholder="https://example.com"
+                          {...field}
+                          disabled={isFetching}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -108,7 +112,7 @@ const CreateLinkForm = () => {
                       <div className="flex justify-between items-center">
                         <FormLabel>Short Link</FormLabel>
                         <Button
-                          disabled={isLoading}
+                          disabled={isLoading || isFetching}
                           variant="ghost"
                           type="button"
                           size="sm"
@@ -127,6 +131,7 @@ const CreateLinkForm = () => {
                             placeholder="(optional)"
                             className="focus-visible:ring-gray-400 focus-visible:ring-offset-1"
                             {...field}
+                            disabled={isFetching}
                           />
                         </div>
                       </FormControl>
@@ -160,6 +165,7 @@ const CreateLinkForm = () => {
                         <Textarea
                           placeholder="Add any additional notes here"
                           {...field}
+                          disabled={isFetching}
                         />
                       </FormControl>
                       <FormMessage />
@@ -172,7 +178,11 @@ const CreateLinkForm = () => {
                 <LinkPreview url={destination} />
               </div>
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading || isFetching}
+            >
               Create Link
             </Button>
           </form>
@@ -182,4 +192,4 @@ const CreateLinkForm = () => {
   );
 };
 
-export default CreateLinkForm;
+export default LinkForm;

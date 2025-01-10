@@ -29,7 +29,7 @@ import { BASE_DOMAIN } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
-const CreateLinkForm = () => {
+const LinkForm = () => {
   const [slugAvailable, setSlugAvailable] = useState(false);
   const [isLoading, startTransaction] = useTransition();
 
@@ -160,4 +160,4 @@ const CreateLinkForm = () => {
   );
 };
 
-export default CreateLinkForm;
+export default LinkForm;
