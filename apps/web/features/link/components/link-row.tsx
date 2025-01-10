@@ -1,24 +1,15 @@
 import Link from "next/link";
 
-import {
-  ArrowRightIcon,
-  MoreHorizontal,
-  MousePointerClickIcon,
-} from "lucide-react";
+import { ArrowRightIcon, MousePointerClickIcon } from "lucide-react";
 
-import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@clikz/ui/components/ui/dropdown-menu";
 
+import LinkActions from "./link-actions";
 import { LinkProps } from "./link-card";
 import { LinkFavIcon } from "./link-fav-icon";
 
 export function LinkRow({
+  id,
   shortUrl,
   longUrl,
   totalClicks,
@@ -56,19 +47,7 @@ export function LinkRow({
           <MousePointerClickIcon className="size-4 mr-1" />
           {totalClicks} {totalClicks === 1 ? "click" : "clicks"}
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Copy link</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <LinkActions linkId={id} />
       </CardFooter>
     </Card>
   );

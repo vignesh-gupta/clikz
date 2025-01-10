@@ -19,6 +19,19 @@ const linkApp = new Hono()
 
     return c.json({ link });
   })
+  .get("/:linkId", async (c) => {
+    const linkId = c.req.param("linkId");
+
+    const link = await db.link.findUnique({
+      where: { id: linkId },
+    });
+
+    if (!link) {
+      return c.json({ error: "Link not found" }, 404);
+    }
+
+    return c.json({ link });
+  })
   .get("/:slug/exist", async (c) => {
     const slug = c.req.param("slug");
     const domain = c.req.query("domain") ?? BASE_DOMAIN;

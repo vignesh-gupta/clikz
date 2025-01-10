@@ -37,6 +37,7 @@ export const GOOGLE_FAVICON_URL_V2 =
   "https://www.google.com/s2/favicons?sz=64&domain_url=";
 
 export const QUERY_KEYS = {
+  LINK: ["link"],
   LINKS: ["links"],
   WORKSPACES: ["workspaces"],
 };

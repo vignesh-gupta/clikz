@@ -28,7 +28,8 @@ const LinkList = ({ initialLinks }: LinksProps) => {
       <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
         {links?.map(({ id, domain, shortLink, key, url, clicks }) => (
           <LinkCard
-            key={id}
+            key={`link-grid-${id}`}
+            id={id}
             slug={key}
             longUrl={url}
             domain={domain}
@@ -45,7 +46,8 @@ const LinkList = ({ initialLinks }: LinksProps) => {
       <div className="space-y-1">
         {links?.map(({ id, domain, shortLink, key, url, clicks }) => (
           <LinkRow
-            key={id}
+            key={`link-row-${id}`}
+            id={id}
             slug={key}
             longUrl={url}
             domain={domain}

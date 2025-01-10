@@ -34,6 +34,7 @@ import { BASE_DOMAIN, QUERY_KEYS } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
+import { useGetLink } from "../api/use-get-link";
 import { useLinkModel } from "../hooks/use-link-modal";
 
 const CreateLinkForm = () => {
@@ -41,14 +42,16 @@ const CreateLinkForm = () => {
   const queryClient = useQueryClient();
 
   const workspace = useWorkspaceSlug();
-  const { close } = useLinkModel();
+  const { close, linkId } = useLinkModel();
+
+  const { data: linkData } = useGetLink({ linkId });
 
   const form = useForm<LinkSchema>({
     resolver: zodResolver(linkSchema),
-    defaultValues: {
-      destination: "",
-      slug: "",
-      comment: "",
+    values: {
+      destination: linkData?.url ?? "",
+      slug: linkData?.key ?? "",
+      comment: linkData?.comment ?? "",
     },
   });
 
