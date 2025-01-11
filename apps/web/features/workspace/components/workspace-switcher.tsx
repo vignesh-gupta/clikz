@@ -73,7 +73,7 @@ const WorkspaceSwitcher = () => {
         variant="outline"
         onClick={() => open("new")}
       >
-        <PlusIcon className="size-4" /> Create Workspace
+        <PlusIcon className="size-4" /> Add Workspace
       </Button>
     </div>
   );
