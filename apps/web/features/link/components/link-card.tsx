@@ -57,7 +57,7 @@ export function LinkCard({
           <MousePointerClickIcon className="size-4 mr-1" />
           {totalClicks} {totalClicks === 1 ? "click" : "clicks"}
         </div>
-        <LinkActions linkId={id} />
+        <LinkActions linkId={id} shortUrl={shortUrl} />
       </CardFooter>
     </Card>
   );

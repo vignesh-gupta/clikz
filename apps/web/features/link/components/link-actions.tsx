@@ -1,6 +1,7 @@
 "use client";
 
 import { MoreHorizontalIcon } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import {
@@ -10,14 +11,27 @@ import {
   DropdownMenuTrigger,
 } from "@clikz/ui/components/ui/dropdown-menu";
 
+import { useDeleteLink } from "../api/use-delete-link";
 import { useLinkModel } from "../hooks/use-link-modal";
 
 type LinkActionsProps = {
   linkId: string;
+  shortUrl: string;
 };
 
-const LinkActions = ({ linkId }: LinkActionsProps) => {
+const LinkActions = ({ linkId, shortUrl }: LinkActionsProps) => {
   const { open } = useLinkModel();
+
+  const { mutate: deleteLink } = useDeleteLink();
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(shortUrl);
+    toast.success("Link copied to clipboard");
+  };
+
+  const handleDelete = () => {
+    deleteLink({ param: { linkId } });
+  };
 
   return (
     <DropdownMenu>
@@ -29,8 +43,13 @@ const LinkActions = ({ linkId }: LinkActionsProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => open(linkId)}>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Copy link</DropdownMenuItem>
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleCopy}>Copy link</DropdownMenuItem>
+        <DropdownMenuItem
+          className="hover:bg-destructive hover:text-destructive-foreground"
+          onClick={handleDelete}
+        >
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -22,6 +22,10 @@ const linkApp = new Hono()
   .get("/:linkId", async (c) => {
     const linkId = c.req.param("linkId");
 
+    if (linkId === "new") {
+      return c.json({ link: null });
+    }
+
     const link = await db.link.findUnique({
       where: { id: linkId },
     });
@@ -44,6 +48,15 @@ const linkApp = new Hono()
     });
 
     return c.json({ exists: link > 0 });
+  })
+  .delete("/:linkId", async (c) => {
+    const linkId = c.req.param("linkId");
+
+    const link = await db.link.delete({
+      where: { id: linkId },
+    });
+
+    return c.json({ link });
   });
 
 export default linkApp;
