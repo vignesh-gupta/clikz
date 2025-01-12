@@ -5,7 +5,7 @@ datasource db {
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearchPostgres", "driverAdapters", "prismaSchemaFolder", "omitApi"]
+  previewFeatures = ["fullTextSearchPostgres", "driverAdapters", "prismaSchemaFolder"]
 }
 
 model Passcode {

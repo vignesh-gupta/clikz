@@ -4,7 +4,7 @@ model Workspace {
   slug       String
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
-  User       User         @relation(fields: [userId], references: [id])
+  User       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
   Invite     Invite[]
   Link       Link[]
@@ -20,7 +20,7 @@ model Invite {
   email       String
   token       String
   expires     DateTime
-  Workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
 
   @@index([workspaceId])
@@ -29,10 +29,10 @@ model Invite {
 model Membership {
   id          String     @id @default(cuid())
   email       String
-  User        User       @relation(fields: [userId], references: [id])
+  User        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   role        MemberRole
-  Workspace   Workspace  @relation(fields: [workspaceId], references: [id])
+  Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
 
   @@index([workspaceId])

@@ -12,6 +12,8 @@ import { Separator } from "@clikz/ui/components/ui/separator";
 
 import WorkspaceAvatar from "~/features/workspace/components/workspace-avatar";
 
+import DeleteWorkspace from "./delete-workspace";
+
 type GeneralSettingsProps = {
   workspaceId: string;
   slug: string;
@@ -120,6 +122,8 @@ export default function GeneralSettings({
       </Card>
 
       <Separator />
+
+      <DeleteWorkspace workspaceId={workspaceId} />
     </div>
   );
 }

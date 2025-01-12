@@ -9,7 +9,7 @@ type PageLayoutProps = {
 
 const PageLayout = ({ children, subtitle, title, icon }: PageLayoutProps) => {
   return (
-    <div className="min-h-screen pt-12 md:pt-24 lg:pt-36 sm:px-6 lg:px-8 animate-fade-in ">
+    <div className="min-h-screen pt-12 md:pt-20 sm:px-6 lg:px-8 animate-fade-in ">
       <div className="sm:mx-auto sm:w-full sm:max-w-md flex items-center flex-col">
         {icon}
         <h2 className="text-center mt-6  text-lg md:text-2xl font-extrabold">
