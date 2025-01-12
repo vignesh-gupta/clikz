@@ -26,6 +26,10 @@ const nextConfig = {
         hostname: "www.google.com",
         protocol: "https",
       },
+      {
+        hostname: "api.dicebear.com",
+        protocol: "https",
+      },
     ],
   },
 };

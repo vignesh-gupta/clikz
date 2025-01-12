@@ -17,7 +17,7 @@ export const useGetLink = ({ linkId, queryKey }: GetLink) => {
     queryKey: [...QUERY_KEYS.LINK, linkId, ...(queryKey ?? [])],
     queryFn: async () => {
       if (linkId === "new") {
-        return { link: null };
+        return null;
       }
 
       const res = await client.api.links[":linkId"].$get({

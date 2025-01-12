@@ -51,7 +51,11 @@ const WorkspaceSwitcher = () => {
             workspaces?.map((workspace) => (
               <SelectItem key={workspace.id} value={workspace.slug}>
                 <div className="flex justify-start items-center gap-3 font-medium">
-                  <WorkspaceAvatar name={workspace.name} />
+                  <WorkspaceAvatar
+                    name={workspace.slug}
+                    height={10}
+                    width={10}
+                  />
                   <div className="flex flex-col items-start">
                     <span className="truncate">{workspace.name}</span>
                     <span className="truncate text-xs text-muted-foreground">

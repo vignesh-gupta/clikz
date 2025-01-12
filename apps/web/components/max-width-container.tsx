@@ -17,7 +17,10 @@ const MaxWidthContainer: FC<MaxWidthContainerProps> = ({
 }) => {
   return (
     <main
-      className={cn("h-screen relative overflow-hidden", containerClassName)}
+      className={cn(
+        "min-h-screen relative overflow-hidden",
+        containerClassName
+      )}
     >
       {showPattern && (
         <GridPattern
