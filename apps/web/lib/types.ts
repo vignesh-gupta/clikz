@@ -21,3 +21,11 @@ export type LinkProp = {
   workspaceId: string;
   workspaceSlug: string;
 } | null;
+
+export type WorkspaceMember = {
+  id: string;
+  name: string | null;
+  email: string;
+  image: string | null;
+  role: "ADMIN" | "MEMBER";
+};

@@ -3,7 +3,10 @@ import { Hono } from "hono";
 import { db } from "~/lib/db";
 import { sessionMiddleware } from "~/lib/session-middleware";
 
+import workspaceApp from "./workspace-server";
+
 const workspacesApp = new Hono()
+  .route("/:workspaceId", workspaceApp)
   .get("/", sessionMiddleware, async (c) => {
     const user = c.get("user");
 
@@ -26,22 +29,13 @@ const workspacesApp = new Hono()
   .get("/:slug/exist", async (c) => {
     const slug = c.req.param("slug");
 
-    const workspace = await db.workspace.count({
+    const workspaceCount = await db.workspace.count({
       where: {
         slug,
       },
     });
 
-    return c.json({ exists: workspace > 0 });
-  })
-  .delete("/:workspaceId", async (c) => {
-    const workspaceId = c.req.param("workspaceId");
-
-    await db.workspace.delete({
-      where: { id: workspaceId },
-    });
-
-    return c.json({ success: true });
+    return c.json({ exists: workspaceCount > 0 });
   });
 
 export default workspacesApp;

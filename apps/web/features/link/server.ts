@@ -7,7 +7,7 @@ import { db } from "~/lib/db";
 import { getWorkspaceLinks } from "./data";
 import { getLinkSchema } from "./schema";
 
-const linkApp = new Hono()
+const linksApp = new Hono()
   .get("/", zValidator("query", getLinkSchema), async (c) => {
     const { slug } = c.req.valid("query");
 
@@ -59,4 +59,4 @@ const linkApp = new Hono()
     return c.json({ link });
   });
 
-export default linkApp;
+export default linksApp;

@@ -16,12 +16,7 @@ const MaxWidthContainer: FC<MaxWidthContainerProps> = ({
   containerClassName,
 }) => {
   return (
-    <main
-      className={cn(
-        "min-h-screen relative overflow-hidden",
-        containerClassName
-      )}
-    >
+    <div className={cn("relative overflow-hidden", containerClassName)}>
       {showPattern && (
         <GridPattern
           width={20}
@@ -34,7 +29,7 @@ const MaxWidthContainer: FC<MaxWidthContainerProps> = ({
       <div className={cn("max-w-screen-xl mx-auto px-4 z-20", className)}>
         {children}
       </div>
-    </main>
+    </div>
   );
 };
 

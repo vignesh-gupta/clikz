@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
-import linkApp from "~/features/link/server";
+import linksApp from "~/features/link/server";
 import workspacesApp from "~/features/workspace/server";
 
 export const runtime = "nodejs";
@@ -9,7 +9,7 @@ export const runtime = "nodejs";
 const app = new Hono()
   .basePath("/api")
   .route("/workspaces", workspacesApp)
-  .route("/links", linkApp);
+  .route("/links", linksApp);
 
 export type AppType = typeof app;
 

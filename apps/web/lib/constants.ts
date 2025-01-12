@@ -40,4 +40,7 @@ export const QUERY_KEYS = {
   LINK: ["link"],
   LINKS: ["links"],
   WORKSPACES: ["workspaces"],
+  MEMBERS: ["members"],
 };
+
+export const AVATAR_URL = "https://api.dicebear.com/9.x/open-peeps/svg?seed=";

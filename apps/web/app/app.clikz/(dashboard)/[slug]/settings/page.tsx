@@ -46,7 +46,7 @@ const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
           />
         </TabsContent>
         <TabsContent value="team" className="p-1">
-          <TeamSettings />
+          <TeamSettings workspaceId={workspace.id} />
         </TabsContent>
       </Tabs>
     </MaxWidthContainer>

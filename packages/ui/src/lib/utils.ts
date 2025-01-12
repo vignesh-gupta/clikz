@@ -37,11 +37,17 @@ export function getQRData({
   };
 }
 
-// capitalize first character of each word in a string
+export function capitalizeFirstLetter(str?: string | null) {
+  if (!str || typeof str !== "string") return str;
+
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
 export function capitalize(str?: string | null) {
   if (!str || typeof str !== "string") return str;
+
   return str
     .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => capitalizeFirstLetter(word))
     .join(" ");
 }

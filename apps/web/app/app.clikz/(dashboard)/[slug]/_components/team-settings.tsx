@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import { Link2, MoreVertical } from "lucide-react";
 
 import {
@@ -22,31 +20,25 @@ import {
   TabsList,
   TabsTrigger,
 } from "@clikz/ui/components/ui/tabs";
+import { capitalizeFirstLetter } from "@clikz/ui/lib/utils";
 
-type Member = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  avatar?: string;
+import { useGetWorkspaceMembers } from "~/features/workspace/api/use-get-workspace-members";
+import { AVATAR_URL } from "~/lib/constants";
+
+type TeamSettingsProps = {
+  workspaceId: string;
 };
 
-export default function TeamSettings() {
-  const [members] = useState<Member[]>([
-    {
-      id: "1",
-      name: "Vignesh Gupta",
-      email: "vignesh@example.com",
-      role: "Owner",
-      avatar: "https://github.com/shadcn.png",
-    },
-  ]);
+export default function TeamSettings({ workspaceId }: TeamSettingsProps) {
+  const { data: members } = useGetWorkspaceMembers({ workspaceId });
+
+  console.log(capitalizeFirstLetter("ADMIN"));
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold">People</h2>
+          <h2 className="text-lg font-semibold">Team</h2>
           <p className="text-sm text-muted-foreground">
             Teammates that have access to this workspace
           </p>
@@ -66,19 +58,26 @@ export default function TeamSettings() {
           <TabsTrigger value="invitations">Invitations</TabsTrigger>
         </TabsList>
         <TabsContent value="members" className="space-y-4 px-4">
-          {members.map((member) => (
+          {members?.map((member) => (
             <div
               key={member.id}
               className="flex items-center justify-between py-4"
             >
               <div className="flex items-center gap-4">
                 <Avatar>
-                  <AvatarImage src={member.avatar} />
+                  <AvatarImage
+                    className="rounded-full"
+                    src={
+                      member.image ??
+                      `${AVATAR_URL}${member.name || member.email}`
+                    }
+                  />
                   <AvatarFallback>
-                    {member.name
+                    {(member.name || member.email)
                       .split(" ")
                       .map((n) => n[0])
-                      .join("")}
+                      .join("")
+                      .toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div>
@@ -90,7 +89,7 @@ export default function TeamSettings() {
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-sm text-muted-foreground">
-                  {member.role}
+                  {capitalizeFirstLetter(member.role)}
                 </span>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
