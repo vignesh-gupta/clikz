@@ -1,18 +1,10 @@
 import { notFound } from "next/navigation";
 
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@clikz/ui/components/ui/tabs";
-
 import MaxWidthContainer from "~/components/max-width-container";
 import { db } from "~/lib/db";
 
-import GeneralSettings from "../_components/general-settings";
-import TeamSettings from "../_components/team-settings";
 import { PageWithSlugParams } from "../page";
+import SettingsTab from "./settings-tab";
 
 const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
   const { slug } = await params;
@@ -33,22 +25,12 @@ const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
           Manage your workspace preferences and team
         </p>
       </div>
-      <Tabs defaultValue="general" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="team">Team</TabsTrigger>
-        </TabsList>
-        <TabsContent value="general" className="p-1">
-          <GeneralSettings
-            workspaceId={workspace.id}
-            name={workspace.name}
-            slug={workspace.slug}
-          />
-        </TabsContent>
-        <TabsContent value="team" className="p-1">
-          <TeamSettings workspaceId={workspace.id} />
-        </TabsContent>
-      </Tabs>
+
+      <SettingsTab
+        workspaceId={workspace.id}
+        workspaceSlug={workspace.slug}
+        workspaceName={workspace.name}
+      />
     </MaxWidthContainer>
   );
 };

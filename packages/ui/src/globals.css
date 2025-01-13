@@ -118,3 +118,15 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-accent rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-800 rounded-md;
+}

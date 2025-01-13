@@ -25,6 +25,8 @@ import { capitalizeFirstLetter } from "@clikz/ui/lib/utils";
 import { useGetWorkspaceMembers } from "~/features/workspace/api/use-get-workspace-members";
 import { AVATAR_URL } from "~/lib/constants";
 
+import { useTeamNavigation } from "./hooks/use-team-navigation";
+
 type TeamSettingsProps = {
   workspaceId: string;
 };
@@ -32,7 +34,7 @@ type TeamSettingsProps = {
 export default function TeamSettings({ workspaceId }: TeamSettingsProps) {
   const { data: members } = useGetWorkspaceMembers({ workspaceId });
 
-  console.log(capitalizeFirstLetter("ADMIN"));
+  const { teamTab, setTeamTab } = useTeamNavigation("members");
 
   return (
     <div className="space-y-6">
@@ -52,10 +54,17 @@ export default function TeamSettings({ workspaceId }: TeamSettingsProps) {
         </div>
       </div>
 
-      <Tabs defaultValue="members" className="w-full">
+      <Tabs value={teamTab} className="w-full">
         <TabsList className="w-full justify-start">
-          <TabsTrigger value="members">Members</TabsTrigger>
-          <TabsTrigger value="invitations">Invitations</TabsTrigger>
+          <TabsTrigger value="members" onClick={() => setTeamTab("members")}>
+            Members
+          </TabsTrigger>
+          <TabsTrigger
+            value="invitations"
+            onClick={() => setTeamTab("invitations")}
+          >
+            Invitations
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="members" className="space-y-4 px-4">
           {members?.map((member) => (
