@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 
+import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
-import { sessionMiddleware } from "~/lib/session-middleware";
 
 const workspaceMembersApp = new Hono().get(
   "/",

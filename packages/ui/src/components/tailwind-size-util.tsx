@@ -1,5 +1,5 @@
 const TailwindSizeUtil = () => {
-  // eslint-disable-next-line turbo/no-undeclared-env-vars
+  // eslint-disable-next-line turbo/no-undeclared-env-vars, no-undef
   if (process.env.NODE_ENV !== "development") return null;
   return (
     <div className="fixed right-5 top-5 bg-foreground text-background p-2 rounded-lg text-xs font-mono">
