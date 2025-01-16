@@ -2,9 +2,9 @@ import { ImageProps } from "next/image";
 
 import { Globe2 } from "lucide-react";
 
+import { BlurImage } from "@clikz/ui/components/blur-image";
 import { cn } from "@clikz/ui/lib/utils";
 
-import { BlurImage } from "~/components/blur-image";
 import { GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
 
 export function LinkFavIcon({

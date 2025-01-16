@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import TailwindSizeUtil from "@clikz/ui/components/tailwind-size-util";
 import "@clikz/ui/globals.css";
-
-import TailwindSizeUtil from "~/components/tailwind-size-util";
 
 import Provider from "../components/provider";
 

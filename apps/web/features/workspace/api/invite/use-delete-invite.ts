@@ -8,39 +8,34 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["$delete"]
+  (typeof client.api.workspaces)[":workspaceId"]["invites"][":inviteId"]["$delete"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["$delete"]
+  (typeof client.api.workspaces)[":workspaceId"]["invites"][":inviteId"]["$delete"]
 >;
 
-export const useDeleteWorkspace = () => {
+export const useDeleteInvite = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
-      const res = await client.api.workspaces[":workspaceId"].$delete({
+      const res = await client.api.workspaces[":workspaceId"].invites[
+        ":inviteId"
+      ].$delete({
         param,
       });
       if (!res.ok) {
-        const data = await res.json();
-        if ("error" in data) {
-          // throw new Error(data.error ?? "Failed to delete Task");
-        }
         throw new Error("Failed to delete Task");
       }
       return await res.json();
     },
     onSuccess: () => {
       toast.success("Task deleted!");
-      queryClient.invalidateQueries({
-        queryKey: [...QUERY_KEYS.WORKSPACES],
-      });
-
-      router.push("/dashboard");
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.INVITES });
+      router.refresh();
     },
-    onError: (error) => toast.error(error.message ?? "Failed to delete Task"),
+    onError: (error) => toast.error(error.message ?? "Failed to delete Invite"),
   });
 
   return mutation;
