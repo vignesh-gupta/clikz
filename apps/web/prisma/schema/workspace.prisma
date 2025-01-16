@@ -12,16 +12,17 @@ model Workspace {
 
   @@unique([slug])
   @@unique([id, slug])
-  @@index([userId])
+  @@index([userId, slug])
 }
 
 model Invite {
-  id          String    @id @default(cuid())
+  id          String     @id @default(cuid())
   email       String
   token       String
   expires     DateTime
-  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
+  role        MemberRole
 
   @@index([workspaceId])
 }

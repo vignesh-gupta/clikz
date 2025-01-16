@@ -74,6 +74,7 @@ export const inviteUser = async (emails: string[], workspaceSlug: string) => {
             token: generateInviteCode(),
             // Expires in 15 days
             expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+            role: MemberRole.MEMBER,
           },
         })
       )

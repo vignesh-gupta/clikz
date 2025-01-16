@@ -3,10 +3,14 @@ import { Hono } from "hono";
 import { db } from "~/lib/db";
 import { sessionMiddleware } from "~/lib/session-middleware";
 
-import workspaceApp from "./workspace-server";
+import workspaceInviteApp from "./invite";
+import workspaceMembersApp from "./member";
+import workspaceApp from "./workspace";
 
 const workspacesApp = new Hono()
   .route("/:workspaceId", workspaceApp)
+  .route("/:workspaceId/members", workspaceMembersApp)
+  .route("/:workspaceId/invites", workspaceInviteApp)
   .get("/", sessionMiddleware, async (c) => {
     const user = c.get("user");
 

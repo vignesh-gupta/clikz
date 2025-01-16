@@ -12,7 +12,7 @@ import {
 import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
 
-import { useDeleteWorkspace } from "~/features/workspace/api/use-delete-workspace";
+import { useDeleteWorkspace } from "~/features/workspace/api/workspace/use-delete-workspace";
 
 type DeleteWorkspaceProps = {
   workspaceId: string;

@@ -20,11 +20,7 @@ type GeneralSettingsProps = {
   name: string;
 };
 
-export default function GeneralSettings({
-  name,
-  slug,
-  workspaceId,
-}: GeneralSettingsProps) {
+const GeneralSettings = ({ name, slug, workspaceId }: GeneralSettingsProps) => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
@@ -126,4 +122,6 @@ export default function GeneralSettings({
       <DeleteWorkspace workspaceId={workspaceId} />
     </div>
   );
-}
+};
+
+export default GeneralSettings;

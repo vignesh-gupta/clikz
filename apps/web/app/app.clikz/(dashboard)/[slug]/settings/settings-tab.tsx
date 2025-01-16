@@ -9,7 +9,7 @@ import {
 
 import GeneralSettings from "../_components/general-settings";
 import { useSettingsNavigation } from "../_components/hooks/use-settings-navigation";
-import TeamSettings from "../_components/team-settings";
+import TeamSettings from "../_components/teams/team-settings";
 
 type SettingsTabProps = {
   workspaceId: string;
