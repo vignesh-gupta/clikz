@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren, Suspense } from "react";
 
+import { SessionProvider } from "next-auth/react";
 import { AxiomWebVitals } from "next-axiom";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "sonner";
@@ -11,18 +12,20 @@ import QueryProviders from "./query-provider";
 
 const Provider: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <NuqsAdapter>
-      <QueryProviders>
-        <KeyboardShortcutProvider>
-          {children}
-          <Suspense fallback={null}>
-            <Modals />
-          </Suspense>
-        </KeyboardShortcutProvider>
-      </QueryProviders>
-      <Toaster />
-      <AxiomWebVitals />
-    </NuqsAdapter>
+    <SessionProvider>
+      <NuqsAdapter>
+        <QueryProviders>
+          <KeyboardShortcutProvider>
+            {children}
+            <Suspense fallback={null}>
+              <Modals />
+            </Suspense>
+          </KeyboardShortcutProvider>
+        </QueryProviders>
+        <Toaster />
+        <AxiomWebVitals />
+      </NuqsAdapter>
+    </SessionProvider>
   );
 };
 

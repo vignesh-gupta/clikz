@@ -41,6 +41,8 @@ const SignInForm = () => {
   const onSubmit = async (values: SignInSchema) => {
     await login(values)
       .then((data) => {
+        console.log({ data });
+
         if (data?.error) return toast.error(data.error);
         if (data?.success) return toast.success(data.success);
       })

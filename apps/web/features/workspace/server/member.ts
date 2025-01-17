@@ -16,7 +16,6 @@ const workspaceMembersApp = new Hono().get(
       include: {
         User: {
           select: {
-            email: true,
             name: true,
             image: true,
           },
@@ -27,7 +26,7 @@ const workspaceMembersApp = new Hono().get(
     const members = memberships.map((m) => ({
       id: m.id,
       name: m.User.name,
-      email: m.User.email,
+      email: m.email,
       image: m.User.image,
       role: m.role,
     }));

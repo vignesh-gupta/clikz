@@ -7,7 +7,7 @@
     "lint": "eslint ."
   },
   "peerDependencies": {
-    "react": "^18"
+    "react": "catalog:react19"
   },
   "devDependencies": {
     "@clikz/eslint-config": "workspace:*",
