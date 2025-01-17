@@ -16,11 +16,7 @@ export const appRedirect = (path: string, req: NextRequest) =>
 export const AppMiddleware = async (req: NextRequest) => {
   const { nextUrl, fullPath, domain } = parse(req);
 
-  if (fullPath === "/") {
-    if (domain === BASE_DOMAIN) return NextResponse.next();
-
-    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-  }
+  if (fullPath === "/" && domain === BASE_DOMAIN) return NextResponse.next();
 
   if (PUBLIC_ROUTE.includes(nextUrl.pathname)) {
     return NextResponse.next();
@@ -43,9 +39,6 @@ export const AppMiddleware = async (req: NextRequest) => {
   }
 
   if (!(user && user.id)) {
-    // If not a auth route and user is not logged in, redirect to sign-in
-    console.log("Redirecting to sign-in");
-
     let callbackUrl = nextUrl.pathname;
     if (nextUrl.search) {
       callbackUrl += nextUrl.search;

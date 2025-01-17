@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
-import { APP_NAMES, BASE_DOMAIN } from "./lib/constants";
+import { APP_NAMES } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
 import { LinkMiddleware } from "./lib/middleware/link";
 
@@ -25,8 +25,7 @@ export default async function middleware(req: NextRequest) {
 
   const { domain, fullPath } = parse(req);
 
-  if (APP_NAMES.has(domain) || (domain === BASE_DOMAIN && fullPath === "/"))
-    return AppMiddleware(req);
+  if (APP_NAMES.has(domain) || fullPath === "/") return AppMiddleware(req);
 
   return LinkMiddleware(req);
 }

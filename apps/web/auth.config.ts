@@ -23,7 +23,10 @@ export default {
         const isPasswordValid = await compare(password, user.password);
         if (!isPasswordValid) return null;
 
-        return user;
+        return {
+          ...user,
+          password: undefined,
+        };
       },
     }),
   ],

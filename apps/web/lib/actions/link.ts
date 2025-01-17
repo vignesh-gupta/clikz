@@ -28,8 +28,6 @@ export const createLink = async (
 
   const slug = data.slug === "" ? generateRandomSlug() : data.slug;
 
-  console.log(DEFAULT_REDIRECT_DOMAIN);
-
   await db.link.create({
     data: {
       domain: DEFAULT_REDIRECT_DOMAIN ?? "clikz.co",

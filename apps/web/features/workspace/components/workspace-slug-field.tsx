@@ -31,7 +31,11 @@ const WorkspaceSlugField = ({ setSlugAvailable }: WorkspaceSlugFieldProps) => {
 
   useEffect(() => {
     form.setValue("slug", textToSlug(name)); // Automatically update the slug field
-  }, [name, slug]);
+  }, [name]);
+
+  useEffect(() => {
+    form.setValue("slug", textToSlug(slug)); // Automatically update the slug field
+  }, [slug]);
 
   useEffect(() => {
     setSlugAvailable(false);

@@ -3,6 +3,7 @@ import { PropsWithChildren } from "react";
 
 import { SidebarInset, SidebarProvider } from "@clikz/ui/components/ui/sidebar";
 
+import { auth } from "~/auth";
 import MaxWidthContainer from "~/components/max-width-container";
 import { db } from "~/lib/db";
 
@@ -15,12 +16,25 @@ export default async function DashboardLayout({
   params,
   children,
 }: DashboardLayoutProps) {
+  const session = await auth();
+  if (!session || !session.user) return notFound();
+
   const { slug } = await params;
+
   const workspace = await db.workspace.findUnique({
     where: { slug },
   });
 
   if (!workspace) return notFound();
+
+  const members = await db.membership.findFirst({
+    where: {
+      userId: session.user?.id,
+      workspaceId: workspace.id,
+    },
+  });
+
+  if (!members) return notFound();
 
   return (
     <SidebarProvider>

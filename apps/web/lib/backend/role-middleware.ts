@@ -25,8 +25,6 @@ export const roleMiddleware = (requiredRole: MemberRole) =>
       },
     });
 
-    console.log("membership", membership);
-
     if (!membership) {
       return c.json({ error: "Unauthorized" }, { status: 401 });
     }

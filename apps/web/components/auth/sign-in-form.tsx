@@ -41,12 +41,15 @@ const SignInForm = () => {
   const onSubmit = async (values: SignInSchema) => {
     await login(values)
       .then((data) => {
-        console.log({ data });
-
         if (data?.error) return toast.error(data.error);
         if (data?.success) return toast.success(data.success);
       })
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => {
+        console.log({ someError: error });
+
+        if (error.message === "NEXT_REDIRECT") return;
+        toast.error("An error occurred. Please try again later.");
+      });
   };
 
   return (
