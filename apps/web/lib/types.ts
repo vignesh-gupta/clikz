@@ -1,11 +1,12 @@
 export type WorkspaceProp = {
   name: string;
   id: string;
+  slug: string;
+  userId: string;
+  defaultInvite: string;
   createdAt: Date;
   updatedAt: Date;
-  userId: string;
-  slug: string;
-} | null;
+};
 
 export type LinkProp = {
   domain: string;

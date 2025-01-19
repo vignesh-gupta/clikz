@@ -26,11 +26,7 @@ const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
         </p>
       </div>
 
-      <SettingsTab
-        workspaceId={workspace.id}
-        workspaceSlug={workspace.slug}
-        workspaceName={workspace.name}
-      />
+      <SettingsTab initialWorkspace={workspace} />
     </MaxWidthContainer>
   );
 };

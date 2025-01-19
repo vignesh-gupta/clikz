@@ -48,7 +48,7 @@ export const getUserFirstWorkspaceViaEdge = async (userId: string) => {
   const query = `SELECT * FROM "Workspace" WHERE "userId" = '${userId}' ORDER BY "createdAt" ASC LIMIT 1`;
   const result = await conn(query);
 
-  return result[0] as WorkspaceProp;
+  return result[0] as WorkspaceProp | null;
 };
 
 export const getLinkViaEdge = async (key: string, domain: string) => {

@@ -14,6 +14,8 @@ import {
   DialogTrigger,
 } from "@clikz/ui/components/ui/dialog";
 
+import { DB_PREFIX } from "~/lib/constants";
+
 import { useGetWorkspace } from "../api/workspace/use-get-workspace";
 
 type WorkspaceInviteProps = {
@@ -51,11 +53,11 @@ const WorkspaceInvite = ({ workspaceId }: WorkspaceInviteProps) => {
           </p>
         </DialogHeader>
         <div className="w-full space-y-4">
-          <div className="flex items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5">
-            <p className="text-sm text-muted-foreground">
-              {workspace?.defaultInvite}
+          <div className="flex items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 gap-2">
+            <p className="text-sm text-muted-foreground truncate">
+              {`https://app.clikz.live/join/${DB_PREFIX.WORKSPACE_INVITE}${workspace?.defaultInvite}`}
             </p>
-            <Button variant="outline" size="icon" onClick={handleCopy}>
+            <Button variant="outline" className="size-10" onClick={handleCopy}>
               {copy ? (
                 <CheckIcon className="size-4 " />
               ) : (
