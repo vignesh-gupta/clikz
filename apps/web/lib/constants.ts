@@ -40,8 +40,17 @@ export const QUERY_KEYS = {
   LINK: ["link"],
   LINKS: ["links"],
   WORKSPACES: ["workspaces"],
+  WORKSPACE: ["workspace"],
   MEMBERS: ["members"],
   INVITES: ["invites"],
 };
 
 export const AVATAR_URL = "https://api.dicebear.com/9.x/open-peeps/svg?seed=";
+
+export const DB_PREFIX = {
+  WORKSPACE: "ws_",
+  LINK: "ln_",
+  USER: "us_",
+  WORKSPACE_INVITE: "wsi_",
+  USER_INVITE: "usi_",
+};

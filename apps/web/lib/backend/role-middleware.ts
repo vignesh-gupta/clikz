@@ -3,7 +3,7 @@ import { createMiddleware } from "hono/factory";
 
 import { db } from "../db";
 
-export const roleMiddleware = (requiredRole: MemberRole) =>
+export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
   createMiddleware(async (c, next) => {
     const user = c.get("user");
 

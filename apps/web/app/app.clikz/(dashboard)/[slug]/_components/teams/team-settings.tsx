@@ -1,7 +1,5 @@
 "use client";
 
-import { Link2 } from "lucide-react";
-
 import { Button } from "@clikz/ui/components/ui/button";
 import { Skeleton } from "@clikz/ui/components/ui/skeleton";
 import {
@@ -10,6 +8,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@clikz/ui/components/ui/tabs";
+
+import WorkspaceInvite from "~/features/workspace/components/workspace-invite";
 
 import { useTeamNavigation } from "../hooks/use-team-navigation";
 import InvitesTab from "./invites-tab";
@@ -32,10 +32,7 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon">
-            <Link2 className="h-4 w-4" />
-            <span className="sr-only">Copy invite link</span>
-          </Button>
+          <WorkspaceInvite workspaceId={workspaceId} />
           <Button>Invite</Button>
         </div>
       </div>

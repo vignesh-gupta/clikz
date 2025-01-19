@@ -11,6 +11,7 @@ import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
 
 import WorkspaceAvatar from "~/features/workspace/components/workspace-avatar";
+import { DB_PREFIX } from "~/lib/constants";
 
 import DeleteWorkspace from "./delete-workspace";
 
@@ -95,7 +96,7 @@ const GeneralSettings = ({ name, slug, workspaceId }: GeneralSettingsProps) => {
           <div className="flex w-full">
             <Input
               disabled
-              defaultValue={`ws_${workspaceId}`}
+              defaultValue={`${DB_PREFIX.WORKSPACE}${workspaceId}`}
               className="rounded-r-none font-mono text-sm"
             />
             <Button

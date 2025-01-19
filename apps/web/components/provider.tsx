@@ -22,7 +22,7 @@ const Provider: FC<PropsWithChildren> = ({ children }) => {
             </Suspense>
           </KeyboardShortcutProvider>
         </QueryProviders>
-        <Toaster />
+        <Toaster closeButton />
         <AxiomWebVitals />
       </NuqsAdapter>
     </SessionProvider>

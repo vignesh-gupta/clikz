@@ -3,6 +3,7 @@ import { useMediaQuery } from "../hooks/use-media-query";
 import { cn } from "../lib/utils";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Drawer, DrawerClose, DrawerContent } from "./ui/drawer";
+import { ScrollArea } from "./ui/scroll-area";
 
 type ResponsiveModelProps = {
   open: boolean;
@@ -38,10 +39,10 @@ const ResponsiveModel = ({
   return (
     <Drawer open={open} onOpenChange={onOpen} setBackgroundColorOnScale={true}>
       <DrawerClose className="bg-gray-700" />
-      <DrawerContent
-        className={cn("overflow-y-auto hide-scrollbar max-h-[85vh]", className)}
-      >
-        {children}
+      <DrawerContent className={className}>
+        <ScrollArea className="overflow-y-auto hide-scrollbar">
+          {children}
+        </ScrollArea>
       </DrawerContent>
     </Drawer>
   );

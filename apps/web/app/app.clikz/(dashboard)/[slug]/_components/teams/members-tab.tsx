@@ -31,20 +31,14 @@ const MembersTab = ({ workspaceId }: TeamSettingsProps) => {
 
   const { data: currentSession } = useSession();
 
-  if (!currentSession) return null;
+  if (!currentSession || !currentSession.user) return null;
 
-  const currentUserRoleIndex = members?.findIndex(
+  const currentUserRole = members?.find(
     (m) => m.email === currentSession.user?.email
-  );
-
-  if (!currentUserRoleIndex || currentUserRoleIndex == -1) return null;
-
-  const currentUserRole = members?.[currentUserRoleIndex];
-  members?.splice(currentUserRoleIndex, 1);
-
-  if (currentUserRole) members?.unshift(currentUserRole);
+  )?.role;
 
   if (isLoading) return <TeamsLoading />;
+
   return members?.map((member) => (
     <div key={member.id} className="flex items-center justify-between py-4">
       <div className="flex items-center gap-4">
@@ -79,7 +73,10 @@ const MembersTab = ({ workspaceId }: TeamSettingsProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem
-              disabled={currentUserRole?.role !== MemberRole.ADMIN}
+              disabled={
+                currentUserRole !== MemberRole.ADMIN ||
+                currentSession.user?.email === member.email
+              }
             >
               <UserRoundCog className="size-4 mr-1" /> Change role
             </DropdownMenuItem>

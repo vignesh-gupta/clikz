@@ -11,6 +11,13 @@ const workspaceApp = new Hono()
 
   .route("/members", workspaceMembersApp)
   .route("/invites", workspaceInviteApp)
+  .get("/", sessionMiddleware, roleMiddleware(), async (c) => {
+    const workspace = await db.workspace.findFirst({
+      where: { id: c.req.param("workspaceId") },
+    });
+
+    return c.json(workspace);
+  })
   .delete("/", sessionMiddleware, roleMiddleware("ADMIN"), async (c) => {
     const workspaceId = c.req.param("workspaceId");
 
