@@ -22,7 +22,7 @@ const SettingsTab = ({ initialWorkspace }: SettingsTabProps) => {
   const { tab, setTab } = useSettingsNavigation("general");
 
   const { data: workspace } = useGetWorkspace({
-    workspaceId: initialWorkspace?.id,
+    workspaceId: initialWorkspace.id,
     initialData: initialWorkspace,
   });
 

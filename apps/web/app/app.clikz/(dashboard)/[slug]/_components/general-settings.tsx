@@ -2,16 +2,27 @@
 
 import { useState } from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Copy } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
 
+import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
 import WorkspaceAvatar from "~/features/workspace/components/workspace-avatar";
 import { DB_PREFIX } from "~/lib/constants";
+import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 
 import DeleteWorkspace from "./delete-workspace";
 
@@ -24,45 +35,72 @@ type GeneralSettingsProps = {
 const GeneralSettings = ({ name, slug, workspaceId }: GeneralSettingsProps) => {
   const [copied, setCopied] = useState(false);
 
+  const form = useForm<WorkspaceSchema>({
+    resolver: zodResolver(workspaceSchema),
+    values: {
+      name,
+      slug,
+    },
+  });
+
+  const { mutate: updateWorkspace } = useUpdateWorkspace();
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(`ws_${workspaceId}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 500);
   };
 
+  const onSubmit = (values: WorkspaceSchema) =>
+    updateWorkspace({ json: values, param: { workspaceId } });
+
   return (
     <div className="space-y-6">
-      <Card>
-        <CardContent className="space-y-2 p-4">
-          <Label htmlFor="slug">Workspace Slug</Label>
-          <Input
-            id="name"
-            readOnly
-            value={name}
-            placeholder="your-workspace-slug"
-            className="w-full"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <Card>
+                  <CardContent className="space-y-2 p-4">
+                    <FormLabel>Workspace Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <p className="text-sm text-muted-foreground">
+                      Only lowercase letters, numbers. Max 48 characters.
+                    </p>
+                  </CardContent>
+                </Card>
+              </FormItem>
+            )}
           />
-          <p className="text-sm text-muted-foreground">
-            Only lowercase letters, numbers, and dashes. Max 48 characters.
-          </p>
-        </CardContent>
-      </Card>
 
-      <Card>
-        <CardContent className="space-y-2 p-4">
-          <Label htmlFor="slug">Workspace Slug</Label>
-          <Input
-            id="slug"
-            readOnly
-            value={slug}
-            placeholder="your-workspace-slug"
-            className="w-full"
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <Card>
+                  <CardContent className="space-y-2 p-4">
+                    <FormLabel>Workspace Slug</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <p className="text-sm text-muted-foreground">
+                      Only lowercase letters, numbers, and dashes. Max 48
+                      characters.
+                    </p>
+                  </CardContent>
+                </Card>
+              </FormItem>
+            )}
           />
-          <p className="text-sm text-muted-foreground">
-            Only lowercase letters, numbers, and dashes. Max 48 characters.
-          </p>
-        </CardContent>
-      </Card>
+          <Button type="submit">Save</Button>
+        </form>
+      </Form>
 
       <Separator />
 

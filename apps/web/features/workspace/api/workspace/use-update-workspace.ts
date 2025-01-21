@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
@@ -8,37 +8,37 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["$delete"]
+  (typeof client.api.workspaces)[":workspaceId"]["$put"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["$delete"]
+  (typeof client.api.workspaces)[":workspaceId"]["$put"]
 >;
 
-export const useDeleteWorkspace = () => {
+export const useUpdateWorkspace = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const param = useParams();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ param }) => {
-      const res = await client.api.workspaces[":workspaceId"].$delete({
+    mutationFn: async ({ json, param }) => {
+      const res = await client.api.workspaces[":workspaceId"].$put({
         param,
+        json,
       });
+
       if (!res.ok) {
-        const data = await res.json();
-        if ("error" in data) {
-          // throw new Error(data.error ?? "Failed to delete Task");
-        }
-        throw new Error("Failed to delete Task");
+        throw new Error("Failed to update Workspace");
       }
       return await res.json();
     },
-    onSuccess: () => {
-      toast.success("Workspace deleted!");
-      queryClient.invalidateQueries({
-        queryKey: [...QUERY_KEYS.WORKSPACES],
-      });
+    onSuccess: ({ id, slug }) => {
+      if (slug !== param.slug) router.push(`/${slug}/settings`);
+      else router.refresh();
 
-      router.push("/dashboard");
+      toast.success("Workspace Updated!");
+      queryClient.invalidateQueries({
+        queryKey: [...QUERY_KEYS.WORKSPACE, id],
+      });
     },
     onError: (error) => toast.error(error.message ?? "Failed to delete Task"),
   });
