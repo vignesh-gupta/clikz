@@ -29,6 +29,8 @@
     "bcryptjs": "^2.4.3",
     "framer-motion": "^11.18.0",
     "hono": "^4.6.14",
+    "imagekit": "^6.0.0",
+    "imagekitio-next": "^1.0.1",
     "lucide-react": "^0.456.0",
     "next": "catalog:",
     "next-auth": "5.0.0-beta.25",

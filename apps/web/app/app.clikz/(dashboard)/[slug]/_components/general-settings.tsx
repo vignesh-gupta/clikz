@@ -20,10 +20,10 @@ import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
 
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
-import WorkspaceAvatar from "~/features/workspace/components/workspace-avatar";
 import { DB_PREFIX } from "~/lib/constants";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 
+import AvatarUpload from "./avatar-upload";
 import DeleteWorkspace from "./delete-workspace";
 
 type GeneralSettingsProps = {
@@ -108,14 +108,7 @@ const GeneralSettings = ({ name, slug, workspaceId }: GeneralSettingsProps) => {
         <CardContent className="space-y-2 p-4">
           <Label>Workspace Logo</Label>
           <div className="flex items-center gap-4">
-            <div className="relative size-24 rounded-full border-2">
-              <WorkspaceAvatar name={slug} className="size-full" />
-              <input
-                type="file"
-                className="absolute inset-0 size-full opacity-0 cursor-pointer"
-                accept="image/png,image/jpeg"
-              />
-            </div>
+            <AvatarUpload slug={slug} />
             <div className="text-sm text-muted-foreground">
               <p>
                 Square image recommended. Accepted file types: .png, .jpg with

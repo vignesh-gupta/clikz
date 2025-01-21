@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 
 import { KeyboardShortcutProvider } from "@clikz/ui";
 
+import ImageKitProvider from "./image-kit-provider";
 import Modals from "./modals";
 import QueryProviders from "./query-provider";
 
@@ -15,12 +16,14 @@ const Provider: FC<PropsWithChildren> = ({ children }) => {
     <SessionProvider>
       <NuqsAdapter>
         <QueryProviders>
-          <KeyboardShortcutProvider>
-            {children}
-            <Suspense fallback={null}>
-              <Modals />
-            </Suspense>
-          </KeyboardShortcutProvider>
+          <ImageKitProvider>
+            <KeyboardShortcutProvider>
+              {children}
+              <Suspense fallback={null}>
+                <Modals />
+              </Suspense>
+            </KeyboardShortcutProvider>
+          </ImageKitProvider>
         </QueryProviders>
         <Toaster closeButton />
         <AxiomWebVitals />

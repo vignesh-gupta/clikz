@@ -30,6 +30,10 @@ const nextConfig = {
         hostname: "api.dicebear.com",
         protocol: "https",
       },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
+      },
     ],
   },
 };
