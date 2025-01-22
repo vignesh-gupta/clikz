@@ -21,7 +21,7 @@
     "typescript": "catalog:"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
+    "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-alert-dialog": "^1.1.4",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.4",
@@ -39,12 +39,12 @@
     "input-otp": "^1.4.1",
     "lucide-react": "catalog:",
     "next-themes": "^0.4.3",
-    "react-hook-form": "^7.53.1",
+    "react-hook-form": "catalog:",
     "sonner": "^1.7.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.1",
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "exports": {
     ".": "./src/index.ts",
