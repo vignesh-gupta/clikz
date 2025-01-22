@@ -20,7 +20,7 @@ catalogs:
       version: 8.57.0
     lucide-react:
       specifier: ^0.456.0
-      version: 0.451.0
+      version: 0.456.0
     next:
       specifier: ^15.1.3
       version: 15.1.3

@@ -8,10 +8,11 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["$put"]
+  (typeof client.api.workspaces)[":workspaceId"]["$patch"],
+  200
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["$put"]
+  (typeof client.api.workspaces)[":workspaceId"]["$patch"]
 >;
 
 export const useUpdateWorkspace = () => {
@@ -21,7 +22,7 @@ export const useUpdateWorkspace = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json, param }) => {
-      const res = await client.api.workspaces[":workspaceId"].$put({
+      const res = await client.api.workspaces[":workspaceId"].$patch({
         param,
         json,
       });
@@ -38,6 +39,9 @@ export const useUpdateWorkspace = () => {
       toast.success("Workspace Updated!");
       queryClient.invalidateQueries({
         queryKey: [...QUERY_KEYS.WORKSPACE, id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.WORKSPACES,
       });
     },
     onError: (error) => toast.error(error.message ?? "Failed to delete Task"),

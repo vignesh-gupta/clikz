@@ -30,9 +30,15 @@ type GeneralSettingsProps = {
   workspaceId: string;
   slug: string;
   name: string;
+  icon?: string;
 };
 
-const GeneralSettings = ({ name, slug, workspaceId }: GeneralSettingsProps) => {
+const GeneralSettings = ({
+  name,
+  slug,
+  workspaceId,
+  icon,
+}: GeneralSettingsProps) => {
   const [copied, setCopied] = useState(false);
 
   const form = useForm<WorkspaceSchema>({
@@ -108,7 +114,7 @@ const GeneralSettings = ({ name, slug, workspaceId }: GeneralSettingsProps) => {
         <CardContent className="space-y-2 p-4">
           <Label>Workspace Logo</Label>
           <div className="flex items-center gap-4">
-            <AvatarUpload slug={slug} />
+            <AvatarUpload slug={slug} workspaceId={workspaceId} icon={icon} />
             <div className="text-sm text-muted-foreground">
               <p>
                 Square image recommended. Accepted file types: .png, .jpg with

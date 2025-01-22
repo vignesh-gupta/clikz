@@ -53,6 +53,7 @@ const WorkspaceSwitcher = () => {
                 <div className="flex justify-start items-center gap-3 font-medium">
                   <WorkspaceAvatar
                     name={workspace.slug}
+                    image={workspace.icon ?? undefined}
                     height={10}
                     width={10}
                   />

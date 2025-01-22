@@ -8,6 +8,7 @@ model Workspace {
   Invite        Invite[]
   Link          Link[]
   Membership    Membership[]
+  icon          String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 

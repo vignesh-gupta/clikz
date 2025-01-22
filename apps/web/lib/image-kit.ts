@@ -8,8 +8,6 @@ export const authenticator = async () => {
   try {
     const response = await fetch(`${BASE_URL}/api/files/auth`);
 
-    console.log("ImageKit authentication res", response);
-
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
@@ -19,8 +17,6 @@ export const authenticator = async () => {
 
     const data = await response.json();
     const { signature, expire, token } = data;
-
-    console.log("ImageKit authentication successful");
 
     return { signature, expire, token };
   } catch (error: any) {

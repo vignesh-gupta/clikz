@@ -4,6 +4,7 @@ export type WorkspaceProp = {
   slug: string;
   userId: string;
   defaultInvite: string;
+  icon: string;
   createdAt: Date;
   updatedAt: Date;
 };

@@ -24,6 +24,7 @@ export const workspaceSchema = z.object({
     .string()
     .min(1, "Workspace slug is required")
     .max(100, "Workspace slug is too long"),
+  icon: z.string().optional(),
 });
 
 export type WorkspaceSchema = z.infer<typeof workspaceSchema>;

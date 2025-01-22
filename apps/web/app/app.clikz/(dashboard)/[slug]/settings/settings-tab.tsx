@@ -41,6 +41,7 @@ const SettingsTab = ({ initialWorkspace }: SettingsTabProps) => {
           workspaceId={initialWorkspace.id}
           name={workspace?.name!}
           slug={workspace?.slug!}
+          icon={workspace?.icon ?? undefined}
         />
       </TabsContent>
       <TabsContent value="team" className="p-1">

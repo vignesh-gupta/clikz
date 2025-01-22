@@ -29,18 +29,30 @@ const workspaceApp = new Hono()
 
     return c.json({ success: true, workspaceId });
   })
-  .put(
+  .patch(
     "/",
     sessionMiddleware,
     roleMiddleware("ADMIN"),
-    zValidator("json", workspaceSchema),
+    zValidator("json", workspaceSchema.partial()),
     async (c) => {
       const workspaceId = c.req.param("workspaceId");
-      const { name, slug } = c.req.valid("json");
+      const { name, slug, icon } = c.req.valid("json");
+
+      const existingWorkspace = await db.workspace.findFirst({
+        where: { id: workspaceId },
+      });
+
+      if (!existingWorkspace) {
+        return c.json({ error: "Workspace not found" }, 404);
+      }
 
       const workspace = await db.workspace.update({
-        where: { id: workspaceId },
-        data: { name, slug },
+        where: { id: existingWorkspace.id },
+        data: {
+          name: name ?? existingWorkspace.name,
+          slug: slug ?? existingWorkspace.slug,
+          icon: icon ?? existingWorkspace.icon,
+        },
       });
 
       return c.json(workspace);
