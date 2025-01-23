@@ -2,8 +2,8 @@ import { MemberRole } from "@prisma/client";
 import {
   LogOutIcon,
   MoreVertical,
-  TrashIcon,
   UserRoundCog,
+  UserRoundX,
 } from "lucide-react";
 import { User } from "next-auth";
 
@@ -15,25 +15,25 @@ import {
   DropdownMenuTrigger,
 } from "@clikz/ui/components/ui/dropdown-menu";
 
+import { useDeleteMember } from "~/features/workspace/api/members/use-delete-membe";
+import { useUpdateMember } from "~/features/workspace/api/members/use-update-member";
 import { WorkspaceMember } from "~/lib/types";
 
 type MemberActionProps = {
   member: WorkspaceMember;
   currentUser?: User;
   currentUserRole?: MemberRole;
+  workspaceId: string;
 };
 
 const MemberAction = ({
   currentUser,
   member,
   currentUserRole,
+  workspaceId,
 }: MemberActionProps) => {
-  console.log({
-    isAdmin: currentUserRole === MemberRole.ADMIN,
-    isCurrentUser: currentUser?.email === member.email,
-  });
-
-  // Return  null if the the current user is not an admin or the member is not the current user
+  const { mutate: updateMember } = useUpdateMember();
+  const { mutate: deleteMember } = useDeleteMember();
 
   if (
     currentUserRole !== MemberRole.ADMIN &&
@@ -41,6 +41,23 @@ const MemberAction = ({
   ) {
     return null;
   }
+
+  const handleRoleChange = (role: MemberRole) =>
+    updateMember({
+      json: { role },
+      param: {
+        workspaceId,
+        membershipId: member.id,
+      },
+    });
+
+  const handleRemoveMember = () =>
+    deleteMember({
+      param: {
+        workspaceId,
+        membershipId: member.id,
+      },
+    });
 
   return (
     <DropdownMenu>
@@ -56,10 +73,16 @@ const MemberAction = ({
             currentUserRole !== MemberRole.ADMIN ||
             currentUser?.email === member.email
           }
+          onClick={() =>
+            handleRoleChange(member.role === "ADMIN" ? "MEMBER" : "ADMIN")
+          }
         >
           <UserRoundCog className="size-4 mr-1" /> Change role
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-destructive">
+        <DropdownMenuItem
+          className="text-destructive"
+          onClick={handleRemoveMember}
+        >
           {member.email === currentUser?.email ? (
             <>
               <LogOutIcon className="size-4 mr-1" />
@@ -67,7 +90,7 @@ const MemberAction = ({
             </>
           ) : (
             <>
-              <TrashIcon className="size-4 mr-1" />
+              <UserRoundX className="size-4 mr-1" />
               Remove member
             </>
           )}

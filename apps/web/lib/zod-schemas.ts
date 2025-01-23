@@ -36,3 +36,12 @@ export const linkSchema = z.object({
 });
 
 export type LinkSchema = z.infer<typeof linkSchema>;
+
+export const MemberRole = z.enum(["ADMIN", "MEMBER"]);
+
+export const membershipSchema = z.object({
+  email: z.string().email(),
+  role: MemberRole,
+});
+
+export type MembershipSchema = z.infer<typeof membershipSchema>;

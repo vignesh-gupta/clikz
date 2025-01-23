@@ -1,12 +1,13 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
+import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
+import { membershipSchema } from "~/lib/zod-schemas";
 
-const workspaceMembersApp = new Hono().get(
-  "/",
-  sessionMiddleware,
-  async (c) => {
+const workspaceMembersApp = new Hono()
+  .get("/", sessionMiddleware, async (c) => {
     const workspaceId = c.req.param("workspaceId");
 
     const memberships = await db.membership.findMany({
@@ -32,7 +33,42 @@ const workspaceMembersApp = new Hono().get(
     }));
 
     return c.json(members);
-  }
-);
+  })
+  .patch(
+    "/:membershipId",
+    sessionMiddleware,
+    roleMiddleware("ADMIN"),
+    zValidator("json", membershipSchema.partial()),
+    async (c) => {
+      const membershipId = c.req.param("membershipId");
+      const { role } = c.req.valid("json");
 
+      const updatedMember = await db.membership.update({
+        where: {
+          id: membershipId,
+        },
+        data: {
+          role,
+        },
+      });
+
+      return c.json({ success: true, member: updatedMember });
+    }
+  )
+  .delete(
+    "/:membershipId",
+    sessionMiddleware,
+    roleMiddleware("ADMIN"),
+    async (c) => {
+      const membershipId = c.req.param("membershipId");
+
+      const deletedMember = await db.membership.delete({
+        where: {
+          id: membershipId,
+        },
+      });
+
+      return c.json({ success: true, member: deletedMember });
+    }
+  );
 export default workspaceMembersApp;

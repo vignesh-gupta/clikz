@@ -56,6 +56,7 @@ const MembersTab = ({ workspaceId }: TeamSettingsProps) => {
           currentUserRole={currentUserRole}
           currentUser={currentSession.user}
           member={member}
+          workspaceId={workspaceId}
         />
       </div>
     </div>
