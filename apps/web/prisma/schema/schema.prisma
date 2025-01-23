@@ -32,6 +32,8 @@ model User {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   Membership    Membership[]
+
+  @@unique([id, email])
 }
 
 model Account {

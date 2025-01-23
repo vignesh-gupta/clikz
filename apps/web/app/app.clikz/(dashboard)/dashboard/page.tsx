@@ -12,7 +12,11 @@ const PrivatePage = async () => {
 
   const workspace = await db.workspace.findFirst({
     where: {
-      userId: session.user.id,
+      Membership: {
+        some: {
+          userId: session.user.id,
+        },
+      },
     },
   });
 

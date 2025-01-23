@@ -34,7 +34,7 @@ model Invite {
 model Membership {
   id          String     @id @default(cuid())
   email       String
-  User        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User        User       @relation(fields: [userId, email], references: [id, email], onDelete: Cascade)
   userId      String
   role        MemberRole
   Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
