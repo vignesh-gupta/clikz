@@ -5,12 +5,12 @@ import { Button } from "@clikz/ui/components/ui/button";
 import { capitalizeFirstLetter } from "@clikz/ui/lib/utils";
 
 import { useDeleteInvite } from "~/features/workspace/api/invite/use-delete-invite";
-import { useGetWorkspaceInvites } from "~/features/workspace/api/invite/use-get-workspace-invites";
+import { useGetInvites } from "~/features/workspace/api/invite/use-get-invites";
 
 import { TeamSettingsProps, TeamsLoading } from "./team-settings";
 
 const InvitesTab = ({ workspaceId }: TeamSettingsProps) => {
-  const { data: invites, isLoading } = useGetWorkspaceInvites({ workspaceId });
+  const { data: invites, isLoading } = useGetInvites({ workspaceId });
   const { mutate: deleteInvite } = useDeleteInvite();
 
   if (isLoading) return <TeamsLoading />;

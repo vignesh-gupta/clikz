@@ -5,6 +5,7 @@ import { useState } from "react";
 import { IKUpload } from "imagekitio-next";
 import { IKUploadResponse } from "imagekitio-next/dist/types/components/IKUpload/props";
 import { Upload } from "lucide-react";
+import { toast } from "sonner";
 
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
 import WorkspaceAvatar from "~/features/workspace/components/workspace-avatar";
@@ -22,11 +23,11 @@ const AvatarUpload = ({ slug, workspaceId, icon }: AvatarUploadProps) => {
 
   const onError = (err: any) => {
     console.log("Error", err);
+    toast.error("Failed to upload image. Please try again.");
     setIsUploading(false);
   };
 
   const onSuccess = (res: IKUploadResponse) => {
-    console.log("Success", res);
     updateWorkspace({
       json: { icon: `${urlEndpoint}tr:w-100,h-100/${res.name}` },
       param: { workspaceId },

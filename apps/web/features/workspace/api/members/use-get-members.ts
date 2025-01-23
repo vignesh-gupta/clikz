@@ -4,17 +4,17 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 import { WorkspaceMember } from "~/lib/types";
 
-type GetWorkspaceMembers = {
+type GetMembers = {
   workspaceId: string;
   initialMembers?: WorkspaceMember[];
   queryKey?: string[];
 };
 
-export const useGetWorkspaceMembers = ({
+export const useGetMembers = ({
   initialMembers,
   workspaceId,
   queryKey,
-}: GetWorkspaceMembers) => {
+}: GetMembers) => {
   return useQuery({
     initialData: initialMembers,
     queryKey: [...QUERY_KEYS.MEMBERS, workspaceId, ...(queryKey ?? [])],

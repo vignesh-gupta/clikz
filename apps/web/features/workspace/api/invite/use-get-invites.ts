@@ -3,15 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
-type GetWorkspaceMembers = {
+type GetInvites = {
   workspaceId: string;
   queryKey?: string[];
 };
 
-export const useGetWorkspaceInvites = ({
-  workspaceId,
-  queryKey,
-}: GetWorkspaceMembers) => {
+export const useGetInvites = ({ workspaceId, queryKey }: GetInvites) => {
   return useQuery({
     queryKey: [...QUERY_KEYS.INVITES, workspaceId, ...(queryKey ?? [])],
     queryFn: async () => {
