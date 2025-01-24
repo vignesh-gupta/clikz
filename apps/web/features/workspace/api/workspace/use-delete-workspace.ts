@@ -24,11 +24,9 @@ export const useDeleteWorkspace = () => {
         param,
       });
       if (!res.ok) {
-        const data = await res.json();
-        if ("error" in data) {
-          // throw new Error(data.error ?? "Failed to delete Task");
-        }
-        throw new Error("Failed to delete Task");
+        const errorRes = (await res.json()) as unknown as { error: string };
+
+        throw new Error(errorRes?.error ?? "Failed to delete workspace");
       }
       return await res.json();
     },

@@ -25,7 +25,11 @@ export const useDeleteLink = () => {
         param,
       });
 
-      if (!res.ok) throw new Error("Failed to delete task");
+      if (!res.ok) {
+        const errorRes = (await res.json()) as unknown as { error: string };
+
+        throw new Error(errorRes?.error ?? "Failed to delete task");
+      }
 
       return await res.json();
     },

@@ -26,7 +26,10 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
     });
 
     if (!membership) {
-      return c.json({ error: "Unauthorized" }, { status: 401 });
+      return c.json(
+        { error: "Unauthorized to perform the action" },
+        { status: 401 }
+      );
     }
 
     await next();

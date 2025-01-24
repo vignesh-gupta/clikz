@@ -25,8 +25,11 @@ export const useDeleteMember = () => {
       ].$delete({
         param,
       });
+
       if (!res.ok) {
-        throw new Error("Failed to update member");
+        const errorRes = (await res.json()) as unknown as { error: string };
+
+        throw new Error(errorRes?.error ?? "Failed to delete member");
       }
       return await res.json();
     },

@@ -27,7 +27,9 @@ export const useUpdateMember = () => {
         json,
       });
       if (!res.ok) {
-        throw new Error("Failed to update member");
+        const errorRes = (await res.json()) as unknown as { error: string };
+
+        throw new Error(errorRes?.error ?? "Failed to update member role");
       }
       return await res.json();
     },
@@ -36,7 +38,8 @@ export const useUpdateMember = () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MEMBERS });
       router.refresh();
     },
-    onError: (error) => toast.error(error.message ?? "Failed to delete Invite"),
+    onError: (error) =>
+      toast.error(error.message ?? "Failed to update member role"),
   });
 
   return mutation;

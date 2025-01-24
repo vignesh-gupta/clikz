@@ -36,7 +36,7 @@ model Membership {
   email       String
   User        User       @relation(fields: [userId, email], references: [id, email], onDelete: Cascade)
   userId      String
-  role        MemberRole
+  role        MemberRole @default(MEMBER)
   Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
   createdAt   DateTime   @default(now())

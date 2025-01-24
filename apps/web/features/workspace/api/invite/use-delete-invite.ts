@@ -26,7 +26,9 @@ export const useDeleteInvite = () => {
         param,
       });
       if (!res.ok) {
-        throw new Error("Failed to delete Task");
+        const errorRes = (await res.json()) as unknown as { error: string };
+
+        throw new Error(errorRes?.error ?? "Failed to delete Task");
       }
       return await res.json();
     },

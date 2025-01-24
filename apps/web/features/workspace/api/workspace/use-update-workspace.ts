@@ -28,7 +28,9 @@ export const useUpdateWorkspace = () => {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to update Workspace");
+        const errorRes = (await res.json()) as unknown as { error: string };
+
+        throw new Error(errorRes?.error ?? "Failed to update Workspace");
       }
       return await res.json();
     },
@@ -44,7 +46,8 @@ export const useUpdateWorkspace = () => {
         queryKey: QUERY_KEYS.WORKSPACES,
       });
     },
-    onError: (error) => toast.error(error.message ?? "Failed to delete Task"),
+    onError: (error) =>
+      toast.error(error.message ?? "Failed to update Workspace"),
   });
 
   return mutation;
