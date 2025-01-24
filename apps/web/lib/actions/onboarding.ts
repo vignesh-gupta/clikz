@@ -52,7 +52,18 @@ export const inviteUser = async (emails: string[], workspaceSlug: string) => {
     return { error: "Workspace not found" };
   }
 
-  if (workspace.userId !== session.user.id) {
+  const membership = await db.membership.findFirst({
+    where: {
+      userId: session.user.id,
+      workspaceId: workspace.id,
+    },
+  });
+
+  if (
+    !membership ||
+    membership.role !== "ADMIN" ||
+    membership.userId !== session.user.id
+  ) {
     return { error: "You are not the owner of this workspace" };
   }
 

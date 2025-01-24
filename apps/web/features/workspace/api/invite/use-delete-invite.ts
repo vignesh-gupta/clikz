@@ -28,12 +28,12 @@ export const useDeleteInvite = () => {
       if (!res.ok) {
         const errorRes = (await res.json()) as unknown as { error: string };
 
-        throw new Error(errorRes?.error ?? "Failed to delete Task");
+        throw new Error(errorRes?.error ?? "Failed to delete Invite");
       }
       return await res.json();
     },
     onSuccess: () => {
-      toast.success("Task deleted!");
+      toast.success("Invite deleted!");
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.INVITES });
       router.refresh();
     },

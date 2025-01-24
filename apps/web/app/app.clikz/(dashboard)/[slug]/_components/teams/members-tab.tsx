@@ -44,7 +44,10 @@ const MembersTab = ({ workspaceId }: TeamSettingsProps) => {
           </AvatarFallback>
         </Avatar>
         <div>
-          <p className="font-medium">{member.name}</p>
+          <p className="font-medium">
+            {member.name}{" "}
+            {currentSession.user?.email === member.email ? "(You)" : null}
+          </p>
           <p className="text-sm text-muted-foreground">{member.email}</p>
         </div>
       </div>

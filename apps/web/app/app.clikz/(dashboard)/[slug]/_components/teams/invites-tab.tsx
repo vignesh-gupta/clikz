@@ -6,12 +6,14 @@ import { capitalizeFirstLetter } from "@clikz/ui/lib/utils";
 
 import { useDeleteInvite } from "~/features/workspace/api/invite/use-delete-invite";
 import { useGetInvites } from "~/features/workspace/api/invite/use-get-invites";
+import { useResendInvite } from "~/features/workspace/api/invite/use-resend-invite";
 
 import { TeamSettingsProps, TeamsLoading } from "./team-settings";
 
 const InvitesTab = ({ workspaceId }: TeamSettingsProps) => {
   const { data: invites, isLoading } = useGetInvites({ workspaceId });
   const { mutate: deleteInvite } = useDeleteInvite();
+  const { mutate: resendInvite } = useResendInvite();
 
   if (isLoading) return <TeamsLoading />;
 
@@ -26,6 +28,10 @@ const InvitesTab = ({ workspaceId }: TeamSettingsProps) => {
     deleteInvite({ param: { workspaceId, inviteId } });
   };
 
+  const onResendInvite = async (inviteId: string) => {
+    resendInvite({ param: { workspaceId, inviteId } });
+  };
+
   return invites.map((invite) => (
     <div key={invite.id} className="flex items-center justify-between py-4">
       <div className="flex items-center gap-4">
@@ -33,14 +39,18 @@ const InvitesTab = ({ workspaceId }: TeamSettingsProps) => {
         <div>
           <p className="font-medium">{invite.email}</p>
           <p className="text-sm text-muted-foreground">
-            Invited {new Date(invite.expires).toLocaleDateString()} •{" "}
+            Expires {new Date(invite.expires).toLocaleDateString()} •{" "}
             {capitalizeFirstLetter(invite.role)}
           </p>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <TooltipButton text="Resend invite">
-          <Button variant="outline" size="icon">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => onResendInvite(invite.id)}
+          >
             <RotateCcwIcon />
           </Button>
         </TooltipButton>
