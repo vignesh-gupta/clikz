@@ -15,7 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@clikz/ui/components/ui/dropdown-menu";
 
-import { useDeleteMember } from "~/features/workspace/api/members/use-delete-membe";
+import { useDeleteMember } from "~/features/workspace/api/members/use-delete-member";
+import { useLeaveWorkspace } from "~/features/workspace/api/members/use-leave-workspace";
 import { useUpdateMember } from "~/features/workspace/api/members/use-update-member";
 import { WorkspaceMember } from "~/lib/types";
 
@@ -34,6 +35,7 @@ const MemberAction = ({
 }: MemberActionProps) => {
   const { mutate: updateMember } = useUpdateMember();
   const { mutate: deleteMember } = useDeleteMember();
+  const { mutate: leaveWorkspace } = useLeaveWorkspace();
 
   if (
     currentUserRole !== MemberRole.ADMIN &&
@@ -51,13 +53,24 @@ const MemberAction = ({
       },
     });
 
-  const handleRemoveMember = () =>
+  const handleRemoveMember = () => {
+    if (currentUser?.email === member.email) {
+      console.log("leave workspace");
+
+      return leaveWorkspace({
+        param: {
+          workspaceId,
+        },
+      });
+    }
+
     deleteMember({
       param: {
         workspaceId,
         membershipId: member.id,
       },
     });
+  };
 
   return (
     <DropdownMenu>

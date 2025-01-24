@@ -55,6 +55,40 @@ const workspaceMembersApp = new Hono()
       return c.json({ success: true, member: updatedMember });
     }
   )
+  .delete("/leave", sessionMiddleware, roleMiddleware(), async (c) => {
+    const user = c.get("user");
+    const workspaceId = c.req.param("workspaceId");
+
+    if (!user.id) {
+      return c.json(
+        {
+          error: "Please login/sign-up to perform the action",
+        },
+        401
+      );
+    }
+
+    const membership = await db.membership.findFirst({
+      where: { userId: user.id, workspaceId },
+    });
+
+    if (!membership) {
+      return c.json(
+        {
+          error: "You are not a member of the workspace",
+        },
+        401
+      );
+    }
+
+    const deletedMember = await db.membership.delete({
+      where: {
+        id: membership.id,
+      },
+    });
+
+    return c.json({ success: true, member: deletedMember });
+  })
   .delete(
     "/:membershipId",
     sessionMiddleware,
