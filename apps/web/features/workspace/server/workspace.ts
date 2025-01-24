@@ -1,8 +1,11 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
+import { generateCUID } from "@clikz/ui/lib/utils";
+
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
+import { DB_PREFIX } from "~/lib/constants";
 import { db } from "~/lib/db";
 import { workspaceSchema } from "~/lib/zod-schemas";
 
@@ -56,6 +59,36 @@ const workspaceApp = new Hono()
       });
 
       return c.json(workspace);
+    }
+  )
+  .post(
+    "/reset-invite",
+    sessionMiddleware,
+    roleMiddleware("ADMIN"),
+    async (c) => {
+      const workspaceId = c.req.param("workspaceId");
+
+      const workspace = await db.workspace.findFirst({
+        where: { id: workspaceId },
+      });
+
+      if (!workspace) {
+        return c.json({ error: "Workspace not found" }, 404);
+      }
+
+      const defaultInvite = generateCUID();
+
+      const updatedWorkspace = await db.workspace.update({
+        where: { id: workspaceId },
+        data: {
+          defaultInvite,
+        },
+      });
+
+      return c.json({
+        workspace: updatedWorkspace,
+        code: `${DB_PREFIX.WORKSPACE_INVITE}${defaultInvite}`,
+      });
     }
   );
 

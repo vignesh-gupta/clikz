@@ -3,8 +3,8 @@ model Workspace {
   name          String
   slug          String
   User          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        String
-  defaultInvite String       @unique @default(cuid())
+  userId        String       @unique
+  defaultInvite String       @default(cuid())
   Invite        Invite[]
   Link          Link[]
   Membership    Membership[]
@@ -12,9 +12,8 @@ model Workspace {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 
-  @@unique([slug])
   @@unique([id, slug])
-  @@index([userId, slug])
+  @@index([userId])
 }
 
 model Invite {

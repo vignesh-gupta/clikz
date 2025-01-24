@@ -17,6 +17,7 @@ import {
 import { DB_PREFIX } from "~/lib/constants";
 
 import { useGetWorkspace } from "../api/workspace/use-get-workspace";
+import { useResetWorkspaceInvite } from "../api/workspace/use-reset-wsinvite";
 
 type WorkspaceInviteProps = {
   workspaceId: string;
@@ -26,10 +27,20 @@ const WorkspaceInvite = ({ workspaceId }: WorkspaceInviteProps) => {
   const [copy, setCopy] = useState(false);
 
   const { data: workspace } = useGetWorkspace({ workspaceId });
+  const { mutate: resetInvite } = useResetWorkspaceInvite();
 
   const handleCopy = () => {
     setCopy(true);
-    toast.success("Link copied to clipboard");
+    navigator.clipboard
+      .writeText(
+        `https://app.clikz.live/join/${DB_PREFIX.WORKSPACE_INVITE}${workspace?.defaultInvite}`
+      )
+      .then(() => {
+        toast.success("Link copied to clipboard");
+      })
+      .catch(() => {
+        toast.error("Failed to copy link to clipboard");
+      });
     setTimeout(() => {
       setCopy(false);
     }, 2000);
@@ -66,7 +77,11 @@ const WorkspaceInvite = ({ workspaceId }: WorkspaceInviteProps) => {
             </Button>
           </div>
 
-          <Button variant="outline" className="w-full">
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() => resetInvite({ param: { workspaceId } })}
+          >
             Reset Link
           </Button>
         </div>

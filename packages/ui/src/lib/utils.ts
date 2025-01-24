@@ -51,3 +51,11 @@ export function capitalize(str?: string | null) {
     .map((word) => capitalizeFirstLetter(word))
     .join(" ");
 }
+
+export function generateCUID() {
+  // Length = 25 characters & only lowercase letters and numbers
+
+  return "xxxxxxxxxxxxxxxxxxxxxxxxx".replace(/[x]/g, () =>
+    ((Math.random() * 36) | 0).toString(36),
+  );
+}

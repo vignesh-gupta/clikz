@@ -95,6 +95,21 @@ const workspaceMembersApp = new Hono()
     roleMiddleware("ADMIN"),
     async (c) => {
       const membershipId = c.req.param("membershipId");
+      const workspaceId = c.req.param("workspaceId");
+      const user = c.get("user");
+
+      const workspace = await db.workspace.findUnique({
+        where: { id: workspaceId },
+      });
+
+      if (workspace?.userId === user.id) {
+        return c.json(
+          {
+            error: "Cannot remove the owner of the workspace",
+          },
+          401
+        );
+      }
 
       const deletedMember = await db.membership.delete({
         where: {
