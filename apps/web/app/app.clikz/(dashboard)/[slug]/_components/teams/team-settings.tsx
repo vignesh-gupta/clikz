@@ -33,7 +33,7 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
         </div>
         <div className="flex items-center gap-2">
           <WorkspaceInvite workspaceId={workspaceId} />
-          <MemberInviteDialog />
+          <MemberInviteDialog workspaceId={workspaceId} />
         </div>
       </div>
 

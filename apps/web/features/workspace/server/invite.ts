@@ -1,9 +1,12 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
 import { sendWorkspaceInvite } from "~/lib/email";
+import { generateInviteCode } from "~/lib/utils/generate";
+import { inviteSchema } from "~/lib/zod-schemas";
 
 const workspaceInviteApp = new Hono()
   .get("/", sessionMiddleware, async (c) => {
@@ -28,6 +31,40 @@ const workspaceInviteApp = new Hono()
 
     return c.json(invite);
   })
+  .post(
+    "/bulk-invite",
+    sessionMiddleware,
+    roleMiddleware("ADMIN"),
+    zValidator("json", inviteSchema),
+    async (c) => {
+      const workspaceId = c.req.param("workspaceId");
+      const { emails } = c.req.valid("json");
+
+      if (!workspaceId || !emails) {
+        return c.json({ error: "Invalid request" }, 400);
+      }
+
+      const invites = await Promise.all(
+        emails.map((email) =>
+          db.invite.create({
+            data: {
+              email,
+              workspaceId,
+              role: "MEMBER",
+              expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14), // 14 days
+              token: generateInviteCode(),
+            },
+          })
+        )
+      );
+
+      await Promise.all(
+        invites.map((invite) => sendWorkspaceInvite(invite.email, invite.token))
+      );
+
+      return c.json({ success: true, emails });
+    }
+  )
   .post(
     "/resend/:inviteId",
     sessionMiddleware,

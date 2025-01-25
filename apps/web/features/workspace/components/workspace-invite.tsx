@@ -15,15 +15,12 @@ import {
 } from "@clikz/ui/components/ui/dialog";
 
 import { DB_PREFIX } from "~/lib/constants";
+import { PageWorkspaceIdProps } from "~/lib/types";
 
 import { useGetWorkspace } from "../api/workspace/use-get-workspace";
 import { useResetWorkspaceInvite } from "../api/workspace/use-reset-wsinvite";
 
-type WorkspaceInviteProps = {
-  workspaceId: string;
-};
-
-const WorkspaceInvite = ({ workspaceId }: WorkspaceInviteProps) => {
+const WorkspaceInvite = ({ workspaceId }: PageWorkspaceIdProps) => {
   const [copy, setCopy] = useState(false);
 
   const { data: workspace, isLoading } = useGetWorkspace({ workspaceId });

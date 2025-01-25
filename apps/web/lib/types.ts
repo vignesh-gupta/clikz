@@ -31,3 +31,7 @@ export type WorkspaceMember = {
   image: string | null;
   role: "ADMIN" | "MEMBER";
 };
+
+export type PageWorkspaceIdProps = {
+  workspaceId: string;
+};

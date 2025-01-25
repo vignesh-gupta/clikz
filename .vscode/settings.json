@@ -19,7 +19,8 @@
     "syncpack",
     "TINYBIRD",
     "trivago",
-    "unencodable"
+    "unencodable",
+    "wsinvite"
   ],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {

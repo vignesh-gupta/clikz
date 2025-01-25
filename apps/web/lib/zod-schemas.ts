@@ -45,3 +45,7 @@ export const membershipSchema = z.object({
 });
 
 export type MembershipSchema = z.infer<typeof membershipSchema>;
+
+export const inviteSchema = z.object({
+  emails: z.array(z.string().email()),
+});
