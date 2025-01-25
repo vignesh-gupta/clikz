@@ -7,7 +7,7 @@ import { privateKey, publicKey, urlEndpoint } from "~/lib/image-kit";
 
 const imageKit = new ImageKit({
   publicKey: publicKey,
-  privateKey: privateKey || "private_Nmw7dxbMrJtqTqBksbgsaNp/60o=",
+  privateKey: privateKey || "private_samplekeytofixci",
   urlEndpoint: urlEndpoint,
 });
 

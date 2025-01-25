@@ -28,13 +28,13 @@ export const useDeleteLink = () => {
       if (!res.ok) {
         const errorRes = (await res.json()) as unknown as { error: string };
 
-        throw new Error(errorRes?.error ?? "Failed to delete task");
+        throw new Error(errorRes?.error ?? "Failed to delete link");
       }
 
       return await res.json();
     },
     onSuccess: ({ link }) => {
-      toast.success("Task deleted!");
+      toast.success("Link deleted!");
       queryClient.invalidateQueries({
         queryKey: [...QUERY_KEYS.LINKS, workspace],
       });
@@ -43,7 +43,7 @@ export const useDeleteLink = () => {
       });
     },
     onError: () => {
-      toast.error("Failed to delete Task");
+      toast.error("Failed to delete link");
     },
   });
 
