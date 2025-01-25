@@ -26,7 +26,7 @@ type WorkspaceInviteProps = {
 const WorkspaceInvite = ({ workspaceId }: WorkspaceInviteProps) => {
   const [copy, setCopy] = useState(false);
 
-  const { data: workspace } = useGetWorkspace({ workspaceId });
+  const { data: workspace, isLoading } = useGetWorkspace({ workspaceId });
   const { mutate: resetInvite } = useResetWorkspaceInvite();
 
   const handleCopy = () => {
@@ -81,6 +81,7 @@ const WorkspaceInvite = ({ workspaceId }: WorkspaceInviteProps) => {
             variant="outline"
             className="w-full"
             onClick={() => resetInvite({ param: { workspaceId } })}
+            disabled={isLoading}
           >
             Reset Link
           </Button>

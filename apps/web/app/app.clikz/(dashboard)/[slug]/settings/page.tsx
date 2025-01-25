@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 
-import MaxWidthContainer from "~/components/max-width-container";
 import { db } from "~/lib/db";
 
 import { PageWithSlugParams } from "../page";
@@ -16,7 +15,7 @@ const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
   if (!workspace) notFound();
 
   return (
-    <MaxWidthContainer>
+    <>
       <div className="space-y-0.5 mb-8">
         <h1 className="text-2xl font-bold tracking-tight">
           Workspace Settings
@@ -27,7 +26,7 @@ const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
       </div>
 
       <SettingsTab initialWorkspace={workspace} />
-    </MaxWidthContainer>
+    </>
   );
 };
 

@@ -96,13 +96,34 @@ const workspaceMembersApp = new Hono()
     async (c) => {
       const membershipId = c.req.param("membershipId");
       const workspaceId = c.req.param("workspaceId");
-      const user = c.get("user");
+
+      const membership = await db.membership.findUnique({
+        where: { id: membershipId },
+      });
+
+      if (!membership) {
+        return c.json(
+          {
+            error: "Membership not found",
+          },
+          404
+        );
+      }
 
       const workspace = await db.workspace.findUnique({
         where: { id: workspaceId },
       });
 
-      if (workspace?.userId === user.id) {
+      if (!workspace) {
+        return c.json(
+          {
+            error: "Workspace not found",
+          },
+          404
+        );
+      }
+
+      if (workspace?.userId === membership.userId) {
         return c.json(
           {
             error: "Cannot remove the owner of the workspace",

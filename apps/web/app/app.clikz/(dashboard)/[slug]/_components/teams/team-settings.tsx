@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@clikz/ui/components/ui/button";
 import { Skeleton } from "@clikz/ui/components/ui/skeleton";
 import {
   Tabs,
@@ -9,6 +8,7 @@ import {
   TabsTrigger,
 } from "@clikz/ui/components/ui/tabs";
 
+import MemberInviteDialog from "~/features/workspace/components/member/member-invite-dialog";
 import WorkspaceInvite from "~/features/workspace/components/workspace-invite";
 
 import { useTeamNavigation } from "../hooks/use-team-navigation";
@@ -24,7 +24,7 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex md:items-center md:justify-between flex-col md:flex-row gap-2">
         <div>
           <h2 className="text-lg font-semibold">Team</h2>
           <p className="text-sm text-muted-foreground">
@@ -33,7 +33,7 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
         </div>
         <div className="flex items-center gap-2">
           <WorkspaceInvite workspaceId={workspaceId} />
-          <Button>Invite</Button>
+          <MemberInviteDialog />
         </div>
       </div>
 

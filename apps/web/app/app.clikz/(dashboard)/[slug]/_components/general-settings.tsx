@@ -62,6 +62,14 @@ const GeneralSettings = ({
 
   return (
     <div className="space-y-6">
+      <div className="flex md:items-center md:justify-between flex-col md:flex-row gap-2">
+        <div>
+          <h2 className="text-lg font-semibold">General Setting</h2>
+          <p className="text-sm text-muted-foreground">
+            Manage your workspace settings
+          </p>
+        </div>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
