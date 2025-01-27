@@ -1,7 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-
 import { Search } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
@@ -13,10 +11,6 @@ import CreateLinkButton from "~/features/link/components/create-link-button";
 import DisplayFilter from "./link/filters/display";
 
 const PageFilters = () => {
-  const sp = useSearchParams();
-
-  console.log("On Client Page", { page: sp.get("page") });
-
   return (
     <div className="flex justify-between my-6">
       <div className="flex items-center gap-4">

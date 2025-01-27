@@ -7,7 +7,7 @@ type GetWorkspaceLinks = FetchParamsSchema & {
 
 export const getLinks = async ({
   workspaceSlug,
-  page = 0,
+  page = 1,
   perPage = 10,
 }: GetWorkspaceLinks) =>
   await db.link.findMany({

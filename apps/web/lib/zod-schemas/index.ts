@@ -5,7 +5,7 @@ export * from "./link-schemas";
 export * from "./workspace-schemas";
 
 export const fetchParamsSchema = z.object({
-  page: z.number().int().positive().default(0),
+  page: z.number().int().positive().default(1),
   perPage: z.number().int().positive().default(10),
 });
 

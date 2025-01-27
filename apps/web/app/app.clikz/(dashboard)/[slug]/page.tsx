@@ -6,7 +6,7 @@ import NoLinks from "../_components/link/no-links";
 
 export type PageWithSlugParams = {
   params: Promise<{ slug: string }>;
-  searchParams: any;
+  searchParams: Promise<{ page?: number }>;
 };
 
 const WorkspaceLinkPage = async ({
@@ -20,6 +20,7 @@ const WorkspaceLinkPage = async ({
 
   const links = await getLinks({
     workspaceSlug: slug,
+    page: sp.page,
   });
 
   return (

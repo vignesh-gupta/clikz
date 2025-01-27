@@ -61,7 +61,7 @@ export const AppMiddleware = async (req: NextRequest) => {
   if (fullPath === "/")
     return NextResponse.redirect(new URL(`/${workspace.slug}`, nextUrl));
 
-  return NextResponse.rewrite(appRedirect(nextUrl.pathname, req));
+  return NextResponse.rewrite(appRedirect(fullPath, req));
 };
 
 export default AppMiddleware;
