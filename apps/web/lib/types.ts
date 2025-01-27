@@ -22,7 +22,7 @@ export type LinkProp = {
   userId: string;
   workspaceId: string;
   workspaceSlug: string;
-} | null;
+};
 
 export type WorkspaceMember = {
   id: string;

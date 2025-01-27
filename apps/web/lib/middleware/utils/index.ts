@@ -55,5 +55,5 @@ export const getLinkViaEdge = async (key: string, domain: string) => {
   const query = `SELECT * FROM "Link" WHERE "key" = '${key}' AND "domain" = '${domain}'`;
   const result = await conn(query);
 
-  return result[0] as LinkProp;
+  return result[0] as LinkProp | null;
 };

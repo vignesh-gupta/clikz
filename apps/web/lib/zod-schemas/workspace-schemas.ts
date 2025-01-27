@@ -1,20 +1,5 @@
 import { z } from "zod";
 
-export const signInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, "Password is required"),
-});
-
-export type SignInSchema = z.infer<typeof signInSchema>;
-
-export const signUpSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  name: z.string(),
-});
-
-export type SignUpSchema = z.infer<typeof signUpSchema>;
-
 export const workspaceSchema = z.object({
   name: z
     .string()
@@ -28,14 +13,6 @@ export const workspaceSchema = z.object({
 });
 
 export type WorkspaceSchema = z.infer<typeof workspaceSchema>;
-
-export const linkSchema = z.object({
-  destination: z.string().url(),
-  slug: z.string(),
-  comment: z.string().optional(),
-});
-
-export type LinkSchema = z.infer<typeof linkSchema>;
 
 export const MemberRole = z.enum(["ADMIN", "MEMBER"]);
 
