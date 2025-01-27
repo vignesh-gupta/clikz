@@ -1,24 +1,35 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { z } from "zod";
 
 import { BASE_DOMAIN } from "~/lib/constants";
 import { db } from "~/lib/db";
+import { fetchParamsSchema } from "~/lib/zod-schemas";
 
-import { getWorkspaceLinks } from "./data";
-import { getLinkSchema } from "./schema";
+import { getLinks } from "./data";
 
 const linksApp = new Hono()
-  .get("/", zValidator("query", getLinkSchema), async (c) => {
-    const { slug } = c.req.valid("query");
+  .get(
+    "/",
+    zValidator(
+      "query",
+      z.object({
+        workspaceSlug: z.string(),
+      })
+    ),
+    zValidator("query", fetchParamsSchema),
+    async (c) => {
+      const { workspaceSlug, page, perPage } = c.req.valid("query");
 
-    const link = await getWorkspaceLinks(slug);
+      const link = await getLinks({ workspaceSlug, page, perPage });
 
-    if (!link) {
-      return c.json({ error: "Link not found" }, 404);
+      if (!link || link.length === 0) {
+        return c.json({ error: "Link not found" }, 404);
+      }
+
+      return c.json({ link });
     }
-
-    return c.json({ link });
-  })
+  )
   .get("/:linkId", async (c) => {
     const linkId = c.req.param("linkId");
 

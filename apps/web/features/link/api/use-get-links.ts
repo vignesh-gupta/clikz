@@ -1,31 +1,28 @@
-import { Link } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
+import { LinkProp } from "~/lib/types";
+import { FetchParamsSchema } from "~/lib/zod-schemas";
 
-type GetWorkspaceLinks = {
+type GetLinks = FetchParamsSchema & {
   workspaceSlug: string;
-  initialLinks: Link[];
+  initialLinks?: LinkProp[];
   queryKey?: string[];
 };
 
-export const useGetWorkspaceLinks = ({
+export const useGetLinks = ({
   workspaceSlug,
   initialLinks,
   queryKey,
-}: GetWorkspaceLinks) => {
+}: GetLinks) => {
   return useQuery({
-    initialData: initialLinks.map((link) => ({
-      ...link,
-      createdAt: link.createdAt.toISOString(),
-      updatedAt: link.updatedAt.toISOString(),
-    })),
+    initialData: initialLinks,
     queryKey: [...QUERY_KEYS.LINKS, workspaceSlug, ...(queryKey ?? [])],
     queryFn: async () => {
       const res = await client.api.links.$get({
         query: {
-          slug: workspaceSlug,
+          workspaceSlug,
         },
       });
 

@@ -1,22 +1,21 @@
 "use client";
 
-import { Link } from "@prisma/client";
-
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { useView } from "~/lib/hooks/use-view";
+import { LinkProp } from "~/lib/types";
 
-import { useGetWorkspaceLinks } from "../api/use-get-workspace-links";
+import { useGetLinks } from "../api/use-get-links";
 import { LinkCard } from "./link-card";
 import { LinkRow } from "./link-row";
 
-export type LinksProps = {
-  initialLinks: Link[];
+type LinksListProps = {
+  initialLinks?: LinkProp[];
 };
 
-const LinkList = ({ initialLinks }: LinksProps) => {
+const LinkList = ({ initialLinks }: LinksListProps) => {
   const workspaceSlug = useWorkspaceSlug();
 
-  const { data: links } = useGetWorkspaceLinks({
+  const { data: links } = useGetLinks({
     workspaceSlug,
     initialLinks,
   });
