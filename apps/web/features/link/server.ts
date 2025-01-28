@@ -23,7 +23,7 @@ const linksApp = new Hono()
 
       const link = await getLinks({ workspaceSlug, page, limit });
 
-      if (!link || link.length === 0) {
+      if (!link) {
         return c.json({ error: "Link not found" }, 404);
       }
 

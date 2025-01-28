@@ -1,5 +1,6 @@
 import LinkList from "~/features/link/components/links-list";
 import { getLinks } from "~/features/link/data";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "~/lib/constants";
 import { FetchParamsSchema } from "~/lib/zod-schemas";
 
 import PageFilters from "../_components/filter";
@@ -19,8 +20,8 @@ const WorkspaceLinkPage = async ({
 
   const links = await getLinks({
     workspaceSlug: slug,
-    page: sp.page,
-    limit: sp.limit,
+    page: sp.page || DEFAULT_PAGE,
+    limit: sp.limit || DEFAULT_PAGE_SIZE,
   });
 
   return (

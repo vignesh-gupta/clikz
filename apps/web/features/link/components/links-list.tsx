@@ -1,6 +1,9 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "~/lib/constants";
 import { useView } from "~/lib/hooks/use-view";
 import { LinkProp } from "~/lib/types";
 
@@ -15,10 +18,16 @@ type LinksListProps = {
 const LinkList = ({ initialLinks }: LinksListProps) => {
   const workspaceSlug = useWorkspaceSlug();
 
+  const searchParams = useSearchParams();
+
   const { data: links } = useGetLinks({
     workspaceSlug,
     initialLinks,
+    page: searchParams.get("page") ?? DEFAULT_PAGE,
+    limit: searchParams.get("limit") ?? DEFAULT_PAGE_SIZE,
   });
+
+  console.log({ data: links?.length });
 
   const { view } = useView();
 

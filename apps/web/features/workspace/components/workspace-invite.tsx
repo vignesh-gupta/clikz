@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@clikz/ui/components/ui/dialog";
 
-import { DB_PREFIX } from "~/lib/constants";
+import { DATA_PREFIX } from "~/lib/constants";
 import { PageWorkspaceIdProps } from "~/lib/types";
 
 import { useGetWorkspace } from "../api/workspace/use-get-workspace";
@@ -30,7 +30,7 @@ const WorkspaceInvite = ({ workspaceId }: PageWorkspaceIdProps) => {
     setCopy(true);
     navigator.clipboard
       .writeText(
-        `https://app.clikz.live/join/${DB_PREFIX.WORKSPACE_INVITE}${workspace?.defaultInvite}`
+        `https://app.clikz.live/join/${DATA_PREFIX.WORKSPACE_INVITE}${workspace?.defaultInvite}`
       )
       .then(() => {
         toast.success("Link copied to clipboard");
@@ -63,7 +63,7 @@ const WorkspaceInvite = ({ workspaceId }: PageWorkspaceIdProps) => {
         <div className="w-full space-y-4">
           <div className="flex items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 gap-2">
             <p className="text-sm text-muted-foreground truncate">
-              {`https://app.clikz.live/join/${DB_PREFIX.WORKSPACE_INVITE}${workspace?.defaultInvite}`}
+              {`https://app.clikz.live/join/${DATA_PREFIX.WORKSPACE_INVITE}${workspace?.defaultInvite}`}
             </p>
             <Button variant="outline" className="size-10" onClick={handleCopy}>
               {copy ? (

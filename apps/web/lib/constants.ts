@@ -47,10 +47,13 @@ export const QUERY_KEYS = {
 
 export const AVATAR_URL = "https://api.dicebear.com/9.x/open-peeps/svg?seed=";
 
-export const DB_PREFIX = {
+export const DATA_PREFIX = {
   WORKSPACE: "ws_",
   LINK: "ln_",
   USER: "us_",
   WORKSPACE_INVITE: "wsi_",
   USER_INVITE: "usi_",
 };
+
+export const DEFAULT_PAGE_SIZE = "10";
+export const DEFAULT_PAGE = "0";

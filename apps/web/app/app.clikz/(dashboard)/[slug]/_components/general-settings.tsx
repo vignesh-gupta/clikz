@@ -20,7 +20,7 @@ import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
 
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
-import { DB_PREFIX } from "~/lib/constants";
+import { DATA_PREFIX } from "~/lib/constants";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 
 import AvatarUpload from "./avatar-upload";
@@ -141,7 +141,7 @@ const GeneralSettings = ({
           <div className="flex w-full">
             <Input
               disabled
-              defaultValue={`${DB_PREFIX.WORKSPACE}${workspaceId}`}
+              defaultValue={`${DATA_PREFIX.WORKSPACE}${workspaceId}`}
               className="rounded-r-none font-mono text-sm"
             />
             <Button

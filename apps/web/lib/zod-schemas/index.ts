@@ -5,8 +5,8 @@ export * from "./link-schemas";
 export * from "./workspace-schemas";
 
 export const fetchParamsSchema = z.object({
-  page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().default(10),
+  page: z.string().optional().default("0"),
+  limit: z.string().optional().default("10"),
 });
 
 export type FetchParamsSchema = Partial<z.infer<typeof fetchParamsSchema>>;

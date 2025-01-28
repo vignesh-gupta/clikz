@@ -5,7 +5,7 @@ import { generateCUID } from "@clikz/ui/lib/utils";
 
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
-import { DB_PREFIX } from "~/lib/constants";
+import { DATA_PREFIX } from "~/lib/constants";
 import { db } from "~/lib/db";
 import { workspaceSchema } from "~/lib/zod-schemas";
 
@@ -87,7 +87,7 @@ const workspaceApp = new Hono()
 
       return c.json({
         workspace: updatedWorkspace,
-        code: `${DB_PREFIX.WORKSPACE_INVITE}${defaultInvite}`,
+        code: `${DATA_PREFIX.WORKSPACE_INVITE}${defaultInvite}`,
       });
     }
   );

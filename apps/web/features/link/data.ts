@@ -7,12 +7,17 @@ type GetWorkspaceLinks = FetchParamsSchema & {
 
 export const getLinks = async ({
   workspaceSlug,
-  page = 1,
-  limit = 10,
-}: GetWorkspaceLinks) =>
-  await db.link.findMany({
+  page = "0",
+  limit = "10",
+}: GetWorkspaceLinks) => {
+  const links = await db.link.findMany({
     where: { workspaceSlug },
     orderBy: { createdAt: "desc" },
-    skip: page * limit,
-    take: limit,
+    skip: parseInt(page) * parseInt(limit),
+    take: parseInt(limit),
   });
+
+  console.log({ links: links.length, page, limit });
+
+  return links;
+};

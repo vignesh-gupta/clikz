@@ -15,6 +15,8 @@ export const useGetLinks = ({
   workspaceSlug,
   initialLinks,
   queryKey,
+  limit,
+  page,
 }: GetLinks) => {
   return useQuery({
     initialData: initialLinks,
@@ -23,6 +25,8 @@ export const useGetLinks = ({
       const res = await client.api.links.$get({
         query: {
           workspaceSlug,
+          limit,
+          page,
         },
       });
 
