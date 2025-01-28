@@ -1,12 +1,13 @@
 import LinkList from "~/features/link/components/links-list";
 import { getLinks } from "~/features/link/data";
+import { FetchParamsSchema } from "~/lib/zod-schemas";
 
 import PageFilters from "../_components/filter";
 import NoLinks from "../_components/link/no-links";
 
 export type PageWithSlugParams = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ page?: number }>;
+  searchParams: Promise<FetchParamsSchema>;
 };
 
 const WorkspaceLinkPage = async ({
@@ -16,11 +17,10 @@ const WorkspaceLinkPage = async ({
   const { slug } = await params;
   const sp = await searchParams;
 
-  console.log("On Server Page", { page: sp.page });
-
   const links = await getLinks({
     workspaceSlug: slug,
     page: sp.page,
+    limit: sp.limit,
   });
 
   return (

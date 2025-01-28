@@ -19,9 +19,9 @@ const linksApp = new Hono()
     ),
     zValidator("query", fetchParamsSchema),
     async (c) => {
-      const { workspaceSlug, page, perPage } = c.req.valid("query");
+      const { workspaceSlug, page, limit } = c.req.valid("query");
 
-      const link = await getLinks({ workspaceSlug, page, perPage });
+      const link = await getLinks({ workspaceSlug, page, limit });
 
       if (!link || link.length === 0) {
         return c.json({ error: "Link not found" }, 404);
