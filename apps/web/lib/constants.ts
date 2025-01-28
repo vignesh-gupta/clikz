@@ -18,7 +18,7 @@ export const APP_NAMES = new Set([
   "localhost",
 ]);
 
-export const SHORT_REDIRECTS = new Map([
+export const DEFAULT_REDIRECTS = new Map([
   ["home", BASE_URL],
   ["signin", `${BASE_URL}/sign-in`],
   ["sign-in", `${BASE_URL}/sign-in`],
