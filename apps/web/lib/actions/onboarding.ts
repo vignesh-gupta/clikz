@@ -6,7 +6,7 @@ import { auth } from "~/auth";
 import { generateInviteCode, generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema } from "~/lib/zod-schemas";
 
-import { DEFAULT_REDIRECT_DOMAIN, SHORT_REDIRECT_URL } from "../constants";
+import { SHORT_REDIRECT_DOMAIN, SHORT_REDIRECT_URL } from "../constants";
 import { db } from "../db";
 import { sendWorkspaceInvite } from "../email";
 import { WorkspaceSchema } from "../zod-schemas";
@@ -126,7 +126,7 @@ export const createLink = async (
 
   await db.link.create({
     data: {
-      domain: DEFAULT_REDIRECT_DOMAIN ?? "clikz.co",
+      domain: SHORT_REDIRECT_DOMAIN ?? "clikz.live",
       key: slug,
       shortLink: new URL(`/${slug}`, SHORT_REDIRECT_URL).toString(),
       url: data.destination,

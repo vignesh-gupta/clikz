@@ -1,10 +1,10 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 
-export const DEFAULT_REDIRECT_DOMAIN =
-  process.env.NEXT_PUBLIC_DEFAULT_REDIRECT_DOMAIN!;
-export const SHORT_REDIRECT_URL = DEFAULT_REDIRECT_DOMAIN.includes("localhost")
-  ? `http://${DEFAULT_REDIRECT_DOMAIN}`
-  : `https://${DEFAULT_REDIRECT_DOMAIN}`;
+export const SHORT_REDIRECT_DOMAIN =
+  process.env.NEXT_PUBLIC_SHORT_REDIRECT_DOMAIN!;
+export const SHORT_REDIRECT_URL = SHORT_REDIRECT_DOMAIN.includes("localhost")
+  ? `http://${SHORT_REDIRECT_DOMAIN}`
+  : `https://${SHORT_REDIRECT_DOMAIN}`;
 
 export const BASE_DOMAIN = process.env.NEXT_PUBLIC_APP_DOMAIN!;
 export const BASE_URL = BASE_DOMAIN.includes("localhost")
@@ -18,7 +18,7 @@ export const APP_NAMES = new Set([
   "localhost",
 ]);
 
-export const DEFAULT_REDIRECTS = new Map([
+export const SHORT_REDIRECTS = new Map([
   ["home", BASE_URL],
   ["signin", `${BASE_URL}/sign-in`],
   ["sign-in", `${BASE_URL}/sign-in`],
