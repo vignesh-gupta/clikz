@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 import { PlusIcon, XIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -19,7 +19,7 @@ export function InviteTeamForm() {
   const router = useRouter();
 
   const [emails, setEmails] = useState<string[]>([""]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, startTransaction] = useTransition();
 
   const addEmailInput = () => {
     setEmails([...emails, ""]);
@@ -39,30 +39,28 @@ export function InviteTeamForm() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!workspaceId) return toast.error("Workspace not found");
-    setIsSubmitting(true);
 
     // Filter out empty emails
     const validEmails = emails.filter((email) => email.trim() !== "");
 
-    inviteUser(validEmails, workspaceId)
-      .then((res) => {
-        if (res.error) {
-          toast.error(res.error);
-          return;
-        }
-        if (res.success) {
-          // Reset form
-          setEmails([""]);
-          toast.success(res.success);
-          router.push(`/onboarding/link?workspaceId=${workspaceId}`);
-        }
-      })
-      .catch(() => {
-        toast.error("Something went wrong");
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+    startTransaction(() =>
+      inviteUser(validEmails, workspaceId)
+        .then((res) => {
+          if (res.error) {
+            toast.error(res.error);
+            return;
+          }
+          if (res.success) {
+            // Reset form
+            setEmails([""]);
+            toast.success(res.success);
+            router.push(`/onboarding/link?workspaceId=${workspaceId}`);
+          }
+        })
+        .catch(() => {
+          toast.error("Something went wrong");
+        })
+    );
   }
 
   return (

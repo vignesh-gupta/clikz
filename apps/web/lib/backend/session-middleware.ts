@@ -14,7 +14,7 @@ export const sessionMiddleware = createMiddleware<AdditionalContext>(
     const session = await auth();
 
     if (!session || !session.user || !session.user.id) {
-      return c.json({ error: "Unauthorized" }, { status: 401 });
+      return c.json({ error: "Unauthenticated" }, 401);
     }
 
     c.set("user", session.user);

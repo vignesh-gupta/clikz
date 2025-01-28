@@ -24,7 +24,7 @@ import { Label } from "@clikz/ui/components/ui/label";
 
 import LinkPreview from "~/components/preview/link-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { createLink } from "~/lib/actions/link";
+import { createLink } from "~/lib/actions/onboarding";
 import { BASE_DOMAIN } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";

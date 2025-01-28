@@ -3,11 +3,14 @@
 import { MemberRole } from "@prisma/client";
 
 import { auth } from "~/auth";
-import { generateInviteCode } from "~/lib/utils/generate";
+import { generateInviteCode, generateRandomSlug } from "~/lib/utils/generate";
+import { LinkSchema } from "~/lib/zod-schemas";
 
+import { DEFAULT_REDIRECT_DOMAIN, SHORT_REDIRECT_URL } from "../constants";
 import { db } from "../db";
 import { sendWorkspaceInvite } from "../email";
 import { WorkspaceSchema } from "../zod-schemas";
+import { checkUser } from "./utils";
 
 export const createWorkspace = async (data: WorkspaceSchema) => {
   const session = await auth();
@@ -98,4 +101,40 @@ export const inviteUser = async (emails: string[], workspaceSlug: string) => {
   } catch (error) {
     return { error: "Failed to invite user" };
   }
+};
+
+export const createLink = async (
+  data: LinkSchema,
+  workspaceId: string | null
+) => {
+  const user = await checkUser();
+
+  if (!user || !user.id)
+    return { error: "You must be signed in to create a link" };
+
+  if (!workspaceId) return { error: "Workspace id is required" };
+
+  const workspace = await db.workspace.findUnique({
+    where: {
+      slug: workspaceId,
+    },
+  });
+
+  if (!workspace) return { error: "Workspace not found" };
+
+  const slug = data.slug === "" ? generateRandomSlug() : data.slug;
+
+  await db.link.create({
+    data: {
+      domain: DEFAULT_REDIRECT_DOMAIN ?? "clikz.co",
+      key: slug,
+      shortLink: new URL(`/${slug}`, SHORT_REDIRECT_URL).toString(),
+      url: data.destination,
+      userId: user.id,
+      workspaceId: workspace.id,
+      workspaceSlug: workspace.slug,
+    },
+  });
+
+  return { success: "Link created successfully" };
 };

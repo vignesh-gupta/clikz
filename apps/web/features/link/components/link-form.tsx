@@ -1,9 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
 import { DicesIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -29,22 +26,22 @@ import { Textarea } from "@clikz/ui/components/ui/textarea";
 import LinkPreview from "~/components/preview/link-preview";
 import QRPreview from "~/components/preview/qr-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { createLink } from "~/lib/actions/link";
-import { BASE_DOMAIN, QUERY_KEYS } from "~/lib/constants";
+import { BASE_DOMAIN } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
 
+import { useCreateLink } from "../api/use-create-link";
 import { useGetLink } from "../api/use-get-link";
+import { useUpdateLink } from "../api/use-update-link";
 import { useLinkModel } from "../hooks/use-link-modal";
 
 const LinkForm = () => {
-  const [isLoading, startTransaction] = useTransition();
-  const queryClient = useQueryClient();
-
-  const workspace = useWorkspaceSlug();
+  const workspaceSlug = useWorkspaceSlug();
   const { close, linkId } = useLinkModel();
 
-  const { data: linkData, isLoading: isFetching } = useGetLink({ linkId });
+  const { data: linkData, isLoading } = useGetLink({ linkId });
+  const { mutate: createLink, isPending: isCreating } = useCreateLink();
+  const { mutate: updateLink, isPending: isUpdating } = useUpdateLink();
 
   const form = useForm<LinkSchema>({
     resolver: zodResolver(linkSchema),
@@ -59,18 +56,20 @@ const LinkForm = () => {
   const slug = form.watch("slug");
 
   const onSubmit = async (value: LinkSchema) => {
-    startTransaction(async () => {
-      const data = await createLink(value, workspace);
-      if (data.error) {
-        toast.error(data.error);
-      } else {
-        toast.success(data.success);
-        queryClient.invalidateQueries({
-          queryKey: [...QUERY_KEYS.LINKS, workspace],
-        });
-        close();
-      }
-    });
+    if (!linkId) return toast.error("Link ID is missing");
+
+    if (linkId === "new")
+      createLink({
+        json: value,
+        query: { workspaceSlug },
+      });
+    else
+      updateLink({
+        json: value,
+        query: { workspaceSlug },
+        param: { linkId },
+      });
+    close();
   };
 
   const onGenerateRandomSlug = () => {
@@ -97,7 +96,7 @@ const LinkForm = () => {
                         <Input
                           placeholder="https://example.com"
                           {...field}
-                          disabled={isFetching}
+                          disabled={isLoading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -112,7 +111,7 @@ const LinkForm = () => {
                       <div className="flex justify-between items-center">
                         <FormLabel>Short Link</FormLabel>
                         <Button
-                          disabled={isLoading || isFetching}
+                          disabled={isLoading || isCreating || isUpdating}
                           variant="ghost"
                           type="button"
                           size="sm"
@@ -131,7 +130,7 @@ const LinkForm = () => {
                             placeholder="(optional)"
                             className="focus-visible:ring-gray-400 focus-visible:ring-offset-1"
                             {...field}
-                            disabled={isFetching}
+                            disabled={isLoading}
                           />
                         </div>
                       </FormControl>
@@ -165,7 +164,7 @@ const LinkForm = () => {
                         <Textarea
                           placeholder="Add any additional notes here"
                           {...field}
-                          disabled={isFetching}
+                          disabled={isLoading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -181,9 +180,9 @@ const LinkForm = () => {
             <Button
               type="submit"
               className="w-full"
-              disabled={isLoading || isFetching}
+              disabled={isLoading || isCreating || isUpdating}
             >
-              Create Link
+              {linkId === "new" ? "Create" : "Update"} Link
             </Button>
           </form>
         </Form>

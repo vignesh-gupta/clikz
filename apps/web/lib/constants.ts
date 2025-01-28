@@ -2,9 +2,7 @@
 
 export const DEFAULT_REDIRECT_DOMAIN =
   process.env.NEXT_PUBLIC_DEFAULT_REDIRECT_DOMAIN!;
-export const DEFAULT_REDIRECT_URL = DEFAULT_REDIRECT_DOMAIN.includes(
-  "localhost"
-)
+export const SHORT_REDIRECT_URL = DEFAULT_REDIRECT_DOMAIN.includes("localhost")
   ? `http://${DEFAULT_REDIRECT_DOMAIN}`
   : `https://${DEFAULT_REDIRECT_DOMAIN}`;
 

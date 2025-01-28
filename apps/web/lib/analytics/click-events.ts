@@ -21,6 +21,8 @@ export const recordClickEvent = async ({
   req,
   url,
 }: RecordClickEventProps) => {
+  if (process.env.NODE_ENV !== "production") return null;
+
   if (detectBot(req)) return null;
 
   const isVercel = process.env.VERCEL === "1";

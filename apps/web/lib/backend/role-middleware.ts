@@ -8,28 +8,40 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
     const user = c.get("user");
 
     if (!user) {
-      return c.json({ error: "Unauthorized" }, { status: 401 });
+      return c.json({ error: "Unauthorized" }, 403);
     }
 
-    const workspaceId = c.req.param("workspaceId");
+    const workspace =
+      c.req.param("workspaceId") ||
+      c.req.query("workspaceId") ||
+      c.req.param("workspaceSlug") ||
+      c.req.query("workspaceSlug");
 
-    if (!workspaceId) {
-      return c.json({ error: "Missing workspaceId" }, { status: 400 });
+    if (!workspace) {
+      return c.json({ error: "Provide Workspace Id or Slug" }, 400);
     }
 
     const membership = await db.membership.findFirst({
       where: {
-        workspaceId,
-        userId: user.id,
-        role: requiredRole === "ADMIN" ? "ADMIN" : undefined,
+        OR: [
+          {
+            workspaceId: workspace,
+            userId: user.id,
+            role: requiredRole === "ADMIN" ? "ADMIN" : undefined,
+          },
+          {
+            Workspace: {
+              slug: workspace,
+            },
+            userId: user.id,
+            role: requiredRole === "ADMIN" ? "ADMIN" : undefined,
+          },
+        ],
       },
     });
 
     if (!membership) {
-      return c.json(
-        { error: "Unauthorized to perform the action" },
-        { status: 401 }
-      );
+      return c.json({ error: "Unauthorized to perform the action" }, 401);
     }
 
     await next();

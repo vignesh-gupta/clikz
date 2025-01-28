@@ -4,7 +4,7 @@ import { db } from "~/lib/db";
 import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema } from "~/lib/zod-schemas";
 
-import { DEFAULT_REDIRECT_DOMAIN, DEFAULT_REDIRECT_URL } from "../constants";
+import { DEFAULT_REDIRECT_DOMAIN, SHORT_REDIRECT_URL } from "../constants";
 import { checkUser } from "./utils";
 
 export const createLink = async (
@@ -30,9 +30,9 @@ export const createLink = async (
 
   await db.link.create({
     data: {
-      domain: DEFAULT_REDIRECT_DOMAIN ?? "clikz.co",
+      domain: DEFAULT_REDIRECT_DOMAIN ?? "clikz.live",
       key: slug,
-      shortLink: new URL(`/${slug}`, DEFAULT_REDIRECT_URL).toString(),
+      shortLink: new URL(`/${slug}`, SHORT_REDIRECT_URL).toString(),
       url: data.destination,
       userId: user.id,
       workspaceId: workspace.id,

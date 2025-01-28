@@ -27,8 +27,6 @@ const LinkList = ({ initialLinks }: LinksListProps) => {
     limit: searchParams.get("limit") ?? DEFAULT_PAGE_SIZE,
   });
 
-  console.log({ data: links?.length });
-
   const { view } = useView();
 
   if (view === "grid") {

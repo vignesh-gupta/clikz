@@ -53,6 +53,8 @@ export const getUserFirstWorkspaceViaEdge = async (userId: string) => {
 
 export const getLinkViaEdge = async (key: string, domain: string) => {
   const query = `SELECT * FROM "Link" WHERE "key" = '${key}' AND "domain" = '${domain}'`;
+  console.log("Running query", query);
+
   const result = await conn(query);
 
   return result[0] as LinkProp | null;
