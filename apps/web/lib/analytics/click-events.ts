@@ -14,8 +14,8 @@ type RecordClickEventProps = {
   req: NextRequest;
   linkId: string;
   url: string;
-  workspaceId?: string;
-  workspaceSlug?: string;
+  workspaceId: string;
+  workspaceSlug: string;
 };
 
 export const recordClickEvent = async ({

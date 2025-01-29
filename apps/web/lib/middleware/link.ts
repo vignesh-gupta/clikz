@@ -24,6 +24,7 @@ export const LinkMiddleware = async (req: NextRequest) => {
       req,
       url: link.url,
       workspaceId: link.workspaceId,
+      workspaceSlug: link.workspaceSlug,
     })
   );
 
