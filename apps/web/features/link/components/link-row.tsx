@@ -5,7 +5,7 @@ import { ArrowRightIcon, MousePointerClickIcon } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
 
 import LinkActions from "./link-actions";
-import { LinkProps } from "./link-card";
+import { LinkDataProps } from "./link-card";
 import { LinkFavIcon } from "./link-fav-icon";
 
 export function LinkRow({
@@ -15,7 +15,7 @@ export function LinkRow({
   totalClicks,
   slug,
   domain,
-}: LinkProps) {
+}: LinkDataProps) {
   return (
     <Card className="w-full transition hover:-translate-y-1 hover:shadow-lg flex justify-between flex-col sm:flex-row">
       <CardContent className="p-4">
