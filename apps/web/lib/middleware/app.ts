@@ -7,18 +7,14 @@ import {
   PUBLIC_ROUTE,
 } from "~/routes";
 
-import {
-  BASE_DOMAIN,
-  DEFAULT_REDIRECTS,
-  SHORT_REDIRECT_DOMAIN,
-} from "../constants";
+import { BASE_DOMAIN, SHORT_REDIRECT_DOMAIN } from "../constants";
 import { getUserFirstWorkspaceViaEdge, getUserViaToken, parse } from "./utils";
 
 export const appRedirect = (path: string, req: NextRequest) =>
   new URL(`/app.clikz${path}`, req.nextUrl);
 
 export const AppMiddleware = async (req: NextRequest) => {
-  const { nextUrl, fullPath, domain, key } = parse(req);
+  const { nextUrl, fullPath, domain } = parse(req);
 
   if (fullPath === "/" && domain === SHORT_REDIRECT_DOMAIN)
     return NextResponse.next();
@@ -28,10 +24,6 @@ export const AppMiddleware = async (req: NextRequest) => {
 
   if (PUBLIC_ROUTE.includes(nextUrl.pathname)) {
     return NextResponse.next();
-  }
-
-  if (domain === SHORT_REDIRECT_DOMAIN && DEFAULT_REDIRECTS.has(key)) {
-    return NextResponse.redirect(new URL(DEFAULT_REDIRECTS.get(key)!, nextUrl));
   }
 
   const user = await getUserViaToken(req);

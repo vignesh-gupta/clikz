@@ -12,8 +12,9 @@ export const BASE_URL = BASE_DOMAIN.includes("localhost")
   : `https://${BASE_DOMAIN}`;
 
 export const APP_NAMES = new Set([
-  `app.${BASE_DOMAIN}`,
-  `preview.${BASE_DOMAIN}`,
+  `${BASE_DOMAIN}`,
+  `preview.${SHORT_REDIRECT_DOMAIN}`,
+  `app.${SHORT_REDIRECT_DOMAIN}`,
   "localhost:3000",
   "localhost",
 ]);
