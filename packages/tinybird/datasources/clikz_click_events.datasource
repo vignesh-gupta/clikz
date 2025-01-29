@@ -5,6 +5,7 @@ SCHEMA >
     `timestamp` DateTime `json:$.timestamp`,
     `link_id` String `json:$.link_id`,
     `url` String `json:$.url`,
+    `workspace_id` String `json:$.link_id`,
     `vercel_region` String `json:$.vercel_region`,
     `country` LowCardinality(String) `json:$.country`,
     `city` String `json:$.city`,

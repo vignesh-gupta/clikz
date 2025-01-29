@@ -18,6 +18,7 @@ export const LinkMiddleware = async (req: NextRequest) => {
     linkId: link.id,
     req,
     url: link.url,
+    workspaceId: link.workspaceId,
   });
 
   return NextResponse.redirect(link.url, {
