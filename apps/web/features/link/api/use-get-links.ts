@@ -1,13 +1,13 @@
+import { Link } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
-import { LinkProp } from "~/lib/types";
 import { FetchParamsSchema } from "~/lib/zod-schemas";
 
 type GetLinks = FetchParamsSchema & {
   workspaceSlug: string;
-  initialLinks?: LinkProp[];
+  initialLinks?: Link[];
   queryKey?: string[];
 };
 
@@ -34,9 +34,13 @@ export const useGetLinks = ({
         throw new Error("Failed to fetch links");
       }
 
-      const { link } = await res.json();
+      const { links } = await res.json();
 
-      return link;
+      return links.map((link) => ({
+        ...link,
+        createdAt: new Date(link.createdAt),
+        updatedAt: new Date(link.updatedAt),
+      }));
     },
   });
 };

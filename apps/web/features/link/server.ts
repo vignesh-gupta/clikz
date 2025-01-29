@@ -26,13 +26,13 @@ const linksApp = new Hono()
     async (c) => {
       const { workspaceSlug, page, limit } = c.req.valid("query");
 
-      const link = await getLinks({ workspaceSlug, page, limit });
+      const links = await getLinks({ workspaceSlug, page, limit });
 
-      if (!link) {
+      if (!links) {
         return c.json({ error: "Link not found" }, 404);
       }
 
-      return c.json({ link });
+      return c.json({ links });
     }
   )
   .get("/:linkId", async (c) => {

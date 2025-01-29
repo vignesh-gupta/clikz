@@ -33,7 +33,7 @@ const WorkspaceLinkPage = async ({
       </div>
       <div className="flex-1 space-y-4">
         <PageFilters />
-        {links.length === 0 ? <NoLinks /> : <LinkList />}
+        {links.length === 0 ? <NoLinks /> : <LinkList initialLinks={links} />}
       </div>
     </div>
   );

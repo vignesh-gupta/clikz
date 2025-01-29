@@ -1,12 +1,12 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest } from "next/server";
 
+import { Link, Workspace } from "@prisma/client";
 import { User } from "next-auth";
 import { getToken } from "next-auth/jwt";
 
 import { BASE_DOMAIN } from "~/lib/constants";
 import { conn } from "~/lib/edge-db";
-import { LinkProp, WorkspaceProp } from "~/lib/types";
 
 export const parse = (req: NextRequest) => {
   let domain = req.headers.get("host") as string;
@@ -48,7 +48,7 @@ export const getUserFirstWorkspaceViaEdge = async (userId: string) => {
   const query = `SELECT  w.* FROM "Workspace" w JOIN "Membership" m ON w.id = m."workspaceId" WHERE m."userId" = '${userId}' ORDER BY "createdAt" ASC LIMIT 1`;
   const result = await conn(query);
 
-  return result[0] as WorkspaceProp | null;
+  return result[0] as Workspace | null;
 };
 
 export const getLinkViaEdge = async (key: string, domain: string) => {
@@ -57,5 +57,5 @@ export const getLinkViaEdge = async (key: string, domain: string) => {
 
   const result = await conn(query);
 
-  return result[0] as LinkProp | null;
+  return result[0] as Link | null;
 };

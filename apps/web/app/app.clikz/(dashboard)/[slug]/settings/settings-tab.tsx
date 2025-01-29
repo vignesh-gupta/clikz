@@ -1,5 +1,7 @@
 "use client";
 
+import { Workspace } from "@prisma/client";
+
 import {
   Tabs,
   TabsContent,
@@ -8,14 +10,13 @@ import {
 } from "@clikz/ui/components/ui/tabs";
 
 import { useGetWorkspace } from "~/features/workspace/api/workspace/use-get-workspace";
-import { WorkspaceProp } from "~/lib/types";
 
 import GeneralSettings from "../_components/general-settings";
 import { useSettingsNavigation } from "../_components/hooks/use-settings-navigation";
 import TeamSettings from "../_components/teams/team-settings";
 
 type SettingsTabProps = {
-  initialWorkspace: WorkspaceProp;
+  initialWorkspace: Workspace;
 };
 
 const SettingsTab = ({ initialWorkspace }: SettingsTabProps) => {

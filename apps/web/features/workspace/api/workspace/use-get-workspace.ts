@@ -1,12 +1,12 @@
+import { Workspace } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
-import { WorkspaceProp } from "~/lib/types";
 
 type GetWorkspace = {
   workspaceId: string;
-  initialData?: WorkspaceProp;
+  initialData?: Workspace;
   queryKey?: string[];
 };
 

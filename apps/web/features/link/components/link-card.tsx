@@ -7,7 +7,7 @@ import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
 import LinkActions from "./link-actions";
 import { LinkFavIcon } from "./link-fav-icon";
 
-export type LinkProps = {
+export type LinkDataProps = {
   id: string;
   shortUrl: string;
   domain: string;
@@ -23,7 +23,7 @@ export function LinkCard({
   totalClicks,
   slug,
   domain,
-}: LinkProps) {
+}: LinkDataProps) {
   const host = new URL(longUrl).host;
 
   return (

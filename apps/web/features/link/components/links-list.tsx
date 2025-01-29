@@ -2,17 +2,18 @@
 
 import { useSearchParams } from "next/navigation";
 
+import { Link } from "@prisma/client";
+
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "~/lib/constants";
 import { useView } from "~/lib/hooks/use-view";
-import { LinkProp } from "~/lib/types";
 
 import { useGetLinks } from "../api/use-get-links";
 import { LinkCard } from "./link-card";
 import { LinkRow } from "./link-row";
 
 type LinksListProps = {
-  initialLinks?: LinkProp[];
+  initialLinks?: Link[];
 };
 
 const LinkList = ({ initialLinks }: LinksListProps) => {
