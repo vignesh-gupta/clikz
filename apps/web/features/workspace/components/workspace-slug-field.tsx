@@ -14,7 +14,7 @@ import {
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
 
-import { BASE_DOMAIN } from "~/lib/constants";
+import { APP_DOMAIN } from "~/lib/constants";
 import { textToSlug } from "~/lib/utils";
 
 type WorkspaceSlugFieldProps = {
@@ -75,7 +75,7 @@ const WorkspaceSlugField = ({ setSlugAvailable }: WorkspaceSlugFieldProps) => {
           <FormControl>
             <div className="flex rounded-md shadow-sm">
               <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                {`app.${BASE_DOMAIN}/`}
+                {APP_DOMAIN}/
               </span>
               <Input placeholder="my-workspace" {...field} />
             </div>

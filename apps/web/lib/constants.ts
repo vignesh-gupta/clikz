@@ -1,34 +1,33 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 
-export const SHORT_REDIRECT_DOMAIN =
-  process.env.NEXT_PUBLIC_SHORT_REDIRECT_DOMAIN!;
-export const SHORT_REDIRECT_URL = SHORT_REDIRECT_DOMAIN.includes("localhost")
-  ? `http://${SHORT_REDIRECT_DOMAIN}`
-  : `https://${SHORT_REDIRECT_DOMAIN}`;
-
-export const BASE_DOMAIN = process.env.NEXT_PUBLIC_APP_DOMAIN!;
+export const BASE_DOMAIN = process.env.NEXT_PUBLIC_BASE_DOMAIN!;
 export const BASE_URL = BASE_DOMAIN.includes("localhost")
   ? `http://${BASE_DOMAIN}`
   : `https://${BASE_DOMAIN}`;
 
+export const APP_DOMAIN = process.env.NEXT_PUBLIC_APP_DOMAIN!;
+export const APP_URL = APP_DOMAIN.includes("localhost")
+  ? `http://${APP_DOMAIN}`
+  : `https://${APP_DOMAIN}`;
+
 export const APP_NAMES = new Set([
-  `${BASE_DOMAIN}`,
-  `preview.${SHORT_REDIRECT_DOMAIN}`,
-  `app.${SHORT_REDIRECT_DOMAIN}`,
+  `${APP_DOMAIN}`,
+  `preview.${BASE_DOMAIN}`,
+  `app.${BASE_DOMAIN}`,
   "localhost:3000",
   "localhost",
 ]);
 
 export const DEFAULT_REDIRECTS = new Map([
-  ["home", BASE_URL],
-  ["signin", `${BASE_URL}/sign-in`],
-  ["sign-in", `${BASE_URL}/sign-in`],
-  ["login", `${BASE_URL}/sign-in`],
-  ["register", `${BASE_URL}/sign-up`],
-  ["signup", `${BASE_URL}/sign-up`],
-  ["sign-up", `${BASE_URL}/sign-up`],
-  ["app", `${BASE_URL}`],
-  ["dashboard", `${BASE_URL}/dashboard`],
+  ["home", APP_URL],
+  ["signin", `${APP_URL}/sign-in`],
+  ["sign-in", `${APP_URL}/sign-in`],
+  ["login", `${APP_URL}/sign-in`],
+  ["register", `${APP_URL}/sign-up`],
+  ["signup", `${APP_URL}/sign-up`],
+  ["sign-up", `${APP_URL}/sign-up`],
+  ["app", `${APP_URL}`],
+  ["dashboard", `${APP_URL}/dashboard`],
 ]);
 
 export const GOOGLE_FAVICON_URL = "https://www.google.com/s2/favicons?domain=";

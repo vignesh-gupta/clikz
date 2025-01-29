@@ -11,9 +11,7 @@ import { conn } from "~/lib/edge-db";
 export const parse = (req: NextRequest) => {
   let domain = req.headers.get("host") as string;
   domain = domain.replace(/^www./, "").toLowerCase();
-  if (domain === "clikz.localhost:8888" || domain.endsWith(".vercel.app")) {
-    domain = BASE_DOMAIN;
-  }
+  if (domain.endsWith(".vercel.app")) domain = BASE_DOMAIN;
 
   let path = req.nextUrl.pathname;
 

@@ -96,14 +96,24 @@ export const recordClickEvent = async ({
     qr: isQR,
   };
 
-  await Promise.allSettled([
+  console.log(`Logging a valid click event for link ${linkId}`);
+
+  return await Promise.allSettled([
     fetch("https://api.tinybird.co/v0/events?name=clikz_click_events", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.TINYBIRD_API_KEY}`,
       },
       body: JSON.stringify(clickData),
-    }).then((res) => res.json()),
+    }).then((res) => {
+      if (res.ok) {
+        console.log("Successfully sent click event to Tinybird", clickData);
+        return res.json();
+      }
+      console.log("Failed to send click event to Tinybird", res);
+    }),
     conn(`UPDATE "Link" SET clicks = clicks + 1 WHERE id = '${linkId}'`),
-  ]);
+  ]).catch((err) => {
+    console.error(err);
+  });
 };

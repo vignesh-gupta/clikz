@@ -1,5 +1,5 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { BASE_URL } from "./constants";
+import { APP_URL } from "./constants";
 
 export const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || "";
 export const publicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || "";
@@ -7,7 +7,7 @@ export const privateKey = process.env.IMAGEKIT_PRIVATE_KEY || "";
 
 export const authenticator = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/api/files/auth`);
+    const response = await fetch(`${APP_URL}/api/files/auth`);
 
     if (!response.ok) {
       const errorText = await response.text();

@@ -4,11 +4,7 @@ import { z } from "zod";
 
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
-import {
-  BASE_DOMAIN,
-  SHORT_REDIRECT_DOMAIN,
-  SHORT_REDIRECT_URL,
-} from "~/lib/constants";
+import { BASE_DOMAIN, BASE_URL } from "~/lib/constants";
 import { db } from "~/lib/db";
 import { fetchParamsSchema, linkSchema } from "~/lib/zod-schemas";
 
@@ -70,9 +66,9 @@ const linksApp = new Hono()
 
       const link = await db.link.create({
         data: {
-          domain: SHORT_REDIRECT_DOMAIN ?? "clikz.live",
+          domain: BASE_DOMAIN ?? "clikz.live",
           key: slug,
-          shortLink: new URL(`/${slug}`, SHORT_REDIRECT_URL).toString(),
+          shortLink: new URL(`/${slug}`, BASE_URL).toString(),
           url: destination,
           comment,
           Workspace: {
@@ -109,7 +105,7 @@ const linksApp = new Hono()
           url: destination,
           key: slug,
           shortLink: slug
-            ? new URL(`/${slug}`, SHORT_REDIRECT_URL).toString()
+            ? new URL(`/${slug}`, BASE_URL).toString()
             : undefined,
         },
       });

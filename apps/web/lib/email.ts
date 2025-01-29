@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 
-import { BASE_URL } from "./constants";
+import { APP_URL } from "./constants";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 export const resend = new Resend(process.env.RESEND_API_KEY || "re_123");
@@ -8,7 +8,7 @@ export const resend = new Resend(process.env.RESEND_API_KEY || "re_123");
 const AUTH_MAIL_SENDER = "Clikz <auth@clikz.live>";
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `${BASE_URL}/verify?to=${email}&code=${token}`;
+  const confirmLink = `${APP_URL}/verify?to=${email}&code=${token}`;
 
   await resend.emails.send({
     from: AUTH_MAIL_SENDER,
@@ -22,7 +22,7 @@ export const sendWorkspaceInvite = async (
   email: string,
   inviteCode: string
 ) => {
-  const workspaceLink = `${BASE_URL}/invite/${inviteCode}`;
+  const workspaceLink = `${APP_URL}/invite/${inviteCode}`;
 
   return await resend.emails.send({
     from: AUTH_MAIL_SENDER,

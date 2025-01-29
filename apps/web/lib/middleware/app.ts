@@ -7,7 +7,7 @@ import {
   PUBLIC_ROUTE,
 } from "~/routes";
 
-import { BASE_DOMAIN, SHORT_REDIRECT_DOMAIN } from "../constants";
+import { APP_DOMAIN, BASE_DOMAIN } from "../constants";
 import { getUserFirstWorkspaceViaEdge, getUserViaToken, parse } from "./utils";
 
 export const appRedirect = (path: string, req: NextRequest) =>
@@ -16,10 +16,9 @@ export const appRedirect = (path: string, req: NextRequest) =>
 export const AppMiddleware = async (req: NextRequest) => {
   const { nextUrl, fullPath, domain } = parse(req);
 
-  if (fullPath === "/" && domain === SHORT_REDIRECT_DOMAIN)
-    return NextResponse.next();
+  if (fullPath === "/" && domain === BASE_DOMAIN) return NextResponse.next();
 
-  if (fullPath === "/" && domain === BASE_DOMAIN)
+  if (fullPath === "/" && domain === APP_DOMAIN)
     return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
 
   if (PUBLIC_ROUTE.includes(nextUrl.pathname)) {
