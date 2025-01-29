@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 
 import { recordClickEvent } from "../analytics/click-events";
 import { BASE_DOMAIN, DEFAULT_REDIRECTS } from "../constants";
@@ -18,12 +18,14 @@ export const LinkMiddleware = async (req: NextRequest) => {
   if (!link)
     return NextResponse.rewrite(new URL(`/${domain}/not-found`, req.url));
 
-  recordClickEvent({
-    linkId: link.id,
-    req,
-    url: link.url,
-    workspaceId: link.workspaceId,
-  });
+  after(() =>
+    recordClickEvent({
+      linkId: link.id,
+      req,
+      url: link.url,
+      workspaceId: link.workspaceId,
+    })
+  );
 
   return NextResponse.redirect(link.url, {
     status: 302,

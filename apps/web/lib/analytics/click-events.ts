@@ -15,6 +15,7 @@ type RecordClickEventProps = {
   linkId: string;
   url: string;
   workspaceId?: string;
+  workspaceSlug?: string;
 };
 
 export const recordClickEvent = async ({
@@ -22,6 +23,7 @@ export const recordClickEvent = async ({
   req,
   url,
   workspaceId,
+  workspaceSlug,
 }: RecordClickEventProps) => {
   if (process.env.NODE_ENV !== "production") return null;
 
@@ -71,6 +73,7 @@ export const recordClickEvent = async ({
     link_id: linkId,
     url,
     workspace_id: workspaceId,
+    workspace_slug: workspaceSlug,
     vercel_region: geo.region || "",
     country: geo.country || "Unknown",
     city: geo.city || "Unknown",
