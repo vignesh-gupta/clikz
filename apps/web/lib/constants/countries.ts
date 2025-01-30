@@ -1,4 +1,4 @@
-export const COUNTRIES: { [key: string]: string } = {
+export const COUNTRIES = {
   AF: "Afghanistan",
   AL: "Albania",
   DZ: "Algeria",
@@ -251,7 +251,7 @@ export const COUNTRIES: { [key: string]: string } = {
   XK: "Kosovo",
 };
 
-export const COUNTRY_CODES = Object.keys(COUNTRIES) as [string, ...string[]];
+export const COUNTRY_CODES = Object.keys(COUNTRIES);
 
 export const EU_COUNTRY_CODES = [
   "AT",
@@ -283,3 +283,5 @@ export const EU_COUNTRY_CODES = [
   "SI",
   "SK",
 ];
+
+export type CountryCode = keyof typeof COUNTRIES;

@@ -6,10 +6,10 @@ import { geolocation, ipAddress } from "@vercel/functions";
 
 import { capitalize } from "@clikz/ui/lib/utils";
 
+import { EU_COUNTRY_CODES } from "../constants/countries";
 import { conn } from "../edge-db";
 import { detectBot, detectQR } from "../middleware/utils/link-utlis";
 import { getDomainWithoutWWW } from "../utils/url";
-import { EU_COUNTRY_CODES } from "./countries";
 
 type RecordClickEventProps = {
   req: NextRequest;
