@@ -1,6 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest, userAgent } from "next/server";
 
+import { Link } from "@prisma/client";
 import { geolocation, ipAddress } from "@vercel/functions";
 
 import { capitalize } from "@clikz/ui/lib/utils";
@@ -12,18 +13,14 @@ import { EU_COUNTRY_CODES } from "./countries";
 
 type RecordClickEventProps = {
   req: NextRequest;
-  linkId: string;
+  link: Link;
   url: string;
-  workspaceId: string;
-  workspaceSlug: string;
 };
 
 export const recordClickEvent = async ({
-  linkId,
+  link,
   req,
   url,
-  workspaceId,
-  workspaceSlug,
 }: RecordClickEventProps) => {
   if (process.env.NODE_ENV !== "production") return null;
 
@@ -33,7 +30,7 @@ export const recordClickEvent = async ({
 
   const ip = isVercel ? ipAddress(req) : "0.0.0.1";
 
-  // const cacheKey = `recordClick:${linkId}:${ip}`;
+  // const cacheKey = `recordClick:${link}:${ip}`;
 
   const isQR = detectQR(req);
 
@@ -70,10 +67,10 @@ export const recordClickEvent = async ({
 
   const clickData = {
     timestamp: new Date(Date.now()).toISOString(),
-    link_id: linkId,
+    link_id: link.id,
     url,
-    workspace_id: workspaceId,
-    workspace_slug: workspaceSlug,
+    workspace_id: link.workspaceId,
+    workspace_slug: link.workspaceSlug,
     vercel_region: geo.region || "",
     country: geo.country || "Unknown",
     city: geo.city || "Unknown",
@@ -99,8 +96,6 @@ export const recordClickEvent = async ({
     qr: isQR,
   };
 
-  console.log(`Logging a valid click event for link ${linkId}`);
-
   return await Promise.allSettled([
     fetch("https://api.tinybird.co/v0/events?name=clikz_click_events", {
       method: "POST",
@@ -110,13 +105,12 @@ export const recordClickEvent = async ({
       body: JSON.stringify(clickData),
     }).then((res) => {
       if (res.ok) {
-        console.log("Successfully sent click event to Tinybird", clickData);
         return res.json();
       }
       console.log("Failed to send click event to Tinybird", res);
     }),
-    conn(`UPDATE "Link" SET clicks = clicks + 1 WHERE id = '${linkId}'`),
+    conn(`UPDATE "Link" SET clicks = clicks + 1 WHERE id = '${link.id}'`),
   ]).catch((err) => {
-    console.error(err);
+    console.error("Failed to send click event to Tinybird", err);
   });
 };

@@ -20,11 +20,9 @@ export const LinkMiddleware = async (req: NextRequest) => {
 
   after(() =>
     recordClickEvent({
-      linkId: link.id,
+      link,
       req,
       url: link.url,
-      workspaceId: link.workspaceId,
-      workspaceSlug: link.workspaceSlug,
     })
   );
 

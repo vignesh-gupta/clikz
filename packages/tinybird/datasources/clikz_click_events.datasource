@@ -5,6 +5,7 @@ SCHEMA >
     `timestamp` DateTime `json:$.timestamp`,
     `link_id` String `json:$.link_id`,
     `url` String `json:$.url`,
+    `short_url` String `json:$.short_url`,  
     `workspace_id` String `json:$.workspace_id`,
     `workspace_slug` String `json:$.workspace_slug`,
     `vercel_region` String `json:$.vercel_region`,
