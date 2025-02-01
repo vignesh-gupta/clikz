@@ -69,6 +69,7 @@ export const recordClickEvent = async ({
     timestamp: new Date(Date.now()).toISOString(),
     link_id: link.id,
     url,
+    short_url: link.shortLink,
     workspace_id: link.workspaceId,
     workspace_slug: link.workspaceSlug,
     vercel_region: geo.region || "",
