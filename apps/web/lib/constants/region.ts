@@ -3485,10 +3485,3 @@ export const REGIONS = {
 };
 
 export const REGION_CODES = Object.keys(REGIONS);
-
-type RegionKeys = keyof typeof REGIONS;
-// eslint-disable-next-line no-unused-vars
-export type RegionCodes =
-  RegionKeys extends `${infer _}${infer _}${infer _}${infer Rest}`
-    ? Rest
-    : never;

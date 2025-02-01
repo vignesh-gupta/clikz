@@ -5,7 +5,7 @@ import { CornerDownRight, MousePointerClickIcon } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
 
 import LinkActions from "./link-actions";
-import { LinkFavIcon } from "./link-fav-icon";
+import LinkFavIcon from "./link-fav-icon";
 
 export type LinkDataProps = {
   id: string;
@@ -24,15 +24,13 @@ export function LinkCard({
   slug,
   domain,
 }: LinkDataProps) {
-  const host = new URL(longUrl).host;
-
   return (
     <Card className="w-full max-w-md transition hover:-translate-y-1 hover:shadow-lg">
       <CardContent className="pt-6">
         <div className="flex items-center gap-4">
           <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
             <LinkFavIcon
-              host={host}
+              url={longUrl}
               imageProps={{ loading: "lazy" }}
               className="object-cover"
             />

@@ -1,6 +1,5 @@
 import { Continent } from "./constants/continents";
 import { CountryCode } from "./constants/countries";
-import { RegionCodes } from "./constants/region";
 
 export type WorkspaceMember = {
   id: string;
@@ -21,7 +20,7 @@ export type RawAnalyticsData = {
   workspace_id: string;
   workspace_slug: string;
   city: string;
-  region: RegionCodes;
+  region: string;
   country: CountryCode;
   continent: Continent;
   os: string;

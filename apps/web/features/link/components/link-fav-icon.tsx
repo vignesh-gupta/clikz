@@ -1,4 +1,5 @@
 import { ImageProps } from "next/image";
+import { memo } from "react";
 
 import { Globe2 } from "lucide-react";
 
@@ -7,15 +8,16 @@ import { cn } from "@clikz/ui/lib/utils";
 import { BlurImage } from "~/components/blur-image";
 import { GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
 
-export function LinkFavIcon({
-  host,
+function LinkFavIcon({
+  url,
   className,
   imageProps,
 }: {
-  host?: string | null;
+  url?: string | null;
   className?: string;
   imageProps?: Partial<ImageProps>;
 }) {
+  const host = url ? new URL(url).host : null;
   return host ? (
     <BlurImage
       src={`${GOOGLE_FAVICON_URL_V2}${host}`}
@@ -37,3 +39,5 @@ export function LinkFavIcon({
     </div>
   );
 }
+
+export default memo(LinkFavIcon);
