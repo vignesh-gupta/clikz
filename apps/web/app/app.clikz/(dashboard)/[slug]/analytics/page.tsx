@@ -8,9 +8,7 @@ import { MetricBarChart } from "./metric-chart";
 
 const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
   const { slug } = await params;
-  const data = await getAnalytics(slug);
-
-  console.log(data);
+  const data = await getAnalytics(slug, 7);
 
   const items = [
     {

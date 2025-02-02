@@ -9,22 +9,29 @@ import {
 import { MetricBarChart } from "~/app/app.clikz/(dashboard)/[slug]/analytics/metric-chart";
 import LinkFavIcon from "~/features/link/components/link-fav-icon";
 import { RawAnalyticsData } from "~/lib/types";
+import { groupByLink } from "~/lib/utils/url";
 
 type ClickAnalyticsProps = {
-  data: RawAnalyticsData[];
+  data?: RawAnalyticsData[];
 };
 
 const ClickAnalytics = ({ data }: ClickAnalyticsProps) => {
-  const analytics = data.map((item) => ({
-     icon: <LinkFavIcon url={item.url} />,
-      label: item.;
-      amt: number;
+  const groupByLinkId = groupByLink(data || []);
+
+  const analytics = groupByLinkId?.map((item) => ({
+    icon: (
+      <LinkFavIcon url={item.url} height={10} width={10} className="size-4" />
+    ),
+    short_url: item.short_url,
+    url: item.url,
+    linkId: item.linkId,
+    clicks: item.amt,
   }));
   return (
-    <Card className="h-full">
+    <Card className="h-full min-h-60 shadow-xl">
       <Tabs defaultValue="short-url">
         <CardHeader>
-          <TabsList>
+          <TabsList className="justify-start">
             <TabsTrigger
               value="short-url"
               // className="data-[state=active]:bg-transparent data-[state=active]:text-primary"
@@ -41,9 +48,35 @@ const ClickAnalytics = ({ data }: ClickAnalyticsProps) => {
         </CardHeader>
         <CardContent>
           <TabsContent value="short-url">
-            <MetricBarChart items={analytics} />
+            {!analytics || analytics?.length === 0 ? (
+              <div className="flex items-center justify-center h-full">
+                No data available
+              </div>
+            ) : (
+              <MetricBarChart
+                items={analytics.map((data) => ({
+                  icon: data.icon,
+                  label: data.short_url,
+                  amt: data.clicks,
+                }))}
+              />
+            )}
           </TabsContent>
-          <TabsContent value="dest-url">Destination URL</TabsContent>
+          <TabsContent value="dest-url">
+            {!analytics || analytics?.length === 0 ? (
+              <div className="flex items-center justify-center h-full">
+                No data available
+              </div>
+            ) : (
+              <MetricBarChart
+                items={analytics.map((data) => ({
+                  icon: data.icon,
+                  label: data.url,
+                  amt: data.clicks,
+                }))}
+              />
+            )}
+          </TabsContent>
         </CardContent>
       </Tabs>
     </Card>

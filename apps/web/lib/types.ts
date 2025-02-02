@@ -17,6 +17,7 @@ export type RawAnalyticsData = {
   timestamp: string;
   link_id: string;
   url: string;
+  short_url: string;
   workspace_id: string;
   workspace_slug: string;
   city: string;

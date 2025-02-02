@@ -23,8 +23,8 @@ export function MetricBarChart({
   barClassName,
   filledBarClassName,
 }: MetricBarChartProps) {
-  // Find the maximum amount to calculate relative widths
   const maxAmt = Math.max(...items.map((item) => item.amt));
+  items.sort((a, b) => b.amt - a.amt);
 
   return (
     <div className={cn("space-y-4", className)}>
@@ -48,8 +48,8 @@ export function MetricBarChart({
           >
             {/* Label and icon container */}
             <div className="flex h-full items-center gap-2 px-4">
-              <span>{item.icon}</span>
-              <span className="text-sm font-medium text-primary/80">
+              <span className="shrink-0">{item.icon}</span>
+              <span className="text-sm font-medium text-primary/80 truncate">
                 {item.label}
               </span>
             </div>

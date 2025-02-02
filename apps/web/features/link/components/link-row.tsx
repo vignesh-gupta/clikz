@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
 
 import LinkActions from "./link-actions";
 import { LinkDataProps } from "./link-card";
-import { LinkFavIcon } from "./link-fav-icon";
+import LinkFavIcon from "./link-fav-icon";
 
 export function LinkRow({
   id,
@@ -22,7 +22,7 @@ export function LinkRow({
         <div className="flex items-center space-x-4">
           <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
             <LinkFavIcon
-              host={new URL(longUrl).host}
+              url={longUrl}
               imageProps={{ loading: "lazy" }}
               className="object-cover"
             />

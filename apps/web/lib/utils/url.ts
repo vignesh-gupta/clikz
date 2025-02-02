@@ -1,3 +1,5 @@
+import { RawAnalyticsData } from "../types";
+
 export const paramsMetadata = [
   { display: "UTM Source", key: "utm_source", examples: "twitter, facebook" },
   { display: "UTM Medium", key: "utm_medium", examples: "social, email" },
@@ -37,4 +39,28 @@ export const getDomainWithoutWWW = (url: string) => {
   } catch (e) {
     return null;
   }
+};
+
+export const groupByLink = (params: RawAnalyticsData[]) => {
+  // Group by link_id and return short_url, url, linkId, amt (count of link_id)
+
+  const group = new Map<
+    string,
+    { short_url: string; url: string; linkId: string; amt: number }
+  >();
+
+  params.forEach((param) => {
+    if (group.has(param.link_id)) {
+      group.get(param.link_id)!.amt += 1;
+    } else {
+      group.set(param.link_id, {
+        short_url: param.short_url,
+        url: param.url,
+        linkId: param.link_id,
+        amt: 1,
+      });
+    }
+  });
+
+  return Array.from(group.values());
 };
