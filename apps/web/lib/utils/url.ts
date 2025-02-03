@@ -1,5 +1,3 @@
-import { RawAnalyticsData } from "../types";
-
 export const paramsMetadata = [
   { display: "UTM Source", key: "utm_source", examples: "twitter, facebook" },
   { display: "UTM Medium", key: "utm_medium", examples: "social, email" },
@@ -41,22 +39,21 @@ export const getDomainWithoutWWW = (url: string) => {
   }
 };
 
-export const groupByLink = (params: RawAnalyticsData[]) => {
-  // Group by link_id and return short_url, url, linkId, amt (count of link_id)
+export const groupByParam = <T extends Record<string, any>>(
+  data: T[],
+  param: keyof T
+) => {
+  // Group by given param and return short_url, url, linkId, amt (count of param)
 
-  const group = new Map<
-    string,
-    { short_url: string; url: string; linkId: string; amt: number }
-  >();
+  const group = new Map<string, T & { amt: number }>();
 
-  params.forEach((param) => {
-    if (group.has(param.link_id)) {
-      group.get(param.link_id)!.amt += 1;
+  data.forEach((item) => {
+    const key = String(item[param]);
+    if (group.has(key)) {
+      group.get(key)!.amt += 1;
     } else {
-      group.set(param.link_id, {
-        short_url: param.short_url,
-        url: param.url,
-        linkId: param.link_id,
+      group.set(key, {
+        ...item,
         amt: 1,
       });
     }

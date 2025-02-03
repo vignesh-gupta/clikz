@@ -22,10 +22,12 @@ function LinkFavIcon({
   width?: number;
 }) {
   const host = url ? new URL(url).host : null;
-  return host ? (
+  const domain = host ? host.split(".").slice(-2).join(".") : null;
+
+  return domain ? (
     <BlurImage
-      src={`${GOOGLE_FAVICON_URL_V2}${host}`}
-      alt={host}
+      src={`${GOOGLE_FAVICON_URL_V2}${domain}`}
+      alt={`${domain} favicon`}
       className={cn("h-9 w-9 rounded-full", className)}
       width={height || 20}
       height={width || 20}
