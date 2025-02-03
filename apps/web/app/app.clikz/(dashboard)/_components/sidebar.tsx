@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { BarChart2, Link2, Settings, Zap } from "lucide-react";
+import { BarChart2, Link2, Settings } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Progress } from "@clikz/ui/components/ui/progress";
@@ -32,11 +32,11 @@ const navigation = [
     href: "/analytics",
     icon: BarChart2,
   },
-  {
-    title: "Events",
-    href: "/events",
-    icon: Zap,
-  },
+  // {
+  //   title: "Events",
+  //   href: "/events",
+  //   icon: Zap,
+  // },
   {
     title: "Settings",
     href: "/settings",
