@@ -34,7 +34,7 @@ const ResponsiveModel = ({
             className,
           )}
         >
-          <DialogTitle className="opacity-0 ">Dialog</DialogTitle>
+          <DialogTitle className="opacity-0 hidden">Dialog</DialogTitle>
           {children}
         </DialogContent>
       </Dialog>

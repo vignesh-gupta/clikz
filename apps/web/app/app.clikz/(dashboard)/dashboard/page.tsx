@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { auth } from "~/auth";
 import { db } from "~/lib/db";
 
-const PrivatePage = async () => {
+const DashboardPage = async () => {
   const session = await auth();
 
   if (!session || !session.user || !session.user.id) {
@@ -29,4 +29,4 @@ const PrivatePage = async () => {
   return null;
 };
 
-export default PrivatePage;
+export default DashboardPage;

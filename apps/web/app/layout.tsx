@@ -1,17 +1,15 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import TailwindSizeUtil from "@clikz/ui/components/tailwind-size-util";
 import "@clikz/ui/globals.css";
 
+import { constructMetaTags } from "~/lib/meta-data";
+
 import Provider from "../components/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Clikz - Your team's link management",
-  description: "Link management and branding for teams",
-};
+export const metadata = constructMetaTags({});
 
 export default function RootLayout({
   children,

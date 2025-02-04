@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -16,7 +17,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@clikz/ui/components/ui/sidebar";
-import { cn } from "@clikz/ui/lib/utils";
 
 import WorkspaceSwitcher from "~/features/workspace/components/workspace-switcher";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
@@ -51,8 +51,8 @@ export function DashboardSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader>
-        <p className={cn("px-4 py-2 text-3xl")}>Clikz</p>
+      <SidebarHeader className="flex items-center justify-center my-4">
+        <Image src="/clikz.png" width={150} height={40} alt="Clikz Logo" />
       </SidebarHeader>
       <SidebarContent className="px-4">
         <div className="my-4">

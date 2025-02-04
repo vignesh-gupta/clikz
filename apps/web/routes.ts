@@ -1,7 +1,7 @@
 /**
  * An array of routes that are public and do not require authentication.
  */
-export const PUBLIC_ROUTE = ["/", "/api/hello"];
+export const PUBLIC_ROUTE = ["/"];
 
 /**
  * An array of routes that are used for authentication.
@@ -12,7 +12,7 @@ export const AUTH_ROUTES = [
   "/sign-up",
   "/error",
   "/reset",
-  "/verify"
+  "/verify",
 ];
 
 /**
@@ -25,3 +25,14 @@ export const AUTH_API_ROUTE = "/api/auth";
  * The default redirect URL after login.
  */
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+
+export const ALLOWED_EXTENSIONS = [
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".svg",
+  ".gif",
+  ".webp",
+  ".ico",
+  ".txt",
+];

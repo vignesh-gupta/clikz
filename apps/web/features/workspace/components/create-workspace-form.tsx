@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useTransition } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,8 +53,9 @@ const CreateWorkspaceForm = () => {
 
   return (
     <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="space-y-3 text-center">
-        <p>Clikz</p>
+      <CardHeader className="gap-y-3 flex items-center justify-center flex-col">
+        <Image src="/clikz.png" width={150} height={40} alt="Clikz Logo" />
+
         <p className="text-xl font-semibold">Create a new workspace</p>
       </CardHeader>
       <CardContent>

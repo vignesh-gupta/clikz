@@ -1,11 +1,12 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
 import { APP_NAMES } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
 import { LinkMiddleware } from "./lib/middleware/link";
+import { ALLOWED_EXTENSIONS } from "./routes";
 
 export const config = {
   matcher: [
@@ -24,6 +25,10 @@ export default async function middleware(req: NextRequest) {
   // AxiomMiddleware(req, event);
 
   const { domain, fullPath } = parse(req);
+
+  if (ALLOWED_EXTENSIONS.some((ext) => fullPath.endsWith(ext))) {
+    return NextResponse.next();
+  }
 
   if (APP_NAMES.has(domain) || fullPath === "/") return AppMiddleware(req);
 
