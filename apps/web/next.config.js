@@ -1,8 +1,7 @@
-import { createJiti } from "jiti";
-import { fileURLToPath } from "node:url";
-
 /* eslint-disable turbo/no-undeclared-env-vars */
-const { withAxiom } = require("next-axiom");
+import { createJiti } from "jiti";
+import { withAxiom } from "next-axiom";
+import { fileURLToPath } from "node:url";
 
 const jiti = createJiti(fileURLToPath(import.meta.url));
 
