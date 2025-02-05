@@ -6,7 +6,7 @@ import { parse } from "~/lib/middleware/utils";
 import { APP_NAMES } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
 import { LinkMiddleware } from "./lib/middleware/link";
-import { ALLOWED_EXTENSIONS } from "./routes";
+import { ALLOWED_EXTENSIONS, PUBLIC_ROUTE } from "./routes";
 
 export const config = {
   matcher: [
@@ -27,6 +27,9 @@ export default async function middleware(req: NextRequest) {
   const { domain, fullPath } = parse(req);
 
   if (ALLOWED_EXTENSIONS.some((ext) => fullPath.endsWith(ext))) {
+    return NextResponse.next();
+  }
+  if (PUBLIC_ROUTE.includes(req.nextUrl.pathname)) {
     return NextResponse.next();
   }
 

@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import {
-  AUTH_API_ROUTE,
-  AUTH_ROUTES,
-  DEFAULT_LOGIN_REDIRECT,
-  PUBLIC_ROUTE,
-} from "~/routes";
+import { AUTH_API_ROUTE, AUTH_ROUTES, DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
-import { APP_DOMAIN, BASE_DOMAIN } from "../constants";
+import { APP_DOMAIN } from "../constants";
 import { getUserFirstWorkspaceViaEdge, getUserViaToken, parse } from "./utils";
 
 export const appRedirect = (path: string, req: NextRequest) =>
@@ -16,14 +11,12 @@ export const appRedirect = (path: string, req: NextRequest) =>
 export const AppMiddleware = async (req: NextRequest) => {
   const { nextUrl, fullPath, domain } = parse(req);
 
-  if (fullPath === "/" && domain === BASE_DOMAIN) return NextResponse.next();
+  // TODO: remove this line after landing page is ready
+  // if (fullPath === "/" && domain === BASE_DOMAIN) return NextResponse.next();
+  if (fullPath === "/") return NextResponse.next();
 
   if (fullPath === "/" && domain === APP_DOMAIN)
     return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-
-  if (PUBLIC_ROUTE.includes(nextUrl.pathname)) {
-    return NextResponse.next();
-  }
 
   const user = await getUserViaToken(req);
 

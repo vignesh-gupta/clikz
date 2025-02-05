@@ -53,7 +53,7 @@ Clikz is licensed under the [MIT License](LICENSE).
 ## Author
 
 - [![@vigneshfixes](https://img.shields.io/badge/vigneshfixes-000000?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/intent/follow?screen_name=vigneshfixes)
-- [![Vignesh Gupta](https://img.shields.io/badge/Website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://vigneshgupta.vercel.app/)
+- [![Vignesh Gupta](https://img.shields.io/badge/Website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://vigneshgupta.me/)
 
 ## Thank you!
 

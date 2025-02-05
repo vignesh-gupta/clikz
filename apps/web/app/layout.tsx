@@ -1,13 +1,9 @@
-import { Inter } from "next/font/google";
-
 import TailwindSizeUtil from "@clikz/ui/components/tailwind-size-util";
 import "@clikz/ui/globals.css";
 
+import Providers from "~/components/provider";
 import { constructMetaTags } from "~/lib/meta-data";
-
-import Provider from "../components/provider";
-
-const inter = Inter({ subsets: ["latin"] });
+import { inter } from "~/lib/utils/font";
 
 export const metadata = constructMetaTags({});
 
@@ -19,10 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>
+        <Providers>
           {children}
           <TailwindSizeUtil />
-        </Provider>
+        </Providers>
       </body>
     </html>
   );
