@@ -8,6 +8,7 @@ import { capitalize } from "@clikz/ui/lib/utils";
 
 import { EU_COUNTRY_CODES } from "../constants/countries";
 import { conn } from "../edge-db";
+import { env } from "../env";
 import { detectBot, detectQR } from "../middleware/utils/link-utlis";
 import { getDomainWithoutWWW } from "../utils/url";
 
@@ -101,7 +102,7 @@ export const recordClickEvent = async ({
     fetch("https://api.tinybird.co/v0/events?name=clikz_click_events", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.TINYBIRD_API_KEY}`,
+        Authorization: `Bearer ${env.TINYBIRD_API_KEY}`,
       },
       body: JSON.stringify(clickData),
     }).then((res) => {

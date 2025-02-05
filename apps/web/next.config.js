@@ -1,5 +1,13 @@
+import { createJiti } from "jiti";
+import { fileURLToPath } from "node:url";
+
 /* eslint-disable turbo/no-undeclared-env-vars */
 const { withAxiom } = require("next-axiom");
+
+const jiti = createJiti(fileURLToPath(import.meta.url));
+
+// Import env here to validate during build. Using jiti@^1 we can import .ts files :)
+jiti("./app/env");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",

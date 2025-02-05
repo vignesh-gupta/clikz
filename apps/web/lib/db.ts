@@ -2,8 +2,9 @@ import { Pool } from "@neondatabase/serverless";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaClient } from "@prisma/client";
 
-// eslint-disable-next-line turbo/no-undeclared-env-vars
-const connectionString = `${process.env.DATABASE_URL}`;
+import { env } from "./env";
+
+const connectionString = `${env.DATABASE_URL}`;
 
 const pool = new Pool({ connectionString });
 const adapter = new PrismaNeon(pool);
