@@ -7,10 +7,7 @@ export const env = createEnv({
     NODE_ENV: z.enum(["development", "test", "production"]),
   },
   server: {
-    ANALYZE: z
-      .enum(["true", "false"])
-      .optional()
-      .transform((analyze) => analyze === "true"),
+    ANALYZE: z.enum(["true", "false"]).optional(),
     VERCEL: z.enum(["1", "0"]).optional(),
     DATABASE_URL: z.string().url(),
     AUTH_SECRET: z.string().min(1),

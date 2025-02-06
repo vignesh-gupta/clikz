@@ -1,20 +1,15 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
-import { createJiti } from "jiti";
+import { NextConfig } from "next";
+
 import { withAxiom } from "next-axiom";
-import { fileURLToPath } from "node:url";
 
-const jiti = createJiti(fileURLToPath(import.meta.url));
-
-// Import env here to validate during build. Using jiti@^1 we can import .ts files :)
-jiti("./lib/env");
+import { env } from "./lib/env";
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
+  enabled: env.ANALYZE === "true",
 });
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  transpilePackages: ["@clikz/ui"],
+const nextConfig: NextConfig = {
+  transpilePackages: ["@clikz/ui", "@t3-oss/env-nextjs", "@t3-oss/env-core"],
   images: {
     remotePatterns: [
       {

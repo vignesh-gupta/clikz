@@ -14,7 +14,7 @@
   },
   "include": [
     "next-env.d.ts",
-    "next.config.js",
+    "next.config.ts",
     "postcss.config.mjs",
     "**/*.ts",
     "**/*.tsx",
