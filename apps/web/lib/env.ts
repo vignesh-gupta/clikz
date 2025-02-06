@@ -3,7 +3,15 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 export const env = createEnv({
+  shared: {
+    NODE_ENV: z.enum(["development", "test", "production"]),
+  },
   server: {
+    ANALYZE: z
+      .enum(["true", "false"])
+      .optional()
+      .transform((analyze) => analyze === "true"),
+    VERCEL: z.enum(["1", "0"]).optional(),
     DATABASE_URL: z.string().url(),
     AUTH_SECRET: z.string().min(1),
     AUTH_GITHUB_ID: z.string().min(1),
@@ -23,7 +31,7 @@ export const env = createEnv({
   },
   // For Next.js >= 13.4.4, you can just reference process.env:
   experimental__runtimeEnv: {
-    ...process.env,
+    NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY:
       process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY,
     NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT:

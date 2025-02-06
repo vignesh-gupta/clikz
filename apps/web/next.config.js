@@ -3,13 +3,15 @@ import { createJiti } from "jiti";
 import { withAxiom } from "next-axiom";
 import { fileURLToPath } from "node:url";
 
+import { env } from "./lib/env";
+
 const jiti = createJiti(fileURLToPath(import.meta.url));
 
 // Import env here to validate during build. Using jiti@^1 we can import .ts files :)
 jiti("./lib/env");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
+  enabled: env.ANALYZE === "true",
 });
 
 /** @type {import('next').NextConfig} */

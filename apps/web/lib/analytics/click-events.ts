@@ -23,11 +23,16 @@ export const recordClickEvent = async ({
   req,
   url,
 }: RecordClickEventProps) => {
-  if (process.env.NODE_ENV !== "production") return null;
+  if (env.NODE_ENV !== "production") return null;
 
   if (detectBot(req)) return null;
 
-  const isVercel = process.env.VERCEL === "1";
+  if (!env.VERCEL) {
+    console.log("Not running on Vercel, skipping click event recording");
+    return null;
+  }
+
+  const isVercel = env.VERCEL === "1";
 
   const ip = isVercel ? ipAddress(req) : "0.0.0.1";
 
@@ -56,14 +61,14 @@ export const recordClickEvent = async ({
   // geolocation().region is Vercel's edge region – NOT the actual region
   // so we use the x-vercel-ip-country-region to get the actual region
   const { continent, region } =
-    process.env.VERCEL === "1"
+    env.VERCEL === "1"
       ? {
           continent: req.headers.get("x-vercel-ip-continent"),
           region: req.headers.get("x-vercel-ip-country-region"),
         }
       : {
-          continent: "AS",
-          region: "MH",
+          continent: "<Unknown>",
+          region: "<Unknown>",
         };
 
   const clickData = {

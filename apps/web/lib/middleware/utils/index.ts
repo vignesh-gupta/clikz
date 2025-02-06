@@ -38,7 +38,7 @@ export async function getUserViaToken(req: NextRequest) {
   const session = await getToken({
     req,
     secret: env.AUTH_SECRET,
-    secureCookie: process.env.NODE_ENV === "production",
+    secureCookie: env.NODE_ENV === "production",
   });
   return session?.user as User;
 }
