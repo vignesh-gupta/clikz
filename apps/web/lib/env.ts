@@ -17,7 +17,6 @@ export const env = createEnv({
     AUTH_DISCORD_SECRET: z.string().min(1),
     AUTH_RESEND_KEY: z.string().min(1),
     IMAGEKIT_PRIVATE_KEY: z.string().min(1),
-    RESEND_API_KEY: z.string().min(1),
     TINYBIRD_API_KEY: z.string().min(1),
   },
   client: {
