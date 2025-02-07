@@ -1,10 +1,11 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import { APP_URL } from "./constants";
-import { env } from "./env";
+import { clientEnv } from "./env/client";
+import { serverEnv } from "./env/server";
 
-export const urlEndpoint = env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
-export const publicKey = env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
-export const privateKey = env.IMAGEKIT_PRIVATE_KEY;
+export const urlEndpoint = clientEnv.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
+export const publicKey = clientEnv.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
+export const privateKey = serverEnv.IMAGEKIT_PRIVATE_KEY;
 
 export const authenticator = async () => {
   try {

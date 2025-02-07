@@ -2,23 +2,7 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-export const env = createEnv({
-  shared: {
-    NODE_ENV: z.enum(["development", "test", "production"]),
-  },
-  server: {
-    ANALYZE: z.enum(["true", "false"]).optional(),
-    VERCEL: z.enum(["1", "0"]).optional(),
-    DATABASE_URL: z.string().url(),
-    AUTH_SECRET: z.string().min(1),
-    AUTH_GITHUB_ID: z.string().min(1),
-    AUTH_GITHUB_SECRET: z.string().min(1),
-    AUTH_DISCORD_ID: z.string().min(1),
-    AUTH_DISCORD_SECRET: z.string().min(1),
-    AUTH_RESEND_KEY: z.string().min(1),
-    IMAGEKIT_PRIVATE_KEY: z.string().min(1),
-    TINYBIRD_API_KEY: z.string().min(1),
-  },
+export const clientEnv = createEnv({
   client: {
     NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: z.string().min(1),
     NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: z.string().min(1),
@@ -26,8 +10,7 @@ export const env = createEnv({
     NEXT_PUBLIC_BASE_DOMAIN: z.string().min(1),
   },
   // For Next.js >= 13.4.4, you can just reference process.env:
-  experimental__runtimeEnv: {
-    NODE_ENV: process.env.NODE_ENV,
+  runtimeEnv: {
     NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY:
       process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY,
     NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT:

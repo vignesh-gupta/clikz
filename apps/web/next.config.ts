@@ -2,10 +2,10 @@ import { NextConfig } from "next";
 
 import { withAxiom } from "next-axiom";
 
-import { env } from "./lib/env";
+import { serverEnv } from "./lib/env/server";
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: env.ANALYZE === "true",
+  enabled: serverEnv.ANALYZE === "true",
 });
 
 const nextConfig: NextConfig = {

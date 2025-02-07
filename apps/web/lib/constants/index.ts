@@ -1,12 +1,12 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { env } from "../env";
+import { clientEnv } from "../env/client";
 
-export const BASE_DOMAIN = env.NEXT_PUBLIC_BASE_DOMAIN;
+export const BASE_DOMAIN = clientEnv.NEXT_PUBLIC_BASE_DOMAIN;
 export const BASE_URL = BASE_DOMAIN.includes("localhost")
   ? `http://${BASE_DOMAIN}`
   : `https://${BASE_DOMAIN}`;
 
-export const APP_DOMAIN = env.NEXT_PUBLIC_APP_DOMAIN;
+export const APP_DOMAIN = clientEnv.NEXT_PUBLIC_APP_DOMAIN;
 export const APP_URL = APP_DOMAIN.includes("localhost")
   ? `http://${APP_DOMAIN}`
   : `https://${APP_DOMAIN}`;

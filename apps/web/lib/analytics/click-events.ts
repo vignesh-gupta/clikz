@@ -8,7 +8,8 @@ import { capitalize } from "@clikz/ui/lib/utils";
 
 import { EU_COUNTRY_CODES } from "../constants/countries";
 import { conn } from "../edge-db";
-import { env } from "../env";
+import { serverEnv } from "../env/server";
+import { sharedEnv } from "../env/shared";
 import { detectBot, detectQR } from "../middleware/utils/link-utlis";
 import { getDomainWithoutWWW } from "../utils/url";
 
@@ -23,16 +24,16 @@ export const recordClickEvent = async ({
   req,
   url,
 }: RecordClickEventProps) => {
-  if (env.NODE_ENV !== "production") return null;
+  if (sharedEnv.NODE_ENV !== "production") return null;
 
   if (detectBot(req)) return null;
 
-  if (!env.VERCEL) {
+  if (!serverEnv.VERCEL) {
     console.log("Not running on Vercel, skipping click event recording");
     return null;
   }
 
-  const isVercel = env.VERCEL === "1";
+  const isVercel = serverEnv.VERCEL === "1";
 
   const ip = isVercel ? ipAddress(req) : "0.0.0.1";
 
@@ -61,7 +62,7 @@ export const recordClickEvent = async ({
   // geolocation().region is Vercel's edge region – NOT the actual region
   // so we use the x-vercel-ip-country-region to get the actual region
   const { continent, region } =
-    env.VERCEL === "1"
+    serverEnv.VERCEL === "1"
       ? {
           continent: req.headers.get("x-vercel-ip-continent"),
           region: req.headers.get("x-vercel-ip-country-region"),
@@ -107,7 +108,7 @@ export const recordClickEvent = async ({
     fetch("https://api.tinybird.co/v0/events?name=clikz_click_events", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${env.TINYBIRD_API_KEY}`,
+        Authorization: `Bearer ${serverEnv.TINYBIRD_API_KEY}`,
       },
       body: JSON.stringify(clickData),
     }).then((res) => {

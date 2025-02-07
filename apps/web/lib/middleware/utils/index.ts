@@ -7,7 +7,8 @@ import { getToken } from "next-auth/jwt";
 
 import { BASE_DOMAIN } from "~/lib/constants";
 import { conn } from "~/lib/edge-db";
-import { env } from "~/lib/env";
+import { serverEnv } from "~/lib/env/server";
+import { sharedEnv } from "~/lib/env/shared";
 
 export const parse = (req: NextRequest) => {
   let domain = req.headers.get("host") as string;
@@ -37,8 +38,8 @@ export const parse = (req: NextRequest) => {
 export async function getUserViaToken(req: NextRequest) {
   const session = await getToken({
     req,
-    secret: env.AUTH_SECRET,
-    secureCookie: env.NODE_ENV === "production",
+    secret: serverEnv.AUTH_SECRET,
+    secureCookie: sharedEnv.NODE_ENV === "production",
   });
   return session?.user as User;
 }
