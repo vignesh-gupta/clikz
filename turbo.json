@@ -8,8 +8,8 @@
       "outputs": [".next/**", "!.next/cache/**"],
       "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
       "env": [
-        "AUTH_URL",
         "DATABASE_URL",
+        "AUTH_URL",
         "AUTH_SECRET",
         "AUTH_GITHUB_ID",
         "AUTH_GITHUB_SECRET",

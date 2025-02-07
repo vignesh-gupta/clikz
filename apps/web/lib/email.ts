@@ -1,10 +1,9 @@
 import { Resend } from "resend";
 
 import { APP_URL } from "./constants";
-import { serverEnv } from "./env/server";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
-export const resend = new Resend(serverEnv.AUTH_RESEND_KEY || "re_123");
+export const resend = new Resend(process.env.AUTH_RESEND_KEY || "re_123");
 
 const AUTH_MAIL_SENDER = "Clikz <auth@clikz.live>";
 

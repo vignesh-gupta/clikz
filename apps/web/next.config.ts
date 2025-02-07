@@ -1,11 +1,10 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextConfig } from "next";
 
 import { withAxiom } from "next-axiom";
 
-import { serverEnv } from "./lib/env/server";
-
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: serverEnv.ANALYZE === "true",
+  enabled: process.env.ANALYZE === "true",
 });
 
 const nextConfig: NextConfig = {
