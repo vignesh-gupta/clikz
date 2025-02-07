@@ -54,7 +54,7 @@ const CreateWorkspaceForm = () => {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="gap-y-3 flex items-center justify-center flex-col">
-        <Image src="/clikz.png" width={150} height={40} alt="Clikz Logo" />
+        <Image src="/logo-name.png" width={150} height={40} alt="Clikz Logo" />
 
         <p className="text-xl font-semibold">Create a new workspace</p>
       </CardHeader>

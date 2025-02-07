@@ -1,5 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
-
 export const BASE_DOMAIN = process.env.NEXT_PUBLIC_BASE_DOMAIN || "";
 export const BASE_URL = BASE_DOMAIN.includes("localhost")
   ? `http://${BASE_DOMAIN}`

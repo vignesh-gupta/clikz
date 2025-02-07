@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest, userAgent } from "next/server";
 
 import { Link } from "@prisma/client";

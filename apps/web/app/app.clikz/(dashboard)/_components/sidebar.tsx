@@ -52,7 +52,7 @@ export function DashboardSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="flex items-center justify-center my-4">
-        <Image src="/clikz.png" width={150} height={40} alt="Clikz Logo" />
+        <Image src="/logo-name.png" width={150} height={40} alt="Clikz Logo" />
       </SidebarHeader>
       <SidebarContent className="px-4">
         <div className="my-4">

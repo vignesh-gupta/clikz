@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextConfig } from "next";
 
 import { withAxiom } from "next-axiom";

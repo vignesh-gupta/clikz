@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest, NextResponse } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";

@@ -1,7 +1,24 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env"],
-  "globalEnv": ["NODE_ENV"],
+  "globalEnv": [
+    "VERCEL",
+    "NODE_ENV",
+    "DATABASE_URL",
+    "AUTH_URL",
+    "AUTH_SECRET",
+    "AUTH_GITHUB_ID",
+    "AUTH_GITHUB_SECRET",
+    "AUTH_DISCORD_ID",
+    "AUTH_DISCORD_SECRET",
+    "AUTH_RESEND_KEY",
+    "TINYBIRD_API_KEY",
+    "IMAGEKIT_PRIVATE_KEY",
+    "NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT",
+    "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
+    "NEXT_PUBLIC_BASE_DOMAIN",
+    "NEXT_PUBLIC_APP_DOMAIN"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

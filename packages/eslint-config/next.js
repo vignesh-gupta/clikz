@@ -1,9 +1,11 @@
 const { resolve } = require("node:path");
+const turboConfig = require("eslint-config-turbo");
 
 const project = resolve(process.cwd(), "tsconfig.json");
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
+  ...turboConfig,
   extends: [
     "eslint:recommended",
     require.resolve("@vercel/style-guide/eslint/next"),
