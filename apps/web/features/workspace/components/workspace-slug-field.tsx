@@ -61,7 +61,7 @@ const WorkspaceSlugField = ({ setSlugAvailable }: WorkspaceSlugFieldProps) => {
       }
     };
 
-    checkSlug(debouncedSlug);
+    if (debouncedSlug) checkSlug(debouncedSlug);
     return () => controller.abort("Sending a new request");
   }, [debouncedSlug]);
 

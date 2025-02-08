@@ -1,7 +1,7 @@
 /**
  * An array of routes that are public and do not require authentication.
  */
-export const PUBLIC_ROUTE = ["/", "/test"];
+export const PUBLIC_ROUTE = ["/", "/contact"];
 
 /**
  * An array of routes that are used for authentication.

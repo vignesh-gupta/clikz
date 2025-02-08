@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
-import { APP_NAMES } from "./lib/constants";
+import { APP_NAMES, BASE_DOMAIN } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
 import { LinkMiddleware } from "./lib/middleware/link";
 import { ALLOWED_EXTENSIONS, PUBLIC_ROUTE } from "./routes";
@@ -29,6 +29,10 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
   if (PUBLIC_ROUTE.includes(req.nextUrl.pathname)) {
+    if (process.env.NODE_ENV === "production" && domain !== BASE_DOMAIN) {
+      return NextResponse.redirect(`https://${BASE_DOMAIN}${fullPath}`, 302);
+    }
+
     return NextResponse.next();
   }
 

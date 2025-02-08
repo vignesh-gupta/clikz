@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button } from "@clikz/ui/components/ui/button";
 
 import MaxWidthContainer from "~/components/max-width-container";
-import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 const Root404Page = () => {
   return (
@@ -12,8 +11,9 @@ const Root404Page = () => {
         <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900  to-gray-600 inline-block text-transparent bg-clip-text font-mono">
           404
         </h1>
-        <Button className="mt-4" size="sm">
-          <Link href={DEFAULT_LOGIN_REDIRECT}>Go back home</Link>
+        <p className="text-muted-foreground">Page not found!</p>
+        <Button className="mt-4" size="sm" asChild>
+          <Link href="/">Go home</Link>
         </Button>
       </div>
     </MaxWidthContainer>
