@@ -10,7 +10,7 @@ const PublicPageLayout = ({ children }: PropsWithChildren) => {
   return (
     <main
       className={cn(
-        "min-h-screen bg-gradient-custom font-medium px-4",
+        "min-h-screen bg-gradient-custom font-medium px-4 pb-10",
         urbanist.className
       )}
     >

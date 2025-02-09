@@ -2,13 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
+import { useMotionValueEvent, useScroll } from "motion/react";
 import * as motion from "motion/react-client";
+import { useSession } from "next-auth/react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { cn } from "@clikz/ui/lib/utils";
 
 import { APP_DOMAIN } from "~/lib/constants";
+import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 const navItems = [
   {
@@ -30,17 +34,34 @@ const navItems = [
 ];
 
 const Navbar = () => {
+  const [hidden, setHidden] = useState(false);
+
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest: number) => {
+    const prev = scrollY.getPrevious() || 0;
+
+    if (latest > prev && latest > 100) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
+
+  const { status } = useSession();
+
   return (
     <nav className="fixed top-10 md:top-5  w-full z-50">
       <motion.div
-        className={cn(
-          "shadow-sm px-6 py-3 rounded-full mx-auto h-16 lg:max-w-screen-lg max-w-screen-md bg-white flex items-center justify-between transition-all z-50"
-        )}
-        initial={{ y: -200 }}
-        animate={{
-          y: 0,
+        variants={{
+          visible: { y: 0 },
+          hidden: { y: "-150%" },
         }}
-        exit={{ y: -200 }}
+        className={cn(
+          "shadow-sm px-6 py-3 rounded-full mx-auto h-16 lg:max-w-screen-lg max-w-screen-md bg-white flex items-center justify-between z-50"
+        )}
+        initial={{ y: "-200%" }}
+        animate={hidden ? "hidden" : "visible"}
       >
         <Link href="/">
           <Image
@@ -71,17 +92,31 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          <Button className="rounded-full" asChild>
-            <Link
-              href={{
-                host: APP_DOMAIN,
-                pathname: "/sign-in",
-              }}
-              prefetch={false}
-            >
-              Sign In
-            </Link>
-          </Button>
+          {status === "authenticated" ? (
+            <Button className="rounded-full" asChild>
+              <Link
+                href={{
+                  host: APP_DOMAIN,
+                  pathname: DEFAULT_LOGIN_REDIRECT,
+                }}
+                prefetch={false}
+              >
+                Dashboard
+              </Link>
+            </Button>
+          ) : (
+            <Button className="rounded-full" asChild>
+              <Link
+                href={{
+                  host: APP_DOMAIN,
+                  pathname: "/sign-in",
+                }}
+                prefetch={false}
+              >
+                Sign In
+              </Link>
+            </Button>
+          )}
         </div>
       </motion.div>
     </nav>

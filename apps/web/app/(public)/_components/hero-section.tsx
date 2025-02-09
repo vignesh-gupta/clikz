@@ -34,7 +34,7 @@ const HeroSection = () => {
         {["Branded Links", "Real Time Analytics", "Link Management"].map(
           (feat) => (
             <div key={feat} className="flex items-center gap-2">
-              <div className="rounded-full p-1.5 border-2 border-muted text-orange-500">
+              <div className="rounded-full p-1.5 border-2 border-muted/30 text-orange-500">
                 <CircleCheckBig className="size-4" />
               </div>
               <span>{feat}</span>
