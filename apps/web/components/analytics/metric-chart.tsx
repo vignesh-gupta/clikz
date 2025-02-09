@@ -35,6 +35,13 @@ export function MetricBarChart({
   filledBarClassName,
   isLink,
 }: MetricBarChartProps) {
+  if (!items || items.length === 0)
+    return (
+      <div className="flex items-center justify-center h-full min-h-60">
+        No data available
+      </div>
+    );
+
   const maxAmt = Math.max(...items.map((item) => item.amt));
   items.sort((a, b) => b.amt - a.amt);
 

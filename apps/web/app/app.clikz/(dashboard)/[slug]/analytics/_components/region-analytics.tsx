@@ -35,91 +35,67 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
       ]}
     >
       <TabsContent value="city">
-        {!groupByCity || groupByCity?.length === 0 ? (
-          <div className="flex items-center justify-center h-full min-h-60">
-            No data available
-          </div>
-        ) : (
-          <MetricBarChart
-            items={groupByCity.map((data) => ({
-              icon: (
-                <Image
-                  src={`https://flag.vercel.app/m/${data.country}.svg`}
-                  alt={`${data.country} flag`}
-                  height={10}
-                  width={10}
-                  className="size-4 object-contain"
-                />
-              ),
-              label: data.city,
-              amt: data.amt,
-            }))}
-          />
-        )}
+        <MetricBarChart
+          items={groupByCity.map((data) => ({
+            icon: (
+              <Image
+                src={`https://flag.vercel.app/m/${data.country}.svg`}
+                alt={`${data.country} flag`}
+                height={10}
+                width={10}
+                className="size-4 object-contain"
+              />
+            ),
+            label: data.city,
+            amt: data.amt,
+          }))}
+        />
       </TabsContent>
       <TabsContent value="region">
-        {!groupByRegion || groupByRegion?.length === 0 ? (
-          <div className="flex items-center justify-center h-full min-h-60">
-            No data available
-          </div>
-        ) : (
-          <MetricBarChart
-            items={groupByRegion.map((data) => ({
-              icon: (
-                <Image
-                  src={`https://flag.vercel.app/m/${data.country}.svg`}
-                  alt={`${data.country} flag`}
-                  height={10}
-                  width={10}
-                  className="size-4 object-contain"
-                />
-              ),
-              label:
-                REGIONS[
-                  `${data.country}-${data.region}` as keyof typeof REGIONS
-                ] ?? "Unknown",
-              amt: data.amt,
-            }))}
-          />
-        )}
+        <MetricBarChart
+          items={groupByRegion.map((data) => ({
+            icon: (
+              <Image
+                src={`https://flag.vercel.app/m/${data.country}.svg`}
+                alt={`${data.country} flag`}
+                height={10}
+                width={10}
+                className="size-4 object-contain"
+              />
+            ),
+            label:
+              REGIONS[
+                `${data.country}-${data.region}` as keyof typeof REGIONS
+              ] ?? "Unknown",
+            amt: data.amt,
+          }))}
+        />
       </TabsContent>
       <TabsContent value="country">
-        {!groupByCountry || groupByCountry?.length === 0 ? (
-          <div className="flex items-center justify-center h-full min-h-60">
-            No data available
-          </div>
-        ) : (
-          <MetricBarChart
-            items={groupByCountry.map((data) => ({
-              icon: (
-                <Image
-                  src={`https://flag.vercel.app/m/${data.country}.svg`}
-                  alt={`${data.country} flag`}
-                  height={10}
-                  width={10}
-                  className="size-4 object-contain"
-                />
-              ),
-              label: COUNTRIES[data.country] ?? "Unknown",
-              amt: data.amt,
-            }))}
-          />
-        )}
+        <MetricBarChart
+          items={groupByCountry.map((data) => ({
+            icon: (
+              <Image
+                src={`https://flag.vercel.app/m/${data.country}.svg`}
+                alt={`${data.country} flag`}
+                height={10}
+                width={10}
+                className="size-4 object-contain"
+              />
+            ),
+            label: COUNTRIES[data.country] ?? "Unknown",
+            amt: data.amt,
+          }))}
+        />
       </TabsContent>
       <TabsContent value="continent">
-        {!groupByContinent || groupByContinent?.length === 0 ? (
-          <div className="flex items-center justify-center h-full min-h-60">
-            No data available
-          </div>
-        ) : (
-          <MetricBarChart
-            items={groupByContinent.map((data) => ({
-              icon: <Globe2Icon className="size-4 " />,
-              label: CONTINENTS[data.continent] ?? "Unknown",
-              amt: data.amt,
-            }))}
-          />
-        )}
+        <MetricBarChart
+          items={groupByContinent.map((data) => ({
+            icon: <Globe2Icon className="size-4 " />,
+            label: CONTINENTS[data.continent] ?? "Unknown",
+            amt: data.amt,
+          }))}
+        />
       </TabsContent>
     </AnalyticsCard>
   );

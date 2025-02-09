@@ -11,52 +11,53 @@ export const appRedirect = (path: string, req: NextRequest) =>
 export const AppMiddleware = async (req: NextRequest) => {
   const { nextUrl, fullPath, domain } = parse(req);
 
-  if (fullPath === "/" && process.env.NODE_ENV === "development")
-    return NextResponse.next();
-
-  if (fullPath === "/" && domain === BASE_DOMAIN) return NextResponse.next();
-
-  if (fullPath === "/" && domain === APP_DOMAIN)
-    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-
-  const user = await getUserViaToken(req);
+  if (fullPath === "/") {
+    if (process.env.NODE_ENV === "development" || domain === BASE_DOMAIN) {
+      return NextResponse.next();
+    }
+    if (domain === APP_DOMAIN) {
+      return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+  }
 
   if (nextUrl.pathname.startsWith(AUTH_API_ROUTE)) {
     return NextResponse.next();
   }
 
+  const user = await getUserViaToken(req);
+
   if (AUTH_ROUTES.includes(nextUrl.pathname)) {
-    if (!(user && user?.id)) return NextResponse.next();
-
-    // if user is logged in, redirect to callbackUrl
-    const callbackUrl = decodeURIComponent(
-      nextUrl.searchParams.get("callbackUrl") ?? DEFAULT_LOGIN_REDIRECT
-    );
-    return NextResponse.redirect(new URL(callbackUrl, nextUrl));
-  }
-
-  if (!(user && user.id)) {
-    let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) {
-      callbackUrl += nextUrl.search;
+    if (user?.id) {
+      const callbackUrl = decodeURIComponent(
+        nextUrl.searchParams.get("callbackUrl") ?? DEFAULT_LOGIN_REDIRECT
+      );
+      return NextResponse.redirect(new URL(callbackUrl, nextUrl));
     }
+    return NextResponse.next();
+  }
 
-    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-
+  if (!user?.id) {
+    const callbackUrl = encodeURIComponent(
+      nextUrl.pathname + (nextUrl.search || "")
+    );
     return NextResponse.redirect(
-      `${nextUrl.origin}/sign-in?callbackUrl=${encodedCallbackUrl}`
+      `${nextUrl.origin}/sign-in?callbackUrl=${callbackUrl}`
     );
   }
 
-  if (fullPath.includes("/onboarding"))
+  if (fullPath.includes("/onboarding")) {
     return NextResponse.rewrite(appRedirect(fullPath, req));
+  }
 
   const workspace = await getUserFirstWorkspaceViaEdge(user.id);
 
-  if (!workspace) return NextResponse.redirect(new URL("/onboarding", nextUrl));
+  if (!workspace) {
+    return NextResponse.redirect(new URL("/onboarding", nextUrl));
+  }
 
-  if (fullPath === "/")
+  if (fullPath === "/") {
     return NextResponse.redirect(new URL(`/${workspace.slug}`, nextUrl));
+  }
 
   return NextResponse.rewrite(appRedirect(fullPath, req));
 };
