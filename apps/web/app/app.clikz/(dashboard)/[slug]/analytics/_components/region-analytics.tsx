@@ -36,6 +36,7 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
     >
       <TabsContent value="city">
         <MetricBarChart
+          color="red"
           items={groupByCity.map((data) => ({
             icon: (
               <Image
@@ -53,6 +54,7 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
       </TabsContent>
       <TabsContent value="region">
         <MetricBarChart
+          color="red"
           items={groupByRegion.map((data) => ({
             icon: (
               <Image
@@ -73,6 +75,7 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
       </TabsContent>
       <TabsContent value="country">
         <MetricBarChart
+          color="red"
           items={groupByCountry.map((data) => ({
             icon: (
               <Image
@@ -90,6 +93,7 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
       </TabsContent>
       <TabsContent value="continent">
         <MetricBarChart
+          color="red"
           items={groupByContinent.map((data) => ({
             icon: <Globe2Icon className="size-4 " />,
             label: CONTINENTS[data.continent] ?? "Unknown",

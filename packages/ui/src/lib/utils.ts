@@ -59,3 +59,13 @@ export function generateCUID() {
     ((Math.random() * 36) | 0).toString(36),
   );
 }
+
+export function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+    .format(date)
+    .replace(/\//g, "-");
+}
