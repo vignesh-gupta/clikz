@@ -24,6 +24,7 @@ export type RawAnalyticsData = {
   region: string;
   country: CountryCode;
   continent: Continent;
+  browser: string;
   os: string;
   device: string;
   referer: string;

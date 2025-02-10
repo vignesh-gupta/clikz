@@ -11,8 +11,6 @@ import {
   useState,
 } from "react";
 
-import { stableSort } from "../lib/stable-sort";
-
 type KeyboardShortcutListener = {
   id: string;
   key: string | string[];
@@ -83,10 +81,9 @@ export function useKeyboardShortcut(
       if (!matchingListeners.length) return;
 
       // Sort the listeners by priority
-      const topListener = stableSort(
-        matchingListeners,
-        (a, b) => (b.priority ?? 0) - (a.priority ?? 0),
-      ).slice(-1)[0];
+      const topListener = matchingListeners
+        .sort((a, b) => (a.priority ?? 0) - (b?.priority ?? 0))
+        .slice(-1)[0];
 
       // Check if this is the top listener
       if (topListener?.id !== id) return;

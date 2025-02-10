@@ -80,33 +80,38 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
             className="md:hidden"
           />
         </Link>
-        <div className="flex items-center gap-6">
-          <ul className="flex items-center gap-4">
-            {navItems.map((item) => (
-              <li
-                key={`landing-nav-${item.title}`}
-                className="relative cursor-pointer after:contents-[''] after:absolute after:w-0 after:transition-all after:duration-500 after:left-0 after:bottom-0 hover:after:w-full after:bg-black after:h-0.5"
-              >
-                <a href={item.link} className="text-black font-semibold">
-                  {item.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-          {isLoggedIn ? (
-            <Button className="rounded-full" asChild>
-              <Link
-                href={{
-                  host: APP_DOMAIN,
-                  pathname: DEFAULT_LOGIN_REDIRECT,
-                }}
-                prefetch={false}
-              >
-                Dashboard
-              </Link>
-            </Button>
-          ) : (
-            <Button className="rounded-full" asChild>
+        <ul className="flex items-center gap-4">
+          {navItems.map((item) => (
+            <li
+              key={`landing-nav-${item.title}`}
+              className="relative cursor-pointer after:contents-[''] after:absolute after:w-0 after:transition-all after:duration-500 after:left-0 after:bottom-0 hover:after:w-full after:bg-black after:h-0.5"
+            >
+              <a href={item.link} className="text-black font-semibold">
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+        {isLoggedIn ? (
+          <Button className="rounded-full" size="sm" asChild>
+            <Link
+              href={{
+                host: APP_DOMAIN,
+                pathname: DEFAULT_LOGIN_REDIRECT,
+              }}
+              prefetch={false}
+            >
+              Dashboard
+            </Link>
+          </Button>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Button
+              className="rounded-full"
+              size="sm"
+              variant="outline"
+              asChild
+            >
               <Link
                 href={{
                   host: APP_DOMAIN,
@@ -114,11 +119,22 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
                 }}
                 prefetch={false}
               >
-                Sign In
+                Log in
               </Link>
             </Button>
-          )}
-        </div>
+            <Button className="rounded-full" size="sm" asChild>
+              <Link
+                href={{
+                  host: APP_DOMAIN,
+                  pathname: "/sign-up",
+                }}
+                prefetch={false}
+              >
+                Sign up
+              </Link>
+            </Button>
+          </div>
+        )}
       </motion.div>
     </nav>
   );
