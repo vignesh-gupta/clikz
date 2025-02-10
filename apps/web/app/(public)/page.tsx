@@ -4,10 +4,10 @@ import PricingSection from "./_components/pricing-section";
 
 export default function HomePage() {
   return (
-    <main>
+    <>
       <HeroSection />
       <BentoDemo />
       <PricingSection />
-    </main>
+    </>
   );
 }

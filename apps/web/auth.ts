@@ -9,7 +9,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/sign-in",
   },
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 30, // 30 days
+  },
+
   events: {
     linkAccount: async ({ user }) => {
       await db.user.update({

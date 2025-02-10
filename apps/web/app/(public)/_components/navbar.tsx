@@ -6,7 +6,6 @@ import { useState } from "react";
 
 import { useMotionValueEvent, useScroll } from "motion/react";
 import * as motion from "motion/react-client";
-import { useSession } from "next-auth/react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { cn } from "@clikz/ui/lib/utils";
@@ -33,7 +32,11 @@ const navItems = [
   },
 ];
 
-const Navbar = () => {
+type NavbarProps = {
+  isLoggedIn: boolean;
+};
+
+const Navbar = ({ isLoggedIn }: NavbarProps) => {
   const [hidden, setHidden] = useState(false);
 
   const { scrollY } = useScroll();
@@ -47,8 +50,6 @@ const Navbar = () => {
       setHidden(false);
     }
   });
-
-  const { status } = useSession();
 
   return (
     <nav className="fixed top-10 md:top-5  w-full z-50">
@@ -92,7 +93,7 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          {status === "authenticated" ? (
+          {isLoggedIn ? (
             <Button className="rounded-full" asChild>
               <Link
                 href={{

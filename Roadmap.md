@@ -15,6 +15,7 @@
 
 ## In Progress
 
+- [ ] Tools (QR gen, Metadata API, Link Preview, UTM builder)
 - [ ] User Settings
 - [ ] Improved analytics
 
