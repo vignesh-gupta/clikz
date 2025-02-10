@@ -11,6 +11,7 @@ model Workspace {
   icon          String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
+  plan          PlanName     @default(FREE)
 
   @@unique([slug])
   @@unique([id, slug])
@@ -47,4 +48,10 @@ model Membership {
 enum MemberRole {
   ADMIN
   MEMBER
+}
+
+enum PlanName {
+  FREE
+  PRO
+  ENTERPRISE
 }

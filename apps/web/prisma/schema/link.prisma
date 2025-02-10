@@ -1,18 +1,31 @@
 model Link {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   domain        String
   url           String
   key           String
   shortLink     String
   comment       String?
-  clicks        Int       @default(0)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  User          User      @relation(fields: [userId], references: [id])
+  clicks        Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  User          User          @relation(fields: [userId], references: [id])
   userId        String
-  Workspace     Workspace @relation(fields: [workspaceId, workspaceSlug], references: [id, slug])
+  Workspace     Workspace     @relation(fields: [workspaceId, workspaceSlug], references: [id, slug])
   workspaceId   String
   workspaceSlug String
+  isProxy       Boolean       @default(false)
+  metadataId    String?       @unique
+  metadata      LinkMetadata? @relation(fields: [metadataId], references: [id])
 
   @@index([userId])
+}
+
+model LinkMetadata {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  image       String
+  favicon     String
+  Link        Link?
+  linkId      String @unique
 }

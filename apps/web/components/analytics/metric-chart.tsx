@@ -35,7 +35,6 @@ export function MetricBarChart({
   barClassName,
   filledBarClassName,
   isLink,
-  color = "yellow",
 }: MetricBarChartProps) {
   if (!items || items.length === 0)
     return (
@@ -54,17 +53,15 @@ export function MetricBarChart({
           <Tooltip delayDuration={0} key={index}>
             <div
               className={cn(
-                "h-10 flex items-center justify-between gap-2 cursor-pointer px-4 py-1 border-l-2 border-transparent hover:bg-opacity-15 ",
-                barClassName,
-                `hover:border-${color}-600 hover:bg-${color}-300`
+                "h-10 flex items-center justify-between gap-2 cursor-pointer px-4 py-1 border-l-2 border-transparent hover:bg-opacity-15 hover:border-yellow-600 hover:bg-yellow-300",
+                barClassName
               )}
             >
               <TooltipTrigger asChild>
                 <div
                   className={cn(
-                    "h-full rounded-lg bg-opacity-15",
-                    filledBarClassName,
-                    `bg-${color}-500`
+                    "h-full rounded-lg bg-opacity-15 bg-yellow-500",
+                    filledBarClassName
                   )}
                   style={{
                     width: `${(item.amt / maxAmt) * 100}%`,
