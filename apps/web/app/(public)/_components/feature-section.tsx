@@ -1,4 +1,5 @@
 import { BellIcon, CalendarIcon, FileTextIcon, Share2Icon } from "lucide-react";
+import * as motion from "motion/react-client";
 
 import { AnimatedBeamMultipleOutputDemo } from "@clikz/ui/components/demo/animated-beam-demo";
 import { AnimatedListDemo } from "@clikz/ui/components/demo/animated-list-demo";
@@ -87,7 +88,7 @@ const features = [
     cta: "Learn more",
     className: "col-span-3 lg:col-span-2",
     background: (
-      <AnimatedBeamMultipleOutputDemo className="absolute right-2 top-4 h-[300px] border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
+      <AnimatedBeamMultipleOutputDemo className="absolute right-2 top-4 h-[300px] border-1 transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
     ),
   },
   {
@@ -109,12 +110,17 @@ const features = [
 
 export function BentoDemo() {
   return (
-    <MaxWidthContainer>
-      <BentoGrid>
-        {features.map((feature, idx) => (
-          <BentoCard key={idx} {...feature} />
-        ))}
-      </BentoGrid>
-    </MaxWidthContainer>
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+    >
+      <MaxWidthContainer>
+        <BentoGrid className="mb-10">
+          {features.map((feature, idx) => (
+            <BentoCard key={idx} {...feature} />
+          ))}
+        </BentoGrid>
+      </MaxWidthContainer>
+    </motion.section>
   );
 }

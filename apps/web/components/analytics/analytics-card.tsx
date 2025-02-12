@@ -12,7 +12,7 @@ type AnalyticsCardProps = {
 };
 const AnalyticsCard = ({ tabs, children }: AnalyticsCardProps) => {
   return (
-    <Card className="h-full shadow-lg min-h-96">
+    <Card className="h-full min-h-96">
       <Tabs defaultValue={tabs[0]?.value}>
         <AnalyticsTabs tabs={tabs} />
         {children}

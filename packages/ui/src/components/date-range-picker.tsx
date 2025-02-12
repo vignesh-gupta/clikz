@@ -21,6 +21,8 @@ interface DateRangePickerProps {
   className?: string;
 }
 
+export type { DateRange } from "react-day-picker";
+
 export function DateRangePicker({
   date,
   onDateChange,

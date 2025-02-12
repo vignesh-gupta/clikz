@@ -17,7 +17,7 @@ const PricingTier = ({
   features: string[];
   isPopular?: boolean;
 }) => (
-  <motion.div
+  <motion.section
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{
@@ -76,7 +76,7 @@ const PricingTier = ({
         </motion.li>
       ))}
     </ul>
-  </motion.div>
+  </motion.section>
 );
 
 export default function PricingSection() {
