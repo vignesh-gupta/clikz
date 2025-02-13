@@ -2,14 +2,15 @@ import { LinkIcon, UsersIcon } from "lucide-react";
 
 import { Card } from "@clikz/ui/components/ui/card";
 
-import RegionAnalytics from "~/app/app.clikz/(dashboard)/[slug]/analytics/_components/region-analytics";
-import UrlAnalytics from "~/app/app.clikz/(dashboard)/[slug]/analytics/_components/url-analytics";
 import { getAnalytics } from "~/lib/analytics/fetch-analytics";
 import { groupByParam } from "~/lib/utils/url";
 
 import { PageWithSlugParams } from "../page";
+import CampaignAnalytics from "./_components/campaign-analytics";
 import DeviceAnalytics from "./_components/device-analytics";
 import PageFilters from "./_components/page-filters";
+import RegionAnalytics from "./_components/region-analytics";
+import UrlAnalytics from "./_components/url-analytics";
 
 const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
   const { slug } = await params;
@@ -36,7 +37,7 @@ const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
               <p className="text-sm text-muted-foreground">Total Links</p>
               <p className="text-2xl font-bold">{totalLinks}</p>
             </div>
-            <LinkIcon className="h-8 w-8 text-blue-500" />
+            <LinkIcon className="size-8 text-blue-500" />
           </div>
         </Card>
 
@@ -46,7 +47,7 @@ const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
               <p className="text-sm text-muted-foreground">Total Visitors</p>
               <p className="text-2xl font-bold">{totalClicks}</p>
             </div>
-            <UsersIcon className="h-8 w-8 text-green-500" />
+            <UsersIcon className="size-8 text-green-500" />
           </div>
         </Card>
       </div>
@@ -54,8 +55,9 @@ const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
       {/* Main Analytics Grid */}
       <div className="grid gap-6 md:grid-cols-2">
         <UrlAnalytics data={data} />
-        <DeviceAnalytics data={data} />
         <RegionAnalytics data={data} />
+        <DeviceAnalytics data={data} />
+        <CampaignAnalytics data={data} />
       </div>
     </div>
   );

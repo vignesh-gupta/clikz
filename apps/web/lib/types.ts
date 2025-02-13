@@ -31,3 +31,7 @@ export type RawAnalyticsData = {
   referer_url: string;
   qr: 0 | 1;
 };
+
+export type AnalyticsDataProp = {
+  data?: RawAnalyticsData[];
+};

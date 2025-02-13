@@ -5,15 +5,11 @@ import { TabsContent } from "@clikz/ui/components/ui/tabs";
 import AnalyticsCard from "~/components/analytics/analytics-card";
 import { MetricBarChart } from "~/components/analytics/metric-chart";
 import LinkFavIcon from "~/features/link/components/link-fav-icon";
-import { RawAnalyticsData } from "~/lib/types";
+import { AnalyticsDataProp } from "~/lib/types";
 import { groupByParam } from "~/lib/utils/url";
 
-type UrlAnalyticsProps = {
-  data?: RawAnalyticsData[];
-};
-
-const UrlAnalytics = ({ data }: UrlAnalyticsProps) => {
-  const groupByLinkId = groupByParam(data || [], "link_id");
+const UrlAnalytics = ({ data }: AnalyticsDataProp) => {
+  const groupByLinkId = groupByParam(data, "link_id");
 
   const analytics = groupByLinkId?.map((item) => ({
     icon: (

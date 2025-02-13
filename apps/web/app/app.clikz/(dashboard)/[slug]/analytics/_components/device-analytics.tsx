@@ -12,17 +12,13 @@ import { TabsContent } from "@clikz/ui/components/ui/tabs";
 import AnalyticsCard from "~/components/analytics/analytics-card";
 import { MetricBarChart } from "~/components/analytics/metric-chart";
 import { BlurImage } from "~/components/blur-image";
-import { RawAnalyticsData } from "~/lib/types";
+import { AnalyticsDataProp } from "~/lib/types";
 import { groupByParam } from "~/lib/utils/url";
 
-type DeviceAnalyticsProps = {
-  data?: RawAnalyticsData[];
-};
-
-const DeviceAnalytics = ({ data }: DeviceAnalyticsProps) => {
-  const groupByDevice = groupByParam(data || [], "device");
-  const groupByBrowser = groupByParam(data || [], "browser");
-  const groupByOS = groupByParam(data || [], "os");
+const DeviceAnalytics = ({ data }: AnalyticsDataProp) => {
+  const groupByDevice = groupByParam(data, "device");
+  const groupByBrowser = groupByParam(data, "browser");
+  const groupByOS = groupByParam(data, "os");
 
   const getDeviceIcon = (device: string) => {
     switch (device.toLowerCase()) {
@@ -47,8 +43,8 @@ const DeviceAnalytics = ({ data }: DeviceAnalyticsProps) => {
     >
       <TabsContent value="device">
         <MetricBarChart
-          barClassName="hover:border-blue-600 hover:bg-blue-300"
-          filledBarClassName="bg-blue-500"
+          barClassName="hover:border-green-600 hover:bg-green-300"
+          filledBarClassName="bg-green-500"
           items={groupByDevice.map((data) => ({
             icon: getDeviceIcon(data.device),
             label: data.device || "Unknown",
@@ -58,8 +54,8 @@ const DeviceAnalytics = ({ data }: DeviceAnalyticsProps) => {
       </TabsContent>
       <TabsContent value="browser">
         <MetricBarChart
-          barClassName="hover:border-blue-600 hover:bg-blue-300"
-          filledBarClassName="bg-blue-500"
+          barClassName="hover:border-green-600 hover:bg-green-300"
+          filledBarClassName="bg-green-500"
           items={groupByBrowser.map((data) => ({
             icon: (
               <BlurImage
@@ -77,8 +73,8 @@ const DeviceAnalytics = ({ data }: DeviceAnalyticsProps) => {
       </TabsContent>
       <TabsContent value="os">
         <MetricBarChart
-          barClassName="hover:border-blue-600 hover:bg-blue-300"
-          filledBarClassName="bg-blue-500"
+          barClassName="hover:border-green-600 hover:bg-green-300"
+          filledBarClassName="bg-green-500"
           items={groupByOS.map((data) => ({
             icon: (
               <BlurImage

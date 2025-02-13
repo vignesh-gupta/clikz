@@ -9,18 +9,14 @@ import { MetricBarChart } from "~/components/analytics/metric-chart";
 import { CONTINENTS } from "~/lib/constants/continents";
 import { COUNTRIES } from "~/lib/constants/countries";
 import { REGIONS } from "~/lib/constants/region";
-import { RawAnalyticsData } from "~/lib/types";
+import { AnalyticsDataProp } from "~/lib/types";
 import { groupByParam } from "~/lib/utils/url";
 
-type RegionAnalyticsProps = {
-  data?: RawAnalyticsData[];
-};
-
-const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
-  const groupByCity = groupByParam(data || [], "city");
-  const groupByRegion = groupByParam(data || [], "region");
-  const groupByCountry = groupByParam(data || [], "country");
-  const groupByContinent = groupByParam(data || [], "continent");
+const RegionAnalytics = ({ data }: AnalyticsDataProp) => {
+  const groupByCity = groupByParam(data, "city");
+  const groupByRegion = groupByParam(data, "region");
+  const groupByCountry = groupByParam(data, "country");
+  const groupByContinent = groupByParam(data, "continent");
 
   return (
     <AnalyticsCard
@@ -36,8 +32,8 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
     >
       <TabsContent value="city">
         <MetricBarChart
-          barClassName="hover:border-red-600 hover:bg-red-300"
-          filledBarClassName="bg-red-500"
+          barClassName="hover:border-blue-600 hover:bg-blue-300"
+          filledBarClassName="bg-blue-500"
           items={groupByCity.map((data) => ({
             icon: (
               <Image
@@ -55,8 +51,8 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
       </TabsContent>
       <TabsContent value="region">
         <MetricBarChart
-          barClassName="hover:border-red-600 hover:bg-red-300"
-          filledBarClassName="bg-red-500"
+          barClassName="hover:border-blue-600 hover:bg-blue-300"
+          filledBarClassName="bg-blue-500"
           items={groupByRegion.map((data) => ({
             icon: (
               <Image
@@ -77,8 +73,8 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
       </TabsContent>
       <TabsContent value="country">
         <MetricBarChart
-          barClassName="hover:border-red-600 hover:bg-red-300"
-          filledBarClassName="bg-red-500"
+          barClassName="hover:border-blue-600 hover:bg-blue-300"
+          filledBarClassName="bg-blue-500"
           items={groupByCountry.map((data) => ({
             icon: (
               <Image
@@ -96,8 +92,8 @@ const RegionAnalytics = ({ data }: RegionAnalyticsProps) => {
       </TabsContent>
       <TabsContent value="continent">
         <MetricBarChart
-          barClassName="hover:border-red-600 hover:bg-red-300"
-          filledBarClassName="bg-red-500"
+          barClassName="hover:border-blue-600 hover:bg-blue-300"
+          filledBarClassName="bg-blue-500"
           items={groupByContinent.map((data) => ({
             icon: <Globe2Icon className="size-4 " />,
             label: CONTINENTS[data.continent] ?? "Unknown",

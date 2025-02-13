@@ -38,7 +38,7 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
       </div>
 
       <Tabs value={teamTab} className="w-full">
-        <TabsList className="w-full justify-start">
+        <TabsList className=" justify-start">
           <TabsTrigger value="members" onClick={() => setTeamTab("members")}>
             Members
           </TabsTrigger>

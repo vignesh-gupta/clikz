@@ -50,7 +50,10 @@ export function MetricBarChart({
     <TooltipProvider>
       <div className={cn("space-y-2", className)}>
         {items.map((item, index) => (
-          <Tooltip delayDuration={0} key={index}>
+          <Tooltip
+            delayDuration={0}
+            key={`analytics-label-${item.label}-${index}`}
+          >
             <div
               className={cn(
                 "h-10 flex items-center justify-between gap-2 cursor-pointer px-4 py-1 border-l-2 border-transparent hover:bg-opacity-15 hover:border-yellow-600 hover:bg-yellow-300",
@@ -67,9 +70,9 @@ export function MetricBarChart({
                     width: `${(item.amt / maxAmt) * 100}%`,
                   }}
                 >
-                  <div className="flex h-full items-center gap-2 px-4">
+                  <div className="flex items-center h-full gap-2 px-4">
                     <span className="shrink-0">{item.icon}</span>
-                    <span className="text-sm font-medium text-primary/80 truncate">
+                    <span className="text-sm font-medium truncate text-primary/80">
                       {item.label}
                     </span>
                   </div>
@@ -80,16 +83,16 @@ export function MetricBarChart({
                   <Link
                     target="_blank"
                     href={item.label}
-                    className="hover:underline underline-offset-2  hover:text-blue-700 text-blue-500 inline-flex items-center gap-1 line-clamp-2 overflow-x-auto"
+                    className="inline-flex items-center gap-1 overflow-x-auto text-blue-500 hover:underline underline-offset-2 hover:text-blue-700 line-clamp-2"
                   >
-                    {item.label}{" "}
-                    <SquareArrowOutUpRightIcon className="size-4 shrink-0" />
+                    {item.label}
+                    <SquareArrowOutUpRightIcon className="size-3 shrink-0" />
                   </Link>
                 </TooltipContent>
               )}
 
               {/* Amount on the right */}
-              <span className="text-sm font-medium px-1 text-center">
+              <span className="px-1 text-sm font-medium text-center">
                 {item.amt}
               </span>
             </div>

@@ -14,7 +14,7 @@ const AnalyticsTabs = ({ tabs }: AnalyticsTabsProps) => {
   const [activeTab, setActiveTab] = useState(tabs[0]?.value);
 
   return (
-    <TabsList className="justify-start bg-background border-gray-200 px-4 my-2 border-b w-full">
+    <TabsList className="justify-start w-full px-4 my-2 border-b border-gray-400 rounded-none bg-background">
       {tabs.map((tab) => (
         <TabsTrigger
           key={`tab-${tab.value}`}
@@ -25,7 +25,7 @@ const AnalyticsTabs = ({ tabs }: AnalyticsTabsProps) => {
           {tab.label}
           {activeTab === tab.value && (
             <div
-              className="absolute bottom-1 w-full px-1.5 text-black"
+              className="absolute w-full text-black bottom-[2px]"
               style={{ transform: "none", transformOrigin: "50% 50% 0px" }}
             >
               <div className="h-0.5 rounded-t-full bg-current" />
