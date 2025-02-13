@@ -7,6 +7,7 @@ import { cn } from "@clikz/ui/lib/utils";
 
 import { BlurImage } from "~/components/blur-image";
 import { GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
+import { isValidUrl } from "~/lib/utils/url";
 
 function LinkFavIcon({
   url,
@@ -21,14 +22,14 @@ function LinkFavIcon({
   height?: number;
   width?: number;
 }) {
-  const host = url ? new URL(url).host : null;
+  const host = url && isValidUrl(url) ? new URL(url).host : null;
   const domain = host ? host.split(".").slice(-2).join(".") : null;
 
   return domain ? (
     <BlurImage
       src={`${GOOGLE_FAVICON_URL_V2}${domain}`}
       alt={`${domain} favicon`}
-      className={cn("h-9 w-9 rounded-full", className)}
+      className={cn("size-8 rounded-full", className)}
       width={height || 20}
       height={width || 20}
       draggable={false}
@@ -37,11 +38,11 @@ function LinkFavIcon({
   ) : (
     <div
       className={cn(
-        "flex size-8 items-center justify-center rounded-full bg-gray-100 px-0 sm:h-10 sm:w-10",
+        "flex size-8 items-center justify-center rounded-full bg-gray-100 px-0",
         className
       )}
     >
-      <Globe2 className="h-4 w-4 text-gray-600 sm:h-5 sm:w-5" />
+      <Globe2 className="w-4 h-4 text-gray-600 sm:h-5 sm:w-5" />
     </div>
   );
 }
