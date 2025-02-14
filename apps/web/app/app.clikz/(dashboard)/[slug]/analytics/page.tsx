@@ -30,14 +30,14 @@ const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
       <PageFilters />
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Total Links</p>
               <p className="text-2xl font-bold">{totalLinks}</p>
             </div>
-            <LinkIcon className="size-8 text-blue-500" />
+            <LinkIcon className="text-blue-500 size-8" />
           </div>
         </Card>
 
@@ -47,7 +47,7 @@ const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
               <p className="text-sm text-muted-foreground">Total Visitors</p>
               <p className="text-2xl font-bold">{totalClicks}</p>
             </div>
-            <UsersIcon className="size-8 text-green-500" />
+            <UsersIcon className="text-green-500 size-8" />
           </div>
         </Card>
       </div>

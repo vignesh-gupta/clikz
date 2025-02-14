@@ -43,10 +43,6 @@ export const groupByParam = <T extends Record<string, any>>(
   data: T[] = [],
   param: keyof T
 ) => {
-  console.log({
-    data,
-  });
-
   // Group by given param and return short_url, url, linkId, amt (count of param)
 
   const group = new Map<string, T & { amt: number }>();

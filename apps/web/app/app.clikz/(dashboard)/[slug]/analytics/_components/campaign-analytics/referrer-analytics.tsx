@@ -53,6 +53,17 @@ const ReferrerAnalytics = ({ data }: AnalyticsDataProp) => {
           }))}
         />
       </TabsContent>
+      <TabsContent value="url">
+        <MetricBarChart
+          barClassName="hover:border-red-600 hover:bg-red-300"
+          filledBarClassName="bg-red-500"
+          items={groupByReferrer.map((data) => ({
+            icon: data.icon,
+            label: data.url,
+            amt: data.clicks,
+          }))}
+        />
+      </TabsContent>
     </Tabs>
   );
 };
