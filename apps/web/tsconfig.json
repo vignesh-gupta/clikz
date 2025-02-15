@@ -1,4 +1,5 @@
 {
+  "types": ["@testing-library/jest-dom"],
   "extends": "@clikz/typescript-config/nextjs.json",
   "compilerOptions": {
     "declaration": false,
