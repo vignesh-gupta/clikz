@@ -22,7 +22,7 @@ export function constructMetaTags({
       description,
       creator: "@vigneshfixes",
       images: {
-        url: "/thumbnail.png",
+        url: "/thumbnail.jpeg",
         width: "100%",
         height: "auto",
         alt: title,
@@ -32,7 +32,7 @@ export function constructMetaTags({
       title,
       description,
       images: {
-        url: "/thumbnail.png",
+        url: "/thumbnail.jpeg",
         alt: title,
       },
       type: "website",
