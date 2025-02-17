@@ -61,3 +61,15 @@ export const groupByParam = <T extends Record<string, any>>(
 
   return Array.from(group.values());
 };
+
+export const getUrlFromStringIfValid = (str: string) => {
+  if (isValidUrl(str)) return str;
+  try {
+    if (str.includes(".") && !str.includes(" ")) {
+      return new URL(`https://${str}`).toString();
+    }
+  } catch (_) {
+    /* empty */
+  }
+  return null;
+};

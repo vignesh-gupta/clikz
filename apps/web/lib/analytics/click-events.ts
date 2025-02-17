@@ -7,6 +7,7 @@ import { capitalize } from "@clikz/ui/lib/utils";
 
 import { EU_COUNTRY_CODES } from "../constants/countries";
 import { conn } from "../edge-db";
+import { getFinalUrlForAnalytics } from "../middleware/utils/final-url";
 import { detectBot, detectQR } from "../middleware/utils/link-utlis";
 import { getDomainWithoutWWW } from "../utils/url";
 
@@ -69,10 +70,12 @@ export const recordClickEvent = async ({
           region: "<Unknown>",
         };
 
+  const finalUrl = getFinalUrlForAnalytics(url, req);
+
   const clickData = {
     timestamp: new Date(Date.now()).toISOString(),
     link_id: link.id,
-    url,
+    url: finalUrl,
     short_url: link.shortLink,
     workspace_id: link.workspaceId,
     workspace_slug: link.workspaceSlug,
