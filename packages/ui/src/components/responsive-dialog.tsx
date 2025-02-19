@@ -24,32 +24,36 @@ const ResponsiveModel = ({
 }: ResponsiveModelProps) => {
   const isDesktop = useMediaQuery("(min-width: 786px)");
 
-  if (isDesktop)
+  if (!isDesktop)
     return (
-      <Dialog open={open} onOpenChange={onOpen} modal={true}>
-        {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-        <DialogContent
-          className={cn(
-            "w-auto max-w-screen-lg p-0 border-none overflow-y-auto hide-scrollbar",
-            className,
-          )}
-        >
-          <DialogTitle className="opacity-0 hidden">Dialog</DialogTitle>
-          {children}
-        </DialogContent>
-      </Dialog>
+      <Drawer
+        open={open}
+        onOpenChange={onOpen}
+        setBackgroundColorOnScale={true}
+      >
+        {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
+        <DrawerClose className="bg-gray-700" />
+        <DrawerContent className={className}>
+          <ScrollArea className="overflow-y-auto hide-scrollbar">
+            {children}
+          </ScrollArea>
+        </DrawerContent>
+      </Drawer>
     );
 
   return (
-    <Drawer open={open} onOpenChange={onOpen} setBackgroundColorOnScale={true}>
-      {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
-      <DrawerClose className="bg-gray-700" />
-      <DrawerContent className={className}>
-        <ScrollArea className="overflow-y-auto hide-scrollbar">
-          {children}
-        </ScrollArea>
-      </DrawerContent>
-    </Drawer>
+    <Dialog open={open} onOpenChange={onOpen} modal={true}>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+      <DialogContent
+        className={cn(
+          "w-auto max-w-screen-lg p-0 border-none overflow-y-auto hide-scrollbar",
+          className,
+        )}
+      >
+        <DialogTitle className="opacity-0 hidden">Dialog</DialogTitle>
+        {children}
+      </DialogContent>
+    </Dialog>
   );
 };
 

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 import { BsTwitterX } from "react-icons/bs";
 import { FaFacebook, FaGlobe, FaLinkedin } from "react-icons/fa";
+import { toast } from "sonner";
 import { useDebounce } from "use-debounce";
 
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
@@ -36,7 +37,7 @@ type LinkPreviewProps = {
 
 const LinkPreview = ({ url }: LinkPreviewProps) => {
   const [metadata, setMetadata] = useState<FetchMetadata | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, startTransaction] = useTransition();
 
   const [debouncedUrl] = useDebounce(getUrlWithoutUTMParams(url), 500);
 
@@ -44,19 +45,22 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
     if (!debouncedUrl) return;
 
     const controller = new AbortController();
-    setLoading(true);
-    fetch(`/api/metadata?url=${encodeURIComponent(debouncedUrl)}`, {
-      signal: controller.signal,
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch metadata");
-        }
-        const data = await res.json();
-        setMetadata(data);
+    startTransaction(() =>
+      fetch(`/api/metadata?url=${encodeURIComponent(debouncedUrl)}`, {
+        signal: controller.signal,
       })
-      .catch(() => setMetadata(null))
-      .finally(() => setLoading(false));
+        .then(async (res) => {
+          if (!res.ok) {
+            throw new Error("Failed to fetch metadata");
+          }
+          const data = await res.json();
+          setMetadata(data);
+        })
+        .catch(() => {
+          toast.error("Failed to fetch metadata");
+          setMetadata(null);
+        })
+    );
 
     return () => controller.abort();
   }, [debouncedUrl]);

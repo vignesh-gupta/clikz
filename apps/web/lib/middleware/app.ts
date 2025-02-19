@@ -2,23 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { AUTH_API_ROUTE, AUTH_ROUTES, DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
-import { APP_DOMAIN, BASE_DOMAIN } from "../constants";
 import { getUserFirstWorkspaceViaEdge, getUserViaToken, parse } from "./utils";
 
 export const appRedirect = (path: string, req: NextRequest) =>
   new URL(`/app.clikz${path}`, req.nextUrl);
 
 export const AppMiddleware = async (req: NextRequest) => {
-  const { nextUrl, fullPath, domain } = parse(req);
-
-  if (fullPath === "/") {
-    if (process.env.NODE_ENV === "development" || domain === BASE_DOMAIN) {
-      return NextResponse.next();
-    }
-    if (domain === APP_DOMAIN) {
-      return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-    }
-  }
+  const { nextUrl, fullPath } = parse(req);
 
   if (nextUrl.pathname.startsWith(AUTH_API_ROUTE)) {
     return NextResponse.next();

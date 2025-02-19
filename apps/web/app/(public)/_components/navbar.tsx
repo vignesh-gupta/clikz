@@ -93,12 +93,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
           ))}
         </ul>
         {isLoggedIn ? (
-          <Button
-            variant="secondary"
-            className="rounded-full "
-            size="sm"
-            asChild
-          >
+          <Button className="rounded-full " size="sm" asChild>
             <Link
               href={{
                 host: APP_DOMAIN,

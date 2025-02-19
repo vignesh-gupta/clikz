@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
-import { AxiomRequest, withAxiom } from "next-axiom";
+import { AxiomRequest } from "next-axiom";
 
-import { isValidUrl } from "~/lib/utils/url";
+import { getUrlFromStringIfValid, isValidUrl } from "~/lib/utils/url";
 
 export type MetadataResponse = {
   status: "success" | "error";
@@ -10,7 +10,7 @@ export type MetadataResponse = {
     lang: string;
     title: string;
     description: string;
-    image: {
+    image?: {
       url: string;
       type: string;
       height: number;
@@ -28,11 +28,13 @@ export type MetadataResponse = {
   statusCode: number;
 };
 
-export const GET = withAxiom(async (req: AxiomRequest) => {
+export const GET = async (req: AxiomRequest) => {
   try {
     const url = decodeURIComponent(req.nextUrl.searchParams.get("url") || "");
+    console.log({ url });
 
-    if (!url || !isValidUrl(url)) {
+    const validUrl = getUrlFromStringIfValid(url);
+    if (!url || !isValidUrl(url) || !validUrl) {
       return NextResponse.json(
         {
           error: "Please provide a valid URL",
@@ -40,26 +42,29 @@ export const GET = withAxiom(async (req: AxiomRequest) => {
         { status: 400 }
       );
     }
-
     const res: MetadataResponse = await fetch(
-      `https://api.microlink.io/?url=${encodeURIComponent(url)}`
+      `https://api.microlink.io/?url=${encodeURIComponent(url ?? validUrl)}`
     ).then((res) => res.json());
 
     if (res.status === "error" && !res.data && res.statusCode !== 200) {
       throw new Error("Failed to fetch metadata");
     }
 
-    return NextResponse.json(
-      {
-        title: res.data.title,
-        description: res.data.description,
-        image: res.data.image.url,
-        favicon: res.data.logo.url,
-      },
-      { status: 200 }
-    );
+    const resMetaData = {
+      title: res.data.title,
+      description: res.data.description,
+      image: res.data.image?.url ?? null,
+      favicon: res.data.logo.url,
+    };
+
+    console.log({
+      data: res.data,
+      resMetaData,
+    });
+
+    return NextResponse.json(resMetaData, { status: 200 });
   } catch (error) {
-    req.log.error("Failed to fetch metadata", { error });
+    console.error("Failed to fetch metadata", { error });
     return NextResponse.json(null, { status: 500 });
   }
-});
+};

@@ -29,14 +29,14 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
   if (PUBLIC_ROUTE.includes(req.nextUrl.pathname)) {
-    if (process.env.NODE_ENV === "production" && domain !== BASE_DOMAIN) {
+    if (domain !== BASE_DOMAIN) {
       return NextResponse.redirect(`https://${BASE_DOMAIN}${fullPath}`, 302);
     }
 
     return NextResponse.next();
   }
 
-  if (APP_NAMES.has(domain) || fullPath === "/") return AppMiddleware(req);
+  if (APP_NAMES.has(domain)) return AppMiddleware(req);
 
   return LinkMiddleware(req);
 }
