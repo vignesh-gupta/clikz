@@ -44,7 +44,7 @@
     "lucide-react": "catalog:",
     "motion": "^12.4.1",
     "next-themes": "^0.4.3",
-    "react-day-picker": "9.5.1",
+    "react-day-picker": "8.10.1",
     "react-hook-form": "catalog:",
     "recharts": "^2.15.1",
     "sonner": "^1.7.0",
