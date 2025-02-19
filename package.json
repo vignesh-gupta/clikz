@@ -8,6 +8,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "debug:dev": "pnpm --filter web debug:dev",
     "ui": "pnpm --filter @clikz/ui ui",
     "db:push": "pnpm --filter web db:push",
     "db:studio": "pnpm --filter web db:studio",
