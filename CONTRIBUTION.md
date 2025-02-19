@@ -26,43 +26,47 @@ Commit: [2] feat: add new layer
 
 To get started with **Clikz** locally, follow these steps
 
-1. Fork the repo
-
-2. Clone your fork
+1. Clone the repo:
 
    ```sh
-    git clone https://github.com/<YOUR_GITHUB_ACCOUNT_NAME>/clikz.git
+   git clone https://github.com/vignesh-gupta/clikz.git
    ```
 
-3. Navigate to the project directory
-
-   ```sh
-   cd clikz
-   ```
-
-4. Create a .env file inside the project's root directory.
-
-5. Copy and paste variables from `.env.example` into `.env`
-
-6. Install NPM packages
+2. Run the following command to install the dependencies:
 
    ```sh
    pnpm i
    ```
 
-7. Start the app dev server
+3. Copy and paste variables from `.env.example` into `.env`
+
+4. Setup tinybird for analytics
+
+   - In your [Tinybird](https://www.tinybird.co/) account, create a new Workspace.
+   - Follow the instruction [here](https://www.tinybird.co/docs/cli/install) to install in `packages/tinybind`
+   - Run the following command to deploy the tinybird pipeline
+     ```sh
+     tb auth --token <YOUR_ADMIN_TOKEN> && tb push
+     ```
+
+5. Setup [Neon Database](https://neon.tech/) (Serverless Postgres) and update in `.env`
+
+   - Create a new database in Neon
+   - Update the `DATABASE_URL` in `.env` with the database URL
+   - Run the following command to deploy the database schema
+     ```sh
+     pnpm run db:push
+     ```
+
+6. Start the app dev server
 
    ```sh
-   pnpm run dev
+   pnpm dev
+   ``
+
    ```
 
-8. Start the convex backend
-
-   ```sh
-   pnpm run convex dev
-   ```
-
-9. Open your browser and visit <http://localhost:3000> to see the application running.
+7. Open your browser and visit <http://localhost:3000> to see the application running.
 
 ## Working on New Features
 
