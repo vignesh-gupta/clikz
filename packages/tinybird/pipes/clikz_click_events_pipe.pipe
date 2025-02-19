@@ -1,0 +1,31 @@
+DESCRIPTION >
+    Get Clikz Click data 
+
+NODE collect_click_data
+SQL >
+
+    %
+    {% if not defined(workspaceSlug) %}
+        {{ error('workspaceSlug query param is required') }}
+    {% end %}
+
+    SELECT
+        timestamp,
+        link_id,
+        short_url,
+        url,
+        workspace_id,
+        workspace_slug,
+        city,
+        region,
+        country,
+        continent,
+        browser,
+        os,
+        device,
+        referer,
+        referer_url
+    FROM clikz_click_events
+    where workspace_slug ={{ workspaceSlug }}
+    {% if defined(fromDate) %} AND timestamp >= {{ DateTime64(fromDate) }} {% end %}
+    {% if defined(toDate) %} AND timestamp <= {{ DateTime64(toDate) }} {% end %}
