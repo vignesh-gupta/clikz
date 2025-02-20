@@ -5,7 +5,8 @@ import { APP_URL } from "./constants";
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 export const resend = new Resend(process.env.AUTH_RESEND_KEY || "re_123");
 
-const AUTH_MAIL_SENDER = "Clikz <auth@clikz.live>";
+const AUTH_MAIL_SENDER =
+  process.env.RESEND_EMAIL_SENDER || "Clikz <auth@clikz.live>";
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${APP_URL}/verify?to=${email}&code=${token}`;

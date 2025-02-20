@@ -2,7 +2,9 @@
   "name": "local-proxy",
   "version": "0.0.0",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "dev": "tsx --watch index.ts"
+  },
   "dependencies": {
     "express": "^4.21.2",
     "http-proxy": "^1.18.1",
