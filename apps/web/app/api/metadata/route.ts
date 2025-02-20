@@ -31,7 +31,6 @@ export type MetadataResponse = {
 export const GET = async (req: AxiomRequest) => {
   try {
     const url = decodeURIComponent(req.nextUrl.searchParams.get("url") || "");
-    console.log({ url });
 
     const validUrl = getUrlFromStringIfValid(url);
     if (!url || !isValidUrl(url) || !validUrl) {
@@ -56,11 +55,6 @@ export const GET = async (req: AxiomRequest) => {
       image: res.data.image?.url ?? null,
       favicon: res.data.logo.url,
     };
-
-    console.log({
-      data: res.data,
-      resMetaData,
-    });
 
     return NextResponse.json(resMetaData, { status: 200 });
   } catch (error) {

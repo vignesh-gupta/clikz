@@ -29,10 +29,7 @@ export const getFinalUrl = (url: string, req: NextRequest) => {
   return urlObj.toString();
 };
 
-export const getFinalUrlForAnalytics = async (
-  url: string,
-  req: NextRequest
-) => {
+export const getFinalUrlForAnalytics = (url: string, req: NextRequest) => {
   const searchParams = req.nextUrl.searchParams;
 
   const redirectUrl = getUrlFromStringIfValid(

@@ -22,14 +22,7 @@ export const recordClickEvent = async ({
   req,
   url,
 }: RecordClickEventProps) => {
-  if (process.env.NODE_ENV !== "production") return null;
-
   if (detectBot(req)) return null;
-
-  if (!process.env.VERCEL) {
-    console.log("Not running on Vercel, skipping click event recording");
-    return null;
-  }
 
   const isVercel = process.env.VERCEL === "1";
 
@@ -111,14 +104,11 @@ export const recordClickEvent = async ({
         Authorization: `Bearer ${process.env.TINYBIRD_API_KEY}`,
       },
       body: JSON.stringify(clickData),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      console.log("Failed to send click event to Tinybird", res);
-    }),
+    })
+      .then(async (res) => res.json())
+      .catch((err) =>
+        console.error("Failed to send click event to Tinybird", err)
+      ),
     conn(`UPDATE "Link" SET clicks = clicks + 1 WHERE id = '${link.id}'`),
-  ]).catch((err) => {
-    console.error("Failed to send click event to Tinybird", err);
-  });
+  ]);
 };
