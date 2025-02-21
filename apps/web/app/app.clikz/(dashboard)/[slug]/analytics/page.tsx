@@ -2,6 +2,7 @@ import { LinkIcon, UsersIcon } from "lucide-react";
 
 import { Card } from "@clikz/ui/components/ui/card";
 
+import PageTitle from "~/components/page-title";
 import { getAnalytics } from "~/lib/analytics/fetch-analytics";
 import { groupByParam } from "~/lib/utils/url";
 
@@ -22,11 +23,7 @@ const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold leading-7 text-neutral-900 md:text-2xl">
-          Analytics
-        </h1>
-      </div>
+      <PageTitle title="Analytics" />
       <PageFilters />
 
       {/* Summary Cards */}

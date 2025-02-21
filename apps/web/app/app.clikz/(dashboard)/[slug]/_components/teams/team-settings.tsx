@@ -24,7 +24,7 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex md:items-center md:justify-between flex-col md:flex-row gap-2">
+      <div className="flex flex-col gap-2 sm:items-center sm:justify-between sm:flex-row">
         <div>
           <h2 className="text-lg font-semibold">Team</h2>
           <p className="text-sm text-muted-foreground">
@@ -38,7 +38,7 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
       </div>
 
       <Tabs value={teamTab} className="w-full">
-        <TabsList className=" justify-start">
+        <TabsList className="justify-start ">
           <TabsTrigger value="members" onClick={() => setTeamTab("members")}>
             Members
           </TabsTrigger>
@@ -49,10 +49,13 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
             Invitations
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="members" className="space-y-4 px-4">
+        <TabsContent
+          value="members"
+          className="flex items-center justify-between px-4 py-3 space-x-3 sm:pl-8"
+        >
           <MembersTab workspaceId={workspaceId} />
         </TabsContent>
-        <TabsContent value="invitations" className="px-4">
+        <TabsContent value="invitations">
           <InvitesTab workspaceId={workspaceId} />
         </TabsContent>
       </Tabs>

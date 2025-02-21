@@ -10,7 +10,7 @@ const DisplayFilter = () => {
 
   return (
     <FilterDropdown trigger={<Button variant="outline">Display</Button>}>
-      <DropdownMenuItem onClick={() => setView("grid")}>Grid</DropdownMenuItem>
+      <DropdownMenuItem onClick={() => setView("card")}>Card</DropdownMenuItem>
       <DropdownMenuItem onClick={() => setView("row")}>Row</DropdownMenuItem>
     </FilterDropdown>
   );

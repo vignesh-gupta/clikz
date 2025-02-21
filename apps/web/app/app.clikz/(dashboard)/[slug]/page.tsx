@@ -1,3 +1,4 @@
+import PageTitle from "~/components/page-title";
 import LinkList from "~/features/link/components/links-list";
 import { getLinks } from "~/features/link/data";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "~/lib/constants";
@@ -26,11 +27,7 @@ const WorkspaceLinkPage = async ({
 
   return (
     <div className="flex h-full flex-col flex-1 gap-y-2">
-      <div className="flex">
-        <h1 className="text-xl font-semibold leading-7 text-neutral-900 md:text-2xl">
-          Links
-        </h1>
-      </div>
+      <PageTitle title="Links" />
       <div className="flex-1 space-y-4">
         <PageFilters />
         {links.length === 0 ? <NoLinks /> : <LinkList initialLinks={links} />}

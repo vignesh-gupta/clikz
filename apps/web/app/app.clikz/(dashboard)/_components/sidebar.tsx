@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { BarChart2, Link2, Settings } from "lucide-react";
 
@@ -16,6 +15,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@clikz/ui/components/ui/sidebar";
 
 import WorkspaceSwitcher from "~/features/workspace/components/workspace-switcher";
@@ -32,11 +32,6 @@ const navigation = [
     href: "/analytics",
     icon: BarChart2,
   },
-  // {
-  //   title: "Events",
-  //   href: "/events",
-  //   icon: Zap,
-  // },
   {
     title: "Settings",
     href: "/settings",
@@ -46,12 +41,20 @@ const navigation = [
 
 export function DashboardSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const { setOpenMobile } = useSidebar();
 
   const slug = useWorkspaceSlug();
 
+  const handleClick = (href: string) => {
+    router.push(`/${slug}${href}`);
+    setOpenMobile(false);
+  };
+
   return (
-    <Sidebar>
-      <SidebarHeader className="flex items-center justify-center my-4">
+    <Sidebar className="bg-white">
+      <SidebarHeader className="my-4 mx-auto">
         <Image src="/logo-name.png" width={150} height={40} alt="Clikz Logo" />
       </SidebarHeader>
       <SidebarContent className="px-4">
@@ -62,14 +65,12 @@ export function DashboardSidebar() {
           {navigation.map((item) => (
             <SidebarMenuItem key={`/${slug}${item.href}`}>
               <SidebarMenuButton
-                asChild
                 isActive={pathname === `/${slug}${item.href}`}
                 className="gap-2"
+                onClick={() => handleClick(item.href)}
               >
-                <Link href={`/${slug}${item.href}`} prefetch={false}>
-                  <item.icon className="h-4 w-4" />
-                  {item.title}
-                </Link>
+                <item.icon className="h-4 w-4" />
+                {item.title}
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

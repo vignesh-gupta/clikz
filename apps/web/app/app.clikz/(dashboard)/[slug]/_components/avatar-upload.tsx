@@ -36,7 +36,7 @@ const AvatarUpload = ({ slug, workspaceId, icon }: AvatarUploadProps) => {
   };
 
   return (
-    <div className="relative size-24 rounded-full border-2 group">
+    <div className="relative border-2 rounded-full size-24 group shrink-0">
       <WorkspaceAvatar
         image={icon}
         name={slug}
@@ -44,15 +44,15 @@ const AvatarUpload = ({ slug, workspaceId, icon }: AvatarUploadProps) => {
         isLoading={isUploading}
       />
 
-      <div className="hidden absolute inset-0 bg-black/60  rounded-full group-hover:flex items-center justify-center">
+      <div className="absolute inset-0 items-center justify-center hidden rounded-full bg-black/60 group-hover:flex">
         <label htmlFor="avatar-upload" className="cursor-pointer">
-          <Upload className="h-6 w-6 text-white" />
+          <Upload className="w-6 h-6 text-white" />
           <span className="sr-only">Upload new avatar</span>
         </label>
       </div>
       <IKUpload
         useUniqueFileName
-        className="absolute inset-0 size-full cursor-pointer opacity-0"
+        className="absolute inset-0 opacity-0 cursor-pointer size-full"
         onError={onError}
         onSuccess={onSuccess}
         onUploadStart={() => setIsUploading(true)}

@@ -62,7 +62,7 @@ const GeneralSettings = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex md:items-center md:justify-between flex-col md:flex-row gap-2">
+      <div className="flex flex-col gap-2 md:items-center md:justify-between md:flex-row">
         <div>
           <h2 className="text-lg font-semibold">General Setting</h2>
           <p className="text-sm text-muted-foreground">
@@ -78,7 +78,7 @@ const GeneralSettings = ({
             render={({ field }) => (
               <FormItem>
                 <Card>
-                  <CardContent className="space-y-2 p-4">
+                  <CardContent className="p-4 space-y-2">
                     <FormLabel>Workspace Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
@@ -98,7 +98,7 @@ const GeneralSettings = ({
             render={({ field }) => (
               <FormItem>
                 <Card>
-                  <CardContent className="space-y-2 p-4">
+                  <CardContent className="p-4 space-y-2">
                     <FormLabel>Workspace Slug</FormLabel>
                     <FormControl>
                       <Input {...field} />
@@ -119,7 +119,7 @@ const GeneralSettings = ({
       <Separator />
 
       <Card>
-        <CardContent className="space-y-2 p-4">
+        <CardContent className="p-4 space-y-2">
           <Label>Workspace Logo</Label>
           <div className="flex items-center gap-4">
             <AvatarUpload slug={slug} workspaceId={workspaceId} icon={icon} />
@@ -136,18 +136,18 @@ const GeneralSettings = ({
       <Separator />
 
       <Card>
-        <CardContent className="space-y-2 p-4">
+        <CardContent className="p-4 space-y-2">
           <Label>Workspace ID</Label>
           <div className="flex w-full">
             <Input
               disabled
               defaultValue={`${DATA_PREFIX.WORKSPACE}${workspaceId}`}
-              className="rounded-r-none font-mono text-sm"
+              className="font-mono text-sm rounded-r-none"
             />
             <Button
               onClick={copyToClipboard}
               variant="secondary"
-              className="rounded-l-none px-3"
+              className="px-3 rounded-l-none"
             >
               {copied ? (
                 <Check className="size-5" />

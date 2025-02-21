@@ -36,10 +36,10 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full">
+      <div className="flex w-full min-h-screen">
         <DashboardSidebar />
-        <SidebarInset className="">
-          <MaxWidthContainer className="mt-6 md:py-3">
+        <SidebarInset>
+          <MaxWidthContainer className="md:mt-6 md:py-3">
             {children}
           </MaxWidthContainer>
         </SidebarInset>

@@ -30,9 +30,9 @@ const LinkList = ({ initialLinks }: LinksListProps) => {
 
   const { view } = useView();
 
-  if (view === "grid") {
+  if (view === "card") {
     return (
-      <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
+      <div className="grid grid-cols-1 gap-2 xl:grid-cols-3 md:grid-cols-2">
         {links?.map(({ id, domain, shortLink, key, url, clicks }) => (
           <LinkCard
             key={`link-grid-${id}`}
@@ -50,7 +50,9 @@ const LinkList = ({ initialLinks }: LinksListProps) => {
 
   if (view === "row") {
     return (
-      <div className="space-y-1">
+      // First div should have top left right rounded corners
+      // and the last div should have bottom left right rounded corners
+      <div className="[&>*:first-child]:rounded-t-xl [&>*:last-child]:rounded-b-xl">
         {links?.map(({ id, domain, shortLink, key, url, clicks }) => (
           <LinkRow
             key={`link-row-${id}`}

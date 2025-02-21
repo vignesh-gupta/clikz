@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import PageTitle from "~/components/page-title";
 import { db } from "~/lib/db";
 
 import { PageWithSlugParams } from "../page";
@@ -16,15 +17,7 @@ const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
 
   return (
     <>
-      <div className="space-y-0.5 mb-8">
-        <h1 className="text-2xl font-bold tracking-tight">
-          Workspace Settings
-        </h1>
-        <p className="text-muted-foreground">
-          Manage your workspace preferences and team
-        </p>
-      </div>
-
+      <PageTitle title="Workspace Settings" />
       <SettingsTab initialWorkspace={workspace} />
     </>
   );
