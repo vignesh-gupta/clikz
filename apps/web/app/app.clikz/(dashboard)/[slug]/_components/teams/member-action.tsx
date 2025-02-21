@@ -75,8 +75,8 @@ const MemberAction = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <MoreVertical className="h-4 w-4" />
+        <Button variant="ghost" size="sm" className="sm:size-8 size-6">
+          <MoreVertical className="size-4" />
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
@@ -90,7 +90,7 @@ const MemberAction = ({
             handleRoleChange(member.role === "ADMIN" ? "MEMBER" : "ADMIN")
           }
         >
-          <UserRoundCog className="size-4 mr-1" /> Change role
+          <UserRoundCog className="mr-1 size-4" /> Change role
         </DropdownMenuItem>
         <DropdownMenuItem
           className="text-destructive"
@@ -98,12 +98,12 @@ const MemberAction = ({
         >
           {member.email === currentUser?.email ? (
             <>
-              <LogOutIcon className="size-4 mr-1" />
+              <LogOutIcon className="mr-1 size-4" />
               Leave workspace
             </>
           ) : (
             <>
-              <UserRoundX className="size-4 mr-1" />
+              <UserRoundX className="mr-1 size-4" />
               Remove member
             </>
           )}

@@ -1,10 +1,10 @@
 import { useQueryState } from "nuqs";
 
 export const useView = () => {
-  const [view, setView] = useQueryState<"grid" | "row">("view", {
-    parse: (val) => (val === "grid" || val === "row" ? val : "grid"),
-    defaultValue: "grid",
-    clearOnDefault: false
+  const [view, setView] = useQueryState<"card" | "row">("view", {
+    parse: (val) => (val === "card" || val === "row" ? val : "card"),
+    defaultValue: "card",
+    clearOnDefault: false,
   });
 
   return { view, setView };

@@ -19,7 +19,7 @@ const InvitesTab = ({ workspaceId }: TeamSettingsProps) => {
 
   if (!invites?.length)
     return (
-      <div className="text-sm text-muted-foreground py-4">
+      <div className="py-4 text-sm text-muted-foreground">
         No pending invitations
       </div>
     );
@@ -32,45 +32,54 @@ const InvitesTab = ({ workspaceId }: TeamSettingsProps) => {
     resendInvite({ param: { workspaceId, inviteId } });
   };
 
-  return invites.map((invite) => (
-    <div key={invite.id} className="flex items-center justify-between py-4">
-      <div className="flex items-center gap-4">
-        <MailIcon className="size-10 p-2 bg-gray-700 rounded-full text-white" />
-        <div>
-          <p className="font-medium">{invite.email}</p>
-          <p className="text-sm text-muted-foreground">
-            Expires {new Date(invite.expires).toLocaleDateString()} •{" "}
-            {capitalizeFirstLetter(invite.role)}
-          </p>
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <TooltipButton text="Resend invite">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => onResendInvite(invite.id)}
-          >
-            <RotateCcwIcon />
-          </Button>
-        </TooltipButton>
-
-        <TooltipButton
-          text="Delete invite"
-          className="bg-destructive text-destructive-foreground"
+  return (
+    <div className="flex flex-col items-center px-4 gap-y-4">
+      {invites.map((invite) => (
+        <div
+          key={invite.id}
+          className="flex items-center justify-between w-full py-4"
         >
-          <Button
-            variant="outline"
-            className="hover:bg-destructive hover:text-destructive-foreground border-destructive/40 text-destructive/80"
-            size="icon"
-            onClick={() => onDeleteInvite(invite.id)}
-          >
-            <Trash2Icon />
-          </Button>
-        </TooltipButton>
-      </div>
+          <div className="flex items-center gap-4">
+            <div className="p-1 text-white bg-gray-700 rounded-full size-8">
+              <MailIcon className="object-contain" />
+            </div>
+            <div>
+              <p className="text-sm font-medium">{invite.email}</p>
+              <p className="text-xs text-muted-foreground">
+                Expires {new Date(invite.expires).toLocaleDateString()} •{" "}
+                {capitalizeFirstLetter(invite.role)}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <TooltipButton text="Resend invite">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => onResendInvite(invite.id)}
+              >
+                <RotateCcwIcon />
+              </Button>
+            </TooltipButton>
+
+            <TooltipButton
+              text="Delete invite"
+              className="bg-destructive text-destructive-foreground"
+            >
+              <Button
+                variant="outline"
+                className="hover:bg-destructive hover:text-destructive-foreground border-destructive/40 text-destructive/80"
+                size="icon"
+                onClick={() => onDeleteInvite(invite.id)}
+              >
+                <Trash2Icon />
+              </Button>
+            </TooltipButton>
+          </div>
+        </div>
+      ))}
     </div>
-  ));
+  );
 };
 
 export default InvitesTab;

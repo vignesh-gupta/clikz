@@ -29,11 +29,19 @@ const SettingsTab = ({ initialWorkspace }: SettingsTabProps) => {
 
   return (
     <Tabs value={tab} className="space-y-6">
-      <TabsList>
-        <TabsTrigger value="general" onClick={() => setTab("general")}>
+      <TabsList className="rounded-none bg-background">
+        <TabsTrigger
+          value="general"
+          onClick={() => setTab("general")}
+          className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-background"
+        >
           General
         </TabsTrigger>
-        <TabsTrigger value="team" onClick={() => setTab("team")}>
+        <TabsTrigger
+          value="team"
+          onClick={() => setTab("team")}
+          className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-background"
+        >
           Team
         </TabsTrigger>
       </TabsList>

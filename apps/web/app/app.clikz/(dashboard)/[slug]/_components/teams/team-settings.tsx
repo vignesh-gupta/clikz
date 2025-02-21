@@ -37,22 +37,27 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
         </div>
       </div>
 
-      <Tabs value={teamTab} className="w-full">
-        <TabsList className="justify-start ">
-          <TabsTrigger value="members" onClick={() => setTeamTab("members")}>
+      <Tabs
+        value={teamTab}
+        className="w-full overflow-hidden border rounded-lg border-muted"
+      >
+        <TabsList className="justify-start w-full px-4 py-0 pt-2 border-b rounded-b-none border-muted bg-background">
+          <TabsTrigger
+            value="members"
+            onClick={() => setTeamTab("members")}
+            className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-background"
+          >
             Members
           </TabsTrigger>
           <TabsTrigger
             value="invitations"
             onClick={() => setTeamTab("invitations")}
+            className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-background"
           >
             Invitations
           </TabsTrigger>
         </TabsList>
-        <TabsContent
-          value="members"
-          className="flex items-center justify-between px-4 py-3 space-x-3 sm:pl-8"
-        >
+        <TabsContent value="members">
           <MembersTab workspaceId={workspaceId} />
         </TabsContent>
         <TabsContent value="invitations">
@@ -63,6 +68,6 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
   );
 };
 
-export const TeamsLoading = () => <Skeleton className="h-28" />;
+export const TeamsLoading = () => <Skeleton className="m-4 h-28" />;
 
 export default TeamSettings;

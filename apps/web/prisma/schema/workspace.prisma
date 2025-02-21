@@ -24,7 +24,7 @@ model Invite {
   expires     DateTime
   Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
-  role        MemberRole
+  role        MemberRole @default(MEMBER)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 

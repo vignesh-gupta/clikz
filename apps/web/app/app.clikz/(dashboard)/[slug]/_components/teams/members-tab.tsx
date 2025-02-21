@@ -25,44 +25,58 @@ const MembersTab = ({ workspaceId }: TeamSettingsProps) => {
     (m) => m.email === currentSession.user?.email
   )?.role;
 
-  if (isLoading) return <TeamsLoading />;
+  if (isLoading) {
+    console.log("Loading members");
+    return <TeamsLoading />;
+  }
 
-  return members?.map((member) => (
-    <div key={member.id} className="flex items-center justify-between py-4">
-      <div className="flex items-center gap-4">
-        <Avatar>
-          <AvatarImage
-            className="rounded-full"
-            src={member.image ?? `${AVATAR_URL}${member.name || member.email}`}
-          />
-          <AvatarFallback>
-            {(member.name || member.email)
-              .split(" ")
-              .map((n) => n[0])
-              .join("")
-              .toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
-        <div>
-          <p className="font-medium">
-            {member.name}{" "}
-            {currentSession.user?.email === member.email ? "(You)" : null}
-          </p>
-          <p className="text-sm text-muted-foreground">{member.email}</p>
+  if (!members?.length) return <p>No members found</p>;
+
+  return (
+    <div className="flex flex-col items-center py-4 gap-y-4">
+      {members?.map((member) => (
+        <div
+          key={member.id}
+          className="flex items-center justify-between w-full px-4"
+        >
+          <div className="flex items-center gap-2 overflow-hidden sm:gap-4 grow">
+            <Avatar>
+              <AvatarImage
+                className="rounded-full"
+                src={
+                  member.image ?? `${AVATAR_URL}${member.name || member.email}`
+                }
+              />
+              <AvatarFallback>
+                {(member.name || member.email)
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <p className="text-sm font-medium">
+                {member.name}{" "}
+                {currentSession.user?.email === member.email ? "(You)" : null}
+              </p>
+              <p className="text-xs text-muted-foreground">{member.email}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <span className="text-xs text-muted-foreground/80">
+              {capitalizeFirstLetter(member.role)}
+            </span>
+            <MemberAction
+              currentUserRole={currentUserRole}
+              currentUser={currentSession.user}
+              member={member}
+              workspaceId={workspaceId}
+            />
+          </div>
         </div>
-      </div>
-      <div className="flex items-center gap-4">
-        <span className="text-sm text-muted-foreground">
-          {capitalizeFirstLetter(member.role)}
-        </span>
-        <MemberAction
-          currentUserRole={currentUserRole}
-          currentUser={currentSession.user}
-          member={member}
-          workspaceId={workspaceId}
-        />
-      </div>
+      ))}
     </div>
-  ));
+  );
 };
 export default MembersTab;
