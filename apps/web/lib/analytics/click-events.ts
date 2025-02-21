@@ -66,7 +66,7 @@ export const recordClickEvent = async ({
   const finalUrl = getFinalUrlForAnalytics(url, req);
 
   const clickData = {
-    timestamp: new Date(Date.now()).toISOString(),
+    timestamp: new Date(),
     link_id: link.id,
     url: finalUrl,
     short_url: link.shortLink,

@@ -1,26 +1,75 @@
 import "server-only";
 
-import { formatDate } from "@clikz/ui/lib/utils";
-
 import { TINYBIRD_API_KEY, TINYBIRD_PIPES_ENDPOINT } from "~/lib/analytics";
 
+import {
+  GRANULARITY,
+  INTERVAL_DATA,
+  INTERVAL_TIMES,
+} from "../constants/date-time";
 import { RawAnalyticsData } from "../types";
 
-export const getAnalytics = async (
-  slug: string,
-  interval: number = 7,
+// Either start and end dates are provided or interval is provided
+// If start and end dates are provided, ignore interval
+// If interval is provided, calculate start and end dates
+// Return start and end dates with 00:00:00 time for Tinybird
+const getStartAndEndDates = (
+  interval: INTERVAL_TIMES,
   start?: string,
   end?: string
 ) => {
-  const endDate = end ? new Date(end) : new Date();
-  const startDate = start
-    ? new Date(start)
-    : new Date(endDate.getTime() - interval * 24 * 60 * 60 * 1000);
+  let startDate: Date;
+  let endDate: Date;
+  let granularity: GRANULARITY = "day";
 
-  const formattedStartDate = `${formatDate(startDate)}T${startDate.toTimeString().slice(0, 8)}`;
-  const formattedEndDate = `${formatDate(endDate)}T${endDate.toTimeString().slice(0, 8)}`;
+  console.log({
+    first: !(start && end),
+    sec: !interval,
+  });
 
-  const url = `${TINYBIRD_PIPES_ENDPOINT}/clikz_click_events_pipe.json?workspaceSlug=${slug}&fromDate=${encodeURIComponent(formattedStartDate)}&toDate=${encodeURIComponent(formattedEndDate)}&token=${TINYBIRD_API_KEY}`;
+  if (!(start && end) && !interval) {
+    throw new Error(
+      "Either start and end dates should be provided or interval should be provided"
+    );
+  }
+
+  if (start && end) {
+    startDate = new Date(start);
+    endDate = new Date(end);
+
+    const diff = Math.abs(startDate.getTime() - endDate.getTime());
+    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+    if (diffDays <= 1) {
+      granularity = "hour";
+    } else if (diffDays >= 180) {
+      granularity = "month";
+    }
+  } else {
+    startDate = INTERVAL_DATA[interval].startDate;
+    endDate = new Date();
+  }
+
+  return {
+    startDate: startDate.toISOString().replace("T", " ").slice(0, 19),
+    endDate: endDate.toISOString().replace("T", " ").slice(0, 19),
+    granularity,
+  };
+};
+
+export const getAnalytics = async (
+  slug: string,
+  interval: INTERVAL_TIMES = "7d",
+  start?: string,
+  end?: string
+) => {
+  const { endDate, startDate } = getStartAndEndDates(interval, start, end);
+  const url = `${TINYBIRD_PIPES_ENDPOINT}/clikz_click_events_pipe.json?workspaceSlug=${slug}&fromDate=${encodeURIComponent(startDate)}&toDate=${encodeURIComponent(endDate)}&token=${TINYBIRD_API_KEY}`;
+
+  console.log("Fetching analytics data from Tinybird", {
+    url,
+    startDate,
+    endDate,
+  });
 
   const data = await fetch(url)
     .then((res) => res.json())

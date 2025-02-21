@@ -15,7 +15,7 @@ import UrlAnalytics from "./_components/url-analytics";
 
 const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
   const { slug } = await params;
-  const data = await getAnalytics(slug, 40);
+  const data = await getAnalytics(slug, "7d");
 
   // Calculate total clicks and other metrics
   const totalLinks = groupByParam(data ?? [], "link_id").length;
