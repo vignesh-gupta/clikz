@@ -6,12 +6,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { Button } from "@clikz/ui/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@clikz/ui/components/ui/card";
+import { Card, CardContent } from "@clikz/ui/components/ui/card";
 import {
   Form,
   FormControl,
@@ -77,11 +72,8 @@ const LinkForm = () => {
   };
 
   return (
-    <Card className="rounded-xl">
-      <CardHeader>
-        <CardTitle>{linkId === "new" ? "Create" : "Edit"} Link</CardTitle>
-      </CardHeader>
-      <CardContent className="p-5">
+    <Card className="rounded-xl border-0 p-0">
+      <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -172,7 +164,7 @@ const LinkForm = () => {
                   )}
                 />
               </div>
-              <div className="space-y-4">
+              <div className="space-y-4 flex flex-col items-center">
                 <QRPreview slug={slug} />
                 <LinkPreview url={destination} />
               </div>

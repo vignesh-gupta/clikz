@@ -3,7 +3,13 @@ import React from "react";
 import { useMediaQuery } from "../hooks/use-media-query";
 import { cn } from "../lib/utils";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
-import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "./ui/drawer";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTitle,
+  DrawerTrigger,
+} from "./ui/drawer";
 import { ScrollArea } from "./ui/scroll-area";
 
 type ResponsiveModelProps = {
@@ -13,6 +19,7 @@ type ResponsiveModelProps = {
   children: React.ReactNode;
   className?: string;
   trigger?: React.ReactNode;
+  title?: string;
 };
 
 const ResponsiveModel = ({
@@ -21,6 +28,7 @@ const ResponsiveModel = ({
   open,
   className,
   trigger,
+  title,
 }: ResponsiveModelProps) => {
   const isDesktop = useMediaQuery("(min-width: 786px)");
 
@@ -33,8 +41,9 @@ const ResponsiveModel = ({
       >
         {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
         <DrawerClose className="bg-gray-700" />
-        <DrawerContent className={className}>
-          <ScrollArea className="overflow-y-auto hide-scrollbar">
+        <DrawerContent className={cn("px-2", className)}>
+          <ScrollArea className="overflow-y-auto hide-scrollbar inset-x-0">
+            {title && <DrawerTitle className="mb-2">{title}</DrawerTitle>}
             {children}
           </ScrollArea>
         </DrawerContent>
@@ -42,15 +51,16 @@ const ResponsiveModel = ({
     );
 
   return (
-    <Dialog open={open} onOpenChange={onOpen} modal={true}>
+    <Dialog open={open} onOpenChange={onOpen}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent
         className={cn(
-          "w-auto max-w-screen-lg p-0 border-none overflow-y-auto hide-scrollbar",
+          "w-auto max-w-screen-lg border-none overflow-y-auto hide-scrollbar",
           className,
         )}
+        aria-describedby="responsive-dialog"
       >
-        <DialogTitle className="opacity-0 hidden">Dialog</DialogTitle>
+        {title && <DialogTitle>{title}</DialogTitle>}
         {children}
       </DialogContent>
     </Dialog>

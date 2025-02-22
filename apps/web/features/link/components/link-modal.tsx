@@ -10,6 +10,7 @@ const LinkModal = () => {
       open={!!linkId}
       onOpen={close}
       className="rounded-xl w-full"
+      title={linkId === "new" ? "Create Link" : "Edit Link"}
     >
       <LinkForm />
     </ResponsiveModal>

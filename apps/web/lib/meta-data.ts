@@ -41,7 +41,7 @@ export function constructMetaTags({
     metadataBase: new URL(SITE_URL),
     authors: {
       name: "Vighnesh Gupta",
-      url: new URL("https://vigneshgupta.tech/"),
+      url: new URL("https://vigneshgupta.me/"),
     },
     creator: "Vighnesh Gupta",
     keywords: [

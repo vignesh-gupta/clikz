@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 
 import { BASE_URL } from "~/lib/constants";
 
-const host = BASE_URL ?? "https://vigneshgupta.tech";
+const host = BASE_URL ?? "https://clikz.live";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

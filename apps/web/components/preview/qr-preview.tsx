@@ -18,7 +18,7 @@ const QRPreview = ({ slug }: QRPreviewProps) => {
   const [debouncedSlug] = useDebounce(getUrlWithoutUTMParams(slug), 500);
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardContent className="p-4 space-y-2">
         <Label>QR Code</Label>
         <div className="w-full h-36 bg-gray-200 flex items-center justify-center text-gray-500">

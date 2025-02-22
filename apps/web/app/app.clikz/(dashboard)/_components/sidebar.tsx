@@ -18,6 +18,7 @@ import {
   useSidebar,
 } from "@clikz/ui/components/ui/sidebar";
 
+import { UserButton } from "~/features/auth/components/user-button";
 import WorkspaceSwitcher from "~/features/workspace/components/workspace-switcher";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 
@@ -54,8 +55,16 @@ export function DashboardSidebar() {
 
   return (
     <Sidebar className="bg-white">
-      <SidebarHeader className="my-4 mx-auto">
-        <Image src="/logo-name.png" width={150} height={40} alt="Clikz Logo" />
+      <SidebarHeader className="my-4 flex-row justify-between items-center">
+        <Image
+          src="/logo-name.png"
+          width={150}
+          height={46}
+          alt="Clikz Logo"
+          className="w-28 h-auto"
+          priority
+        />
+        <UserButton align="start" alignOffset={0} />
       </SidebarHeader>
       <SidebarContent className="px-4">
         <div className="my-4">
