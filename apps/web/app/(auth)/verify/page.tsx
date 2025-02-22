@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import VerifyEmail from "~/components/auth/verify-email";
+import VerifyEmail from "~/features/auth/components/verify-email";
 
 type VerifyPageProps = {
   searchParams: Promise<{ to: string; code: string }>;

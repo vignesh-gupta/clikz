@@ -28,7 +28,7 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 
 import { register } from "~/app/(auth)/actions";
-import SocialLogins from "~/components/auth/social-logins";
+import SocialLogins from "~/features/auth/components/social-logins";
 import { SignUpSchema, signUpSchema } from "~/lib/zod-schemas";
 
 const SignUpForm = () => {
