@@ -4,8 +4,8 @@ import { getLinks } from "~/features/link/data";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "~/lib/constants";
 import { FetchParamsSchema } from "~/lib/zod-schemas";
 
-import PageFilters from "../_components/filter";
-import NoLinks from "../_components/link/no-links";
+import PageFilters from "./_components/filter";
+import NoLinks from "./_components/link/no-links";
 
 export type PageWithSlugParams = {
   params: Promise<{ slug: string }>;

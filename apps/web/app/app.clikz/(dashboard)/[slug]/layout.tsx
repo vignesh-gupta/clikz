@@ -7,7 +7,7 @@ import { auth } from "~/auth";
 import MaxWidthContainer from "~/components/max-width-container";
 import { db } from "~/lib/db";
 
-import { DashboardSidebar } from "../_components/sidebar";
+import { DashboardSidebar } from "./_components/sidebar";
 import { PageWithSlugParams } from "./page";
 
 type DashboardLayoutProps = PropsWithChildren<PageWithSlugParams>;
