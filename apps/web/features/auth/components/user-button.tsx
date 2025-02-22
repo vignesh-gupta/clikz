@@ -54,7 +54,7 @@ export function UserButton({ align, alignOffset, className }: UserButtonProps) {
         <p className="text-xs pl-3 text-gray-500">{email}</p>
         <div className="mt-2">
           <Link
-            href="/settings"
+            href="/account/settings"
             className={buttonVariants({
               variant: "ghost",
               className: "w-full flex items-center !justify-start",
