@@ -10,13 +10,13 @@ export const appRedirect = (path: string, req: NextRequest) =>
 export const AppMiddleware = async (req: NextRequest) => {
   const { nextUrl, fullPath } = parse(req);
 
-  if (nextUrl.pathname.startsWith(AUTH_API_ROUTE)) {
+  if (fullPath.startsWith(AUTH_API_ROUTE)) {
     return NextResponse.next();
   }
 
   const user = await getUserViaToken(req);
 
-  if (AUTH_ROUTES.includes(nextUrl.pathname)) {
+  if (AUTH_ROUTES.includes(fullPath)) {
     if (user?.id) {
       const callbackUrl = decodeURIComponent(
         nextUrl.searchParams.get("callbackUrl") ?? DEFAULT_LOGIN_REDIRECT

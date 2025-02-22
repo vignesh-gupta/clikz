@@ -16,7 +16,7 @@ import {
 import { useGetWorkspaces } from "../api/use-get-workspaces";
 import { useWorkspaceModel } from "../hooks/use-workspace-modal";
 import { useWorkspaceSlug } from "../hooks/use-workspace-slug";
-import WorkspaceAvatar from "./workspace-avatar";
+import WorkspaceIcon from "./workspace-icon";
 
 const WorkspaceSwitcher = () => {
   const { data: workspaces, isLoading } = useGetWorkspaces();
@@ -51,7 +51,7 @@ const WorkspaceSwitcher = () => {
             workspaces?.map((workspace) => (
               <SelectItem key={workspace.id} value={workspace.slug}>
                 <div className="flex justify-start items-center gap-3 font-medium">
-                  <WorkspaceAvatar
+                  <WorkspaceIcon
                     name={workspace.slug}
                     image={workspace.icon ?? undefined}
                     height={10}

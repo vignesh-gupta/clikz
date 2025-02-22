@@ -8,16 +8,16 @@ import { Upload } from "lucide-react";
 import { toast } from "sonner";
 
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
-import WorkspaceAvatar from "~/features/workspace/components/workspace-avatar";
+import WorkspaceIcon from "~/features/workspace/components/workspace-icon";
 import { urlEndpoint } from "~/lib/image-kit";
 
-type AvatarUploadProps = {
+type IconUploadProps = {
   workspaceId: string;
   slug: string;
   icon?: string;
 };
 
-const AvatarUpload = ({ slug, workspaceId, icon }: AvatarUploadProps) => {
+const IconUpload = ({ slug, workspaceId, icon }: IconUploadProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const { mutate: updateWorkspace } = useUpdateWorkspace();
 
@@ -37,7 +37,7 @@ const AvatarUpload = ({ slug, workspaceId, icon }: AvatarUploadProps) => {
 
   return (
     <div className="relative border-2 rounded-full size-24 group shrink-0">
-      <WorkspaceAvatar
+      <WorkspaceIcon
         image={icon}
         name={slug}
         className="size-full"
@@ -63,4 +63,4 @@ const AvatarUpload = ({ slug, workspaceId, icon }: AvatarUploadProps) => {
   );
 };
 
-export default AvatarUpload;
+export default IconUpload;

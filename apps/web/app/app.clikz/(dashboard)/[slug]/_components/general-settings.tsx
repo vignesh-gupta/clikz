@@ -23,8 +23,8 @@ import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-updat
 import { DATA_PREFIX } from "~/lib/constants";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 
-import AvatarUpload from "./avatar-upload";
 import DeleteWorkspace from "./delete-workspace";
+import IconUpload from "./icon-upload";
 
 type GeneralSettingsProps = {
   workspaceId: string;
@@ -122,7 +122,7 @@ const GeneralSettings = ({
         <CardContent className="p-4 space-y-2">
           <Label>Workspace Logo</Label>
           <div className="flex items-center gap-4">
-            <AvatarUpload slug={slug} workspaceId={workspaceId} icon={icon} />
+            <IconUpload slug={slug} workspaceId={workspaceId} icon={icon} />
             <div className="text-sm text-muted-foreground">
               <p>
                 Square image recommended. Accepted file types: .png, .jpg with

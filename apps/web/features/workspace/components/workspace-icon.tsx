@@ -4,7 +4,7 @@ import { Avatar, AvatarImage } from "@clikz/ui/components/ui/avatar";
 import { Skeleton } from "@clikz/ui/components/ui/skeleton";
 import { cn } from "@clikz/ui/lib/utils";
 
-type WorkspaceAvatarProps = {
+type WorkspaceIconProps = {
   image?: string;
   name: string;
   className?: string;
@@ -13,14 +13,14 @@ type WorkspaceAvatarProps = {
   isLoading?: boolean;
 };
 
-const WorkspaceAvatar = ({
+const WorkspaceIcon = ({
   name,
   className,
   image,
   height,
   width,
   isLoading,
-}: WorkspaceAvatarProps) => {
+}: WorkspaceIconProps) => {
   if (isLoading) {
     return (
       <Skeleton
@@ -33,12 +33,12 @@ const WorkspaceAvatar = ({
     );
   }
 
-  const defaultAvatarUrl = `https://api.dicebear.com/9.x/thumbs/svg?seed=${name}`;
+  const defaultIconUrl = `https://api.dicebear.com/9.x/thumbs/svg?seed=${name}`;
 
   return (
     <Avatar className={className}>
       <AvatarImage
-        src={image || defaultAvatarUrl}
+        src={image || defaultIconUrl}
         className="size-full object-cover"
         height={height}
         width={width}
@@ -47,4 +47,4 @@ const WorkspaceAvatar = ({
   );
 };
 
-export default memo(WorkspaceAvatar);
+export default memo(WorkspaceIcon);

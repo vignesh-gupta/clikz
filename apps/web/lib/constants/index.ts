@@ -46,9 +46,9 @@ export const AVATAR_URL = "https://api.dicebear.com/9.x/open-peeps/svg?seed=";
 export const DATA_PREFIX = {
   WORKSPACE: "ws_",
   LINK: "ln_",
-  USER: "us_",
+  USER: "uz_",
   WORKSPACE_INVITE: "wsi_",
-  USER_INVITE: "usi_",
+  USER_INVITE: "uzi_",
 };
 
 export const DEFAULT_PAGE_SIZE = "10";
