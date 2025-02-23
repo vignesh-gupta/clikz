@@ -7,13 +7,7 @@ export const PUBLIC_ROUTE = ["/", "/contact"];
  * An array of routes that are used for authentication.
  * These route will redirect logged in users to settings page.
  */
-export const AUTH_ROUTES = [
-  "/sign-in",
-  "/sign-up",
-  "/error",
-  "/reset",
-  "/verify",
-];
+export const AUTH_ROUTES = ["sign-in", "sign-up", "error", "reset", "verify"];
 
 /**
  * The prefix for API authentication routes.

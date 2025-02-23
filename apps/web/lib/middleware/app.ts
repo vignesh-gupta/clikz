@@ -8,7 +8,7 @@ export const appRedirect = (path: string, req: NextRequest) =>
   new URL(`/app.clikz${path}`, req.nextUrl);
 
 export const AppMiddleware = async (req: NextRequest) => {
-  const { nextUrl, fullPath } = parse(req);
+  const { nextUrl, fullPath, fullKey } = parse(req);
 
   if (fullPath.startsWith(AUTH_API_ROUTE)) {
     return NextResponse.next();
@@ -16,7 +16,7 @@ export const AppMiddleware = async (req: NextRequest) => {
 
   const user = await getUserViaToken(req);
 
-  if (AUTH_ROUTES.includes(fullPath)) {
+  if (AUTH_ROUTES.includes(fullKey)) {
     if (user?.id) {
       const callbackUrl = decodeURIComponent(
         nextUrl.searchParams.get("callbackUrl") ?? DEFAULT_LOGIN_REDIRECT
