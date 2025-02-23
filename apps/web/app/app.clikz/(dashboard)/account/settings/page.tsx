@@ -11,12 +11,11 @@ import { DATA_PREFIX } from "~/lib/constants";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 import UserAvatarUpload from "./_components/avatar-upload";
+import DeleteAccount from "./_components/delete-account";
 import AccountSettingsClientPage from "./page-client";
 
 const AccountSettingsPage = async () => {
   const session = await auth();
-
-  console.log(session?.user);
 
   if (!session || !session.user || !session.user.email || !session.user.id)
     redirect(DEFAULT_LOGIN_REDIRECT);
@@ -33,7 +32,7 @@ const AccountSettingsPage = async () => {
 
       <Card>
         <CardContent className="p-4 space-y-2">
-          <Label>Workspace Logo</Label>
+          <Label>Your Avatar</Label>
           <div className="flex items-center gap-4">
             <UserAvatarUpload email={email} userId={id} />
             <div className="text-sm text-muted-foreground">
@@ -60,7 +59,7 @@ const AccountSettingsPage = async () => {
 
       <Separator />
 
-      {/* <DeleteWorkspace workspaceId={workspaceId} /> */}
+      <DeleteAccount userId={id} />
     </div>
   );
 };

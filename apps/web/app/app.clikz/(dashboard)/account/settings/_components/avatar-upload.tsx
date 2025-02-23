@@ -32,7 +32,6 @@ const UserAvatarUpload = ({ email, userId }: UserAvatarUploadProps) => {
     updateUser({
       json: {
         image: `${urlEndpoint}/avatars/tr:w-100,h-100/${res.name}`,
-        email,
       },
       param: { userId },
     });
@@ -49,7 +48,7 @@ const UserAvatarUpload = ({ email, userId }: UserAvatarUploadProps) => {
         email={email}
         image={image}
         isLoading={isUploading}
-        className="size-24"
+        className="size-24 border-2 border-gray-200"
       />
 
       <div className="absolute inset-0 items-center justify-center hidden rounded-full bg-black/60 group-hover:flex">
