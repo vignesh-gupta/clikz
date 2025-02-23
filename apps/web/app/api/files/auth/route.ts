@@ -5,9 +5,9 @@ import ImageKit from "imagekit";
 import { privateKey, publicKey, urlEndpoint } from "~/lib/image-kit";
 
 const imageKit = new ImageKit({
-  publicKey: publicKey,
-  privateKey: privateKey || "private_samplekeytofixci",
-  urlEndpoint: urlEndpoint,
+  publicKey,
+  privateKey,
+  urlEndpoint,
 });
 
 export async function GET() {

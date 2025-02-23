@@ -1,5 +1,7 @@
 "use client";
 
+import { useTransition } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -14,19 +16,26 @@ import {
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
 
+import { useUpdateUser } from "~/features/auth/api/use-update-user";
 import { type UserAccountSchema, userAccountSchema } from "~/lib/zod-schemas";
 
 type AccountSettingsClientPageProps = {
   name?: string | null;
   email: string;
+  id: string;
 };
 
 const AccountSettingsClientPage = ({
   name,
   email,
+  id,
 }: AccountSettingsClientPageProps) => {
+  const { mutate: updateDetails } = useUpdateUser();
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm<UserAccountSchema>({
     resolver: zodResolver(userAccountSchema),
+    disabled: isPending,
     values: {
       name: name || "",
       email,
@@ -34,7 +43,12 @@ const AccountSettingsClientPage = ({
   });
 
   const onSubmit = (values: UserAccountSchema) => {
-    console.log(values);
+    startTransition(() => {
+      updateDetails({
+        json: values,
+        param: { userId: id },
+      });
+    });
   };
 
   return (
@@ -80,7 +94,9 @@ const AccountSettingsClientPage = ({
             </FormItem>
           )}
         />
-        <Button type="submit">Save</Button>
+        <Button type="submit" disabled={isPending}>
+          Save
+        </Button>
       </form>
     </Form>
   );

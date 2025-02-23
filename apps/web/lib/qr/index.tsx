@@ -22,7 +22,8 @@ import {
   getImageSettings,
 } from "./utils";
 
-const DUB_QR_LOGO = "https://assets.dub.co/logo.png";
+const CLIKZ_QR_LOGO =
+  "https://ik.imagekit.io/zwd9hb91x/tr:w-100,h-100/logo.png";
 
 export * from "./types";
 export * from "./utils";
@@ -355,7 +356,7 @@ export function getQRData({
     margin,
     ...(!hideLogo && {
       imageSettings: {
-        src: logo || DUB_QR_LOGO,
+        src: logo || CLIKZ_QR_LOGO,
         height: 256,
         width: 256,
         excavate: true,

@@ -8,7 +8,7 @@ import { useSidebar } from "@clikz/ui/components/ui/sidebar";
 import { UserButton } from "~/features/auth/components/user-button";
 
 type PageTitleProps = {
-  title: string;
+  title?: string;
 };
 
 const PageTitle = ({ title }: PageTitleProps) => {
@@ -22,9 +22,11 @@ const PageTitle = ({ title }: PageTitleProps) => {
             <MenuIcon size={24} />
           </Button>
         ) : null}
-        <h1 className="text-xl font-semibold leading-7 text-neutral-900 md:text-2xl">
-          {title}
-        </h1>
+        {title ? (
+          <h1 className="text-xl font-semibold leading-7 text-neutral-900 md:text-2xl">
+            {title}
+          </h1>
+        ) : null}
       </div>
 
       <UserButton align="end" className="md:hidden" />
