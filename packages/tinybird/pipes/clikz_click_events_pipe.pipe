@@ -27,5 +27,5 @@ SQL >
         referer_url
     FROM clikz_click_events
     where workspace_slug ={{ workspaceSlug }}
-    {% if defined(fromDate) %} AND timestamp >= {{ DateTime64(fromDate) }} {% end %}
-    {% if defined(toDate) %} AND timestamp <= {{ DateTime64(toDate) }} {% end %}
+    {% if defined(fromDate) %} AND timestamp >= {{ DateTime(fromDate) }} {% end %}
+    {% if defined(toDate) %} AND timestamp <= {{ DateTime(toDate) }} {% end %}
