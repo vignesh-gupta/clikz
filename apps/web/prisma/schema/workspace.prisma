@@ -2,8 +2,8 @@ model Workspace {
   id            String       @id @default(cuid())
   name          String
   slug          String
-  User          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        String       @unique
+  Owner         User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId       String       @unique
   defaultInvite String       @default(cuid())
   Invite        Invite[]
   Link          Link[]
@@ -12,6 +12,7 @@ model Workspace {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   plan          PlanName     @default(FREE)
+  Domain        Domain[]
 
   @@unique([slug])
   @@unique([id, slug])

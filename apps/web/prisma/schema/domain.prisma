@@ -1,0 +1,19 @@
+model Domain {
+  id            String       @id @default(cuid())
+  name          String
+  workspace     Workspace    @relation(fields: [workspaceId, workspaceSlug], references: [id, slug], onDelete: Cascade)
+  workspaceId   String
+  workspaceSlug String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  status        DomainStatus @default(PENDING)
+
+  @@unique([workspaceId, workspaceSlug])
+  @@index([workspaceId])
+}
+
+enum DomainStatus {
+  PENDING
+  VERIFIED
+  FAILED
+}
