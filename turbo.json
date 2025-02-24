@@ -19,7 +19,9 @@
     "NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY",
     "NEXT_PUBLIC_BASE_DOMAIN",
     "NEXT_PUBLIC_APP_DOMAIN",
-    "ANALYZE"
+    "ANALYZE",
+    "UPSTASH_REDIS_REST_URL",
+    "UPSTASH_REDIS_REST_TOKEN"
   ],
   "tasks": {
     "build": {
@@ -36,7 +38,9 @@
         "AUTH_DISCORD_SECRET",
         "AUTH_RESEND_KEY",
         "IMAGEKIT_PRIVATE_KEY",
-        "TINYBIRD_API_KEY"
+        "TINYBIRD_API_KEY",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN"
       ]
     },
     "dev": {
