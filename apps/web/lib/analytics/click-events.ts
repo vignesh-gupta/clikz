@@ -1,6 +1,5 @@
 import { NextRequest, userAgent } from "next/server";
 
-import { Link } from "@prisma/client";
 import { geolocation, ipAddress } from "@vercel/functions";
 
 import { capitalize } from "@clikz/ui/lib/utils";
@@ -9,11 +8,12 @@ import { EU_COUNTRY_CODES } from "../constants/countries";
 import { conn } from "../edge-db";
 import { getFinalUrlForAnalytics } from "../middleware/utils/final-url";
 import { detectBot, detectQR } from "../middleware/utils/link-utlis";
+import { RequiredLinkProp } from "../types";
 import { getDomainWithoutWWW } from "../utils/url";
 
 type RecordClickEventProps = {
   req: NextRequest;
-  link: Link;
+  link: RequiredLinkProp;
   url: string;
 };
 
@@ -69,7 +69,7 @@ export const recordClickEvent = async ({
     timestamp: new Date(),
     link_id: link.id,
     url: finalUrl,
-    short_url: link.shortLink,
+    short_url: `${link.domain}/${link.key}`,
     workspace_id: link.workspaceId,
     workspace_slug: link.workspaceSlug,
     vercel_region: geo.region || "",

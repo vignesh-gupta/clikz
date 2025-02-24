@@ -2,7 +2,8 @@ import { NextRequest, NextResponse, after } from "next/server";
 
 import { recordClickEvent } from "../analytics/click-events";
 import { BASE_DOMAIN, DEFAULT_REDIRECTS } from "../constants";
-import { getLinkViaEdge, parse } from "./utils";
+import { RequiredLinkProp } from "../types";
+import { getLinkViaEdgeWithKey, parse } from "./utils";
 import { getFinalUrl } from "./utils/final-url";
 import { getLinkViaRedis, setLinkToRedis } from "./utils/link-utlis";
 
@@ -15,13 +16,13 @@ export const LinkMiddleware = async (req: NextRequest) => {
     return NextResponse.redirect(new URL(DEFAULT_REDIRECTS.get(key)!, nextUrl));
   }
 
-  let link;
+  let link: RequiredLinkProp | null = null;
 
   link = await getLinkViaRedis(key, domain);
 
   if (!link) {
     console.log("Link not found in Redis, fetching from Edge DB");
-    link = await getLinkViaEdge(key, domain);
+    link = await getLinkViaEdgeWithKey(key, domain);
   }
 
   if (!link)

@@ -1,3 +1,5 @@
+import { Link } from "@prisma/client";
+
 import { Continent } from "./constants/continents";
 import { CountryCode } from "./constants/countries";
 
@@ -35,3 +37,8 @@ export type RawAnalyticsData = {
 export type AnalyticsDataProp = {
   data?: RawAnalyticsData[];
 };
+
+export type RequiredLinkProp = Pick<
+  Link,
+  "id" | "key" | "url" | "domain" | "workspaceId" | "workspaceSlug"
+>;

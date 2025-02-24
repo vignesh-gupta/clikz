@@ -1,8 +1,7 @@
 import { NextRequest } from "next/server";
 
-import { Link } from "@prisma/client";
-
 import { redis } from "~/lib/redis";
+import { RequiredLinkProp } from "~/lib/types";
 
 export const detectBot = (req: NextRequest) => {
   const searchParams = new URL(req.url).searchParams;
@@ -35,13 +34,13 @@ export const detectQR = (req: NextRequest) => {
 export const getLinkViaRedis = async (key: string, domain: string) => {
   const cacheKey = `link:${domain}:${key}`;
   const cached = await redis.get(cacheKey);
-  return cached as Link | null;
+  return cached as RequiredLinkProp | null;
 };
 
 export const setLinkToRedis = async (
   key: string,
   domain: string,
-  link: Link
+  link: RequiredLinkProp
 ) => {
   const cacheKey = `link:${domain}:${key}`;
   await redis.set(cacheKey, link);
