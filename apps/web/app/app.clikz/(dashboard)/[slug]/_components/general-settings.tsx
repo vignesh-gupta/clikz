@@ -20,11 +20,11 @@ import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
 
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
+import WorkspaceIconUpload from "~/features/workspace/components/workspace-icon-upload";
 import { DATA_PREFIX } from "~/lib/constants";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 
 import DeleteWorkspace from "./delete-workspace";
-import IconUpload from "./icon-upload";
 
 type GeneralSettingsProps = {
   workspaceId: string;
@@ -122,7 +122,11 @@ const GeneralSettings = ({
         <CardContent className="p-4 space-y-2">
           <Label>Workspace Logo</Label>
           <div className="flex items-center gap-4">
-            <IconUpload slug={slug} workspaceId={workspaceId} icon={icon} />
+            <WorkspaceIconUpload
+              slug={slug}
+              workspaceId={workspaceId}
+              icon={icon}
+            />
             <div className="text-sm text-muted-foreground">
               <p>
                 Square image recommended. Accepted file types: .png, .jpg with
