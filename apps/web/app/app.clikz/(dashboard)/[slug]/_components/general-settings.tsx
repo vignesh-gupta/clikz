@@ -48,7 +48,7 @@ const GeneralSettings = ({
   const { mutate: updateWorkspace } = useUpdateWorkspace();
 
   const onSubmit = (values: WorkspaceSchema) =>
-    updateWorkspace({ json: values, param: { workspaceId } });
+    updateWorkspace({ json: values, param: { idOrSlug: slug } });
 
   return (
     <div className="space-y-6">
@@ -112,11 +112,7 @@ const GeneralSettings = ({
         <CardContent className="p-4 space-y-2">
           <Label>Workspace Logo</Label>
           <div className="flex items-center gap-4">
-            <WorkspaceIconUpload
-              slug={slug}
-              workspaceId={workspaceId}
-              icon={icon}
-            />
+            <WorkspaceIconUpload slug={slug} icon={icon} />
             <div className="text-sm text-muted-foreground">
               <p>
                 Square image recommended. Accepted file types: .png, .jpg with
@@ -141,7 +137,7 @@ const GeneralSettings = ({
 
       <Separator />
 
-      <DeleteWorkspace workspaceId={workspaceId} />
+      <DeleteWorkspace />
     </div>
   );
 };

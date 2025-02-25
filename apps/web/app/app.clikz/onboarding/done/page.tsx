@@ -4,18 +4,16 @@ import { ArrowRight, SparklesIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 
-import { NEW_LINK_QUERY_PARAM } from "~/features/link/hooks/use-link-modal";
-
 import PageLayout from "../page-layout";
 
 type OnboardingCompletedPageProps = {
-  searchParams: Promise<{ workspaceId: string }>;
+  searchParams: Promise<{ workspace: string }>;
 };
 
 const OnboardingCompletedPage = async ({
   searchParams,
 }: OnboardingCompletedPageProps) => {
-  const { workspaceId } = await searchParams;
+  const { workspace } = await searchParams;
 
   return (
     <PageLayout
@@ -28,7 +26,7 @@ const OnboardingCompletedPage = async ({
       }
     >
       <Link
-        href={`/${workspaceId || "dashboard"}?${NEW_LINK_QUERY_PARAM}=true`}
+        href={`/${workspace || "dashboard"}?`}
         className="flex items-center justify-center"
       >
         <Button className="flex-1 group">

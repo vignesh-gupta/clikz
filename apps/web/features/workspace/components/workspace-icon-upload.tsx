@@ -12,12 +12,11 @@ import WorkspaceIcon from "~/features/workspace/components/workspace-icon";
 import { urlEndpoint } from "~/lib/image-kit";
 
 type IconUploadProps = {
-  workspaceId: string;
   slug: string;
   icon?: string | null;
 };
 
-const IconUpload = ({ slug, workspaceId, icon }: IconUploadProps) => {
+const IconUpload = ({ slug, icon }: IconUploadProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const { mutate: updateWorkspace } = useUpdateWorkspace();
 
@@ -30,7 +29,7 @@ const IconUpload = ({ slug, workspaceId, icon }: IconUploadProps) => {
   const onSuccess = (res: IKUploadResponse) => {
     updateWorkspace({
       json: { icon: `${urlEndpoint}tr:w-100,h-100/${res.name}` },
-      param: { workspaceId },
+      param: { idOrSlug: slug },
     });
     setIsUploading(false);
   };

@@ -7,11 +7,13 @@ import { capitalizeFirstLetter } from "@clikz/ui/lib/utils";
 import { useDeleteInvite } from "~/features/workspace/api/invite/use-delete-invite";
 import { useGetInvites } from "~/features/workspace/api/invite/use-get-invites";
 import { useResendInvite } from "~/features/workspace/api/invite/use-resend-invite";
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 
-import { TeamSettingsProps, TeamsLoading } from "./team-settings";
+import { TeamsLoading } from "./team-settings";
 
-const InvitesTab = ({ workspaceId }: TeamSettingsProps) => {
-  const { data: invites, isLoading } = useGetInvites({ workspaceId });
+const InvitesTab = () => {
+  const slug = useWorkspaceSlug();
+  const { data: invites, isLoading } = useGetInvites({ idOrSlug: slug });
   const { mutate: deleteInvite } = useDeleteInvite();
   const { mutate: resendInvite } = useResendInvite();
 
@@ -19,17 +21,17 @@ const InvitesTab = ({ workspaceId }: TeamSettingsProps) => {
 
   if (!invites?.length)
     return (
-      <div className="py-4 text-sm text-muted-foreground">
+      <div className="p-4 text-center text-sm text-muted-foreground">
         No pending invitations
       </div>
     );
 
   const onDeleteInvite = async (inviteId: string) => {
-    deleteInvite({ param: { workspaceId, inviteId } });
+    deleteInvite({ param: { idOrSlug: slug, inviteId } });
   };
 
   const onResendInvite = async (inviteId: string) => {
-    resendInvite({ param: { workspaceId, inviteId } });
+    resendInvite({ param: { idOrSlug: slug, inviteId } });
   };
 
   return (

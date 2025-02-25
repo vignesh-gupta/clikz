@@ -26,7 +26,7 @@ type WorkspaceSwitcherProps = {
 
 const WorkspaceSwitcher = ({ className }: WorkspaceSwitcherProps) => {
   const { data: workspaces, isLoading } = useGetWorkspaces();
-  const workspaceId = useWorkspaceSlug();
+  const slug = useWorkspaceSlug();
 
   const { open } = useWorkspaceModel();
 
@@ -43,7 +43,7 @@ const WorkspaceSwitcher = ({ className }: WorkspaceSwitcherProps) => {
       {isLoading ? (
         <Skeleton className="w-full h-11" />
       ) : (
-        <Select onValueChange={onSelect} value={workspaceId}>
+        <Select onValueChange={onSelect} value={slug}>
           <SelectTrigger className="w-full font-medium p-1 border-0 ring-0">
             <SelectValue placeholder="No workspace selected" />
           </SelectTrigger>

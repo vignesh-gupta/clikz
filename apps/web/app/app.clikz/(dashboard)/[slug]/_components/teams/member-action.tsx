@@ -24,14 +24,14 @@ type MemberActionProps = {
   member: WorkspaceMember;
   currentUser?: User;
   currentUserRole?: MemberRole;
-  workspaceId: string;
+  slug: string;
 };
 
 const MemberAction = ({
   currentUser,
   member,
   currentUserRole,
-  workspaceId,
+  slug,
 }: MemberActionProps) => {
   const { mutate: updateMember } = useUpdateMember();
   const { mutate: deleteMember } = useDeleteMember();
@@ -48,7 +48,7 @@ const MemberAction = ({
     updateMember({
       json: { role },
       param: {
-        workspaceId,
+        idOrSlug: slug,
         membershipId: member.id,
       },
     });
@@ -59,14 +59,14 @@ const MemberAction = ({
 
       return leaveWorkspace({
         param: {
-          workspaceId,
+          idOrSlug: slug,
         },
       });
     }
 
     deleteMember({
       param: {
-        workspaceId,
+        idOrSlug: slug,
         membershipId: member.id,
       },
     });

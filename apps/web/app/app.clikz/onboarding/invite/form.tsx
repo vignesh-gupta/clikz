@@ -14,7 +14,7 @@ import { inviteUser } from "~/lib/actions/onboarding";
 
 export function InviteTeamForm() {
   const searchParams = useSearchParams();
-  const workspaceId = searchParams.get("workspaceId");
+  const workspace = searchParams.get("workspace");
 
   const router = useRouter();
 
@@ -38,13 +38,13 @@ export function InviteTeamForm() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!workspaceId) return toast.error("Workspace not found");
+    if (!workspace) return toast.error("Workspace not found");
 
     // Filter out empty emails
     const validEmails = emails.filter((email) => email.trim() !== "");
 
     startTransaction(() =>
-      inviteUser(validEmails, workspaceId)
+      inviteUser(validEmails, workspace)
         .then((res) => {
           if (res.error) {
             toast.error(res.error);
@@ -54,7 +54,7 @@ export function InviteTeamForm() {
             // Reset form
             setEmails([""]);
             toast.success(res.success);
-            router.push(`/onboarding/link?workspaceId=${workspaceId}`);
+            router.push(`/onboarding/link?workspace=${workspace}`);
           }
         })
         .catch(() => {

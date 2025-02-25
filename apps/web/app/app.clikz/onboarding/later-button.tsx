@@ -17,9 +17,9 @@ const LaterButton = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const workspaceId = searchParams.get("workspaceId");
+  const workspace = searchParams.get("workspace");
 
-  const nextStepUrl = `${STEPS[STEPS.indexOf(pathname) + 1]}${workspaceId ? `?workspaceId=${workspaceId}` : ""}`;
+  const nextStepUrl = `${STEPS[STEPS.indexOf(pathname) + 1]}${workspace ? `?workspace=${workspace}` : ""}`;
 
   return (
     <Link

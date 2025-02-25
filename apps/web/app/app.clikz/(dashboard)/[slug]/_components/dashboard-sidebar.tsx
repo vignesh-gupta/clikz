@@ -62,7 +62,7 @@ export function DashboardSidebar() {
   const currentNavigation = isSettingsPage ? settingsNavigation : navigation;
 
   return (
-    <Sidebar className="bg-white">
+    <Sidebar className="bg-slate-700">
       <AnimatePresence mode="wait">
         <motion.div
           key={
@@ -98,8 +98,8 @@ export function DashboardSidebar() {
                 <SidebarMenuItem key={`/${slug}${item.href}`}>
                   <SidebarMenuButton
                     isActive={pathname === `/${slug}${item.href}`}
-                    className="gap-2"
                     onClick={() => handleClick(item.href)}
+                    className="hover:text-foreground transition-all data-[active=true]:text-blue-700 data-[active=true]:bg-blue-200/25"
                   >
                     <item.icon className="h-4 w-4" />
                     {item.title}

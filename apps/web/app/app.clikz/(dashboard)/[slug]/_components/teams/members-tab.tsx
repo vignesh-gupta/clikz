@@ -8,13 +8,16 @@ import {
 import { capitalizeFirstLetter } from "@clikz/ui/lib/utils";
 
 import { useGetMembers } from "~/features/workspace/api/members/use-get-members";
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { AVATAR_URL } from "~/lib/constants";
 
 import MemberAction from "./member-action";
-import { TeamSettingsProps, TeamsLoading } from "./team-settings";
+import { TeamsLoading } from "./team-settings";
 
-const MembersTab = ({ workspaceId }: TeamSettingsProps) => {
-  const { data: members, isLoading } = useGetMembers({ workspaceId });
+const MembersTab = () => {
+  const slug = useWorkspaceSlug();
+
+  const { data: members, isLoading } = useGetMembers({ idOrSlug: slug });
 
   const { data: currentSession } = useSession();
 
@@ -71,7 +74,7 @@ const MembersTab = ({ workspaceId }: TeamSettingsProps) => {
               currentUserRole={currentUserRole}
               currentUser={currentSession.user}
               member={member}
-              workspaceId={workspaceId}
+              slug={slug}
             />
           </div>
         </div>

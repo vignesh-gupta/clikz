@@ -15,11 +15,7 @@ import { useTeamNavigation } from "../hooks/use-team-navigation";
 import InvitesTab from "./invites-tab";
 import MembersTab from "./members-tab";
 
-export type TeamSettingsProps = {
-  workspaceId: string;
-};
-
-const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
+const TeamSettings = () => {
   const { teamTab, setTeamTab } = useTeamNavigation("members");
 
   return (
@@ -33,7 +29,7 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
         </div>
         <div className="flex items-center gap-2">
           <WorkspaceInvite />
-          <MemberInviteDialog workspaceId={workspaceId} />
+          <MemberInviteDialog />
         </div>
       </div>
 
@@ -58,10 +54,10 @@ const TeamSettings = ({ workspaceId }: TeamSettingsProps) => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="members">
-          <MembersTab workspaceId={workspaceId} />
+          <MembersTab />
         </TabsContent>
         <TabsContent value="invitations">
-          <InvitesTab workspaceId={workspaceId} />
+          <InvitesTab />
         </TabsContent>
       </Tabs>
     </div>

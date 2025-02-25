@@ -23,7 +23,7 @@ const SettingsTab = ({ initialWorkspace }: SettingsTabProps) => {
   const { tab, setTab } = useSettingsNavigation("general");
 
   const { data: workspace } = useGetWorkspace({
-    workspaceId: initialWorkspace.id,
+    idOrSlug: initialWorkspace.id,
     initialData: initialWorkspace,
   });
 
@@ -54,7 +54,7 @@ const SettingsTab = ({ initialWorkspace }: SettingsTabProps) => {
         />
       </TabsContent>
       <TabsContent value="team" className="p-1">
-        <TeamSettings workspaceId={initialWorkspace.id} />
+        <TeamSettings />
       </TabsContent>
     </Tabs>
   );

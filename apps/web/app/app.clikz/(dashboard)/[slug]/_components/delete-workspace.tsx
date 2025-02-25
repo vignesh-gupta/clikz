@@ -13,16 +13,14 @@ import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
 
 import { useDeleteWorkspace } from "~/features/workspace/api/workspace/use-delete-workspace";
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 
-type DeleteWorkspaceProps = {
-  workspaceId: string;
-};
-
-const DeleteWorkspace = ({ workspaceId }: DeleteWorkspaceProps) => {
+const DeleteWorkspace = () => {
   const { mutate } = useDeleteWorkspace();
+  const slug = useWorkspaceSlug();
 
   const handleDelete = () => {
-    mutate({ param: { workspaceId } });
+    mutate({ param: { idOrSlug: slug } });
   };
 
   return (
