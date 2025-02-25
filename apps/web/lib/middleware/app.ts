@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { AUTH_API_ROUTE, AUTH_ROUTES, DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
-import { getUserFirstWorkspaceViaEdge, getUserViaToken, parse } from "./utils";
+import {
+  getUserDefaultWorkspaceViaEdge,
+  getUserViaToken,
+  parse,
+} from "./utils";
 
 export const appRedirect = (path: string, req: NextRequest) =>
   new URL(`/app.clikz${path}`, req.nextUrl);
@@ -39,13 +43,13 @@ export const AppMiddleware = async (req: NextRequest) => {
     return NextResponse.rewrite(appRedirect(fullPath, req));
   }
 
-  const workspace = await getUserFirstWorkspaceViaEdge(user.id);
+  const workspace = await getUserDefaultWorkspaceViaEdge(user.id);
 
   if (!workspace) {
     return NextResponse.redirect(new URL("/onboarding", nextUrl));
   }
 
-  if (fullPath === "/") {
+  if (fullPath === "/" || fullPath === DEFAULT_LOGIN_REDIRECT) {
     return NextResponse.redirect(new URL(`/${workspace.slug}`, nextUrl));
   }
 

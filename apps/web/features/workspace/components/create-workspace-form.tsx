@@ -52,7 +52,7 @@ const CreateWorkspaceForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto border-0">
       <CardHeader className="gap-y-3 flex items-center justify-center flex-col">
         <Image src="/logo-name.png" width={150} height={40} alt="Clikz Logo" />
 

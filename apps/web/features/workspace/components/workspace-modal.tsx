@@ -7,7 +7,13 @@ const WorkspaceModal = () => {
   const { wsId, close } = useWorkspaceModel();
 
   return (
-    <ResponsiveModal open={!!wsId} onOpen={close} className="rounded-xl">
+    <ResponsiveModal
+      open={!!wsId}
+      onOpen={close}
+      className="rounded-xl"
+      title="Create a new workspace"
+      titleClassName="sr-only"
+    >
       <CreateWorkspaceForm />
     </ResponsiveModal>
   );

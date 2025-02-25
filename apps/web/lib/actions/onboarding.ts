@@ -2,7 +2,7 @@
 
 import { MemberRole } from "@prisma/client";
 
-import { auth } from "~/auth";
+import { auth, signOut } from "~/auth";
 import { generateInviteCode, generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema } from "~/lib/zod-schemas";
 
@@ -15,27 +15,58 @@ import { checkUser } from "./utils";
 export const createWorkspace = async (data: WorkspaceSchema) => {
   const session = await auth();
 
-  if (!session || !session.user || !session.user.id || !session.user.email) {
+  if (!session || !session.user || !session.user.id) {
     return { error: "You must be signed in to create a workspace" };
+  }
+
+  const user = await db.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
+  });
+
+  if (!user) {
+    signOut();
+    return { error: "User not found" };
   }
 
   const workspace = await db.workspace.create({
     data: {
       name: data.name,
       slug: data.slug,
-      userId: session.user.id,
+      ownerId: user.id,
     },
   });
 
   await db.membership.create({
     data: {
-      userId: session.user.id,
+      userId: user.id,
       workspaceId: workspace.id,
       role: MemberRole.ADMIN,
-      email: session.user.email,
+      email: user.email,
     },
   });
+
+  if (!user.defaultWorkspace) {
+    await setUserDefaultWorkspace(workspace.slug);
+  }
+
   return { success: "Workspace create successfully", workspace };
+};
+
+export const setUserDefaultWorkspace = async (workspaceSlug: string) => {
+  const session = await auth();
+
+  if (!session || !session.user || !session.user.id) return;
+
+  await db.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      defaultWorkspace: workspaceSlug,
+    },
+  });
 };
 
 export const inviteUser = async (emails: string[], workspaceSlug: string) => {

@@ -2,14 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
-import { APP_DOMAIN, APP_NAMES, BASE_DOMAIN } from "./lib/constants";
+import { APP_NAMES, BASE_DOMAIN, BASE_URL } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
 import { LinkMiddleware } from "./lib/middleware/link";
-import {
-  ALLOWED_EXTENSIONS,
-  DEFAULT_LOGIN_REDIRECT,
-  PUBLIC_ROUTE,
-} from "./routes";
+import { ALLOWED_EXTENSIONS, PUBLIC_ROUTE } from "./routes";
 
 export const config = {
   matcher: [
@@ -27,19 +23,16 @@ export const config = {
 export default async function middleware(req: NextRequest) {
   // AxiomMiddleware(req, event);
 
-  const { domain, fullPath, nextUrl } = parse(req);
+  const { domain, fullPath } = parse(req);
 
   if (ALLOWED_EXTENSIONS.some((ext) => fullPath.endsWith(ext))) {
     return NextResponse.next();
   }
 
-  if (fullPath === "/" && domain === APP_DOMAIN) {
-    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl), 302);
-  }
-
+  if (domain === BASE_DOMAIN && fullPath === "/") return NextResponse.next();
   if (PUBLIC_ROUTE.includes(req.nextUrl.pathname)) {
     if (domain !== BASE_DOMAIN) {
-      return NextResponse.redirect(`https://${BASE_DOMAIN}${fullPath}`, 302);
+      return NextResponse.redirect(`${BASE_URL}${fullPath}`, 302);
     }
 
     return NextResponse.next();

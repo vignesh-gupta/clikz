@@ -20,6 +20,7 @@ type ResponsiveModelProps = {
   className?: string;
   trigger?: React.ReactNode;
   title?: string;
+  titleClassName?: string;
 };
 
 const ResponsiveModel = ({
@@ -29,6 +30,7 @@ const ResponsiveModel = ({
   className,
   trigger,
   title,
+  titleClassName,
 }: ResponsiveModelProps) => {
   const isDesktop = useMediaQuery("(min-width: 786px)");
 
@@ -60,7 +62,7 @@ const ResponsiveModel = ({
         )}
         aria-describedby="responsive-dialog"
       >
-        {title && <DialogTitle>{title}</DialogTitle>}
+        {title && <DialogTitle className={titleClassName}>{title}</DialogTitle>}
         {children}
       </DialogContent>
     </Dialog>

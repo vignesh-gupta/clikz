@@ -41,9 +41,9 @@ export async function getUserViaToken(req: NextRequest) {
   return session?.user as User;
 }
 
-export const getUserFirstWorkspaceViaEdge = async (userId: string) => {
-  const query = `SELECT  w.* FROM "Workspace" w JOIN "Membership" m ON w.id = m."workspaceId" WHERE m."userId" = '${userId}' ORDER BY "createdAt" ASC LIMIT 1`;
-  const result = await conn(query);
+export const getUserDefaultWorkspaceViaEdge = async (userId: string) => {
+  const query = `SELECT * FROM "Workspace" WHERE slug = (SELECT "defaultWorkspace" FROM "User" WHERE id = $1 LIMIT 1)`;
+  const result = await conn(query, [userId]);
 
   return result[0] as Workspace | null;
 };
