@@ -9,14 +9,14 @@ import { Button } from "@clikz/ui/components/ui/button";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 
-import { PageWorkspaceIdProps } from "~/lib/types";
-
 import { useCreateInvites } from "../../api/invite/use-create-invites";
+import { useWorkspaceSlug } from "../../hooks/use-workspace-slug";
 
-const MemberInviteForm = ({ workspaceId }: PageWorkspaceIdProps) => {
+const MemberInviteForm = () => {
   const [emails, setEmails] = useState<string[]>([""]);
 
   const { mutateAsync: createInvites, isPending } = useCreateInvites();
+  const slug = useWorkspaceSlug();
 
   const addEmailInput = () => setEmails([...emails, ""]);
 
@@ -33,13 +33,13 @@ const MemberInviteForm = ({ workspaceId }: PageWorkspaceIdProps) => {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!workspaceId) return toast.error("Workspace not found");
+    if (!slug) return toast.error("Workspace not found");
 
     // Filter out empty emails
     const validEmails = emails.filter((email) => email.trim() !== "");
 
     createInvites({
-      param: { workspaceId },
+      param: { idOrSlug: slug },
       json: { emails: validEmails },
     }).then(() => setEmails([""]));
   }

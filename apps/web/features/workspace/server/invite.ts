@@ -10,11 +10,20 @@ import { inviteSchema } from "~/lib/zod-schemas";
 
 const workspaceInviteApp = new Hono()
   .get("/", sessionMiddleware, async (c) => {
-    const workspaceId = c.req.param("workspaceId");
+    const idOrSlug = c.req.param("idOrSlug");
 
     const invites = await db.invite.findMany({
       where: {
-        workspaceId,
+        OR: [
+          {
+            workspaceId: idOrSlug,
+          },
+          {
+            Workspace: {
+              slug: idOrSlug,
+            },
+          },
+        ],
       },
     });
 
@@ -37,19 +46,27 @@ const workspaceInviteApp = new Hono()
     roleMiddleware("ADMIN"),
     zValidator("json", inviteSchema),
     async (c) => {
-      const workspaceId = c.req.param("workspaceId");
+      const idOrSlug = c.req.param("idOrSlug");
       const { emails } = c.req.valid("json");
 
-      if (!workspaceId || !emails) {
+      if (!idOrSlug || !emails) {
         return c.json({ error: "Invalid request" }, 400);
       }
+
+      const workspace = await db.workspace.findFirst({
+        where: {
+          OR: [{ id: idOrSlug }, { slug: idOrSlug }],
+        },
+      });
+
+      if (!workspace) return c.json({ error: "Workspace not found" }, 404);
 
       const invites = await Promise.all(
         emails.map((email) =>
           db.invite.create({
             data: {
               email,
-              workspaceId,
+              workspaceId: workspace.id,
               role: "MEMBER",
               expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14), // 14 days
               token: generateInviteCode(),

@@ -136,18 +136,18 @@ export const inviteUser = async (emails: string[], workspaceSlug: string) => {
 
 export const createLink = async (
   data: LinkSchema,
-  workspaceId: string | null
+  workspaceSlug: string | null
 ) => {
   const user = await checkUser();
 
   if (!user || !user.id)
     return { error: "You must be signed in to create a link" };
 
-  if (!workspaceId) return { error: "Workspace id is required" };
+  if (!workspaceSlug) return { error: "Workspace Slug is required" };
 
   const workspace = await db.workspace.findUnique({
     where: {
-      slug: workspaceId,
+      slug: workspaceSlug,
     },
   });
 

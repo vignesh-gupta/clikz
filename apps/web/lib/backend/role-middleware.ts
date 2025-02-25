@@ -15,7 +15,9 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
       c.req.param("workspaceId") ||
       c.req.query("workspaceId") ||
       c.req.param("workspaceSlug") ||
-      c.req.query("workspaceSlug");
+      c.req.query("workspaceSlug") ||
+      c.req.param("idOrSlug") ||
+      c.req.query("idOrSlug");
 
     if (!workspace) {
       return c.json({ error: "Provide Workspace Id or Slug" }, 400);

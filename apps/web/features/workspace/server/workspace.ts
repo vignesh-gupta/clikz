@@ -13,24 +13,34 @@ import workspaceInviteApp from "./invite";
 import workspaceMembersApp from "./member";
 
 const workspaceApp = new Hono()
-
+  .basePath("/:idOrSlug")
   .route("/members", workspaceMembersApp)
   .route("/invites", workspaceInviteApp)
   .get("/", sessionMiddleware, roleMiddleware(), async (c) => {
     const workspace = await db.workspace.findFirst({
-      where: { id: c.req.param("workspaceId") },
+      where: {
+        OR: [
+          { id: c.req.param("idOrSlug") },
+          { slug: c.req.param("idOrSlug") },
+        ],
+      },
     });
 
     return c.json(workspace);
   })
   .delete("/", sessionMiddleware, roleMiddleware("ADMIN"), async (c) => {
-    const workspaceId = c.req.param("workspaceId");
+    const workspace = c.req.param("idOrSlug");
 
-    await db.workspace.delete({
-      where: { id: workspaceId },
+    await db.workspace.deleteMany({
+      where: {
+        OR: [
+          { id: c.req.param("idOrSlug") },
+          { slug: c.req.param("idOrSlug") },
+        ],
+      },
     });
 
-    return c.json({ success: true, workspaceId });
+    return c.json({ success: true, workspace });
   })
   .patch(
     "/",
@@ -38,11 +48,13 @@ const workspaceApp = new Hono()
     roleMiddleware("ADMIN"),
     zValidator("json", workspaceSchema.partial()),
     async (c) => {
-      const workspaceId = c.req.param("workspaceId");
+      const idOrSlug = c.req.param("idOrSlug");
       const { name, slug, icon } = c.req.valid("json");
 
       const existingWorkspace = await db.workspace.findFirst({
-        where: { id: workspaceId },
+        where: {
+          OR: [{ id: idOrSlug }, { slug: idOrSlug }],
+        },
       });
 
       if (!existingWorkspace) {
@@ -66,10 +78,12 @@ const workspaceApp = new Hono()
     sessionMiddleware,
     roleMiddleware("ADMIN"),
     async (c) => {
-      const workspaceId = c.req.param("workspaceId");
+      const idOrSlug = c.req.param("idOrSlug");
 
       const workspace = await db.workspace.findFirst({
-        where: { id: workspaceId },
+        where: {
+          OR: [{ id: idOrSlug }, { slug: idOrSlug }],
+        },
       });
 
       if (!workspace) {
@@ -78,8 +92,13 @@ const workspaceApp = new Hono()
 
       const defaultInvite = generateCUID();
 
-      const updatedWorkspace = await db.workspace.update({
-        where: { id: workspaceId },
+      const updatedWorkspace = await db.workspace.updateMany({
+        where: {
+          OR: [
+            { id: c.req.param("idOrSlug") },
+            { slug: c.req.param("idOrSlug") },
+          ],
+        },
         data: {
           defaultInvite,
         },

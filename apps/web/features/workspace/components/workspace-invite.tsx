@@ -15,15 +15,16 @@ import {
 } from "@clikz/ui/components/ui/dialog";
 
 import { DATA_PREFIX } from "~/lib/constants";
-import { PageWorkspaceIdProps } from "~/lib/types";
 
 import { useGetWorkspace } from "../api/workspace/use-get-workspace";
 import { useResetWorkspaceInvite } from "../api/workspace/use-reset-wsinvite";
+import { useWorkspaceSlug } from "../hooks/use-workspace-slug";
 
-const WorkspaceInvite = ({ workspaceId }: PageWorkspaceIdProps) => {
+const WorkspaceInvite = () => {
   const [copy, setCopy] = useState(false);
 
-  const { data: workspace, isLoading } = useGetWorkspace({ workspaceId });
+  const slug = useWorkspaceSlug();
+  const { data: workspace, isLoading } = useGetWorkspace({ idOrSlug: slug });
   const { mutate: resetInvite } = useResetWorkspaceInvite();
 
   const handleCopy = () => {
@@ -77,7 +78,7 @@ const WorkspaceInvite = ({ workspaceId }: PageWorkspaceIdProps) => {
           <Button
             variant="outline"
             className="w-full"
-            onClick={() => resetInvite({ param: { workspaceId } })}
+            onClick={() => resetInvite({ param: { idOrSlug: slug } })}
             disabled={isLoading}
           >
             Reset Link

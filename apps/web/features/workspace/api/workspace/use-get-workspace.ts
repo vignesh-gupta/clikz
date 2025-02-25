@@ -5,22 +5,22 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type GetWorkspace = {
-  workspaceId: string;
+  idOrSlug: string;
   initialData?: Workspace;
   queryKey?: string[];
 };
 
 export const useGetWorkspace = ({
-  workspaceId,
+  idOrSlug,
   queryKey,
   initialData,
 }: GetWorkspace) => {
   return useQuery({
     initialData,
-    queryKey: [...QUERY_KEYS.WORKSPACE, workspaceId, ...(queryKey ?? [])],
+    queryKey: [...QUERY_KEYS.WORKSPACE, idOrSlug, ...(queryKey ?? [])],
     queryFn: async () => {
       const res = await client.api.workspaces[":idOrSlug"].$get({
-        param: { workspaceId },
+        param: { idOrSlug },
       });
 
       if (!res.ok) {
