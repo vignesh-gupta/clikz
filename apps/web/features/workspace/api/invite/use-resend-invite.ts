@@ -5,17 +5,17 @@ import { toast } from "sonner";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["invites"]["resend"][":inviteId"]["$post"],
+  (typeof client.api.workspaces)[":idOrSlug"]["invites"]["resend"][":inviteId"]["$post"],
   200
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["invites"]["resend"][":inviteId"]["$post"]
+  (typeof client.api.workspaces)[":idOrSlug"]["invites"]["resend"][":inviteId"]["$post"]
 >;
 
 export const useResendInvite = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
-      const res = await client.api.workspaces[":workspaceId"].invites.resend[
+      const res = await client.api.workspaces[":idOrSlug"].invites.resend[
         ":inviteId"
       ].$post({
         param,

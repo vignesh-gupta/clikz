@@ -8,10 +8,10 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["$delete"]
+  (typeof client.api.workspaces)[":idOrSlug"]["$delete"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["$delete"]
+  (typeof client.api.workspaces)[":idOrSlug"]["$delete"]
 >;
 
 export const useDeleteWorkspace = () => {
@@ -20,7 +20,7 @@ export const useDeleteWorkspace = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
-      const res = await client.api.workspaces[":workspaceId"].$delete({
+      const res = await client.api.workspaces[":idOrSlug"].$delete({
         param,
       });
       if (!res.ok) {

@@ -8,11 +8,11 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["$patch"],
+  (typeof client.api.workspaces)[":idOrSlug"]["$patch"],
   200
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["$patch"]
+  (typeof client.api.workspaces)[":idOrSlug"]["$patch"]
 >;
 
 export const useUpdateWorkspace = () => {
@@ -22,7 +22,7 @@ export const useUpdateWorkspace = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json, param }) => {
-      const res = await client.api.workspaces[":workspaceId"].$patch({
+      const res = await client.api.workspaces[":idOrSlug"].$patch({
         param,
         json,
       });

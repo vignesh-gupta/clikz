@@ -8,10 +8,10 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["invites"]["bulk-invite"]["$post"]
+  (typeof client.api.workspaces)[":idOrSlug"]["invites"]["bulk-invite"]["$post"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["invites"]["bulk-invite"]["$post"]
+  (typeof client.api.workspaces)[":idOrSlug"]["invites"]["bulk-invite"]["$post"]
 >;
 
 export const useCreateInvites = () => {
@@ -21,9 +21,9 @@ export const useCreateInvites = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (args) => {
       const res =
-        await client.api.workspaces[":workspaceId"].invites[
-          "bulk-invite"
-        ].$post(args);
+        await client.api.workspaces[":idOrSlug"].invites["bulk-invite"].$post(
+          args
+        );
 
       if (!res.ok) {
         const errorRes = (await res.json()) as unknown as { error: string };

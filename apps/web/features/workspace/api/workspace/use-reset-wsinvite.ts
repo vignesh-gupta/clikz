@@ -6,10 +6,10 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["reset-invite"]["$post"]
+  (typeof client.api.workspaces)[":idOrSlug"]["reset-invite"]["$post"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["reset-invite"]["$post"]
+  (typeof client.api.workspaces)[":idOrSlug"]["reset-invite"]["$post"]
 >;
 
 export const useResetWorkspaceInvite = () => {
@@ -17,7 +17,7 @@ export const useResetWorkspaceInvite = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
-      const res = await client.api.workspaces[":workspaceId"][
+      const res = await client.api.workspaces[":idOrSlug"][
         "reset-invite"
       ].$post({
         param,

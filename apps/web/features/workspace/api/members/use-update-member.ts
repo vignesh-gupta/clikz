@@ -8,10 +8,10 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["members"][":membershipId"]["$patch"]
+  (typeof client.api.workspaces)[":idOrSlug"]["members"][":membershipId"]["$patch"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["members"][":membershipId"]["$patch"]
+  (typeof client.api.workspaces)[":idOrSlug"]["members"][":membershipId"]["$patch"]
 >;
 
 export const useUpdateMember = () => {
@@ -20,7 +20,7 @@ export const useUpdateMember = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param, json }) => {
-      const res = await client.api.workspaces[":workspaceId"].members[
+      const res = await client.api.workspaces[":idOrSlug"].members[
         ":membershipId"
       ].$patch({
         param,

@@ -8,10 +8,10 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["members"]["leave"]["$delete"]
+  (typeof client.api.workspaces)[":idOrSlug"]["members"]["leave"]["$delete"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["members"]["leave"]["$delete"]
+  (typeof client.api.workspaces)[":idOrSlug"]["members"]["leave"]["$delete"]
 >;
 
 export const useLeaveWorkspace = () => {
@@ -20,7 +20,7 @@ export const useLeaveWorkspace = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
-      const res = await client.api.workspaces[":workspaceId"].members[
+      const res = await client.api.workspaces[":idOrSlug"].members[
         "leave"
       ].$delete({
         param,

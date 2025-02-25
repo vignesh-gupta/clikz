@@ -19,7 +19,7 @@ export const useGetMembers = ({
     initialData: initialMembers,
     queryKey: [...QUERY_KEYS.MEMBERS, workspaceId, ...(queryKey ?? [])],
     queryFn: async () => {
-      const res = await client.api.workspaces[":workspaceId"].members.$get({
+      const res = await client.api.workspaces[":idOrSlug"].members.$get({
         param: {
           workspaceId: workspaceId,
         },

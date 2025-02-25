@@ -8,10 +8,10 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.workspaces)[":workspaceId"]["invites"][":inviteId"]["$delete"]
+  (typeof client.api.workspaces)[":idOrSlug"]["invites"][":inviteId"]["$delete"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["invites"][":inviteId"]["$delete"]
+  (typeof client.api.workspaces)[":idOrSlug"]["invites"][":inviteId"]["$delete"]
 >;
 
 export const useDeleteInvite = () => {
@@ -20,7 +20,7 @@ export const useDeleteInvite = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
-      const res = await client.api.workspaces[":workspaceId"].invites[
+      const res = await client.api.workspaces[":idOrSlug"].invites[
         ":inviteId"
       ].$delete({
         param,

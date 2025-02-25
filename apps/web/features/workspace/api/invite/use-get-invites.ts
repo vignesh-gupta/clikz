@@ -12,7 +12,7 @@ export const useGetInvites = ({ workspaceId, queryKey }: GetInvites) => {
   return useQuery({
     queryKey: [...QUERY_KEYS.INVITES, workspaceId, ...(queryKey ?? [])],
     queryFn: async () => {
-      const res = await client.api.workspaces[":workspaceId"].invites.$get({
+      const res = await client.api.workspaces[":idOrSlug"].invites.$get({
         param: { workspaceId },
       });
 

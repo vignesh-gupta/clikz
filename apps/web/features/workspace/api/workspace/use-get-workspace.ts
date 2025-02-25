@@ -19,7 +19,7 @@ export const useGetWorkspace = ({
     initialData,
     queryKey: [...QUERY_KEYS.WORKSPACE, workspaceId, ...(queryKey ?? [])],
     queryFn: async () => {
-      const res = await client.api.workspaces[":workspaceId"].$get({
+      const res = await client.api.workspaces[":idOrSlug"].$get({
         param: { workspaceId },
       });
 
