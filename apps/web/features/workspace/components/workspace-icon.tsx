@@ -5,7 +5,7 @@ import { Skeleton } from "@clikz/ui/components/ui/skeleton";
 import { cn } from "@clikz/ui/lib/utils";
 
 type WorkspaceIconProps = {
-  image?: string;
+  image?: string | null;
   name: string;
   className?: string;
   height?: number;

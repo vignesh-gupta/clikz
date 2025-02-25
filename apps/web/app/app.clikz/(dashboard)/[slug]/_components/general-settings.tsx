@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, Copy } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@clikz/ui/components/ui/button";
@@ -19,6 +16,7 @@ import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
 
+import InputWithCopy from "~/components/input-with-copy";
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
 import WorkspaceIconUpload from "~/features/workspace/components/workspace-icon-upload";
 import { DATA_PREFIX } from "~/lib/constants";
@@ -39,8 +37,6 @@ const GeneralSettings = ({
   workspaceId,
   icon,
 }: GeneralSettingsProps) => {
-  const [copied, setCopied] = useState(false);
-
   const form = useForm<WorkspaceSchema>({
     resolver: zodResolver(workspaceSchema),
     values: {
@@ -50,12 +46,6 @@ const GeneralSettings = ({
   });
 
   const { mutate: updateWorkspace } = useUpdateWorkspace();
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(`ws_${workspaceId}`);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 500);
-  };
 
   const onSubmit = (values: WorkspaceSchema) =>
     updateWorkspace({ json: values, param: { workspaceId } });
@@ -142,25 +132,7 @@ const GeneralSettings = ({
       <Card>
         <CardContent className="p-4 space-y-2">
           <Label>Workspace ID</Label>
-          <div className="flex w-full">
-            <Input
-              disabled
-              defaultValue={`${DATA_PREFIX.WORKSPACE}${workspaceId}`}
-              className="font-mono text-sm rounded-r-none"
-            />
-            <Button
-              onClick={copyToClipboard}
-              variant="secondary"
-              className="px-3 rounded-l-none"
-            >
-              {copied ? (
-                <Check className="size-5" />
-              ) : (
-                <Copy className="size-5" />
-              )}
-              <span className="sr-only">Copy ID</span>
-            </Button>
-          </div>
+          <InputWithCopy value={`${DATA_PREFIX.WORKSPACE}${workspaceId}`} />
           <p className="text-sm text-muted-foreground">
             Used to identify your workspace when interacting with the Clikz API
           </p>

@@ -14,7 +14,7 @@ import { urlEndpoint } from "~/lib/image-kit";
 type IconUploadProps = {
   workspaceId: string;
   slug: string;
-  icon?: string;
+  icon?: string | null;
 };
 
 const IconUpload = ({ slug, workspaceId, icon }: IconUploadProps) => {
