@@ -6,7 +6,7 @@ import { Separator } from "@clikz/ui/components/ui/separator";
 
 import { auth } from "~/auth";
 import InputWithCopy from "~/components/input-with-copy";
-import PageTitle from "~/components/page-title";
+import PageHeader from "~/components/page-header";
 import { DATA_PREFIX } from "~/lib/constants";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
@@ -24,7 +24,7 @@ const AccountSettingsPage = async () => {
 
   return (
     <div className="space-y-6">
-      <PageTitle />
+      <PageHeader />
 
       <AccountSettingsClientPage email={email} name={name} id={id} />
 

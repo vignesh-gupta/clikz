@@ -38,3 +38,7 @@ export type RequiredLinkProp = Pick<
   Link,
   "id" | "key" | "url" | "domain" | "workspaceId" | "workspaceSlug"
 >;
+
+export type PageWithSlugParams = {
+  params: Promise<{ slug: string }>;
+};

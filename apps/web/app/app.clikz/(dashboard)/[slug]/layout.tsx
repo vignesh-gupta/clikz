@@ -6,9 +6,9 @@ import { SidebarInset, SidebarProvider } from "@clikz/ui/components/ui/sidebar";
 import { auth } from "~/auth";
 import MaxWidthContainer from "~/components/max-width-container";
 import { db } from "~/lib/db";
+import { PageWithSlugParams } from "~/lib/types";
 
 import { DashboardSidebar } from "./_components/dashboard-sidebar";
-import { PageWithSlugParams } from "./page";
 
 type DashboardLayoutProps = PropsWithChildren<PageWithSlugParams>;
 

@@ -1,21 +1,20 @@
-import PageTitle from "~/components/page-title";
+import PageHeader from "~/components/page-header";
 import LinkList from "~/features/link/components/links-list";
 import { getLinks } from "~/features/link/data";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "~/lib/constants";
+import { PageWithSlugParams } from "~/lib/types";
 import { FetchParamsSchema } from "~/lib/zod-schemas";
 
 import PageFilters from "./_components/filter";
-import NoLinks from "./_components/link/no-links";
 
-export type PageWithSlugParams = {
-  params: Promise<{ slug: string }>;
+type WorkspaceLinkPageProp = PageWithSlugParams & {
   searchParams: Promise<FetchParamsSchema>;
 };
 
 const WorkspaceLinkPage = async ({
   params,
   searchParams,
-}: PageWithSlugParams) => {
+}: WorkspaceLinkPageProp) => {
   const { slug } = await params;
   const sp = await searchParams;
 
@@ -27,10 +26,10 @@ const WorkspaceLinkPage = async ({
 
   return (
     <div className="flex h-full flex-col flex-1 gap-y-2">
-      <PageTitle title="Links" />
+      <PageHeader title="Links" />
       <div className="flex-1 space-y-4">
         <PageFilters />
-        {links.length === 0 ? <NoLinks /> : <LinkList initialLinks={links} />}
+        <LinkList initialLinks={links} />
       </div>
     </div>
   );

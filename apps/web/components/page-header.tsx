@@ -8,12 +8,12 @@ import { cn } from "@clikz/ui/lib/utils";
 
 import { UserButton } from "~/features/auth/components/user-button";
 
-type PageTitleProps = {
+type PageHeaderProps = {
   title?: string;
   className?: string;
 };
 
-const PageTitle = ({ title, className }: PageTitleProps) => {
+const PageHeader = ({ title, className }: PageHeaderProps) => {
   const { isMobile, toggleSidebar } = useSidebar();
 
   return (
@@ -36,4 +36,4 @@ const PageTitle = ({ title, className }: PageTitleProps) => {
   );
 };
 
-export default PageTitle;
+export default PageHeader;

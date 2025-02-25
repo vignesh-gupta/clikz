@@ -34,13 +34,13 @@ export const useUpdateWorkspace = () => {
       }
       return await res.json();
     },
-    onSuccess: ({ id, slug }) => {
+    onSuccess: ({ slug }) => {
       if (slug !== param.slug) router.push(`/${slug}/settings`);
       else router.refresh();
 
       toast.success("Workspace Updated!");
       queryClient.invalidateQueries({
-        queryKey: [...QUERY_KEYS.WORKSPACE, id],
+        queryKey: [...QUERY_KEYS.WORKSPACE, slug],
       });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.WORKSPACES,

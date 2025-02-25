@@ -39,7 +39,7 @@ const IconUpload = ({ slug, icon }: IconUploadProps) => {
       <WorkspaceIcon
         image={icon}
         name={slug}
-        className="size-full"
+        className="size-full border border-gray-300"
         isLoading={isUploading}
       />
 

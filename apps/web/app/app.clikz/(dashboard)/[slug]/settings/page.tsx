@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 
-import PageTitle from "~/components/page-title";
+import PageHeader from "~/components/page-header";
 import { db } from "~/lib/db";
+import { PageWithSlugParams } from "~/lib/types";
 
-import { PageWithSlugParams } from "../page";
-import SettingsTab from "./settings-tab";
+import GeneralSettings from "../_components/general-settings";
 
 const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
   const { slug } = await params;
@@ -17,8 +17,8 @@ const WorkspaceSettingPage = async ({ params }: PageWithSlugParams) => {
 
   return (
     <>
-      <PageTitle title="Workspace Settings" />
-      <SettingsTab initialWorkspace={workspace} />
+      <PageHeader />
+      <GeneralSettings initialWorkspace={workspace} />
     </>
   );
 };

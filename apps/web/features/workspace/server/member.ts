@@ -67,15 +67,13 @@ const workspaceMembersApp = new Hono()
         401
       );
     }
-
-    const workspace = await db.workspace.findFirst({
-      where: { OR: [{ id: idOrSlug }, { slug: idOrSlug }] },
-    });
-
-    if (!workspace) return c.json({ error: "Workspace not found" }, 404);
-
     const membership = await db.membership.findFirst({
-      where: { userId: user.id, workspaceId: workspace.id },
+      where: {
+        OR: [
+          { userId: user.id, workspaceId: idOrSlug },
+          { userId: user.id, Workspace: { slug: idOrSlug } },
+        ],
+      },
     });
 
     if (!membership) {

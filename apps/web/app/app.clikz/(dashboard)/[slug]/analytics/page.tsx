@@ -2,16 +2,18 @@ import { LinkIcon, UsersIcon } from "lucide-react";
 
 import { Card } from "@clikz/ui/components/ui/card";
 
-import PageTitle from "~/components/page-title";
+import PageHeader from "~/components/page-header";
 import { getAnalytics } from "~/lib/analytics/fetch-analytics";
+import { PageWithSlugParams } from "~/lib/types";
 import { groupByParam } from "~/lib/utils/url";
 
-import { PageWithSlugParams } from "../page";
-import CampaignAnalytics from "./_components/campaign-analytics";
-import DeviceAnalytics from "./_components/device-analytics";
-import PageFilters from "./_components/page-filters";
-import RegionAnalytics from "./_components/region-analytics";
-import UrlAnalytics from "./_components/url-analytics";
+import {
+  CampaignAnalytics,
+  DeviceAnalytics,
+  PageFilters,
+  RegionAnalytics,
+  UrlAnalytics,
+} from "./_components/analytics";
 
 const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
   const { slug } = await params;
@@ -23,7 +25,7 @@ const AnalyticsPage = async ({ params }: PageWithSlugParams) => {
 
   return (
     <div className="space-y-6">
-      <PageTitle title="Analytics" />
+      <PageHeader title="Analytics" />
       <PageFilters />
 
       {/* Summary Cards */}
