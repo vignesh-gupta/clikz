@@ -48,11 +48,10 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const isSettingsPage = pathname.endsWith("/settings");
+  const slug = useWorkspaceSlug();
+  const isSettingsPage = pathname.startsWith(`/${slug}/settings`);
 
   const { setOpenMobile } = useSidebar();
-
-  const slug = useWorkspaceSlug();
 
   const handleClick = (href: string) => {
     router.push(`/${slug}${href}`);

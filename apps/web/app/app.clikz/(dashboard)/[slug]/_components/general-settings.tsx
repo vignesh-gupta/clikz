@@ -1,6 +1,9 @@
 "use client";
 
+import { notFound } from "next/navigation";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Workspace } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@clikz/ui/components/ui/button";
@@ -17,6 +20,7 @@ import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
 
 import InputWithCopy from "~/components/input-with-copy";
+import { useGetWorkspace } from "~/features/workspace/api/workspace/use-get-workspace";
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
 import WorkspaceIconUpload from "~/features/workspace/components/workspace-icon-upload";
 import { DATA_PREFIX } from "~/lib/constants";
@@ -25,18 +29,19 @@ import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
 import DeleteWorkspace from "./delete-workspace";
 
 type GeneralSettingsProps = {
-  workspaceId: string;
-  slug: string;
-  name: string;
-  icon?: string;
+  initialWorkspace: Workspace;
 };
 
-const GeneralSettings = ({
-  name,
-  slug,
-  workspaceId,
-  icon,
-}: GeneralSettingsProps) => {
+const GeneralSettings = ({ initialWorkspace }: GeneralSettingsProps) => {
+  const { data: workspace } = useGetWorkspace({
+    idOrSlug: initialWorkspace.slug,
+    initialData: initialWorkspace,
+  });
+
+  if (!workspace) return notFound();
+
+  const { id: workspaceId, name, slug, icon } = workspace;
+
   const form = useForm<WorkspaceSchema>({
     resolver: zodResolver(workspaceSchema),
     values: {
