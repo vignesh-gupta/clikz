@@ -19,13 +19,11 @@ export const useUpdateMember = () => {
   const router = useRouter();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ param, json }) => {
-      const res = await client.api.workspaces[":idOrSlug"].members[
-        ":membershipId"
-      ].$patch({
-        param,
-        json,
-      });
+    mutationFn: async (args) => {
+      const res =
+        await client.api.workspaces[":idOrSlug"].members[
+          ":membershipId"
+        ].$patch(args);
       if (!res.ok) {
         const errorRes = (await res.json()) as unknown as { error: string };
 

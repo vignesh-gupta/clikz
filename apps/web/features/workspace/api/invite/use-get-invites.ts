@@ -4,16 +4,16 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type GetInvites = {
-  workspaceId: string;
+  idOrSlug: string;
   queryKey?: string[];
 };
 
-export const useGetInvites = ({ workspaceId, queryKey }: GetInvites) => {
+export const useGetInvites = ({ idOrSlug, queryKey }: GetInvites) => {
   return useQuery({
-    queryKey: [...QUERY_KEYS.INVITES, workspaceId, ...(queryKey ?? [])],
+    queryKey: [...QUERY_KEYS.INVITES, idOrSlug, ...(queryKey ?? [])],
     queryFn: async () => {
       const res = await client.api.workspaces[":idOrSlug"].invites.$get({
-        param: { workspaceId },
+        param: { idOrSlug },
       });
 
       if (!res.ok) {

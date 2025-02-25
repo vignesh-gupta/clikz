@@ -8,11 +8,11 @@ import { membershipSchema } from "~/lib/zod-schemas";
 
 const workspaceMembersApp = new Hono()
   .get("/", sessionMiddleware, async (c) => {
-    const workspaceId = c.req.param("workspaceId");
+    const idOrSlug = c.req.param("idOrSlug");
 
     const memberships = await db.membership.findMany({
       where: {
-        workspaceId,
+        OR: [{ workspaceId: idOrSlug }, { Workspace: { slug: idOrSlug } }],
       },
       include: {
         User: {
@@ -57,7 +57,7 @@ const workspaceMembersApp = new Hono()
   )
   .delete("/leave", sessionMiddleware, roleMiddleware(), async (c) => {
     const user = c.get("user");
-    const workspaceId = c.req.param("workspaceId");
+    const idOrSlug = c.req.param("idOrSlug");
 
     if (!user.id) {
       return c.json(
@@ -68,8 +68,14 @@ const workspaceMembersApp = new Hono()
       );
     }
 
+    const workspace = await db.workspace.findFirst({
+      where: { OR: [{ id: idOrSlug }, { slug: idOrSlug }] },
+    });
+
+    if (!workspace) return c.json({ error: "Workspace not found" }, 404);
+
     const membership = await db.membership.findFirst({
-      where: { userId: user.id, workspaceId },
+      where: { userId: user.id, workspaceId: workspace.id },
     });
 
     if (!membership) {
@@ -95,7 +101,7 @@ const workspaceMembersApp = new Hono()
     roleMiddleware("ADMIN"),
     async (c) => {
       const membershipId = c.req.param("membershipId");
-      const workspaceId = c.req.param("workspaceId");
+      const idOrSlug = c.req.param("idOrSlug");
 
       const membership = await db.membership.findUnique({
         where: { id: membershipId },
@@ -111,7 +117,7 @@ const workspaceMembersApp = new Hono()
       }
 
       const workspace = await db.workspace.findUnique({
-        where: { id: workspaceId },
+        where: { id: idOrSlug },
       });
 
       if (!workspace) {
@@ -123,7 +129,7 @@ const workspaceMembersApp = new Hono()
         );
       }
 
-      if (workspace?.userId === membership.userId) {
+      if (workspace?.ownerId === membership.userId) {
         return c.json(
           {
             error: "Cannot remove the owner of the workspace",

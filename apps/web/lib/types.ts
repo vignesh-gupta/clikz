@@ -11,10 +11,6 @@ export type WorkspaceMember = {
   role: "ADMIN" | "MEMBER";
 };
 
-export type PageWorkspaceIdProps = {
-  workspaceId: string;
-};
-
 export type RawAnalyticsData = {
   timestamp: string;
   link_id: string;
