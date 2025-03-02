@@ -35,16 +35,18 @@ export function LinkCard({
               className="object-cover sm:size-8 size-6"
             />
           </div>
-          <div className="flex-grow">
+          <div className="flex-grow min-w-0">
             <Link href={shortUrl} target="_blank">
-              <h3 className="truncate">{`${domain}/${slug}`}</h3>
+              <p className="truncate">{`${domain}/${slug}`}</p>
             </Link>
             <div className="flex items-center">
               <CornerDownRight className="mx-1 size-3 text-muted-foreground/40" />
-              <Link href={longUrl} target="_blank" className="flex-1 truncate">
-                <p className="text-sm truncate text-muted-foreground hover:underline underline-offset-2">
-                  {longUrl}
-                </p>
+              <Link
+                href={longUrl}
+                target="_blank"
+                className="flex-1 text-sm truncate text-muted-foreground hover:underline underline-offset-2"
+              >
+                {longUrl}
               </Link>
             </div>
           </div>

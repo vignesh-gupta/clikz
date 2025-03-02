@@ -1,6 +1,12 @@
 model Domain {
   id            String       @id @default(cuid())
   name          String
+  logo          String?
+  expiredUrl    String?
+  notFoundUrl   String?
+  placeholder   String?
+  isArchived    Boolean      @default(false)
+  verification  Json?
   workspace     Workspace    @relation(fields: [workspaceId, workspaceSlug], references: [id, slug], onDelete: Cascade)
   workspaceId   String
   workspaceSlug String

@@ -1,4 +1,4 @@
-import { Link } from "@prisma/client";
+import { Domain, Link } from "@prisma/client";
 
 import { Continent } from "./constants/continents";
 import { CountryCode } from "./constants/countries";
@@ -41,4 +41,15 @@ export type RequiredLinkProp = Pick<
 
 export type PageWithSlugParams = {
   params: Promise<{ slug: string }>;
+};
+
+type DomainVerification = {
+  type: string;
+  domain: string;
+  value: string;
+  reason: string;
+};
+
+export type DomainProp = Omit<Domain, "verification"> & {
+  verification: DomainVerification[];
 };
