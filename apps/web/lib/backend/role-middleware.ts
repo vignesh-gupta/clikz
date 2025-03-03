@@ -8,7 +8,7 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
     const user = c.get("user");
 
     if (!user) {
-      return c.json({ error: "Unauthorized" }, 403);
+      return c.json({ error: "Unauthorized" }, 401);
     }
 
     const workspace =
@@ -20,7 +20,10 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
       c.req.query("idOrSlug");
 
     if (!workspace) {
-      return c.json({ error: "Provide Workspace Id or Slug" }, 400);
+      return c.json(
+        { code: "unauthorized", error: "Provide Workspace Id or Slug" },
+        400
+      );
     }
 
     const membership = await db.membership.findFirst({
@@ -29,21 +32,24 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
           {
             workspaceId: workspace,
             userId: user.id,
-            role: requiredRole === "ADMIN" ? "ADMIN" : undefined,
+            role: requiredRole,
           },
           {
             Workspace: {
               slug: workspace,
             },
             userId: user.id,
-            role: requiredRole === "ADMIN" ? "ADMIN" : undefined,
+            role: requiredRole,
           },
         ],
       },
     });
 
     if (!membership) {
-      return c.json({ error: "Unauthorized to perform the action" }, 401);
+      return c.json(
+        { code: "forbidden", error: "The actions is forbidden" },
+        403
+      );
     }
 
     await next();

@@ -4,7 +4,7 @@ import { parse } from "~/lib/middleware/utils";
 
 import { APP_NAMES, BASE_DOMAIN, BASE_URL } from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
-import { LinkMiddleware } from "./lib/middleware/link";
+import LinkMiddleware from "./lib/middleware/link";
 import { ALLOWED_EXTENSIONS, PUBLIC_ROUTE } from "./routes";
 
 export const config = {

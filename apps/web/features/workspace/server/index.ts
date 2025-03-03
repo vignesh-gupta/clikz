@@ -6,7 +6,7 @@ import { db } from "~/lib/db";
 import workspaceApp from "./workspace";
 
 const workspacesApp = new Hono()
-  .route("/", workspaceApp)
+  .route("/:idOrSlug", workspaceApp)
   .get("/", sessionMiddleware, async (c) => {
     const user = c.get("user");
 

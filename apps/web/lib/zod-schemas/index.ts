@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-export * from "./auth-schemas";
-export * from "./link-schemas";
-export * from "./workspace-schemas";
+export * from "./auth";
+export * from "./link";
+export * from "./workspace";
 
 export const fetchParamsSchema = z.object({
   page: z.string().optional().default("0"),

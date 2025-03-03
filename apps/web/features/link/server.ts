@@ -84,7 +84,7 @@ const linksApp = new Hono()
         },
       });
 
-      return c.json({ link });
+      return c.json({ link }, 201);
     }
   )
   .patch(

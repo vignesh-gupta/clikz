@@ -13,7 +13,6 @@ import workspaceInviteApp from "./invite";
 import workspaceMembersApp from "./member";
 
 const workspaceApp = new Hono()
-  .basePath("/:idOrSlug")
   .route("/members", workspaceMembersApp)
   .route("/invites", workspaceInviteApp)
   .get("/", sessionMiddleware, roleMiddleware(), async (c) => {

@@ -7,22 +7,24 @@ import { getLinkViaEdgeWithKey, parse } from "./utils";
 import { getFinalUrl } from "./utils/final-url";
 import { getLinkViaRedis, setLinkToRedis } from "./utils/link-utlis";
 
-export const LinkMiddleware = async (req: NextRequest) => {
-  const { key, domain, fullPath, nextUrl } = parse(req);
+const LinkMiddleware = async (req: NextRequest) => {
+  const { fullKey, domain, fullPath, nextUrl } = parse(req);
 
-  if (!key) return NextResponse.redirect(`https://${domain}${fullPath}`);
+  if (!fullKey) return NextResponse.redirect(`https://${domain}${fullPath}`);
 
-  if (domain === BASE_DOMAIN && DEFAULT_REDIRECTS.has(key)) {
-    return NextResponse.redirect(new URL(DEFAULT_REDIRECTS.get(key)!, nextUrl));
+  if (domain === BASE_DOMAIN && DEFAULT_REDIRECTS.has(fullKey)) {
+    return NextResponse.redirect(
+      new URL(DEFAULT_REDIRECTS.get(fullKey)!, nextUrl)
+    );
   }
 
   let link: RequiredLinkProp | null = null;
 
-  link = await getLinkViaRedis(key, domain);
+  link = await getLinkViaRedis(fullKey, domain);
 
   if (!link) {
     console.log("Link not found in Redis, fetching from Edge DB");
-    link = await getLinkViaEdgeWithKey(key, domain);
+    link = await getLinkViaEdgeWithKey(fullKey, domain);
   }
 
   if (!link)
@@ -35,7 +37,7 @@ export const LinkMiddleware = async (req: NextRequest) => {
       url: link.url,
     });
 
-    setLinkToRedis(key, domain, link);
+    setLinkToRedis(fullKey, domain, link);
   });
 
   const finalUrl = getFinalUrl(link.url, req);
@@ -44,3 +46,5 @@ export const LinkMiddleware = async (req: NextRequest) => {
     status: 302,
   });
 };
+
+export default LinkMiddleware;
