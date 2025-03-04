@@ -1,3 +1,5 @@
+"use client";
+
 import { Globe } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";

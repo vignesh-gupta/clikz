@@ -75,7 +75,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
         </div>
 
         {/* Verification instructions */}
-        {domain.status === "PENDING" && domain.verification.length > 0 ? (
+        {domain.status === "PENDING" && domain.DomainVerification.length > 0 ? (
           <div className="space-y-4">
             <p className="text-sm">
               Please set the following record(s) on{" "}
@@ -94,7 +94,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {domain.verification.map((record) => (
+                  {domain.DomainVerification.map((record) => (
                     <tr key={record.type + record.value + record.domain}>
                       <td className="p-2">{record.type}</td>
                       <td className="p-2 font-mono">{record.domain}</td>

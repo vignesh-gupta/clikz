@@ -8,53 +8,35 @@ import { Button } from "@clikz/ui/components/ui/button";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@clikz/ui/components/ui/tabs";
 
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { DomainProp } from "~/lib/types";
+import { FetchParamsSchema } from "~/lib/zod-schemas";
 
+import { useGetDomains } from "../api/use-get-domains";
 import { AddDomainDialog } from "./add-domain-dialog";
 import { DomainList } from "./domain-list";
 import { EmptyState } from "./empty-state";
 
-export function DomainManagement() {
-  const [domains, setDomains] = useState<DomainProp[]>([]);
-  const [filter, setFilter] = useState<"active" | "archived">("active");
+type DomainManagementProps = FetchParamsSchema & {
+  initialDomains: DomainProp[];
+};
+
+export function DomainManagement({
+  initialDomains,
+  limit,
+  page,
+}: DomainManagementProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddDomainOpen, setIsAddDomainOpen] = useState(false);
 
-  const filteredDomains = domains.filter((domain) => {
-    const matchesSearch = domain.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesFilter = filter === "active"; // In a real app, you'd have an archived property
-    return matchesSearch && matchesFilter;
+  const workspaceSlug = useWorkspaceSlug();
+
+  const { data: domains } = useGetDomains({
+    workspaceSlug,
+    initialDomains,
+    limit,
+    page,
   });
-
-  const addDomain = (
-    domain: Omit<DomainProp, "id" | "createdAt" | "updatedAt">
-  ) => {
-    const newDomain: DomainProp = {
-      ...domain,
-      id: Math.random().toString(36).substring(2, 9),
-      verification: [
-        {
-          type: "TXT",
-          domain: domain.name,
-          value: "some-random-value",
-          reason: "DNS verification",
-        },
-      ],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    setDomains([...domains, newDomain]);
-  };
-
-  const updateDomainStatus = (id: string, status: DomainProp["status"]) => {
-    setDomains(
-      domains.map((domain) =>
-        domain.id === id ? { ...domain, status } : domain
-      )
-    );
-  };
 
   return (
     <div className="space-y-6">
@@ -73,7 +55,7 @@ export function DomainManagement() {
           <Tabs
             defaultValue="active"
             className="w-auto"
-            onValueChange={(value) => setFilter(value as "active" | "archived")}
+            // onValueChange={(value) => setFilter(value as "active" | "archived")}
           >
             <TabsList>
               <TabsTrigger value="active">Active</TabsTrigger>
@@ -88,18 +70,15 @@ export function DomainManagement() {
       </div>
 
       <div className="space-y-4">
-        {domains.length > 0 ? (
-          <DomainList
-            domains={filteredDomains}
-            onUpdateStatus={updateDomainStatus}
-          />
+        {domains?.length ? (
+          <DomainList domains={domains} />
         ) : (
           <EmptyState onAddDomain={() => setIsAddDomainOpen(true)} />
         )}
       </div>
 
       <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <div>Viewing {filteredDomains.length} domains</div>
+        <div>Viewing {domains?.length} domains</div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" disabled={true}>
             Previous
@@ -113,8 +92,6 @@ export function DomainManagement() {
       <AddDomainDialog
         open={isAddDomainOpen}
         onOpenChange={setIsAddDomainOpen}
-        onAddDomain={addDomain}
-        domains={domains}
       />
     </div>
   );

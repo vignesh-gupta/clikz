@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 "use client";
 
 import type React from "react";
@@ -52,12 +51,7 @@ export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
     }
 
     createDomain({
-      query: {
-        workspaceSlug,
-      },
-      json: {
-        slug: domainName,
-      },
+      slug: domainName,
     });
 
     // Reset form and close dialog

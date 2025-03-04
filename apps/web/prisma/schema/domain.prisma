@@ -1,21 +1,30 @@
 model Domain {
-  id            String       @id @default(cuid())
-  name          String
-  logo          String?
-  expiredUrl    String?
-  notFoundUrl   String?
-  placeholder   String?
-  isArchived    Boolean      @default(false)
-  verification  Json?
-  workspace     Workspace    @relation(fields: [workspaceId, workspaceSlug], references: [id, slug], onDelete: Cascade)
-  workspaceId   String
-  workspaceSlug String
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  status        DomainStatus @default(PENDING)
+  id                 String               @id @default(cuid())
+  name               String
+  logo               String?
+  expiredUrl         String?
+  notFoundUrl        String?
+  placeholder        String?
+  isArchived         Boolean              @default(false)
+  workspace          Workspace            @relation(fields: [workspaceId, workspaceSlug], references: [id, slug], onDelete: Cascade)
+  workspaceId        String
+  workspaceSlug      String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  status             DomainStatus         @default(PENDING)
+  DomainVerification DomainVerification[]
 
-  @@unique([workspaceId, workspaceSlug])
   @@index([workspaceId])
+}
+
+model DomainVerification {
+  id           String @id @default(cuid())
+  type         String
+  domain       String
+  value        String
+  reason       String
+  mainDomain   Domain @relation(fields: [mainDomainId], references: [id], onDelete: Cascade)
+  mainDomainId String
 }
 
 enum DomainStatus {

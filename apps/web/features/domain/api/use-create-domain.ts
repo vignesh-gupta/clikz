@@ -17,9 +17,14 @@ export const useCreateDomain = () => {
 
   const workspaceSlug = useWorkspaceSlug();
 
-  const mutation = useMutation<ResponseType, Error, RequestType>({
+  const mutation = useMutation<ResponseType, Error, RequestType["json"]>({
     mutationFn: async (props) => {
-      const res = await client.api.domains.$post(props);
+      const res = await client.api.domains.$post({
+        json: props,
+        query: {
+          workspaceSlug,
+        },
+      });
 
       if (!res.ok) {
         const errorRes = (await res.json()) as unknown as { error: string };
