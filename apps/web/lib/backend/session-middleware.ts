@@ -3,13 +3,13 @@ import { User } from "next-auth";
 
 import { auth } from "~/auth";
 
-type AdditionalContext = {
+export type UserAdditionalContext = {
   Variables: {
     user: User;
   };
 };
 
-export const sessionMiddleware = createMiddleware<AdditionalContext>(
+export const sessionMiddleware = createMiddleware<UserAdditionalContext>(
   async (c, next) => {
     const session = await auth();
 

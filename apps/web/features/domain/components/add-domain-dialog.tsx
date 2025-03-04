@@ -18,7 +18,26 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { DomainProp } from "~/lib/types";
+
+import { useCreateDomain } from "../api/use-create-domain";
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable no-unused-vars */
 
 /* eslint-disable no-unused-vars */
 
@@ -35,14 +54,12 @@ interface AddDomainDialogProps {
   domains: DomainProp[];
 }
 
-export function AddDomainDialog({
-  open,
-  onOpenChange,
-  onAddDomain,
-  domains,
-}: AddDomainDialogProps) {
+export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
   const [domainName, setDomainName] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  const { mutate: createDomain } = useCreateDomain();
+  const workspaceSlug = useWorkspaceSlug();
 
   const validateDomain = (domain: string) => {
     // Basic domain validation regex
@@ -64,25 +81,13 @@ export function AddDomainDialog({
       return;
     }
 
-    // In a real app, this would be an API call
-    onAddDomain({
-      name: domainName,
-      status: "VERIFIED",
-      verification: [
-        {
-          type: "TXT",
-          domain: domainName,
-          value: "random-value",
-          reason: "Pending verification",
-        },
-      ],
-      expiredUrl: null,
-      logo: null,
-      workspaceId: "workspace-id",
-      notFoundUrl: null,
-      placeholder: null,
-      workspaceSlug: "workspace-slug",
-      isArchived: false,
+    createDomain({
+      query: {
+        workspaceSlug,
+      },
+      json: {
+        slug: domainName,
+      },
     });
 
     // Reset form and close dialog
