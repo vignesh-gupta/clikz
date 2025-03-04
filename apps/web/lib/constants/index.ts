@@ -52,5 +52,5 @@ export const DATA_PREFIX = {
   USER_INVITE: "uzi_",
 };
 
-export const DEFAULT_PAGE_SIZE = "10";
-export const DEFAULT_PAGE = "0";
+export const DEFAULT_PAGE_LIMIT = "10";
+export const DEFAULT_PAGE_NUMBER = "0";

@@ -6,7 +6,7 @@ import { Link } from "@prisma/client";
 
 import NoLinks from "~/app/app.clikz/(dashboard)/[slug]/_components/link/no-links";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "~/lib/constants";
+import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from "~/lib/constants";
 import { useView } from "~/lib/hooks/use-view";
 
 import { useGetLinks } from "../api/use-get-links";
@@ -25,8 +25,8 @@ const LinkList = ({ initialLinks }: LinksListProps) => {
   const { data: links } = useGetLinks({
     workspaceSlug,
     initialLinks,
-    page: searchParams.get("page") ?? DEFAULT_PAGE,
-    limit: searchParams.get("limit") ?? DEFAULT_PAGE_SIZE,
+    page: searchParams.get("page") ?? DEFAULT_PAGE_NUMBER,
+    limit: searchParams.get("limit") ?? DEFAULT_PAGE_LIMIT,
   });
 
   const { view } = useView();

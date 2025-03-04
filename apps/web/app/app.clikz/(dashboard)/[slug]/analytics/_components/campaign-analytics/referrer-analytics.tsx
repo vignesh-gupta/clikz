@@ -11,7 +11,7 @@ import { MetricBarChart } from "~/components/analytics/metric-chart";
 import LinkFavIcon from "~/features/link/components/link-fav-icon";
 import { APP_DOMAIN } from "~/lib/constants";
 import { AnalyticsDataProp } from "~/lib/types";
-import { groupByParam } from "~/lib/utils/url";
+import { groupByParam } from "~/lib/utils";
 
 const ReferrerAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByReferrer = groupByParam(data, "referer")?.map((item) => ({

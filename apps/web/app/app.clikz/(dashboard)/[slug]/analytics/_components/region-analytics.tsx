@@ -10,7 +10,7 @@ import { CONTINENTS } from "~/lib/constants/continents";
 import { COUNTRIES } from "~/lib/constants/countries";
 import { REGIONS } from "~/lib/constants/region";
 import { AnalyticsDataProp } from "~/lib/types";
-import { groupByParam } from "~/lib/utils/url";
+import { groupByParam } from "~/lib/utils";
 
 const RegionAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByCity = groupByParam(data, "city");

@@ -7,7 +7,3 @@ export const domainSchema = z.object({
   placeholder: z.string().optional(),
   isArchived: z.boolean().default(false),
 });
-
-export const workspaceSlugSchema = z.object({
-  workspaceSlug: z.string(),
-});

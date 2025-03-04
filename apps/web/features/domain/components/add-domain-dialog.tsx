@@ -18,40 +18,11 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 
-import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { DomainProp } from "~/lib/types";
-
 import { useCreateDomain } from "../api/use-create-domain";
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
-
-/* eslint-disable no-unused-vars */
 
 interface AddDomainDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAddDomain: (
-    domain: Omit<DomainProp, "id" | "createdAt" | "updatedAt">
-  ) => void;
-  domains: DomainProp[];
 }
 
 export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
@@ -59,7 +30,6 @@ export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
   const [error, setError] = useState<string | null>(null);
 
   const { mutate: createDomain } = useCreateDomain();
-  const workspaceSlug = useWorkspaceSlug();
 
   const validateDomain = (domain: string) => {
     // Basic domain validation regex

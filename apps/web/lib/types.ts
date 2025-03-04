@@ -1,4 +1,4 @@
-import { Domain, Link } from "@prisma/client";
+import { Link, MemberRole, Prisma } from "@prisma/client";
 
 import { Continent } from "./constants/continents";
 import { CountryCode } from "./constants/countries";
@@ -8,7 +8,7 @@ export type WorkspaceMember = {
   name: string | null;
   email: string;
   image: string | null;
-  role: "ADMIN" | "MEMBER";
+  role: MemberRole;
 };
 
 export type RawAnalyticsData = {
@@ -43,13 +43,15 @@ export type PageWithSlugParams = {
   params: Promise<{ slug: string }>;
 };
 
-type DomainVerification = {
+export type DomainVerification = {
   type: string;
   domain: string;
   value: string;
   reason: string;
 };
 
-export type DomainProp = Omit<Domain, "verification"> & {
-  verification: DomainVerification[];
-};
+export type DomainProp = Prisma.DomainGetPayload<{
+  include: {
+    DomainVerification: true;
+  };
+}>;

@@ -1,7 +1,7 @@
 import PageHeader from "~/components/page-header";
 import LinkList from "~/features/link/components/links-list";
 import { getLinks } from "~/features/link/data";
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "~/lib/constants";
+import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from "~/lib/constants";
 import { PageWithSlugParams } from "~/lib/types";
 import { FetchParamsSchema } from "~/lib/zod-schemas";
 
@@ -20,8 +20,8 @@ const WorkspaceLinkPage = async ({
 
   const links = await getLinks({
     workspaceSlug: slug,
-    page: sp.page || DEFAULT_PAGE,
-    limit: sp.limit || DEFAULT_PAGE_SIZE,
+    page: sp.page || DEFAULT_PAGE_NUMBER,
+    limit: sp.limit || DEFAULT_PAGE_LIMIT,
   });
 
   return (

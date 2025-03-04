@@ -13,7 +13,7 @@ import AnalyticsCard from "~/components/analytics/analytics-card";
 import { MetricBarChart } from "~/components/analytics/metric-chart";
 import { BlurImage } from "~/components/blur-image";
 import { AnalyticsDataProp } from "~/lib/types";
-import { groupByParam } from "~/lib/utils/url";
+import { groupByParam } from "~/lib/utils";
 
 const DeviceAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByDevice = groupByParam(data, "device");
