@@ -122,6 +122,47 @@ const domainApp = new Hono()
 
       return c.json({ message: "Domain verified", isVerified: true });
     }
+  )
+  .delete(
+    "/:id",
+    sessionMiddleware,
+    zValidator("query", workspaceSlugSchema),
+    roleMiddleware(),
+    async (c) => {
+      const workspace = c.get("workspace");
+      const domainId = c.req.param("id");
+
+      if (!workspace) return c.json({ error: "Workspace not found" }, 404);
+
+      const domain = await db.domain.findFirst({
+        where: {
+          id: domainId,
+          workspaceId: workspace.id,
+        },
+      });
+
+      if (!domain) return c.json({ error: "Domain not found" }, 404);
+
+      await db.domain.delete({
+        where: {
+          id: domainId,
+          workspaceId: workspace.id,
+        },
+      });
+
+      db.domainVerification.deleteMany({
+        where: {
+          mainDomainId: domainId,
+        },
+      });
+
+      vercel.projects.removeProjectDomain({
+        domain: domain.name,
+        idOrName: VERCEL_PROJECT_ID,
+      });
+
+      return c.json({ message: "Domain deleted" });
+    }
   );
 
 export default domainApp;

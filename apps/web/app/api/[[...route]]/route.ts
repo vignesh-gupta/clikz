@@ -10,10 +10,10 @@ export const runtime = "nodejs";
 
 const app = new Hono()
   .basePath("/api")
-  .route("/domains", domainApp)
   .route("/workspaces", workspacesApp)
   .route("/links", linksApp)
-  .route("/users", authApp);
+  .route("/users", authApp)
+  .route("/domains", domainApp);
 
 export type AppType = typeof app;
 

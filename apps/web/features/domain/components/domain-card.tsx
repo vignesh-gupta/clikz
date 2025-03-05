@@ -1,10 +1,11 @@
-import { GlobeIcon, MenuIcon, RefreshCw } from "lucide-react";
+import { GlobeIcon, RefreshCw, TrashIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 
 import InputWithCopy from "~/components/input-with-copy";
 import { DomainProp } from "~/lib/types";
 
+import { useDeleteDomain } from "../api/use-delete-domain";
 import { useUpdateDomainStatus } from "../api/use-update-domains-status";
 
 type DomainCardProps = {
@@ -12,7 +13,9 @@ type DomainCardProps = {
 };
 
 const DomainCard = ({ domain }: DomainCardProps) => {
-  const { mutate: updateDomainStatus } = useUpdateDomainStatus();
+  const { mutate: updateDomainStatus, isPending: isUpdating } =
+    useUpdateDomainStatus();
+  const { mutate: deleteDomain, isPending: isDeleting } = useDeleteDomain();
 
   const getDomainName = (value: string) => {
     const splitValue = value.split(".");
@@ -53,15 +56,18 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                 size="icon"
                 className="size-8 rounded-full"
                 onClick={() => updateDomainStatus({ id: domain.id })}
+                disabled={isUpdating || isDeleting}
               >
                 <RefreshCw />
               </Button>
               <Button
                 variant="outline"
                 size="icon"
-                className="size-8 rounded-full"
+                className="size-8 rounded-full bg-destructive/10 text-destructive/50"
+                onClick={() => deleteDomain({ id: domain.id })}
+                disabled={isUpdating || isDeleting}
               >
-                <MenuIcon />
+                <TrashIcon />
               </Button>
             </div>
           </div>

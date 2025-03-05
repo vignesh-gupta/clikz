@@ -1,4 +1,4 @@
-import { MemberRole, Membership } from "@prisma/client";
+import { MemberRole, Membership, Workspace } from "@prisma/client";
 import { createMiddleware } from "hono/factory";
 
 import { db } from "../db";
@@ -7,6 +7,7 @@ import { UserAdditionalContext } from "./session-middleware";
 type RoleAdditionalContext = UserAdditionalContext & {
   Variables: {
     membership: Membership;
+    workspace: Workspace;
   };
 };
 
@@ -50,6 +51,9 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
           },
         ],
       },
+      include: {
+        Workspace: true,
+      },
     });
 
     if (!membership) {
@@ -60,6 +64,7 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
     }
 
     c.set("membership", membership);
+    c.set("workspace", membership.Workspace);
 
     await next();
   });

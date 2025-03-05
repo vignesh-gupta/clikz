@@ -4,10 +4,6 @@ import httpProxy from "http-proxy";
 const app = express();
 const port = 8080;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 const proxy = httpProxy.createProxy();
 
 app.use((req, res) => {
