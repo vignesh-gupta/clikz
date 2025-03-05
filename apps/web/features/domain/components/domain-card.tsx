@@ -1,20 +1,19 @@
-import {
-  CopyIcon,
-  GlobeIcon,
-  MenuIcon,
-  RefreshCw,
-  SettingsIcon,
-} from "lucide-react";
+import { GlobeIcon, MenuIcon, RefreshCw } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 
+import InputWithCopy from "~/components/input-with-copy";
 import { DomainProp } from "~/lib/types";
+
+import { useUpdateDomainStatus } from "../api/use-update-domains-status";
 
 type DomainCardProps = {
   domain: DomainProp;
 };
 
 const DomainCard = ({ domain }: DomainCardProps) => {
+  const { mutate: updateDomainStatus } = useUpdateDomainStatus();
+
   const getDomainName = (value: string) => {
     const splitValue = value.split(".");
 
@@ -25,7 +24,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
     <div key={domain.id} className="p-4 md:p-6">
       <div className="space-y-4">
         {/* Domain header with actions */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-y-4">
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center w-10 h-10 border rounded-full">
               <GlobeIcon className="w-5 h-5" />
@@ -53,13 +52,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                 variant="outline"
                 size="icon"
                 className="size-8 rounded-full"
-              >
-                <SettingsIcon />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="size-8 rounded-full"
+                onClick={() => updateDomainStatus({ id: domain.id })}
               >
                 <RefreshCw />
               </Button>
@@ -97,14 +90,15 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                   {domain.DomainVerification.map((record) => (
                     <tr key={record.type + record.value + record.domain}>
                       <td className="p-2">{record.type}</td>
-                      <td className="p-2 font-mono">{record.domain}</td>
+                      <td className="p-2 font-mono">
+                        <InputWithCopy
+                          value={record.domain}
+                          className="w-auto"
+                          readOnly
+                        />
+                      </td>
                       <td className="flex items-center gap-2 p-2">
-                        <span className="font-mono text-xs">
-                          {record.value}
-                        </span>
-                        <Button variant="ghost" size="icon" className="w-6 h-6">
-                          <CopyIcon />
-                        </Button>
+                        <InputWithCopy value={record.value} readOnly />
                       </td>
                     </tr>
                   ))}

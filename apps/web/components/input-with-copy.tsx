@@ -7,12 +7,15 @@ import { toast } from "sonner";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Input } from "@clikz/ui/components/ui/input";
+import { cn } from "@clikz/ui/lib/utils";
 
 type InputWithCopyProps = {
   value: string;
+  readOnly?: boolean;
+  className?: string;
 };
 
-const InputWithCopy = ({ value }: InputWithCopyProps) => {
+const InputWithCopy = ({ value, readOnly, className }: InputWithCopyProps) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const copyToClipboard = () => {
@@ -23,11 +26,12 @@ const InputWithCopy = ({ value }: InputWithCopyProps) => {
   };
 
   return (
-    <div className="flex w-full">
+    <div className={cn("flex w-full", className)} onClick={copyToClipboard}>
       <Input
-        disabled
+        readOnly={readOnly}
+        disabled={!readOnly}
         defaultValue={value}
-        className="font-mono text-sm rounded-r-none"
+        className="font-mono text-sm rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0"
       />
       <Button
         onClick={copyToClipboard}

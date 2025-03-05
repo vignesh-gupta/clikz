@@ -41,16 +41,12 @@ const domainApp = new Hono()
 
       const domainData = c.req.valid("json");
 
-      console.log({ domainData, membership, workspaceSlug });
-
       const addToVercel = await vercel.projects.addProjectDomain({
         idOrName: VERCEL_PROJECT_ID,
         requestBody: {
           name: domainData.slug,
         },
       });
-
-      console.log({ addToVercel });
 
       const domain = await db.domain.create({
         data: {
@@ -76,6 +72,55 @@ const domainApp = new Hono()
       });
 
       return c.json(domain, 201);
+    }
+  )
+  .patch(
+    "/:id/status",
+    sessionMiddleware,
+    zValidator("query", workspaceSlugSchema),
+    roleMiddleware(),
+    async (c) => {
+      const domainId = c.req.param("id");
+
+      const membership = c.get("membership");
+
+      const domain = await db.domain.findFirst({
+        where: {
+          id: domainId,
+          workspaceId: membership.workspaceId,
+        },
+      });
+
+      if (!domain) {
+        return c.json({ error: "Domain not found" }, 404);
+      }
+
+      console.log({ name: domain.name });
+
+      const statusOnVercel = await vercel.projects.getProjectDomain({
+        domain: domain.name,
+        idOrName: VERCEL_PROJECT_ID,
+      });
+
+      if (!statusOnVercel.verified) {
+        return c.json({ message: "Domain not verified", isVerified: false });
+      }
+
+      await db.domain.update({
+        where: {
+          id: domainId,
+        },
+        data: {
+          status: "VERIFIED",
+          DomainVerification: {
+            deleteMany: {
+              mainDomainId: domainId,
+            },
+          },
+        },
+      });
+
+      return c.json({ message: "Domain verified", isVerified: true });
     }
   );
 

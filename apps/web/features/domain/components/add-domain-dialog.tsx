@@ -21,6 +21,7 @@ import { useCreateDomain } from "../api/use-create-domain";
 
 interface AddDomainDialogProps {
   open: boolean;
+  // eslint-disable-next-line no-unused-vars
   onOpenChange: (open: boolean) => void;
 }
 
