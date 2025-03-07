@@ -153,13 +153,15 @@ export const createLink = async (
 
   if (!workspace) return { error: "Workspace not found" };
 
-  const slug = data.slug === "" ? generateRandomSlug() : data.slug;
+  const slug = data.slug || generateRandomSlug();
+
+  const domainURL = new URL(data.domain ? `https://${data.domain}` : BASE_URL);
 
   await db.link.create({
     data: {
-      domain: BASE_DOMAIN ?? "clikz.live",
+      domain: data.domain || BASE_DOMAIN,
       key: slug,
-      shortLink: new URL(`/${slug}`, BASE_URL).toString(),
+      shortLink: new URL(`/${slug}`, domainURL).toString(),
       url: data.destination,
       userId: user.id,
       workspaceId: workspace.id,

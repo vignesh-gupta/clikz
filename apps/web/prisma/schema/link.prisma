@@ -1,6 +1,6 @@
 model Link {
   id            String        @id @default(cuid())
-  domain        String
+  domain        String        @default("clikz.live")
   url           String
   key           String
   shortLink     String

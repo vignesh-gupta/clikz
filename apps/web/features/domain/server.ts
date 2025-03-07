@@ -6,6 +6,7 @@ import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
 import { VERCEL_PROJECT_ID, vercel } from "~/lib/vercel";
 import {
+  domainFilterSchema,
   domainSchema,
   fetchParamsSchema,
   workspaceSlugSchema,
@@ -20,10 +21,16 @@ const domainApp = new Hono()
     roleMiddleware(),
     zValidator("query", workspaceSlugSchema),
     zValidator("query", fetchParamsSchema),
+    zValidator("query", domainFilterSchema),
     async (c) => {
-      const { page, limit, workspaceSlug } = c.req.valid("query");
+      const { page, limit, workspaceSlug, verified } = c.req.valid("query");
 
-      const domains = await getDomains({ page, limit, workspaceSlug });
+      const domains = await getDomains({
+        page,
+        limit,
+        workspaceSlug,
+        verified: !!verified,
+      });
 
       return c.json({ domains });
     }

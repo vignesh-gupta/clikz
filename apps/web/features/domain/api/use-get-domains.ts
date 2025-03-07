@@ -7,18 +7,20 @@ import { FetchParamsSchema } from "~/lib/zod-schemas";
 
 type GetDomains = FetchParamsSchema & {
   workspaceSlug: string;
+  verified?: boolean;
   initialDomains?: DomainProp[];
   queryKey?: string[];
 };
 
 export const useGetDomains = ({
   workspaceSlug,
+  verified,
   initialDomains,
   queryKey,
   limit,
   page,
 }: GetDomains) => {
-  return useQuery<DomainProp[]>({
+  return useQuery({
     initialData: initialDomains,
     queryKey: [...QUERY_KEYS.DOMAINS, workspaceSlug, ...(queryKey ?? [])],
     queryFn: async () => {
@@ -27,6 +29,7 @@ export const useGetDomains = ({
           workspaceSlug,
           limit,
           page,
+          verified: verified ? "true" : undefined,
         },
       });
 

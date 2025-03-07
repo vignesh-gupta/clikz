@@ -5,6 +5,7 @@ import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { BASE_DOMAIN, BASE_URL } from "~/lib/constants";
 import { db } from "~/lib/db";
+import { isValidUrl } from "~/lib/utils/url";
 import {
   fetchParamsSchema,
   linkSchema,
@@ -54,7 +55,7 @@ const linksApp = new Hono()
     zValidator("query", workspaceSlugSchema),
     zValidator("json", linkSchema),
     async (c) => {
-      const { destination, slug, comment } = c.req.valid("json");
+      const { destination, slug, comment, domain } = c.req.valid("json");
       const { workspaceSlug } = c.req.valid("query");
 
       const user = c.get("user");
@@ -63,11 +64,13 @@ const linksApp = new Hono()
         return c.json({ error: "Unauthenticated" }, 401);
       }
 
+      const domainURL = new URL(domain ? `https://${domain}` : BASE_URL);
+
       const link = await db.link.create({
         data: {
-          domain: BASE_DOMAIN ?? "clikz.live",
+          domain: domain || BASE_DOMAIN,
           key: slug,
-          shortLink: new URL(`/${slug}`, BASE_URL).toString(),
+          shortLink: new URL(`/${slug}`, domainURL).toString(),
           url: destination,
           comment,
           Workspace: {
@@ -93,19 +96,36 @@ const linksApp = new Hono()
     zValidator("json", linkSchema.partial()),
     zValidator("query", workspaceSlugSchema),
     async (c) => {
-      const { comment, destination, slug } = c.req.valid("json");
+      const { comment, destination, slug, domain } = c.req.valid("json");
 
       const linkId = c.req.param("linkId");
+
+      const existingLink = await db.link.findUnique({
+        where: { id: linkId },
+      });
+
+      if (!existingLink) return c.json({ error: "Link not found" }, 404);
+
+      const domainUrl = domain === BASE_DOMAIN ? BASE_URL : `https://${domain}`;
+
+      const shortLink = new URL(
+        `/${slug || existingLink.key}`,
+        domainUrl
+      ).toString();
+
+      console.log({
+        isValid: isValidUrl(shortLink),
+        shortLink,
+      });
 
       const link = await db.link.update({
         where: { id: linkId },
         data: {
+          domain: domain || BASE_DOMAIN,
           comment,
           url: destination,
           key: slug,
-          shortLink: slug
-            ? new URL(`/${slug}`, BASE_URL).toString()
-            : undefined,
+          shortLink,
         },
       });
 

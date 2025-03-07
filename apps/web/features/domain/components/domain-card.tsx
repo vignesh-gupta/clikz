@@ -1,4 +1,4 @@
-import { GlobeIcon, RefreshCw, TrashIcon } from "lucide-react";
+import { GlobeIcon, RefreshCwIcon, TrashIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 
@@ -51,15 +51,17 @@ const DomainCard = ({ domain }: DomainCardProps) => {
             </div>
 
             <div className="flex gap-1">
-              <Button
-                variant="outline"
-                size="icon"
-                className="size-8 rounded-full"
-                onClick={() => updateDomainStatus({ id: domain.id })}
-                disabled={isUpdating || isDeleting}
-              >
-                <RefreshCw />
-              </Button>
+              {domain.status !== "VERIFIED" && (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="size-8 rounded-full"
+                  onClick={() => updateDomainStatus({ id: domain.id })}
+                  disabled={isUpdating || isDeleting}
+                >
+                  <RefreshCwIcon />
+                </Button>
+              )}
               <Button
                 variant="outline"
                 size="icon"

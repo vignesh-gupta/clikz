@@ -7,3 +7,7 @@ export const domainSchema = z.object({
   placeholder: z.string().optional(),
   isArchived: z.boolean().default(false),
 });
+
+export const domainFilterSchema = z.object({
+  verified: z.string().optional(),
+});
