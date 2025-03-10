@@ -1,4 +1,4 @@
-import { Link, MemberRole, Prisma } from "@prisma/client";
+import { Link, MemberRole } from "@prisma/client";
 
 import { Continent } from "./constants/continents";
 import { CountryCode } from "./constants/countries";
@@ -49,9 +49,3 @@ export type DomainVerification = {
   value: string;
   reason: string;
 };
-
-export type DomainProp = Prisma.DomainGetPayload<{
-  include: {
-    DomainVerification: true;
-  };
-}>;

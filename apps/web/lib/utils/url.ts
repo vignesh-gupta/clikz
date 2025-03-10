@@ -50,3 +50,12 @@ export const getUrlFromStringIfValid = (str: string) => {
   }
   return null;
 };
+
+export const getApexDomain = (url: string) => {
+  const domain = getDomainWithoutWWW(url);
+  if (domain) {
+    const parts = domain.split(".");
+    return parts.slice(-2).join(".");
+  }
+  return null;
+};

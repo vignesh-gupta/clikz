@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { Domain } from "@prisma/client";
 import { ChevronDownIcon, SearchIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
@@ -9,16 +10,14 @@ import { Input } from "@clikz/ui/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@clikz/ui/components/ui/tabs";
 
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { DomainProp } from "~/lib/types";
 import { FetchParamsSchema } from "~/lib/zod-schemas";
 
 import { useGetDomains } from "../api/use-get-domains";
 import { AddDomainDialog } from "./add-domain-dialog";
 import { DomainList } from "./domain-list";
-import { EmptyState } from "./empty-state";
 
 type DomainManagementProps = FetchParamsSchema & {
-  initialDomains: DomainProp[];
+  initialDomains: Domain[];
 };
 
 export function DomainManagement({
@@ -31,7 +30,7 @@ export function DomainManagement({
 
   const workspaceSlug = useWorkspaceSlug();
 
-  const { data: domains } = useGetDomains({
+  const { data: domains, isLoading } = useGetDomains({
     workspaceSlug,
     initialDomains,
     limit,
@@ -70,11 +69,7 @@ export function DomainManagement({
       </div>
 
       <div className="space-y-4">
-        {domains?.length ? (
-          <DomainList domains={domains} />
-        ) : (
-          <EmptyState onAddDomain={() => setIsAddDomainOpen(true)} />
-        )}
+        <DomainList domains={domains} isLoading={isLoading} />
       </div>
 
       <div className="flex items-center justify-between text-sm text-muted-foreground">

@@ -1,20 +1,22 @@
+import { Domain } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
-import { DomainProp } from "~/lib/types";
 import { FetchParamsSchema } from "~/lib/zod-schemas";
 
 type GetDomains = FetchParamsSchema & {
   workspaceSlug: string;
   verified?: boolean;
-  initialDomains?: DomainProp[];
+  archived?: boolean;
+  initialDomains?: Domain[];
   queryKey?: string[];
 };
 
 export const useGetDomains = ({
   workspaceSlug,
-  verified,
+  verified = false,
+  archived = false,
   initialDomains,
   queryKey,
   limit,
@@ -30,6 +32,7 @@ export const useGetDomains = ({
           limit,
           page,
           verified: verified ? "true" : undefined,
+          archived: archived ? "true" : undefined,
         },
       });
 
@@ -43,7 +46,7 @@ export const useGetDomains = ({
         ...domain,
         createdAt: new Date(domain.createdAt),
         updatedAt: new Date(domain.updatedAt),
-      })) as DomainProp[];
+      })) as Domain[];
     },
   });
 };

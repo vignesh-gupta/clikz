@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { Domain } from "@prisma/client";
 import { DicesIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
@@ -25,7 +26,6 @@ import { Skeleton } from "@clikz/ui/components/ui/skeleton";
 import { useGetDomains } from "~/features/domain/api/use-get-domains";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { BASE_DOMAIN } from "~/lib/constants";
-import { DomainProp } from "~/lib/types";
 import { generateRandomSlug } from "~/lib/utils/generate";
 
 type LinkFormSlugProps = {
@@ -36,7 +36,10 @@ type LinkFormSlugProps = {
 const LinkFormSlug = ({ disabled, field }: LinkFormSlugProps) => {
   const form = useFormContext();
   const workspaceSlug = useWorkspaceSlug();
-  const { data: domains, isLoading } = useGetDomains({ workspaceSlug });
+  const { data: domains, isLoading } = useGetDomains({
+    workspaceSlug,
+    verified: true,
+  });
 
   const onGenerateRandomSlug = () => {
     form.setValue("slug", generateRandomSlug());
@@ -83,7 +86,7 @@ const DomainDropdown = ({
   domains,
   disabled,
 }: {
-  domains: DomainProp[];
+  domains: Domain[];
   disabled: boolean;
 }) => {
   const [selectedDomain, setSelectedDomain] = useState<string>(

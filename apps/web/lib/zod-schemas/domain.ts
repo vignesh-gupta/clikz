@@ -9,5 +9,6 @@ export const domainSchema = z.object({
 });
 
 export const domainFilterSchema = z.object({
-  verified: z.string().optional(),
+  verified: z.enum(["true"]).optional(),
+  archived: z.enum(["true"]).optional(),
 });

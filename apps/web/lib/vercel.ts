@@ -6,3 +6,4 @@ export const vercel = new Vercel({
 });
 
 export const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID!;
+export const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID!;
