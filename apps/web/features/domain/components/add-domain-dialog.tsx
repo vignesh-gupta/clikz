@@ -38,7 +38,7 @@ export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
     return domainRegex.test(domain);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!domainName.trim()) {

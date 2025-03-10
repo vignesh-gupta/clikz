@@ -4,15 +4,17 @@ import { Hono } from "hono";
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
+import { getApexDomain } from "~/lib/utils/url";
 import { VERCEL_PROJECT_ID, vercel } from "~/lib/vercel";
 import {
   domainFilterSchema,
   domainSchema,
+  domainStatusUpdateSchema,
   fetchParamsSchema,
   workspaceSlugSchema,
 } from "~/lib/zod-schemas";
 
-import { getDomains } from "./data";
+import { getDomainStatus, getDomains } from "./data";
 
 const domainApp = new Hono()
   .get(
@@ -29,7 +31,7 @@ const domainApp = new Hono()
         page,
         limit,
         workspaceSlug,
-        verified: !!verified,
+        verified: verified === "true",
       });
 
       return c.json({ domains });
@@ -48,12 +50,39 @@ const domainApp = new Hono()
 
       const domainData = c.req.valid("json");
 
-      const addToVercel = await vercel.projects.addProjectDomain({
-        idOrName: VERCEL_PROJECT_ID,
-        requestBody: {
-          name: domainData.slug,
-        },
-      });
+      const apexDomain = getApexDomain(domainData.slug);
+
+      const isApexDomain = apexDomain === domainData.slug;
+
+      const domainSlug = isApexDomain
+        ? `www.${domainData.slug}`
+        : domainData.slug;
+
+      if (isApexDomain) {
+        await Promise.all([
+          vercel.projects.addProjectDomain({
+            idOrName: VERCEL_PROJECT_ID,
+            requestBody: {
+              name: apexDomain,
+            },
+          }),
+          vercel.projects.addProjectDomain({
+            idOrName: VERCEL_PROJECT_ID,
+            requestBody: {
+              name: domainSlug,
+              redirect: `https://${apexDomain}`,
+              redirectStatusCode: 301,
+            },
+          }),
+        ]);
+      } else {
+        await vercel.projects.addProjectDomain({
+          idOrName: VERCEL_PROJECT_ID,
+          requestBody: {
+            name: domainSlug,
+          },
+        });
+      }
 
       const domain = await db.domain.create({
         data: {
@@ -62,19 +91,9 @@ const domainApp = new Hono()
           notFoundUrl: domainData.notFoundUrl,
           placeholder: domainData.placeholder,
           isArchived: domainData.isArchived,
-          status: addToVercel.verified ? "VERIFIED" : "PENDING",
+          status: "PENDING",
           workspaceId: membership.workspaceId,
           workspaceSlug,
-          DomainVerification: {
-            createMany: {
-              data: (addToVercel.verification || []).map((verification) => ({
-                domain: verification.domain,
-                reason: verification.reason,
-                type: verification.type,
-                value: verification.value,
-              })),
-            },
-          },
         },
       });
 
@@ -85,11 +104,17 @@ const domainApp = new Hono()
     "/:id/status",
     sessionMiddleware,
     zValidator("query", workspaceSlugSchema),
+    zValidator("json", domainStatusUpdateSchema),
     roleMiddleware(),
     async (c) => {
       const domainId = c.req.param("id");
-
       const membership = c.get("membership");
+      const { slug, currentStatus } = c.req.valid("json");
+
+      console.log("Fetching domain status for domain", slug);
+      const { status, verifications } = await getDomainStatus(slug);
+
+      if (currentStatus === status) return c.json({ status, verifications });
 
       const domain = await db.domain.findFirst({
         where: {
@@ -99,35 +124,21 @@ const domainApp = new Hono()
       });
 
       if (!domain) {
-        return c.json({ error: "Domain not found" }, 404);
+        return c.json({ status, verifications });
       }
 
-      console.log({ name: domain.name });
-
-      const statusOnVercel = await vercel.projects.getProjectDomain({
-        domain: domain.name,
-        idOrName: VERCEL_PROJECT_ID,
-      });
-
-      if (!statusOnVercel.verified) {
-        return c.json({ message: "Domain not verified", isVerified: false });
-      }
-
-      await db.domain.update({
-        where: {
-          id: domainId,
-        },
-        data: {
-          status: "VERIFIED",
-          DomainVerification: {
-            deleteMany: {
-              mainDomainId: domainId,
-            },
+      if (status !== domain.status) {
+        db.domain.update({
+          where: {
+            id: domainId,
           },
-        },
-      });
+          data: {
+            status,
+          },
+        });
+      }
 
-      return c.json({ message: "Domain verified", isVerified: true });
+      return c.json({ status, verifications });
     }
   )
   .delete(
@@ -154,12 +165,6 @@ const domainApp = new Hono()
         where: {
           id: domainId,
           workspaceId: workspace.id,
-        },
-      });
-
-      db.domainVerification.deleteMany({
-        where: {
-          mainDomainId: domainId,
         },
       });
 

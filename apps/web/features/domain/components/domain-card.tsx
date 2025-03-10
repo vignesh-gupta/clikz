@@ -1,20 +1,36 @@
+"use client";
+
+import { Domain } from "@prisma/client";
+import { useQueryClient } from "@tanstack/react-query";
 import { GlobeIcon, RefreshCwIcon, TrashIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 
 import InputWithCopy from "~/components/input-with-copy";
-import { DomainProp } from "~/lib/types";
+import { QUERY_KEYS } from "~/lib/constants";
 
 import { useDeleteDomain } from "../api/use-delete-domain";
-import { useUpdateDomainStatus } from "../api/use-update-domains-status";
+import { useGetDomainStatus } from "../api/use-domain-status";
 
 type DomainCardProps = {
-  domain: DomainProp;
+  domain: Domain;
 };
 
 const DomainCard = ({ domain }: DomainCardProps) => {
-  const { mutate: updateDomainStatus, isPending: isUpdating } =
-    useUpdateDomainStatus();
+  const queryClient = useQueryClient();
+
+  const {
+    data: domainStatus,
+    isLoading,
+    status,
+  } = useGetDomainStatus({
+    id: domain.id,
+    domain: domain.name,
+    currentStatus: domain.status,
+  });
+
+  console.log({ domainStatus, isLoading, status });
+
   const { mutate: deleteDomain, isPending: isDeleting } = useDeleteDomain();
 
   const getDomainName = (value: string) => {
@@ -22,6 +38,11 @@ const DomainCard = ({ domain }: DomainCardProps) => {
 
     return splitValue.length > 2 ? splitValue.slice(1).join(".") : value;
   };
+
+  const updateDomainStatus = (id: string, name: string) =>
+    queryClient.invalidateQueries({
+      queryKey: [...QUERY_KEYS.DOMAIN, id, name],
+    });
 
   return (
     <div key={domain.id} className="p-4 md:p-6">
@@ -56,8 +77,8 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                   variant="outline"
                   size="icon"
                   className="size-8 rounded-full"
-                  onClick={() => updateDomainStatus({ id: domain.id })}
-                  disabled={isUpdating || isDeleting}
+                  onClick={() => updateDomainStatus(domain.id, domain.name)}
+                  disabled={isLoading || isDeleting}
                 >
                   <RefreshCwIcon />
                 </Button>
@@ -67,7 +88,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                 size="icon"
                 className="size-8 rounded-full bg-destructive/10 text-destructive/50"
                 onClick={() => deleteDomain({ id: domain.id })}
-                disabled={isUpdating || isDeleting}
+                disabled={isDeleting}
               >
                 <TrashIcon />
               </Button>
@@ -75,8 +96,11 @@ const DomainCard = ({ domain }: DomainCardProps) => {
           </div>
         </div>
 
-        {/* Verification instructions */}
-        {domain.status === "PENDING" && domain.DomainVerification.length > 0 ? (
+        {/* Verification instructions
+         */}
+
+        {domainStatus?.status === "PENDING" &&
+        domainStatus.verifications.length > 0 ? (
           <div className="space-y-4">
             <p className="text-sm">
               Please set the following record(s) on{" "}
@@ -95,7 +119,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {domain.DomainVerification.map((record) => (
+                  {domainStatus.verifications.map((record) => (
                     <tr key={record.type + record.value + record.domain}>
                       <td className="p-2">{record.type}</td>
                       <td className="p-2 font-mono">
