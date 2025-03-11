@@ -4,7 +4,7 @@ import { SearchX } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 
-const Link404Page = () => {
+const Domain404Page = () => {
   return (
     <div className="min-h-screen pt-12 md:pt-24 lg:pt-36 sm:px-6 lg:px-8 animate-fade-in ">
       <div className="sm:mx-auto sm:w-full sm:max-w-md flex items-center flex-col">
@@ -12,7 +12,8 @@ const Link404Page = () => {
           <SearchX className="size-6" />
         </div>
         <h2 className="text-center mt-6  text-lg md:text-2xl font-extrabold">
-          Link Not Found
+          Domain is powered by Clikz - An all-in-one link management platform
+          for businesses.
         </h2>
         <p className="text-center mt-1 text-sm text-gray-600 mx-auto text-pretty">
           This link does not exist. Please check the URL and try again.
@@ -28,4 +29,4 @@ const Link404Page = () => {
   );
 };
 
-export default Link404Page;
+export default Domain404Page;

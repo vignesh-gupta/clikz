@@ -56,3 +56,10 @@ export const getLinkViaEdgeWithKey = async (key: string, domain: string) => {
 
   return result[0] as Link | null;
 };
+
+export const getDomainViaEdge = async (domain: string) => {
+  const query = `SELECT * FROM "Domain" WHERE "domain" = '${domain}'`;
+  const result = await conn(query);
+
+  return result[0];
+};

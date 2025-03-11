@@ -2,7 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { parse } from "~/lib/middleware/utils";
 
-import { APP_NAMES, BASE_DOMAIN, BASE_URL } from "./lib/constants";
+import {
+  APP_NAMES,
+  BASE_DOMAIN,
+  BASE_URL,
+  DEFAULT_REDIRECTS,
+} from "./lib/constants";
 import AppMiddleware from "./lib/middleware/app";
 import LinkMiddleware from "./lib/middleware/link";
 import { ALLOWED_EXTENSIONS, PUBLIC_ROUTE } from "./routes";
@@ -23,7 +28,7 @@ export const config = {
 export default async function middleware(req: NextRequest) {
   // AxiomMiddleware(req, event);
 
-  const { domain, fullPath } = parse(req);
+  const { domain, fullPath, fullKey } = parse(req);
 
   if (ALLOWED_EXTENSIONS.some((ext) => fullPath.endsWith(ext))) {
     return NextResponse.next();
@@ -37,8 +42,13 @@ export default async function middleware(req: NextRequest) {
 
     return NextResponse.next();
   }
-
   if (APP_NAMES.has(domain)) return AppMiddleware(req);
+
+  if (domain === BASE_DOMAIN && DEFAULT_REDIRECTS.has(fullKey)) {
+    return NextResponse.redirect(
+      new URL(DEFAULT_REDIRECTS.get(fullKey)!, req.nextUrl)
+    );
+  }
 
   return LinkMiddleware(req);
 }
