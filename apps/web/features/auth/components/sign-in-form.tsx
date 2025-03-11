@@ -45,8 +45,6 @@ const SignInForm = () => {
         if (data?.success) return toast.success(data.success);
       })
       .catch((error) => {
-        console.log({ error });
-
         if (error.message === "NEXT_REDIRECT") return;
         toast.error("An error occurred. Please try again later.");
       });

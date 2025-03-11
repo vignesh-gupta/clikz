@@ -2,7 +2,7 @@ import { DomainStatus } from "@prisma/client";
 
 import { db } from "~/lib/db";
 import { DomainVerification } from "~/lib/types";
-import { getApexDomain } from "~/lib/utils/url";
+import { getApexDomain, getSubdomain } from "~/lib/utils/url";
 import { VERCEL_PROJECT_ID, VERCEL_TEAM_ID, vercel } from "~/lib/vercel";
 import { FetchParamsSchema } from "~/lib/zod-schemas";
 
@@ -16,13 +16,16 @@ export const getDomains = async ({
   verified,
   page = "0",
   limit = "10",
-}: GetWorkspaceDomains) =>
-  await db.domain.findMany({
+}: GetWorkspaceDomains) => {
+  const domains = await db.domain.findMany({
     where: { workspaceSlug, status: verified ? "VERIFIED" : undefined },
     orderBy: { createdAt: "desc" },
     skip: parseInt(page) * parseInt(limit),
     take: parseInt(limit),
   });
+
+  return domains;
+};
 
 const CNAME_RECORD = "cname.vercel-dns.com";
 const A_RECORD = "76.76.21.21";
@@ -103,8 +106,6 @@ export const getDomainStatus = async (
       vercel.domains.getDomainConfig({ domain, teamId: VERCEL_TEAM_ID }),
     ]);
 
-    console.log({ domainVerification, domainConfig });
-
     // Check if the WWW domain is verified and has the correct record(s)
     if (
       !domainVerification.verified &&
@@ -113,12 +114,12 @@ export const getDomainStatus = async (
       verifications.push(...domainVerification.verification);
     }
 
-    if (!domainConfig.misconfigured) {
+    if (domainConfig.misconfigured) {
       verifications.push({
         type: "CNAME",
         value: CNAME_RECORD,
         reason: "Missing A record",
-        domain: "www",
+        domain: getSubdomain(domain) || "@",
       });
     }
   }

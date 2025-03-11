@@ -18,6 +18,10 @@ export const useGetDomainStatus = ({
 }: GetDomainStatus) => {
   const workspaceSlug = useWorkspaceSlug();
   return useQuery({
+    initialData: {
+      status: currentStatus,
+      verifications: [],
+    },
     queryKey: [...QUERY_KEYS.DOMAIN, id, domain],
     queryFn: async () => {
       if (domain === "localtest.com")

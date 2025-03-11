@@ -22,11 +22,6 @@ const getStartAndEndDates = (
   let endDate: Date;
   let granularity: GRANULARITY = "day";
 
-  console.log({
-    first: !(start && end),
-    sec: !interval,
-  });
-
   if (!(start && end) && !interval) {
     throw new Error(
       "Either start and end dates should be provided or interval should be provided"

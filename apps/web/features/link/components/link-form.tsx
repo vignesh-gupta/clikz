@@ -51,7 +51,6 @@ const LinkForm = () => {
 
   const onSubmit = async (value: LinkSchema) => {
     if (!linkId) return toast.error("Link ID is missing");
-    console.log({ value });
 
     if (linkId === "new")
       createLink({

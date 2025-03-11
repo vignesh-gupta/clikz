@@ -5,7 +5,6 @@ import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { BASE_DOMAIN, BASE_URL } from "~/lib/constants";
 import { db } from "~/lib/db";
-import { isValidUrl } from "~/lib/utils/url";
 import {
   fetchParamsSchema,
   linkSchema,
@@ -112,11 +111,6 @@ const linksApp = new Hono()
         `/${slug || existingLink.key}`,
         domainUrl
       ).toString();
-
-      console.log({
-        isValid: isValidUrl(shortLink),
-        shortLink,
-      });
 
       const link = await db.link.update({
         where: { id: linkId },

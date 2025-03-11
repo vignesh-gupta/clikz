@@ -37,17 +37,25 @@ export function LinkCard({
           </div>
           <div className="flex-grow min-w-0">
             <Link href={shortUrl} target="_blank">
-              <p className="truncate">{`${domain}/${slug}`}</p>
+              <p className="truncate">
+                {slug === "_root" ? domain : `${domain}/${slug}`}
+              </p>
             </Link>
             <div className="flex items-center">
               <CornerDownRight className="mx-1 size-3 text-muted-foreground/40" />
-              <Link
-                href={longUrl}
-                target="_blank"
-                className="flex-1 text-sm truncate text-muted-foreground hover:underline underline-offset-2"
-              >
-                {longUrl}
-              </Link>
+              {longUrl ? (
+                <Link
+                  href={longUrl}
+                  target="_blank"
+                  className="flex-1 text-sm truncate text-muted-foreground hover:underline underline-offset-2"
+                >
+                  {longUrl}
+                </Link>
+              ) : (
+                <span className="flex-1 text-sm truncate text-muted-foreground">
+                  No Redirect configured
+                </span>
+              )}
             </div>
           </div>
         </div>

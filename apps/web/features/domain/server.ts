@@ -33,6 +33,7 @@ const domainApp = new Hono()
         workspaceSlug,
         verified: verified === "true",
       });
+      console.log("Fetched domains", domains);
 
       return c.json({ domains });
     }
@@ -109,9 +110,9 @@ const domainApp = new Hono()
     async (c) => {
       const domainId = c.req.param("id");
       const membership = c.get("membership");
+      const { workspaceSlug } = c.req.valid("query");
       const { slug, currentStatus } = c.req.valid("json");
 
-      console.log("Fetching domain status for domain", slug);
       const { status, verifications } = await getDomainStatus(slug);
 
       if (currentStatus === status) return c.json({ status, verifications });
@@ -128,14 +129,45 @@ const domainApp = new Hono()
       }
 
       if (status !== domain.status) {
-        db.domain.update({
-          where: {
-            id: domainId,
-          },
-          data: {
-            status,
-          },
-        });
+        if (status === "VERIFIED") {
+          await Promise.all([
+            db.link.create({
+              data: {
+                domain: domain.name,
+                userId: membership.userId,
+                key: "_root",
+                url: domain.notFoundUrl || "",
+                shortLink: `https://${domain.name}`,
+                workspaceId: membership.workspaceId,
+                workspaceSlug,
+              },
+            }),
+            db.domain.update({
+              where: {
+                id: domainId,
+              },
+              data: {
+                status,
+              },
+            }),
+          ]);
+        } else {
+          await Promise.all([
+            db.link.deleteMany({
+              where: {
+                domain: domain.name,
+              },
+            }),
+            db.domain.update({
+              where: {
+                id: domainId,
+              },
+              data: {
+                status,
+              },
+            }),
+          ]);
+        }
       }
 
       return c.json({ status, verifications });

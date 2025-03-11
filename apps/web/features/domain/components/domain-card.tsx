@@ -19,17 +19,11 @@ type DomainCardProps = {
 const DomainCard = ({ domain }: DomainCardProps) => {
   const queryClient = useQueryClient();
 
-  const {
-    data: domainStatus,
-    isLoading,
-    status,
-  } = useGetDomainStatus({
+  const { data: domainStatus, isLoading } = useGetDomainStatus({
     id: domain.id,
     domain: domain.name,
     currentStatus: domain.status,
   });
-
-  console.log({ domainStatus, isLoading, status });
 
   const { mutate: deleteDomain, isPending: isDeleting } = useDeleteDomain();
 
@@ -68,7 +62,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
 
           <div className="flex items-center gap-2">
             <div className="px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700">
-              {domain.status === "VERIFIED" ? "Verified" : "Pending"}
+              {domainStatus.status === "VERIFIED" ? "Verified" : "Pending"}
             </div>
 
             <div className="flex gap-1">
@@ -96,10 +90,9 @@ const DomainCard = ({ domain }: DomainCardProps) => {
           </div>
         </div>
 
-        {/* Verification instructions
-         */}
+        {/* Verification instructions*/}
 
-        {domainStatus?.status === "PENDING" &&
+        {domainStatus.status === "PENDING" &&
         domainStatus.verifications.length > 0 ? (
           <div className="space-y-4">
             <p className="text-sm">

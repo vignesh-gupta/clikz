@@ -59,3 +59,12 @@ export const getApexDomain = (url: string) => {
   }
   return null;
 };
+
+export const getSubdomain = (url: string) => {
+  const domain = getDomainWithoutWWW(url);
+  if (domain) {
+    const parts = domain.split(".");
+    return parts.slice(0, parts.length - 2).join(".");
+  }
+  return null;
+};
