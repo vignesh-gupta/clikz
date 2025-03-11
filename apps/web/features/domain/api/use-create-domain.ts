@@ -3,8 +3,9 @@ import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { QUERY_KEYS } from "~/lib/constants";
+import { APP_DOMAIN, QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
+import { getApexDomain } from "~/lib/utils/url";
 
 type ResponseType = InferResponseType<
   (typeof client.api.domains)["$post"],
@@ -19,6 +20,10 @@ export const useCreateDomain = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType["json"]>({
     mutationFn: async (props) => {
+      if (getApexDomain(props.slug) === APP_DOMAIN) {
+        throw new Error("Cannot use clikz domain");
+      }
+
       const res = await client.api.domains.$post({
         json: props,
         query: {

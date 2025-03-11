@@ -3,6 +3,7 @@ import { Hono } from "hono";
 
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
+import { APP_DOMAIN } from "~/lib/constants";
 import { db } from "~/lib/db";
 import { getApexDomain } from "~/lib/utils/url";
 import { VERCEL_PROJECT_ID, vercel } from "~/lib/vercel";
@@ -52,6 +53,10 @@ const domainApp = new Hono()
       const domainData = c.req.valid("json");
 
       const apexDomain = getApexDomain(domainData.slug);
+
+      if (!apexDomain || apexDomain === APP_DOMAIN) {
+        return c.json({ error: "Invalid domain name" }, 400);
+      }
 
       const isApexDomain = apexDomain === domainData.slug;
 

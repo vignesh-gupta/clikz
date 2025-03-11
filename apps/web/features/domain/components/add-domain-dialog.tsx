@@ -17,6 +17,9 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 
+import { APP_DOMAIN } from "~/lib/constants";
+import { getApexDomain } from "~/lib/utils/url";
+
 import { useCreateDomain } from "../api/use-create-domain";
 
 interface AddDomainDialogProps {
@@ -32,6 +35,12 @@ export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
   const { mutate: createDomain } = useCreateDomain();
 
   const validateDomain = (domain: string) => {
+    const apexDomain = getApexDomain(domain);
+
+    if (!apexDomain || apexDomain === APP_DOMAIN) {
+      return false;
+    }
+
     // Basic domain validation regex
     const domainRegex =
       /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/i;
