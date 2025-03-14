@@ -34,8 +34,12 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // Landing page
   if (domain === BASE_DOMAIN && fullPath === "/") return NextResponse.next();
+
+  // Public routes
   if (PUBLIC_ROUTE.includes(req.nextUrl.pathname)) {
+    // Redirect to base domain if not already there
     if (domain !== BASE_DOMAIN) {
       return NextResponse.redirect(`${BASE_URL}${fullPath}`, 302);
     }
@@ -44,6 +48,7 @@ export default async function middleware(req: NextRequest) {
   }
   if (APP_NAMES.has(domain)) return AppMiddleware(req);
 
+  // Default redirects
   if (domain === BASE_DOMAIN && DEFAULT_REDIRECTS.has(fullKey)) {
     return NextResponse.redirect(
       new URL(DEFAULT_REDIRECTS.get(fullKey)!, req.nextUrl)

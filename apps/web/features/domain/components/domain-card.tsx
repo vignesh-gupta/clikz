@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { GlobeIcon, RefreshCwIcon, TrashIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
+import { cn } from "@clikz/ui/lib/utils";
 
 import InputWithCopy from "~/components/input-with-copy";
 import { QUERY_KEYS } from "~/lib/constants";
@@ -74,7 +75,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                   onClick={() => updateDomainStatus(domain.id, domain.name)}
                   disabled={isLoading || isDeleting}
                 >
-                  <RefreshCwIcon />
+                  <RefreshCwIcon className={cn(isLoading && "animate-spin")} />
                 </Button>
               )}
               <Button
