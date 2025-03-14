@@ -32,7 +32,7 @@ export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
   const [domainName, setDomainName] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const { mutate: createDomain } = useCreateDomain();
+  const { mutateAsync: createDomain, isPending } = useCreateDomain();
 
   const validateDomain = (domain: string) => {
     const apexDomain = getApexDomain(domain);
@@ -45,6 +45,12 @@ export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
     const domainRegex =
       /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/i;
     return domainRegex.test(domain);
+  };
+
+  const handleClose = () => {
+    setDomainName("");
+    setError(null);
+    onOpenChange(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,25 +66,16 @@ export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
       return;
     }
 
-    createDomain({
+    await createDomain({
       slug: domainName,
     });
 
-    // Reset form and close dialog
-    setDomainName("");
-    setError(null);
-    onOpenChange(false);
-  };
-
-  const handleClose = () => {
-    setDomainName("");
-    setError(null);
-    onOpenChange(false);
+    handleClose();
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] rounded-lg">
         <DialogHeader>
           <DialogTitle>Add Domain</DialogTitle>
           <DialogDescription>
@@ -108,10 +105,17 @@ export function AddDomainDialog({ open, onOpenChange }: AddDomainDialogProps) {
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={handleClose}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClose}
+              disabled={isPending}
+            >
               Cancel
             </Button>
-            <Button type="submit">Add Domain</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? "Adding Domain..." : "Add Domain"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

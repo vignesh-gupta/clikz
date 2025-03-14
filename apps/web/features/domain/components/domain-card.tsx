@@ -67,7 +67,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
             </div>
 
             <div className="flex gap-1">
-              {domain.status !== "VERIFIED" && (
+              {domainStatus.status !== "VERIFIED" && (
                 <Button
                   variant="outline"
                   size="icon"
@@ -82,7 +82,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                 variant="outline"
                 size="icon"
                 className="size-8 rounded-full bg-destructive/10 text-destructive/50"
-                onClick={() => deleteDomain({ id: domain.id })}
+                onClick={() => deleteDomain(domain)}
                 disabled={isDeleting}
               >
                 <TrashIcon />

@@ -29,6 +29,8 @@ const LinkMiddleware = async (req: NextRequest) => {
     link = await getLinkViaEdgeWithKey(fullKey, domain);
   }
 
+  console.log("Link found", link);
+
   if (!link)
     return NextResponse.rewrite(new URL(`/${domain}/not-found`, req.url));
 
@@ -43,11 +45,12 @@ const LinkMiddleware = async (req: NextRequest) => {
       req,
       url: link.url,
     });
-
     setLinkToRedis(fullKey, domain, link);
   });
 
   const finalUrl = getFinalUrl(link.url, req);
+
+  console.log("Redirecting to", finalUrl);
 
   return NextResponse.redirect(finalUrl, {
     status: 302,

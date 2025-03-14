@@ -40,9 +40,8 @@ export default async function middleware(req: NextRequest) {
   // Public routes
   if (PUBLIC_ROUTE.includes(req.nextUrl.pathname)) {
     // Redirect to base domain if not already there
-    if (domain !== BASE_DOMAIN) {
+    if (domain !== BASE_DOMAIN)
       return NextResponse.redirect(`${BASE_URL}${fullPath}`, 302);
-    }
 
     return NextResponse.next();
   }

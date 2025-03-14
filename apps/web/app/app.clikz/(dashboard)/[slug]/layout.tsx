@@ -17,7 +17,8 @@ export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   const session = await auth();
-  if (!session || !session.user || session.user.id) return redirect("/sign-in");
+  if (!session || !session.user || !session.user.id)
+    return redirect("/sign-in");
 
   const { slug } = await params;
 

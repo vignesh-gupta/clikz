@@ -38,7 +38,7 @@ export async function getUserViaToken(req: NextRequest) {
     secret: process.env.AUTH_SECRET,
     secureCookie: process.env.NODE_ENV === "production",
   });
-  return session?.user as User;
+  return session?.user as User | null;
 }
 
 export const getUserDefaultWorkspaceViaEdge = async (userId: string) => {
@@ -50,8 +50,6 @@ export const getUserDefaultWorkspaceViaEdge = async (userId: string) => {
 
 export const getLinkViaEdgeWithKey = async (key: string, domain: string) => {
   const query = `SELECT * FROM "Link" WHERE "key" = '${key}' AND "domain" = '${domain}'`;
-  console.log("Running query", query);
-
   const result = await conn(query);
 
   return result[0] as Link | null;

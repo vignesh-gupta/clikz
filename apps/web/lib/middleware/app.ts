@@ -30,7 +30,7 @@ export const AppMiddleware = async (req: NextRequest) => {
     return NextResponse.next();
   }
 
-  if (!user?.id) {
+  if (!user || !user.id) {
     const callbackUrl = encodeURIComponent(
       nextUrl.pathname + (nextUrl.search || "")
     );

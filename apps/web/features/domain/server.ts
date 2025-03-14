@@ -34,7 +34,6 @@ const domainApp = new Hono()
         workspaceSlug,
         verified: verified === "true",
       });
-      console.log("Fetched domains", domains);
 
       return c.json({ domains });
     }

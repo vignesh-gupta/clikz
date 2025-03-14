@@ -60,12 +60,6 @@ export const getAnalytics = async (
   const { endDate, startDate } = getStartAndEndDates(interval, start, end);
   const url = `${TINYBIRD_PIPES_ENDPOINT}/clikz_click_events_pipe.json?workspaceSlug=${slug}&fromDate=${encodeURIComponent(startDate)}&toDate=${encodeURIComponent(endDate)}&token=${TINYBIRD_API_KEY}`;
 
-  console.log("Fetching analytics data from Tinybird", {
-    url,
-    startDate,
-    endDate,
-  });
-
   const data = await fetch(url)
     .then((res) => res.json())
     .then((res) => res.data)
