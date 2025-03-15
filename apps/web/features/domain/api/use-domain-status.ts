@@ -18,10 +18,13 @@ export const useGetDomainStatus = ({
 }: GetDomainStatus) => {
   const workspaceSlug = useWorkspaceSlug();
   return useQuery({
-    initialData: {
-      status: currentStatus,
-      verifications: [],
-    },
+    initialData:
+      currentStatus === "VERIFIED"
+        ? {
+            status: currentStatus,
+            verifications: [],
+          }
+        : undefined,
     queryKey: [...QUERY_KEYS.DOMAIN, domain],
     queryFn: async () => {
       if (domain === "clikzlocal.vigneshgupta.me")

@@ -35,11 +35,21 @@ export const useDeleteDomain = () => {
 
       return await res.json();
     },
-    onSuccess: () => {
-      toast.success("Domain deleted!");
-      queryClient.invalidateQueries({
-        queryKey: [...QUERY_KEYS.DOMAINS, workspaceSlug],
-      });
+    onSuccess: async ({ domain, message }) => {
+      toast.success(message);
+
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: [...QUERY_KEYS.DOMAINS, workspaceSlug],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [...QUERY_KEYS.LINKS, workspaceSlug],
+        }),
+        queryClient.removeQueries({
+          queryKey: [...QUERY_KEYS.DOMAIN, domain?.name],
+          exact: true,
+        }),
+      ]);
     },
     onError: () => {
       toast.error("Failed to delete Domain");

@@ -53,7 +53,7 @@ export const GET = async (req: AxiomRequest) => {
       title: res.data.title,
       description: res.data.description,
       image: res.data.image?.url ?? null,
-      favicon: res.data.logo.url,
+      favicon: res.data.logo?.url,
     };
 
     return NextResponse.json(resMetaData, { status: 200 });

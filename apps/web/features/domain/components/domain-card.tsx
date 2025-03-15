@@ -63,11 +63,11 @@ const DomainCard = ({ domain }: DomainCardProps) => {
 
           <div className="flex items-center gap-2">
             <div className="px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700">
-              {domainStatus.status === "VERIFIED" ? "Verified" : "Pending"}
+              {domainStatus?.status === "VERIFIED" ? "Verified" : "Pending"}
             </div>
 
             <div className="flex gap-1">
-              {domainStatus.status !== "VERIFIED" && (
+              {domainStatus?.status !== "VERIFIED" && (
                 <Button
                   variant="outline"
                   size="icon"
@@ -93,8 +93,8 @@ const DomainCard = ({ domain }: DomainCardProps) => {
 
         {/* Verification instructions*/}
 
-        {domainStatus.status === "PENDING" &&
-        domainStatus.verifications.length > 0 ? (
+        {domainStatus?.status === "PENDING" &&
+        domainStatus?.verifications.length > 0 ? (
           <div className="space-y-4">
             <p className="text-sm">
               Please set the following record(s) on{" "}
@@ -113,7 +113,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {domainStatus.verifications.map((record) => (
+                  {domainStatus?.verifications.map((record) => (
                     <tr key={record.type + record.value + record.domain}>
                       <td className="p-2">{record.type}</td>
                       <td className="p-2 font-mono">

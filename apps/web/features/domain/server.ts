@@ -186,7 +186,8 @@ const domainApp = new Hono()
       const workspace = c.get("workspace");
       const domainId = c.req.param("id");
 
-      if (!workspace) return c.json({ error: "Workspace not found" }, 404);
+      if (!workspace)
+        return c.json({ message: "Workspace not found", domain: null }, 404);
 
       const domain = await db.domain.findFirst({
         where: {
@@ -195,21 +196,28 @@ const domainApp = new Hono()
         },
       });
 
-      if (!domain) return c.json({ error: "Domain not found" }, 404);
+      if (!domain)
+        return c.json({ message: "Domain not found", domain: null }, 404);
 
-      await db.domain.delete({
-        where: {
-          id: domainId,
-          workspaceId: workspace.id,
-        },
-      });
+      await Promise.all([
+        db.domain.delete({
+          where: {
+            id: domainId,
+            workspaceId: workspace.id,
+          },
+        }),
+        vercel.projects.removeProjectDomain({
+          domain: domain.name,
+          idOrName: VERCEL_PROJECT_ID,
+        }),
+        db.link.deleteMany({
+          where: {
+            domain: domain.name,
+          },
+        }),
+      ]);
 
-      vercel.projects.removeProjectDomain({
-        domain: domain.name,
-        idOrName: VERCEL_PROJECT_ID,
-      });
-
-      return c.json({ message: "Domain deleted" });
+      return c.json({ message: "Domain deleted!", domain });
     }
   );
 
