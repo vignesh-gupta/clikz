@@ -42,15 +42,13 @@ export function DomainManagement({
       <div className="flex lg:items-center justify-between flex-col lg:flex-row">
         <h1 className="text-2xl font-bold">Domains</h1>
         <div className="flex sm:items-center gap-3 sm:flex-row flex-wrap">
-          <div className="relative">
-            <SearchIcon className="absolute w-4 h-4 -translate-y-1/2 left-3 top-1/2 " />
-            <Input
-              placeholder="Search..."
-              className="pl-9 max-w-[240px]"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+          <Input
+            placeholder="Search..."
+            className="pl-9 max-w-[240px]"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            icon={<SearchIcon className="size-4" />}
+          />
           <Tabs
             defaultValue="active"
             className="w-auto"

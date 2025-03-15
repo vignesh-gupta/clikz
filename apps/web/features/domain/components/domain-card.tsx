@@ -36,7 +36,7 @@ const DomainCard = ({ domain }: DomainCardProps) => {
 
   const updateDomainStatus = (id: string, name: string) =>
     queryClient.invalidateQueries({
-      queryKey: [...QUERY_KEYS.DOMAIN, id, name],
+      queryKey: [...QUERY_KEYS.DOMAIN, name],
     });
 
   return (

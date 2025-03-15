@@ -9,8 +9,6 @@ import { getLinkViaRedis, setLinkToRedis } from "./utils/link-utlis";
 const LinkMiddleware = async (req: NextRequest) => {
   const { fullKey: originalKey, domain } = parse(req);
 
-  console.log({ originalKey, domain });
-
   let fullKey = originalKey;
 
   // if key is empty string, set to _root (root domain link)
@@ -23,13 +21,10 @@ const LinkMiddleware = async (req: NextRequest) => {
 
   if (!link) {
     console.log(
-      `Link not found in Redis, fetching from Edge DB for  ${domain}/${fullKey}`,
-      domain
+      `Link not found in Redis, fetching from Edge DB for  ${domain}/${fullKey}`
     );
     link = await getLinkViaEdgeWithKey(fullKey, domain);
   }
-
-  console.log("Link found", link);
 
   if (!link)
     return NextResponse.rewrite(new URL(`/${domain}/not-found`, req.url));
@@ -49,8 +44,6 @@ const LinkMiddleware = async (req: NextRequest) => {
   });
 
   const finalUrl = getFinalUrl(link.url, req);
-
-  console.log("Redirecting to", finalUrl);
 
   return NextResponse.redirect(finalUrl, {
     status: 302,

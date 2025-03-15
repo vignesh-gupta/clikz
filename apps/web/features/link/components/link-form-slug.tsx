@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 import { Domain } from "@prisma/client";
 import { DicesIcon } from "lucide-react";
@@ -89,15 +89,21 @@ const DomainDropdown = ({
   domains: Domain[];
   disabled: boolean;
 }) => {
+  const form = useFormContext();
+
+  const currentDomain = (form.getValues().domain as string) || "";
+
   const [selectedDomain, setSelectedDomain] = useState<string>(
-    domains[0]?.name ?? BASE_DOMAIN
+    currentDomain ?? domains[0]?.name ?? BASE_DOMAIN
   );
 
-  const form = useFormContext();
+  useLayoutEffect(() => {
+    if (domains.length > 0 && form.getValues().domain === "")
+      form.setValue("domain", domains[0]?.name ?? BASE_DOMAIN);
+  }, [domains]);
 
   const onDomainChange = (value: string) => {
     form.setValue("domain", value);
-    console.log(form.getValues());
     setSelectedDomain(value);
   };
 

@@ -90,7 +90,7 @@ export function DashboardSidebar() {
               <UserButton align="start" alignOffset={0} />
             </SidebarHeader>
           )}
-          <SidebarContent className="px-4">
+          <SidebarContent className="px-4 pt-2">
             {!isSettingsPage && <WorkspaceSwitcher />}
             <SidebarMenu>
               {currentNavigation.map((item) => (
@@ -100,7 +100,7 @@ export function DashboardSidebar() {
                     onClick={() => handleClick(item.href)}
                     className="hover:text-foreground transition-all data-[active=true]:text-blue-700 data-[active=true]:bg-blue-200/25"
                   >
-                    <item.icon className="h-4 w-4" />
+                    <item.icon className="size-4" />
                     {item.title}
                   </SidebarMenuButton>
                 </SidebarMenuItem>

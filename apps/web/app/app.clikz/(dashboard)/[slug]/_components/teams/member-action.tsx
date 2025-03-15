@@ -55,8 +55,6 @@ const MemberAction = ({
 
   const handleRemoveMember = () => {
     if (currentUser?.email === member.email) {
-      console.log("leave workspace");
-
       return leaveWorkspace({
         param: {
           idOrSlug: slug,

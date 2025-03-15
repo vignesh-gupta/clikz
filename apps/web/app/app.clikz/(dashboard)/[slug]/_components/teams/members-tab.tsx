@@ -28,10 +28,7 @@ const MembersTab = () => {
     (m) => m.email === currentSession.user?.email
   )?.role;
 
-  if (isLoading) {
-    console.log("Loading members");
-    return <TeamsLoading />;
-  }
+  if (isLoading) return <TeamsLoading />;
 
   if (!members?.length) return <p>No members found</p>;
 

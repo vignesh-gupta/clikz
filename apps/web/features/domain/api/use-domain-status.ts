@@ -22,9 +22,9 @@ export const useGetDomainStatus = ({
       status: currentStatus,
       verifications: [],
     },
-    queryKey: [...QUERY_KEYS.DOMAIN, id, domain],
+    queryKey: [...QUERY_KEYS.DOMAIN, domain],
     queryFn: async () => {
-      if (domain === "localtest.com")
+      if (domain === "clikzlocal.vigneshgupta.me")
         return { status: "VERIFIED", verifications: [] };
       const res = await client.api.domains[":id"].status.$patch({
         param: { id },

@@ -40,8 +40,12 @@ export const getLinkViaRedis = async (key: string, domain: string) => {
 export const setLinkToRedis = async (
   key: string,
   domain: string,
-  link: RequiredLinkProp
+  link: RequiredLinkProp,
+  expireInDay: number = 1
 ) => {
   const cacheKey = `link:${domain}:${key}`;
-  await redis.set(cacheKey, link);
+  await redis.set(cacheKey, link, {
+    ex:
+      process.env.NODE_ENV === "development" ? 60 : 60 * 60 * 24 * expireInDay, // expire in 1 day as default in production and 1 minute in development
+  });
 };
