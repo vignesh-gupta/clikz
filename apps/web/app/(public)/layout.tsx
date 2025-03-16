@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { cn } from "@clikz/ui/lib/utils";
 
 import { auth } from "~/auth";
-import { urbanist } from "~/lib/utils/font";
+import { urbanist } from "~/styles/font";
 
 import FooterSection from "./_components/footer-section";
 import Navbar from "./_components/navbar";

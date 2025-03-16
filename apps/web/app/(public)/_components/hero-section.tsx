@@ -7,8 +7,8 @@ import { AnimatedShinyText } from "@clikz/ui/components/ui/animated-shiny-text";
 import { Button } from "@clikz/ui/components/ui/button";
 
 import { APP_DOMAIN } from "~/lib/constants";
-import { inter } from "~/lib/utils/font";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
+import { inter } from "~/styles/font";
 
 const HeroSection = () => {
   return (
