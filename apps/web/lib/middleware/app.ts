@@ -8,7 +8,7 @@ import {
   parse,
 } from "./utils";
 
-export const appRedirect = (path: string, req: NextRequest) =>
+const appRedirect = (path: string, req: NextRequest) =>
   new URL(`/app.clikz${path}`, req.nextUrl);
 
 export const AppMiddleware = async (req: NextRequest) => {

@@ -1,29 +1,23 @@
-import Link from "next/link";
-
-import { SearchX } from "lucide-react";
-
-import { Button } from "@clikz/ui/components/ui/button";
+import { GlobeIcon } from "lucide-react";
 
 const Link404Page = () => {
   return (
-    <div className="min-h-screen pt-12 md:pt-24 lg:pt-36 sm:px-6 lg:px-8 animate-fade-in ">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md flex items-center flex-col">
-        <div className="p-5 bg-white rounded-full text-black">
-          <SearchX className="size-6" />
+    <div className="relative flex flex-col items-center w-full max-w-xl pt-10 mx-auto sm:pt-20 ">
+      <div className="rounded-full [perspective:500px]">
+        <div className="relative rounded-full bg-gradient-to-b from-neutral-100 to-neutral-300 p-px transition-[transform] duration-75">
+          <div className="p-5 text-black bg-white rounded-full">
+            <GlobeIcon size={50} />
+          </div>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-t from-[#fff8]"></div>
         </div>
-        <h2 className="text-center mt-6  text-lg md:text-2xl font-extrabold">
-          Link Not Found
-        </h2>
-        <p className="text-center mt-1 text-sm text-gray-600 mx-auto text-pretty">
-          This link does not exist. Please check the URL and try again.
-        </p>
       </div>
-
-      <div className="mt-8 flex items-center justify-center">
-        <Link href="https://clikz.live/home">
-          <Button>Go back home</Button>
-        </Link>
-      </div>
+      <h1 className="font-display mt-10 text-center text-4xl font-medium text-neutral-900 sm:text-5xl sm:leading-[1.15] animate-slide-up-fade motion-reduce:animate-fade-in [--offset:20px] duration-1000 fill-mode-both">
+        Link not found
+      </h1>
+      <p className="mt-5 text-pretty text-base text-neutral-700 sm:text-xl animate-slide-up-fade motion-reduce:animate-fade-in [--offset:10px] delay-200 duration-1000 fill-mode-both">
+        This link has expired. Please contact the owner of this link to get a
+        new one.
+      </p>
     </div>
   );
 };

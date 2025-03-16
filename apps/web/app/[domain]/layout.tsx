@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren } from "react";
 
+import { Button } from "@clikz/ui/components/ui/button";
 import GridPattern from "@clikz/ui/components/ui/grid-pattern";
 
 const DomainLayout: FC<PropsWithChildren> = ({ children }) => {
@@ -12,6 +13,10 @@ const DomainLayout: FC<PropsWithChildren> = ({ children }) => {
       />
       <div className="absolute -inset-x-10 bottom-0 h-[60%] opacity-40 blur-[100px] bg-gradient-custom" />
       {children}
+      <div className=" flex-col justify-center sm:flex-row relative mx-auto mt-8 flex  items-center gap-4 animate-slide-up-fade motion-reduce:animate-fade-in [--offset:5px] delay-300 duration-1000 fill-mode-both">
+        <Button>Try Clikz</Button>
+        <Button variant="outline">Learn More</Button>
+      </div>
     </div>
   );
 };
