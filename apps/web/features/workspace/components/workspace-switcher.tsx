@@ -44,14 +44,14 @@ const WorkspaceSwitcher = ({ className }: WorkspaceSwitcherProps) => {
         <Skeleton className="w-full h-11" />
       ) : (
         <Select onValueChange={onSelect} value={slug}>
-          <SelectTrigger className="w-full font-medium p-1 border-0 ring-0">
+          <SelectTrigger className="w-full h-auto font-medium border-0 ring-0">
             <SelectValue placeholder="No workspace selected" />
           </SelectTrigger>
           <SelectContent>
             {Number(workspaces?.length ?? 0) > 0 ? (
               workspaces?.map((workspace) => (
                 <SelectItem key={workspace.id} value={workspace.slug}>
-                  <div className="flex justify-start items-center gap-3 font-medium">
+                  <div className="flex items-center justify-start gap-3 font-medium">
                     <WorkspaceIcon
                       name={workspace.slug}
                       image={workspace.icon ?? undefined}
@@ -60,7 +60,7 @@ const WorkspaceSwitcher = ({ className }: WorkspaceSwitcherProps) => {
                     />
                     <div className="flex flex-col items-start">
                       <span className="truncate">{workspace.name}</span>
-                      <span className="truncate text-xs text-muted-foreground">
+                      <span className="text-xs truncate text-muted-foreground">
                         Free
                       </span>
                     </div>

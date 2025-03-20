@@ -33,8 +33,8 @@ const ImagePreview = ({
             className="relative size-full rounded-[inherit] object-cover"
           />
         ) : (
-          <div className="flex size-full flex-col items-center justify-center space-y-4 bg-white">
-            <ImageIcon className="h-8 w-8 text-gray-400" />
+          <div className="flex flex-col items-center justify-center space-y-4 bg-white size-full">
+            <ImageIcon className="size-8 text-gray-400" />
             <p className="text-sm text-gray-400">
               Enter a link to generate a preview.
             </p>
@@ -70,8 +70,8 @@ export const WebPreview = ({
   return (
     <ImagePreview image={image} loading={loading}>
       <div className="px-1 pt-2 space-y-1">
-        <h3 className="text-sm">{title}</h3>
-        <p className="text-xs">{description}</p>
+        <h3 className="text-sm line-clamp-1">{title}</h3>
+        <p className="text-xs line-clamp-2">{description}</p>
       </div>
     </ImagePreview>
   );
@@ -80,8 +80,8 @@ export const WebPreview = ({
 export const XPreview = ({ loading, title, image }: BasePreviewProps) => {
   return (
     <ImagePreview image={image} loading={loading} className="rounded-2xl">
-      <div className="space-y-1 absolute left-2 bottom-2">
-        <h3 className="text-sm bg-gray-900/35 text-white px-2 py-1 rounded-md">
+      <div className="absolute space-y-1 left-2 bottom-2">
+        <h3 className="px-2 py-1 text-sm text-white rounded-md bg-gray-900/35 line-clamp-1">
           {title}
         </h3>
       </div>
@@ -101,9 +101,9 @@ export const FacebookPreview = ({
 }: FacebookPreviewProps) => {
   return (
     <ImagePreview image={image} loading={loading} className="rounded-none">
-      <div className="p-3 space-y-1 bg-gray-100 border-1 border-t-0 border-gray-800 rounded-none">
+      <div className="p-3 space-y-1 bg-gray-100 border-t-0 border-gray-800 rounded-none border-1 line-clamp-1">
         <h3 className="text-sm">{title}</h3>
-        <p className="text-xs">{description}</p>
+        <p className="text-xs line-clamp-2">{description}</p>
       </div>
     </ImagePreview>
   );
@@ -121,7 +121,7 @@ export const LinkedInPreview = ({
 }: LinkedInPreviewProps) => {
   return (
     <Card>
-      <CardContent className="p-2 rounded-md grid grid-cols-2 gap-4 my-auto">
+      <CardContent className="grid grid-cols-2 gap-4 p-2 my-auto rounded-md">
         {loading ? (
           <div className="absolute inset-0 z-[5] flex items-center justify-center rounded-[inherit] bg-white">
             <LoaderCircle className="animate-spin size-5" />
@@ -131,20 +131,20 @@ export const LinkedInPreview = ({
             <img
               src={image}
               alt="Preview"
-              className="w-full object-contain rounded-md"
+              className="object-contain w-full rounded-md"
             />
           </div>
         ) : (
-          <div className="flex size-full flex-col items-center justify-center space-y-2 text-center bg-gray-200 p-4">
-            <ImageIcon className="size-5 text-gray-400" />
+          <div className="flex flex-col items-center justify-center p-4 space-y-2 text-center bg-gray-200 size-full">
+            <ImageIcon className="text-gray-400 size-5" />
             <p className="text-sm text-gray-400 text-pretty">
               Enter a link to generate a preview.
             </p>
           </div>
         )}
-        <div className="py-2 flex flex-col justify-between">
+        <div className="flex flex-col justify-between py-2">
           <h3 className="text-sm line-clamp-2 ">{title}</h3>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs line-clamp-2 text-muted-foreground">
             {url
               ? (isValidUrl(url) && new URL(url).host) || "example.com"
               : url}

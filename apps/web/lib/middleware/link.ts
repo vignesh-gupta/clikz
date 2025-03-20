@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse, after } from "next/server";
 
 import { recordClickEvent } from "../analytics/click-events";
+import { getLinkViaRedis, setLinkToRedis } from "../cache/link";
 import { RequiredLinkProp } from "../types";
 import { getLinkViaEdgeWithKey, parse } from "./utils";
 import { getFinalUrl } from "./utils/final-url";
-import { getLinkViaRedis, setLinkToRedis } from "./utils/link-utlis";
 
 const LinkMiddleware = async (req: NextRequest) => {
   const { fullKey: originalKey, domain } = parse(req);

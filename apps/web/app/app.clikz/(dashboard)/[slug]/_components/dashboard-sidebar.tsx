@@ -61,7 +61,7 @@ export function DashboardSidebar() {
   const currentNavigation = isSettingsPage ? settingsNavigation : navigation;
 
   return (
-    <Sidebar className="bg-slate-700">
+    <Sidebar>
       <AnimatePresence mode="wait">
         <motion.div
           key={

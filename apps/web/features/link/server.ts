@@ -1,8 +1,11 @@
+import { after } from "next/server";
+
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
+import { deleteLinkFromRedis, setLinkToRedis } from "~/lib/cache/link";
 import { BASE_DOMAIN, BASE_URL } from "~/lib/constants";
 import { db } from "~/lib/db";
 import {
@@ -92,7 +95,7 @@ const linksApp = new Hono()
     "/:linkId",
     sessionMiddleware,
     roleMiddleware(),
-    zValidator("json", linkSchema.partial()),
+    zValidator("json", linkSchema),
     zValidator("query", workspaceSlugSchema),
     async (c) => {
       const { comment, destination, slug, domain } = c.req.valid("json");
@@ -123,6 +126,10 @@ const linksApp = new Hono()
         },
       });
 
+      after(() => {
+        setLinkToRedis(slug, domain || BASE_DOMAIN, link);
+      });
+
       return c.json({ link });
     }
   )
@@ -132,6 +139,7 @@ const linksApp = new Hono()
     const link = await db.link.delete({
       where: { id: linkId },
     });
+    after(() => deleteLinkFromRedis(link.key, link.domain));
 
     return c.json({ link });
   })

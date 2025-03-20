@@ -1,8 +1,5 @@
 import { NextRequest } from "next/server";
 
-import { redis } from "~/lib/redis";
-import { RequiredLinkProp } from "~/lib/types";
-
 export const detectBot = (req: NextRequest) => {
   const searchParams = new URL(req.url).searchParams;
   if (searchParams.get("bot")) return true;
@@ -29,23 +26,4 @@ export const detectBot = (req: NextRequest) => {
 export const detectQR = (req: NextRequest) => {
   const searchParams = req.nextUrl.searchParams;
   return searchParams.get("qr") === "1";
-};
-
-export const getLinkViaRedis = async (key: string, domain: string) => {
-  const cacheKey = `link:${domain}:${key}`;
-  const cached = await redis.get(cacheKey);
-  return cached as RequiredLinkProp | null;
-};
-
-export const setLinkToRedis = async (
-  key: string,
-  domain: string,
-  link: RequiredLinkProp,
-  expireInDay: number = 1
-) => {
-  const cacheKey = `link:${domain}:${key}`;
-  await redis.set(cacheKey, link, {
-    ex:
-      process.env.NODE_ENV === "development" ? 60 : 60 * 60 * 24 * expireInDay, // expire in 1 day as default in production and 1 minute in development
-  });
 };
