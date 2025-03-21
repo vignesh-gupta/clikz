@@ -61,8 +61,6 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
           setMetadata(null);
         })
     );
-
-    return () => controller.abort();
   }, [debouncedUrl]);
 
   return (

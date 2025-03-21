@@ -1,31 +1,48 @@
 model Link {
-  id            String        @id @default(cuid())
-  domain        String        @default("clikz.live")
-  url           String
-  key           String
-  shortLink     String
-  comment       String?
-  clicks        Int           @default(0)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  User          User          @relation(fields: [userId], references: [id])
+  id         String    @id @default(cuid())
+  domain     String    @default("clikz.live")
+  url        String
+  key        String
+  shortLink  String
+  comment    String?
+  clicks     Int       @default(0)
+  archived   Boolean   @default(false)
+  expiredAt  DateTime?
+  expiredUrl String?
+  password   String?
+
+  proxy       Boolean @default(false)
+  title       String?
+  description String? @db.VarChar(280)
+  image       String?
+  video       String?
+
+  // UTM parameters
+  utm_source   String? // UTM source for the link (e.g. youtube.com)
+  utm_medium   String? // UTM medium for the link (e.g. social)
+  utm_campaign String? // UTM campaign for the link (e.g. summer-sale)
+  utm_term     String? // UTM term for the link (e.g. dub)
+  utm_content  String? // UTM content for the link (e.g. description)
+
+  // Link cloaking/masking via rewrite
+  rewrite Boolean @default(false) // whether to rewrite the link or not
+
+  doIndex Boolean @default(false) // don't index short links by default
+  // Custom device targeting
+  ios     String? // custom link for iOS devices
+  android String? // custom link for Android devices
+  geo     Json? // custom link for specific countries
+
+  projectDomain Domain? @relation(fields: [domain], references: [name], onDelete: Cascade, onUpdate: Cascade)
+
+  User          User      @relation(fields: [userId], references: [id], onUpdate: Cascade)
   userId        String
-  Workspace     Workspace     @relation(fields: [workspaceId, workspaceSlug], references: [id, slug])
+  Workspace     Workspace @relation(fields: [workspaceId, workspaceSlug], references: [id, slug], onDelete: Cascade, onUpdate: Cascade)
   workspaceId   String
   workspaceSlug String
-  isProxy       Boolean       @default(false)
-  metadataId    String?       @unique
-  metadata      LinkMetadata? @relation(fields: [metadataId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
-}
-
-model LinkMetadata {
-  id          String @id @default(cuid())
-  title       String
-  description String
-  image       String
-  favicon     String
-  Link        Link?
-  linkId      String @unique
 }

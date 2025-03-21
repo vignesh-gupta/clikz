@@ -1,17 +1,18 @@
 model Domain {
   id            String       @id @default(cuid())
-  name          String
+  name          String       @unique
   logo          String?
   expiredUrl    String?
   notFoundUrl   String?
   placeholder   String?
   isArchived    Boolean      @default(false)
-  workspace     Workspace    @relation(fields: [workspaceId, workspaceSlug], references: [id, slug], onDelete: Cascade)
+  workspace     Workspace    @relation(fields: [workspaceId, workspaceSlug], references: [id, slug], onDelete: Cascade, onUpdate: Cascade)
   workspaceId   String
   workspaceSlug String
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   status        DomainStatus @default(PENDING)
+  Link          Link[]
 
   @@index([workspaceId])
 }

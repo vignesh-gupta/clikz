@@ -2,7 +2,7 @@ model Workspace {
   id            String       @id @default(cuid())
   name          String
   slug          String
-  Owner         User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  Owner         User         @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownerId       String       @unique
   defaultInvite String       @default(cuid())
   Invite        Invite[]
@@ -23,7 +23,7 @@ model Invite {
   email       String
   token       String
   expires     DateTime
-  Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   workspaceId String
   role        MemberRole @default(MEMBER)
   createdAt   DateTime   @default(now())
@@ -35,10 +35,10 @@ model Invite {
 model Membership {
   id          String     @id @default(cuid())
   email       String
-  User        User       @relation(fields: [userId, email], references: [id, email], onDelete: Cascade)
+  User        User       @relation(fields: [userId, email], references: [id, email], onDelete: Cascade, onUpdate: Cascade)
   userId      String
   role        MemberRole @default(MEMBER)
-  Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  Workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   workspaceId String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt

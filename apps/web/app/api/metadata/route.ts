@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { AxiomRequest } from "next-axiom";
 
-import { getUrlFromStringIfValid, isValidUrl } from "~/lib/utils/url";
+import { getUrlFromStringIfValid } from "~/lib/utils/url";
 
 export type MetadataResponse = {
   status: "success" | "error";
@@ -33,7 +33,7 @@ export const GET = async (req: AxiomRequest) => {
     const url = decodeURIComponent(req.nextUrl.searchParams.get("url") || "");
 
     const validUrl = getUrlFromStringIfValid(url);
-    if (!url || !isValidUrl(url) || !validUrl) {
+    if (!url || !validUrl) {
       return NextResponse.json(
         {
           error: "Please provide a valid URL",
