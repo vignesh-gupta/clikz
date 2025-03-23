@@ -30,10 +30,9 @@ import { generateRandomSlug } from "~/lib/utils/generate";
 
 type LinkFormSlugProps = {
   disabled?: boolean;
-  field: any;
 };
 
-const LinkFormSlug = ({ disabled, field }: LinkFormSlugProps) => {
+const LinkFormSlug = ({ disabled }: LinkFormSlugProps) => {
   const form = useFormContext();
   const workspaceSlug = useWorkspaceSlug();
   const { data: domains, isLoading } = useGetDomains({
@@ -68,7 +67,7 @@ const LinkFormSlug = ({ disabled, field }: LinkFormSlugProps) => {
             <DomainDropdown domains={domains} disabled={!!disabled} />
           )}
           <Input
-            {...field}
+            {...form.register("slug")}
             disabled={disabled}
             placeholder="(optional)"
             className="rounded-l-none focus-visible:ring-offset-1 flex-1"

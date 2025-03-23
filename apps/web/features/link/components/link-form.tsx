@@ -43,11 +43,18 @@ const LinkForm = () => {
       slug: linkData?.key ?? "",
       comment: linkData?.comment ?? "",
       domain: linkData?.domain ?? "",
+      title: linkData?.title ?? "",
+      description: linkData?.description ?? "",
+      image: linkData?.image ?? "",
+      video: linkData?.video ?? "",
     },
   });
 
-  const destination = form.watch("destination");
-  const slug = form.watch("slug");
+  const [destination, slug, domain] = form.watch([
+    "destination",
+    "slug",
+    "domain",
+  ]);
 
   const onSubmit = async (value: LinkSchema) => {
     if (!linkId) return toast.error("Link ID is missing");
@@ -93,9 +100,8 @@ const LinkForm = () => {
                 <FormField
                   control={form.control}
                   name="slug"
-                  render={({ field }) => (
+                  render={() => (
                     <LinkFormSlug
-                      field={field}
                       disabled={isLoading || isUpdating || isCreating}
                     />
                   )}
@@ -135,7 +141,7 @@ const LinkForm = () => {
                 />
               </div>
               <div className="space-y-4 flex flex-col items-center">
-                <QRPreview slug={slug} />
+                <QRPreview slug={slug} domain={domain} />
                 <LinkPreview url={destination} />
               </div>
             </div>

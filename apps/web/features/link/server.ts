@@ -57,8 +57,10 @@ const linksApp = new Hono()
     zValidator("query", workspaceSlugSchema),
     zValidator("json", linkSchema),
     async (c) => {
-      const { destination, slug, comment, domain } = c.req.valid("json");
-      const { workspaceSlug } = c.req.valid("query");
+      const { destination, slug, comment, domain, ...ogTags } =
+        c.req.valid("json");
+
+      const workspace = c.get("workspace");
 
       const user = c.get("user");
 
@@ -66,8 +68,9 @@ const linksApp = new Hono()
         return c.json({ error: "Unauthenticated" }, 401);
       }
 
-      const domainURL = new URL(domain ? `https://${domain}` : BASE_URL);
-
+      const domainURL = new URL(
+        domain === BASE_DOMAIN ? BASE_URL : `https://${domain}`
+      );
       const link = await db.link.create({
         data: {
           domain: domain || BASE_DOMAIN,
@@ -75,16 +78,10 @@ const linksApp = new Hono()
           shortLink: new URL(`/${slug}`, domainURL).toString(),
           url: destination,
           comment,
-          Workspace: {
-            connect: {
-              slug: workspaceSlug,
-            },
-          },
-          User: {
-            connect: {
-              id: user.id,
-            },
-          },
+          workspaceId: workspace.id,
+          workspaceSlug: workspace.slug,
+          userId: user.id,
+          ...ogTags,
         },
       });
 
@@ -108,11 +105,13 @@ const linksApp = new Hono()
 
       if (!existingLink) return c.json({ error: "Link not found" }, 404);
 
-      const domainUrl = domain === BASE_DOMAIN ? BASE_URL : `https://${domain}`;
+      const domainURL = new URL(
+        domain === BASE_DOMAIN ? BASE_URL : `https://${domain}`
+      );
 
       const shortLink = new URL(
         `/${slug || existingLink.key}`,
-        domainUrl
+        domainURL
       ).toString();
 
       const link = await db.link.update({

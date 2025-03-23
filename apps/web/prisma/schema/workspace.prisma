@@ -1,18 +1,29 @@
 model Workspace {
-  id            String       @id @default(cuid())
+  id            String   @id @default(cuid())
   name          String
   slug          String
-  Owner         User         @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ownerId       String       @unique
-  defaultInvite String       @default(cuid())
-  Invite        Invite[]
-  Link          Link[]
-  Membership    Membership[]
+  Owner         User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId       String   @unique
+  defaultInvite String   @unique @default(cuid())
   icon          String?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  plan          PlanName     @default(FREE)
-  Domain        Domain[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  plan          PlanName @default(FREE)
+
+  totalLinks  Int @default(0) // Total number of links in the workspace
+  totalClicks Int @default(0) // Total number of clicks in the workspace
+
+  usage        Int @default(0)
+  usageLimit   Int @default(1000)
+  linksUsage   Int @default(0)
+  linksLimit   Int @default(25)
+  domainsLimit Int @default(3)
+  usersLimit   Int @default(1)
+
+  Domain     Domain[]
+  Invite     Invite[]
+  Link       Link[]
+  Membership Membership[]
 
   @@unique([slug])
   @@unique([id, slug])

@@ -33,8 +33,6 @@ model Link {
   android String? // custom link for Android devices
   geo     Json? // custom link for specific countries
 
-  projectDomain Domain? @relation(fields: [domain], references: [name], onDelete: Cascade, onUpdate: Cascade)
-
   User          User      @relation(fields: [userId], references: [id], onUpdate: Cascade)
   userId        String
   Workspace     Workspace @relation(fields: [workspaceId, workspaceSlug], references: [id, slug], onDelete: Cascade, onUpdate: Cascade)
@@ -43,6 +41,10 @@ model Link {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Domain    Domain?  @relation(fields: [domainId], references: [id])
+  domainId  String?
 
+  @@unique([domain, key])
   @@index([userId])
+  @@index([workspaceId, workspaceSlug, createdAt(sort: Desc)])
 }

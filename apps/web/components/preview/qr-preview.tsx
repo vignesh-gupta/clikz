@@ -11,19 +11,23 @@ import { getUrlWithoutUTMParams } from "~/lib/utils/url";
 import { QRCode } from "./qr-code";
 
 type QRPreviewProps = {
+  domain?: string;
   slug: string;
 };
 
-const QRPreview = ({ slug }: QRPreviewProps) => {
+const QRPreview = ({ domain, slug }: QRPreviewProps) => {
   const [debouncedSlug] = useDebounce(getUrlWithoutUTMParams(slug), 500);
 
   return (
-    <Card className="w-full">
+    <Card className="w-full shadow-none border-none">
       <CardContent className="p-4 space-y-2">
         <Label>QR Code</Label>
-        <div className="w-full h-36 bg-gray-200 flex items-center justify-center text-gray-500">
+        <div className="w-full h-28 bg-gray-200 flex items-center justify-center text-gray-500">
           {debouncedSlug ? (
-            <QRCode url={`${BASE_URL}/${debouncedSlug}`} scale={1} />
+            <QRCode
+              url={`${domain || BASE_URL}/${debouncedSlug}`}
+              scale={0.8}
+            />
           ) : (
             <p>QR Code will appear here</p>
           )}

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useTransition } from "react";
 
+import { useFormContext } from "react-hook-form";
 import { BsTwitterX } from "react-icons/bs";
 import { FaFacebook, FaGlobe, FaLinkedin } from "react-icons/fa";
 import { toast } from "sonner";
@@ -16,7 +17,9 @@ import {
   TabsTrigger,
 } from "@clikz/ui/components/ui/tabs";
 
+import { useLinkModel } from "~/features/link/hooks/use-link-modal";
 import { getUrlWithoutUTMParams } from "~/lib/utils/url";
+import { LinkSchema } from "~/lib/zod-schemas";
 
 import {
   FacebookPreview,
@@ -25,24 +28,25 @@ import {
   XPreview,
 } from "./social-preview";
 
-type FetchMetadata = {
-  title: string;
-  description: string;
-  image: string;
-};
-
 type LinkPreviewProps = {
   url: string;
 };
 
 const LinkPreview = ({ url }: LinkPreviewProps) => {
-  const [metadata, setMetadata] = useState<FetchMetadata | null>(null);
   const [loading, startTransaction] = useTransition();
+  const { linkId } = useLinkModel();
+  const form = useFormContext<LinkSchema>();
+
+  const [title, description, image] = form.watch([
+    "title",
+    "description",
+    "image",
+  ]);
 
   const [debouncedUrl] = useDebounce(getUrlWithoutUTMParams(url), 500);
 
   useEffect(() => {
-    if (!debouncedUrl) return;
+    if (!debouncedUrl || linkId !== "new") return;
 
     const controller = new AbortController();
     startTransaction(() =>
@@ -54,11 +58,12 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
             throw new Error("Failed to fetch metadata");
           }
           const data = await res.json();
-          setMetadata(data);
+          form.setValue("title", data?.title ?? "No title");
+          form.setValue("description", data?.description ?? "No description");
+          form.setValue("image", data?.image ?? "");
         })
         .catch(() => {
           toast.error("Failed to fetch metadata");
-          setMetadata(null);
         })
     );
   }, [debouncedUrl]);
@@ -90,32 +95,32 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
             <>
               <TabsContent value="default">
                 <WebPreview
-                  title={metadata?.title || "No Title"}
-                  description={metadata?.description || "No Description"}
-                  image={metadata?.image}
+                  title={title || "No Title"}
+                  description={description || "No Description"}
+                  image={image}
                   loading={loading}
                 />
               </TabsContent>
               <TabsContent value="twitter">
                 <XPreview
-                  title={metadata?.title || "No Title"}
-                  image={metadata?.image}
+                  title={title || "No Title"}
+                  image={image}
                   loading={loading}
                 />
               </TabsContent>
               <TabsContent value="linkedin">
                 <LinkedInPreview
                   url={url}
-                  title={metadata?.title || "No Title"}
-                  image={metadata?.image}
+                  title={title || "No Title"}
+                  image={image}
                   loading={loading}
                 />
               </TabsContent>
               <TabsContent value="facebook">
                 <FacebookPreview
-                  title={metadata?.title || "No Title"}
-                  description={metadata?.description || "No Description"}
-                  image={metadata?.image}
+                  title={title || "No Title"}
+                  description={description || "No Description"}
+                  image={image}
                   loading={loading}
                 />
               </TabsContent>
