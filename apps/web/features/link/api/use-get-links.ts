@@ -34,12 +34,13 @@ export const useGetLinks = ({
         throw new Error("Failed to fetch links");
       }
 
-      const { links } = await res.json();
+      const { data } = await res.json();
 
-      return links.map((link) => ({
+      return data.map((link) => ({
         ...link,
         createdAt: new Date(link.createdAt),
         updatedAt: new Date(link.updatedAt),
+        expiredAt: link.expiredAt ? new Date(link.expiredAt) : null,
       }));
     },
   });

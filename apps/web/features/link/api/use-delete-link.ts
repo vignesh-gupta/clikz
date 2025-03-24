@@ -33,13 +33,13 @@ export const useDeleteLink = () => {
 
       return await res.json();
     },
-    onSuccess: ({ link }) => {
+    onSuccess: ({ data }) => {
       toast.success("Link deleted!");
       queryClient.invalidateQueries({
         queryKey: [...QUERY_KEYS.LINKS, workspace],
       });
       queryClient.invalidateQueries({
-        queryKey: [...QUERY_KEYS.LINK, link.id],
+        queryKey: [...QUERY_KEYS.LINK, data.id],
       });
     },
     onError: () => {

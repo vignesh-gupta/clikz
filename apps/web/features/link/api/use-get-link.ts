@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
@@ -25,12 +26,13 @@ export const useGetLink = ({ linkId, queryKey }: GetLink) => {
       });
 
       if (!res.ok) {
-        throw new Error("No link found");
+        toast.error("Something went wrong. Please try again later.");
+        return null;
       }
 
-      const { link } = await res.json();
+      const { data } = await res.json();
 
-      return link;
+      return data;
     },
   });
 };

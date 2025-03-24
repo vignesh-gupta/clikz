@@ -3,6 +3,10 @@ import { after } from "next/server";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
+import {
+  generateAPIErrorResponse,
+  generateAPIResponse,
+} from "~/lib/backend/response";
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { deleteLinkFromRedis, setLinkToRedis } from "~/lib/cache/link";
@@ -19,6 +23,8 @@ import { getLinks } from "./data";
 const linksApp = new Hono()
   .get(
     "/",
+    sessionMiddleware,
+    roleMiddleware(),
     zValidator("query", workspaceSlugSchema),
     zValidator("query", fetchParamsSchema),
     async (c) => {
@@ -27,17 +33,19 @@ const linksApp = new Hono()
       const links = await getLinks({ workspaceSlug, page, limit });
 
       if (!links) {
-        return c.json({ error: "Link not found" }, 404);
+        return c.json(
+          generateAPIErrorResponse("not_found", "No links found"),
+          404
+        );
       }
-
-      return c.json({ links });
+      return c.json(generateAPIResponse(links));
     }
   )
-  .get("/:linkId", async (c) => {
+  .get("/:linkId", sessionMiddleware, roleMiddleware(), async (c) => {
     const linkId = c.req.param("linkId");
 
     if (linkId === "new") {
-      return c.json({ link: null });
+      return c.json(generateAPIResponse(null));
     }
 
     const link = await db.link.findUnique({
@@ -45,10 +53,13 @@ const linksApp = new Hono()
     });
 
     if (!link) {
-      return c.json({ error: "Link not found" }, 404);
+      return c.json(
+        generateAPIErrorResponse("not_found", "Link not found"),
+        404
+      );
     }
 
-    return c.json({ link });
+    return c.json(generateAPIResponse(link));
   })
   .post(
     "/",
@@ -65,7 +76,10 @@ const linksApp = new Hono()
       const user = c.get("user");
 
       if (!user || !user.id) {
-        return c.json({ error: "Unauthenticated" }, 401);
+        return c.json(
+          generateAPIErrorResponse("unauthorized", "You are not logged in"),
+          401
+        );
       }
 
       const domainURL = new URL(
@@ -85,7 +99,7 @@ const linksApp = new Hono()
         },
       });
 
-      return c.json({ link }, 201);
+      return c.json(generateAPIResponse(link), 201);
     }
   )
   .patch(
@@ -103,7 +117,11 @@ const linksApp = new Hono()
         where: { id: linkId },
       });
 
-      if (!existingLink) return c.json({ error: "Link not found" }, 404);
+      if (!existingLink)
+        return c.json(
+          generateAPIErrorResponse("not_found", "Link bot found"),
+          404
+        );
 
       const domainURL = new URL(
         domain === BASE_DOMAIN ? BASE_URL : `https://${domain}`
@@ -129,10 +147,10 @@ const linksApp = new Hono()
         setLinkToRedis(slug, domain || BASE_DOMAIN, link);
       });
 
-      return c.json({ link });
+      return c.json(generateAPIResponse(link));
     }
   )
-  .delete("/:linkId", async (c) => {
+  .delete("/:linkId", sessionMiddleware, roleMiddleware(), async (c) => {
     const linkId = c.req.param("linkId");
 
     const link = await db.link.delete({
@@ -140,7 +158,7 @@ const linksApp = new Hono()
     });
     after(() => deleteLinkFromRedis(link.key, link.domain));
 
-    return c.json({ link });
+    return c.json(generateAPIResponse(link));
   })
   .get("/:slug/exist", async (c) => {
     const slug = c.req.param("slug");

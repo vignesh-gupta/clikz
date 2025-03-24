@@ -2,14 +2,16 @@
 
 import { useEffect, useTransition } from "react";
 
+import { CrownIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { BsTwitterX } from "react-icons/bs";
 import { FaFacebook, FaGlobe, FaLinkedin } from "react-icons/fa";
 import { toast } from "sonner";
 import { useDebounce } from "use-debounce";
 
-import { Card, CardContent } from "@clikz/ui/components/ui/card";
+import { Card, CardContent, CardHeader } from "@clikz/ui/components/ui/card";
 import { Skeleton } from "@clikz/ui/components/ui/skeleton";
+import { Switch } from "@clikz/ui/components/ui/switch";
 import {
   Tabs,
   TabsContent,
@@ -19,7 +21,7 @@ import {
 
 import { useLinkModel } from "~/features/link/hooks/use-link-modal";
 import { getUrlWithoutUTMParams } from "~/lib/utils/url";
-import { LinkSchema } from "~/lib/zod-schemas";
+import { LinkSchema } from "~/lib/zod/schemas";
 
 import {
   FacebookPreview,
@@ -70,6 +72,10 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
 
   return (
     <Card className="w-full max-w-md overflow-hidden bg-transparent border-0">
+      <CardHeader className=" px-1 py-0 flex-row justify-between items-center">
+        <p>Custom Preview</p>
+        <Switch icon={<CrownIcon className="size-3" />} />
+      </CardHeader>
       <CardContent className="p-0">
         <Tabs defaultValue="default">
           <TabsList className="w-full grid grid-cols-4 gap-1 bg-transparent">

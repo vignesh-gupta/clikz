@@ -7,8 +7,7 @@ import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.links)[":linkId"]["$patch"],
-  200
+  (typeof client.api.links)[":linkId"]["$patch"]
 >;
 type RequestType = InferRequestType<
   (typeof client.api.links)[":linkId"]["$patch"]
@@ -23,26 +22,24 @@ export const useUpdateLink = () => {
     mutationFn: async (props) => {
       const res = await client.api.links[":linkId"].$patch(props);
 
-      if (!res.ok) {
-        const errorRes = (await res.json()) as unknown as { error: string };
+      const data = await res.json();
 
-        throw new Error(errorRes?.error ?? "Failed to update link");
+      if (data.error) {
+        throw new Error(data.error.message);
       }
 
       return await res.json();
     },
-    onSuccess: ({ link }) => {
+    onSuccess: ({ data: link }) => {
       toast.success("Link Updated!");
       queryClient.invalidateQueries({
         queryKey: [...QUERY_KEYS.LINKS, workspaceSlug],
       });
       queryClient.invalidateQueries({
-        queryKey: [...QUERY_KEYS.LINK, link.id],
+        queryKey: [...QUERY_KEYS.LINK, link?.id],
       });
     },
-    onError: () => {
-      toast.error("Failed to update link");
-    },
+    onError: (e) => toast.error(e.message || "Failed to update link"),
   });
 
   return mutation;
