@@ -13,7 +13,7 @@ import {
   domainStatusUpdateSchema,
   fetchParamsSchema,
   workspaceSlugSchema,
-} from "~/lib/zod-schemas";
+} from "~/lib/zod/schemas";
 
 import { getDomainStatus, getDomains } from "./data";
 

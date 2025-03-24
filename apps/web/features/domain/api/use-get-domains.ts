@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
-import { FetchParamsSchema } from "~/lib/zod-schemas";
+import { FetchParamsSchema } from "~/lib/zod/schemas";
 
 type GetDomains = FetchParamsSchema & {
   workspaceSlug: string;

@@ -6,7 +6,7 @@ import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
 import { sendWorkspaceInvite } from "~/lib/email";
 import { generateInviteCode } from "~/lib/utils/generate";
-import { inviteSchema } from "~/lib/zod-schemas";
+import { inviteSchema } from "~/lib/zod/schemas";
 
 const workspaceInviteApp = new Hono()
   .get("/", sessionMiddleware, async (c) => {

@@ -4,7 +4,7 @@ import { Hono } from "hono";
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
-import { membershipSchema } from "~/lib/zod-schemas";
+import { membershipSchema } from "~/lib/zod/schemas";
 
 const workspaceMembersApp = new Hono()
   .get("/", sessionMiddleware, async (c) => {

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -20,7 +21,8 @@ import { Textarea } from "@clikz/ui/components/ui/textarea";
 import LinkPreview from "~/components/preview/link-preview";
 import QRPreview from "~/components/preview/qr-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
+import { BASE_DOMAIN } from "~/lib/constants";
+import { LinkSchema, linkSchema } from "~/lib/zod/schemas";
 
 import { useCreateLink } from "../api/use-create-link";
 import { useGetLink } from "../api/use-get-link";
@@ -33,8 +35,8 @@ const LinkForm = () => {
   const { close, linkId } = useLinkModel();
 
   const { data: linkData, isLoading } = useGetLink({ linkId });
-  const { mutate: createLink, isPending: isCreating } = useCreateLink();
-  const { mutate: updateLink, isPending: isUpdating } = useUpdateLink();
+  const { mutateAsync: createLink, isPending: isCreating } = useCreateLink();
+  const { mutateAsync: updateLink, isPending: isUpdating } = useUpdateLink();
 
   const form = useForm<LinkSchema>({
     resolver: zodResolver(linkSchema),
@@ -42,7 +44,7 @@ const LinkForm = () => {
       destination: linkData?.url ?? "",
       slug: linkData?.key ?? "",
       comment: linkData?.comment ?? "",
-      domain: linkData?.domain ?? "",
+      domain: linkData?.domain ?? BASE_DOMAIN ?? "",
       title: linkData?.title ?? "",
       description: linkData?.description ?? "",
       image: linkData?.image ?? "",
@@ -59,17 +61,20 @@ const LinkForm = () => {
   const onSubmit = async (value: LinkSchema) => {
     if (!linkId) return toast.error("Link ID is missing");
 
-    if (linkId === "new")
-      createLink({
+    const isNew = linkId === "new";
+
+    if (isNew)
+      await createLink({
         json: value,
         query: { workspaceSlug },
       });
     else
-      updateLink({
+      await updateLink({
         json: value,
         query: { workspaceSlug },
         param: { linkId },
       });
+
     close();
   };
 
@@ -150,6 +155,9 @@ const LinkForm = () => {
               className="w-full"
               disabled={isLoading || isCreating || isUpdating}
             >
+              {isCreating || isUpdating ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : null}
               {linkId === "new" ? "Create" : "Update"} Link
             </Button>
           </form>

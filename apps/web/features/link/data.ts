@@ -1,5 +1,5 @@
 import { db } from "~/lib/db";
-import { FetchParamsSchema } from "~/lib/zod-schemas";
+import { FetchParamsSchema } from "~/lib/zod/schemas";
 
 type GetWorkspaceLinks = FetchParamsSchema & {
   workspaceSlug: string;

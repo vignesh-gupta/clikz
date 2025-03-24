@@ -29,7 +29,7 @@ import { Input } from "@clikz/ui/components/ui/input";
 
 import { register } from "~/app/(auth)/actions";
 import SocialLogins from "~/features/auth/components/social-logins";
-import { SignUpSchema, signUpSchema } from "~/lib/zod-schemas";
+import { SignUpSchema, signUpSchema } from "~/lib/zod/schemas";
 
 const SignUpForm = () => {
   const router = useRouter();

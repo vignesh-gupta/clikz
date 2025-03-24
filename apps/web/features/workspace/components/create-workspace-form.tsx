@@ -21,7 +21,7 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 
 import { createWorkspace } from "~/lib/actions/onboarding";
-import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
+import { WorkspaceSchema, workspaceSchema } from "~/lib/zod/schemas";
 
 import WorkspaceSlugField from "./workspace-slug-field";
 

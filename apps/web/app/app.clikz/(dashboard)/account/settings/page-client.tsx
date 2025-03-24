@@ -17,7 +17,7 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 
 import { useUpdateUser } from "~/features/auth/api/use-update-user";
-import { type UserAccountSchema, userAccountSchema } from "~/lib/zod-schemas";
+import { type UserAccountSchema, userAccountSchema } from "~/lib/zod/schemas";
 
 type AccountSettingsClientPageProps = {
   name?: string | null;

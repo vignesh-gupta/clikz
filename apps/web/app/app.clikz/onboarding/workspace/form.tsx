@@ -26,7 +26,7 @@ import { Input } from "@clikz/ui/components/ui/input";
 
 import WorkspaceSlugField from "~/features/workspace/components/workspace-slug-field";
 import { createWorkspace } from "~/lib/actions/onboarding";
-import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
+import { WorkspaceSchema, workspaceSchema } from "~/lib/zod/schemas";
 
 const WorkspaceForm = () => {
   const [error, setError] = useState<string | null>(null);

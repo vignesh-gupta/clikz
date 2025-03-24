@@ -7,7 +7,7 @@ import GitHub from "next-auth/providers/github";
 import { getUserByEmail, getUserById } from "~/features/auth/data";
 
 import { db } from "./lib/db";
-import { signInSchema } from "./lib/zod-schemas";
+import { signInSchema } from "./lib/zod/schemas";
 
 export default {
   providers: [

@@ -27,7 +27,7 @@ import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug"
 import { createLink } from "~/lib/actions/onboarding";
 import { BASE_DOMAIN } from "~/lib/constants";
 import { generateRandomSlug } from "~/lib/utils/generate";
-import { LinkSchema, linkSchema } from "~/lib/zod-schemas";
+import { LinkSchema, linkSchema } from "~/lib/zod/schemas";
 
 const LinkForm = () => {
   const [slugAvailable, setSlugAvailable] = useState(false);

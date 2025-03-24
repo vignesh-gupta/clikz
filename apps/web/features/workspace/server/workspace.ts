@@ -7,7 +7,7 @@ import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { DATA_PREFIX } from "~/lib/constants";
 import { db } from "~/lib/db";
-import { workspaceSchema } from "~/lib/zod-schemas";
+import { workspaceSchema } from "~/lib/zod/schemas";
 
 import workspaceInviteApp from "./invite";
 import workspaceMembersApp from "./member";

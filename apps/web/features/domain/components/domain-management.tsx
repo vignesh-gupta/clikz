@@ -10,7 +10,7 @@ import { Input } from "@clikz/ui/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@clikz/ui/components/ui/tabs";
 
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { FetchParamsSchema } from "~/lib/zod-schemas";
+import { FetchParamsSchema } from "~/lib/zod/schemas";
 
 import { useGetDomains } from "../api/use-get-domains";
 import { AddDomainDialog } from "./add-domain-dialog";

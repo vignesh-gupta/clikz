@@ -15,7 +15,7 @@ export const roleMiddleware = (requiredRole: MemberRole = "MEMBER") =>
   createMiddleware<RoleAdditionalContext>(async (c, next) => {
     const user = c.get("user");
 
-    if (!user) {
+    if (!user || !user.id) {
       return c.json({ error: "Unauthorized" }, 401);
     }
 

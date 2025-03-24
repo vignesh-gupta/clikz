@@ -13,7 +13,7 @@ import {
   SignUpSchema,
   signInSchema,
   signUpSchema,
-} from "~/lib/zod-schemas";
+} from "~/lib/zod/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 export const register = async (values: SignUpSchema) => {

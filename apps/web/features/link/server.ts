@@ -12,7 +12,7 @@ import {
   fetchParamsSchema,
   linkSchema,
   workspaceSlugSchema,
-} from "~/lib/zod-schemas";
+} from "~/lib/zod/schemas";
 
 import { getLinks } from "./data";
 

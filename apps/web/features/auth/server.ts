@@ -3,7 +3,7 @@ import { Hono } from "hono";
 
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
-import { userAccountSchema } from "~/lib/zod-schemas";
+import { userAccountSchema } from "~/lib/zod/schemas";
 
 const authApp = new Hono()
   .patch(

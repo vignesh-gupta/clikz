@@ -4,12 +4,12 @@ import { MemberRole } from "@prisma/client";
 
 import { auth, signOut } from "~/auth";
 import { generateInviteCode, generateRandomSlug } from "~/lib/utils/generate";
-import { LinkSchema } from "~/lib/zod-schemas";
+import { LinkSchema } from "~/lib/zod/schemas";
 
 import { BASE_DOMAIN, BASE_URL } from "../constants";
 import { db } from "../db";
 import { sendWorkspaceInvite } from "../email";
-import { WorkspaceSchema } from "../zod-schemas";
+import { WorkspaceSchema } from "../zod/schemas";
 import { checkUser } from "./utils";
 
 export const createWorkspace = async (data: WorkspaceSchema) => {

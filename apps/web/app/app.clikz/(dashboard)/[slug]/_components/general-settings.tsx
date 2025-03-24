@@ -24,7 +24,7 @@ import { useGetWorkspace } from "~/features/workspace/api/workspace/use-get-work
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
 import WorkspaceIconUpload from "~/features/workspace/components/workspace-icon-upload";
 import { DATA_PREFIX } from "~/lib/constants";
-import { WorkspaceSchema, workspaceSchema } from "~/lib/zod-schemas";
+import { WorkspaceSchema, workspaceSchema } from "~/lib/zod/schemas";
 
 import DeleteWorkspace from "./delete-workspace";
 
