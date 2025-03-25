@@ -24,7 +24,12 @@ export const ErrorCode = z.enum([
   "unprocessable_entity",
 ]);
 
-const errorCodeToHttpStatus: Record<z.infer<typeof ErrorCode>, number> = {
+type ErrorStatusCode = 400 | 401 | 403 | 404 | 409 | 410 | 422 | 429 | 500;
+
+const errorCodeToHttpStatus: Record<
+  z.infer<typeof ErrorCode>,
+  ErrorStatusCode
+> = {
   bad_request: 400,
   unauthorized: 401,
   forbidden: 403,
@@ -162,12 +167,27 @@ export function handleApiError(error: any): ErrorResponse & { status: number } {
   };
 }
 
-export function handleAndReturnErrorResponse(
+export function handleAndReturnNextErrorResponse(
   err: unknown,
   headers?: Record<string, string>
 ) {
   const { error, status } = handleApiError(err);
   return NextResponse.json<ErrorResponse>({ error }, { headers, status });
+}
+
+export function handleAndReturnAPIErrorResponse(
+  err: unknown,
+  headers?: Record<string, string>
+) {
+  const { error, status: errorStatus } = handleApiError(err);
+
+  const status = errorStatus as ErrorStatusCode;
+
+  return {
+    json: { data: null, error },
+    status,
+    headers,
+  };
 }
 
 export const errorSchemaFactory = (

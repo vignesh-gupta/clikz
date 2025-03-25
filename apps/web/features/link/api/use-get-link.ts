@@ -10,13 +10,12 @@ type GetLink = {
 };
 
 export const useGetLink = ({ linkId, queryKey }: GetLink) => {
-  if (!linkId) {
-    throw new Error("Link ID is required");
-  }
-
   return useQuery({
     queryKey: [...QUERY_KEYS.LINK, linkId, ...(queryKey ?? [])],
     queryFn: async () => {
+      if (!linkId) {
+        throw new Error("Link ID is required");
+      }
       if (linkId === "new") {
         return null;
       }

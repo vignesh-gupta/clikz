@@ -1,5 +1,6 @@
 import { Link } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
@@ -31,7 +32,8 @@ export const useGetLinks = ({
       });
 
       if (!res.ok) {
-        throw new Error("Failed to fetch links");
+        toast.error("Something went wrong. Please try again later.");
+        return null;
       }
 
       const { data } = await res.json();
