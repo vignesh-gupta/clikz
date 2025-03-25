@@ -5,6 +5,7 @@ export const linkSchema = z.object({
   slug: z.string(),
   comment: z.string().optional(),
   domain: z.string().optional(),
+  proxy: z.boolean(),
   title: z.string().optional(),
   description: z.string().optional(),
   image: z.string().optional(),

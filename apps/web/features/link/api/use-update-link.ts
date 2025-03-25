@@ -28,7 +28,7 @@ export const useUpdateLink = () => {
         throw new Error(data.error.message);
       }
 
-      return await res.json();
+      return data;
     },
     onSuccess: ({ data: link }) => {
       toast.success("Link Updated!");

@@ -57,7 +57,7 @@ const ResponsiveModel = ({
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent
         className={cn(
-          "w-auto max-w-screen-lg border-none overflow-y-auto hide-scrollbar",
+          "w-auto max-w-screen-lg border-none overflow-y-auto hide-scrollbar px-8 ",
           className,
         )}
         aria-describedby="responsive-dialog"

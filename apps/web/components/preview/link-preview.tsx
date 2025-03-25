@@ -10,6 +10,12 @@ import { toast } from "sonner";
 import { useDebounce } from "use-debounce";
 
 import { Card, CardContent, CardHeader } from "@clikz/ui/components/ui/card";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@clikz/ui/components/ui/form";
 import { Skeleton } from "@clikz/ui/components/ui/skeleton";
 import { Switch } from "@clikz/ui/components/ui/switch";
 import {
@@ -72,9 +78,24 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
 
   return (
     <Card className="w-full max-w-md overflow-hidden bg-transparent border-0">
-      <CardHeader className=" px-1 py-0 flex-row justify-between items-center">
-        <p>Custom Preview</p>
-        <Switch icon={<CrownIcon className="size-3" />} />
+      <CardHeader className="p-0 flex-row justify-between items-center">
+        <FormField
+          control={form.control}
+          name="proxy"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm flex-1 px-1 py-0">
+              <FormLabel>Custom Preview</FormLabel>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  className="mt-0"
+                  icon={<CrownIcon className="size-3" />}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
       </CardHeader>
       <CardContent className="p-0">
         <Tabs defaultValue="default">

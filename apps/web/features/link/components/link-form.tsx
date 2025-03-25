@@ -45,6 +45,7 @@ const LinkForm = () => {
       slug: linkData?.key ?? "",
       comment: linkData?.comment ?? "",
       domain: linkData?.domain ?? BASE_DOMAIN ?? "",
+      proxy: linkData?.proxy ?? false,
       title: linkData?.title ?? "",
       description: linkData?.description ?? "",
       image: linkData?.image ?? "",
@@ -58,29 +59,33 @@ const LinkForm = () => {
     "domain",
   ]);
 
-  const onSubmit = async (value: LinkSchema) => {
+  const onSubmit = (value: LinkSchema) => {
     if (!linkId) return toast.error("Link ID is missing");
 
     const isNew = linkId === "new";
 
+    let res: Promise<any>;
+
     if (isNew)
-      await createLink({
+      res = createLink({
         json: value,
         query: { workspaceSlug },
       });
     else
-      await updateLink({
+      res = updateLink({
         json: value,
         query: { workspaceSlug },
         param: { linkId },
       });
 
-    close();
+    res.then(() => close());
   };
+
+  console.log(form.getValues());
 
   return (
     <Card className="rounded-xl border-0 p-0">
-      <CardContent>
+      <CardContent className="p-0">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

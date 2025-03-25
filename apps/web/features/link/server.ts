@@ -41,7 +41,7 @@ const linksApp = new Hono()
       }
     }
   )
-  .get("/:linkId", sessionMiddleware, roleMiddleware(), async (c) => {
+  .get("/:linkId", sessionMiddleware, async (c) => {
     try {
       const linkId = c.req.param("linkId");
 
@@ -67,7 +67,7 @@ const linksApp = new Hono()
     zValidator("json", linkSchema),
     async (c) => {
       try {
-        const { destination, slug, comment, domain, ...ogTags } =
+        const { destination, slug, comment, domain, ...rest } =
           c.req.valid("json");
 
         const workspace = c.get("workspace");
@@ -94,7 +94,7 @@ const linksApp = new Hono()
             workspaceId: workspace.id,
             workspaceSlug: workspace.slug,
             userId: user.id,
-            ...ogTags,
+            ...rest,
           },
         });
 
@@ -113,7 +113,8 @@ const linksApp = new Hono()
     zValidator("query", workspaceSlugSchema),
     async (c) => {
       try {
-        const { comment, destination, slug, domain } = c.req.valid("json");
+        const { comment, destination, slug, domain, ...rest } =
+          c.req.valid("json");
 
         const linkId = c.req.param("linkId");
 
@@ -138,6 +139,7 @@ const linksApp = new Hono()
             url: destination,
             key: slug,
             shortLink,
+            ...rest,
           },
         });
 

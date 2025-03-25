@@ -24,12 +24,14 @@ export const useGetLink = ({ linkId, queryKey }: GetLink) => {
         param: { linkId },
       });
 
-      if (!res.ok) {
-        toast.error("Something went wrong. Please try again later.");
-        return null;
-      }
+      const { data, error } = await res.json();
 
-      const { data } = await res.json();
+      if (!res.ok || error) {
+        toast.error(
+          error?.message || "Something went wrong. Please try again later."
+        );
+        throw new Error(error?.message || "Failed to fetch link");
+      }
 
       return data;
     },
