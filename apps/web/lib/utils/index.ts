@@ -24,3 +24,9 @@ export const groupByParam = <T extends Record<string, any>>(
 
   return Array.from(group.values());
 };
+
+export const truncate = (str: string | undefined, length: number) => {
+  if (!str) return undefined;
+
+  return str.length > length ? `${str.slice(0, length)}...` : str;
+};

@@ -24,9 +24,7 @@ export const useCreateLink = () => {
         throw new Error(data.error.message);
       }
 
-      const success = await res.json();
-
-      return success;
+      return data;
     },
     onSuccess: ({ data: link }) => {
       toast.success("Link Created!");

@@ -44,7 +44,7 @@ const WorkspaceSwitcher = ({ className }: WorkspaceSwitcherProps) => {
         <Skeleton className="w-full h-11" />
       ) : (
         <Select onValueChange={onSelect} value={slug}>
-          <SelectTrigger className="w-full h-auto font-medium border-0 ring-0">
+          <SelectTrigger className="w-full h-auto font-medium border border-neutral-200 ring-0">
             <SelectValue placeholder="No workspace selected" />
           </SelectTrigger>
           <SelectContent>

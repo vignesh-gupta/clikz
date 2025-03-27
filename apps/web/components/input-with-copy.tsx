@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 
-import { CheckIcon, CopyIcon } from "lucide-react";
 import { toast } from "sonner";
 
-import { Button } from "@clikz/ui/components/ui/button";
+import { CopyButton } from "@clikz/ui/components/copy-button";
 import { Input } from "@clikz/ui/components/ui/input";
 import { cn } from "@clikz/ui/lib/utils";
 
@@ -16,7 +15,7 @@ type InputWithCopyProps = {
 };
 
 const InputWithCopy = ({ value, readOnly, className }: InputWithCopyProps) => {
-  const [isCopied, setIsCopied] = useState(false);
+  const [, setIsCopied] = useState(false);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(value);
@@ -33,18 +32,11 @@ const InputWithCopy = ({ value, readOnly, className }: InputWithCopyProps) => {
         defaultValue={value}
         className="font-mono text-sm rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0"
       />
-      <Button
-        onClick={copyToClipboard}
+      <CopyButton
         variant="secondary"
+        value={value}
         className="px-3 rounded-l-none"
-      >
-        {isCopied ? (
-          <CheckIcon className="size-5" />
-        ) : (
-          <CopyIcon className="size-5" />
-        )}
-        <span className="sr-only">Copy ID</span>
-      </Button>
+      />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { deleteLinkFromRedis, setLinkToRedis } from "~/lib/cache/link";
 import { BASE_DOMAIN, BASE_URL } from "~/lib/constants";
 import { db } from "~/lib/db";
+import { truncate } from "~/lib/utils";
 import {
   fetchParamsSchema,
   linkSchema,
@@ -67,8 +68,15 @@ const linksApp = new Hono()
     zValidator("json", linkSchema),
     async (c) => {
       try {
-        const { destination, slug, comment, domain, ...rest } =
-          c.req.valid("json");
+        const {
+          destination,
+          slug,
+          comment,
+          domain,
+          title,
+          description,
+          ...rest
+        } = c.req.valid("json");
 
         const workspace = c.get("workspace");
 
@@ -94,6 +102,8 @@ const linksApp = new Hono()
             workspaceId: workspace.id,
             workspaceSlug: workspace.slug,
             userId: user.id,
+            title: truncate(title, 100),
+            description: truncate(description, 200),
             ...rest,
           },
         });
@@ -113,8 +123,15 @@ const linksApp = new Hono()
     zValidator("query", workspaceSlugSchema),
     async (c) => {
       try {
-        const { comment, destination, slug, domain, ...rest } =
-          c.req.valid("json");
+        const {
+          comment,
+          destination,
+          slug,
+          domain,
+          title,
+          description,
+          ...rest
+        } = c.req.valid("json");
 
         const linkId = c.req.param("linkId");
 
@@ -139,6 +156,8 @@ const linksApp = new Hono()
             url: destination,
             key: slug,
             shortLink,
+            title: truncate(title, 100),
+            description: truncate(description, 200),
             ...rest,
           },
         });
