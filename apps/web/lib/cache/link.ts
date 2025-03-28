@@ -1,4 +1,5 @@
-import { RequiredLinkProp } from "../types";
+import { Link } from "@prisma/client";
+
 import { redis } from "./redis";
 
 const getCacheKey = (key: string, domain: string) => `link:${domain}:${key}`;
@@ -6,13 +7,13 @@ const getCacheKey = (key: string, domain: string) => `link:${domain}:${key}`;
 export const getLinkViaRedis = async (key: string, domain: string) => {
   const cacheKey = getCacheKey(key, domain);
   const cached = await redis.get(cacheKey);
-  return cached as RequiredLinkProp | null;
+  return cached as Link | null;
 };
 
 export const setLinkToRedis = async (
   key: string,
   domain: string,
-  link: RequiredLinkProp,
+  link: Link,
   expireInDay: number = 1
 ) => {
   const cacheKey = getCacheKey(key, domain);

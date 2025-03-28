@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse, after } from "next/server";
 
+import { Link } from "@prisma/client";
+
 import { recordClickEvent } from "../analytics/click-events";
 import { getLinkViaRedis, setLinkToRedis } from "../cache/link";
-import { RequiredLinkProp } from "../types";
 import { getLinkViaEdgeWithKey, parse } from "./utils";
 import { getFinalUrl } from "./utils/final-url";
 
@@ -15,7 +16,7 @@ const LinkMiddleware = async (req: NextRequest) => {
   if (originalKey === "") {
     fullKey = "_root";
   }
-  let link: RequiredLinkProp | null = null;
+  let link: Link | null = null;
 
   link = await getLinkViaRedis(fullKey, domain);
 
@@ -23,7 +24,7 @@ const LinkMiddleware = async (req: NextRequest) => {
     console.log(
       `Link not found in Redis, fetching from Edge DB for  ${domain}/${fullKey}`
     );
-    link = await getLinkViaEdgeWithKey(fullKey, domain);
+    link = await getLinkViaEdgeWithKey({ domain, key: fullKey });
   }
 
   if (!link)
@@ -44,6 +45,11 @@ const LinkMiddleware = async (req: NextRequest) => {
   });
 
   const finalUrl = getFinalUrl(link.url, req);
+
+  if (link.proxy)
+    return NextResponse.redirect(`/proxy/${domain}/${fullKey}`, {
+      status: 302,
+    });
 
   return NextResponse.redirect(finalUrl, {
     status: 302,

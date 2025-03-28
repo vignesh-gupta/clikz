@@ -7,7 +7,7 @@ import { cn } from "@clikz/ui/lib/utils";
 
 import { BlurImage } from "~/components/blur-image";
 import { GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
-import { isValidUrl } from "~/lib/utils/url";
+import { getDomainWithoutWWW } from "~/lib/utils/url";
 
 function LinkFavIcon({
   url,
@@ -22,12 +22,12 @@ function LinkFavIcon({
   height?: number;
   width?: number;
 }) {
-  const validUrl = url && isValidUrl(url) ? new URL(url) : null;
+  const validUrl = url && getDomainWithoutWWW(url);
 
   return validUrl ? (
     <BlurImage
       src={`${GOOGLE_FAVICON_URL_V2}${validUrl}`}
-      alt={`${validUrl.toString()}'s favicon`}
+      alt={`${validUrl}'s favicon`}
       className={cn("size-8 rounded-full", className)}
       width={height || 20}
       height={width || 20}

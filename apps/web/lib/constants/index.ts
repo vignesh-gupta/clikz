@@ -30,7 +30,7 @@ export const DEFAULT_REDIRECTS = new Map([
 
 export const GOOGLE_FAVICON_URL = "https://www.google.com/s2/favicons?domain=";
 export const GOOGLE_FAVICON_URL_V2 =
-  "https://www.google.com/s2/favicons?sz=64&domain_url=";
+  "https://www.google.com/s2/favicons?sz=64&domain_url=https://";
 
 export const QUERY_KEYS = {
   LINK: ["link"],
