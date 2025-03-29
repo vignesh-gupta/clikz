@@ -174,21 +174,28 @@ const linksApp = new Hono()
       }
     }
   )
-  .delete("/:linkId", sessionMiddleware, roleMiddleware(), async (c) => {
-    try {
-      const linkId = c.req.param("linkId");
+  .delete(
+    "/:linkId",
+    sessionMiddleware,
+    roleMiddleware(),
+    zValidator("query", workspaceSlugSchema),
+    async (c) => {
+      try {
+        const linkId = c.req.param("linkId");
 
-      const link = await db.link.delete({
-        where: { id: linkId },
-      });
-      after(() => deleteLinkFromRedis(link.key, link.domain));
+        const link = await db.link.delete({
+          where: { id: linkId },
+        });
+        after(() => deleteLinkFromRedis(link.key, link.domain));
 
-      return c.json(generateAPIResponse(link));
-    } catch (error) {
-      const { json, status, headers } = handleAndReturnAPIErrorResponse(error);
-      return c.json(json, status, headers);
+        return c.json(generateAPIResponse(link));
+      } catch (error) {
+        const { json, status, headers } =
+          handleAndReturnAPIErrorResponse(error);
+        return c.json(json, status, headers);
+      }
     }
-  })
+  )
   .get("/:slug/exist", async (c) => {
     const slug = c.req.param("slug");
     const domain = c.req.query("domain") ?? BASE_DOMAIN;

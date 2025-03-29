@@ -23,6 +23,7 @@ export const useDeleteLink = () => {
     mutationFn: async ({ param }) => {
       const res = await client.api.links[":linkId"].$delete({
         param,
+        query: { workspaceSlug: workspace },
       });
 
       if (!res.ok) {

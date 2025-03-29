@@ -81,8 +81,6 @@ const LinkForm = () => {
     res.then(() => close());
   };
 
-  console.log(form.getValues());
-
   return (
     <Card className="rounded-xl border-0 p-0">
       <CardContent className="p-0">
