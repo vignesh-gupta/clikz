@@ -5,6 +5,8 @@ import { MousePointerClickIcon, MoveRightIcon } from "lucide-react";
 import { CopyButton } from "@clikz/ui/components/copy-button";
 import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
 
+import { BASE_DOMAIN } from "~/lib/constants";
+
 import LinkActions from "./link-actions";
 import { LinkDataProps } from "./link-card";
 import LinkFavIcon from "./link-fav-icon";
@@ -30,7 +32,7 @@ export function LinkRow({
         <div className="flex items-center gap-2 grow overflow-hidden">
           <div className="flex items-center max-w-[50%] ">
             <Link href={shortUrl} target="_blank" className="truncate">
-              {`${domain}/${slug}`}
+              {`${domain}/${slug === "_root" && domain !== BASE_DOMAIN ? "" : slug}`}
             </Link>
             <span className="sr-only">Copy</span>
             <CopyButton
@@ -46,7 +48,19 @@ export function LinkRow({
               target="_blank"
               className="truncate text-muted-foreground hover:underline underline-offset-2"
             >
-              {longUrl}
+              {longUrl ? (
+                <Link
+                  href={longUrl}
+                  target="_blank"
+                  className=" truncate text-muted-foreground hover:underline underline-offset-2"
+                >
+                  {longUrl}
+                </Link>
+              ) : (
+                <span className=" truncate text-muted-foreground">
+                  No Redirect configured
+                </span>
+              )}
             </Link>
           </div>
         </div>

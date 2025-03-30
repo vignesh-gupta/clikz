@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { InferRequestType, InferResponseType } from "hono";
+import { InferResponseType } from "hono";
 import { toast } from "sonner";
 
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
@@ -10,9 +10,9 @@ type ResponseType = InferResponseType<
   (typeof client.api.links)[":linkId"]["$delete"],
   200
 >;
-type RequestType = InferRequestType<
-  (typeof client.api.links)[":linkId"]["$delete"]
->;
+type RequestType = {
+  linkId: string;
+};
 
 export const useDeleteLink = () => {
   const queryClient = useQueryClient();
@@ -20,9 +20,9 @@ export const useDeleteLink = () => {
   const workspace = useWorkspaceSlug();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ param }) => {
+    mutationFn: async ({ linkId }) => {
       const res = await client.api.links[":linkId"].$delete({
-        param,
+        param: { linkId },
         query: { workspaceSlug: workspace },
       });
 

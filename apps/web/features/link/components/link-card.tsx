@@ -5,6 +5,8 @@ import { CornerDownRight, MousePointerClickIcon } from "lucide-react";
 import { CopyButton } from "@clikz/ui/components/copy-button";
 import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
 
+import { BASE_DOMAIN } from "~/lib/constants";
+
 import LinkActions from "./link-actions";
 import LinkFavIcon from "./link-fav-icon";
 
@@ -39,7 +41,7 @@ export function LinkCard({
           <div className="flex-grow min-w-0">
             <div className="flex items-center">
               <Link href={shortUrl} target="_blank" className="truncate">
-                {`${domain}/${slug}`}
+                {`${domain}/${slug === "_root" && domain !== BASE_DOMAIN ? "" : slug}`}
               </Link>
               <span className="sr-only">Copy</span>
               <CopyButton

@@ -30,7 +30,7 @@ const LinkActions = ({ linkId, shortUrl }: LinkActionsProps) => {
   };
 
   const handleDelete = () => {
-    deleteLink({ param: { linkId } });
+    deleteLink({ linkId });
   };
 
   return (
