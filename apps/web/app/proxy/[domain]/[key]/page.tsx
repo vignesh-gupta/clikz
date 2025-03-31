@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { unescape } from "html-escaper";
 
 import { BlurImage } from "~/components/blur-image";
-import { GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
+import { BASE_URL, GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
 import { getLinkViaEdgeWithKey } from "~/lib/middleware/utils";
 import { getApexDomain } from "~/lib/utils/url";
 
@@ -52,7 +52,7 @@ const ProxyPage = async ({ params }: ProxyPageParams) => {
     <main className="flex h-screen w-screen items-center justify-center">
       <div className="mx-5 w-full max-w-lg overflow-hidden rounded-lg border border-neutral-200 sm:mx-0">
         <img
-          src={data.image}
+          src={data.image || `${BASE_URL}/logo-dark.png`}
           alt={unescape(data.title || "")}
           className="w-full object-cover"
         />
