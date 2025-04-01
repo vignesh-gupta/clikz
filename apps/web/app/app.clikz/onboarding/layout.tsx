@@ -1,9 +1,9 @@
 import { FC, PropsWithChildren } from "react";
 
 import MaxWidthContainer from "~/components/max-width-container";
-import { constructMetaTags } from "~/lib/meta-data";
+import { constructMetadata } from "~/lib/meta-data";
 
-export const metadata = constructMetaTags({
+export const metadata = constructMetadata({
   title: "Welcome to Clikz",
 });
 
