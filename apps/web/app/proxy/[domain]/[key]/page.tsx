@@ -16,16 +16,9 @@ export async function generateMetadata({ params }: ProxyPageParams) {
   const { domain, key } = await params;
 
   const data = await getLinkViaEdgeWithKey({
-    domain,
+    domain: decodeURIComponent(domain), // decode domain in case it's encoded
     key: decodeURIComponent(key), // decode key in case it's encoded
   });
-
-  console.log("Proxy page metadata", {
-    data,
-    domain,
-    key,
-  });
-
   if (!data || !data.proxy) {
     return;
   }
@@ -46,11 +39,9 @@ const ProxyPage = async ({ params }: ProxyPageParams) => {
   const { domain, key } = await params;
 
   const data = await getLinkViaEdgeWithKey({
-    domain,
+    domain: decodeURIComponent(domain),
     key: decodeURIComponent(key), // decode key in case it's encoded
   });
-
-  console.log("Proxy page data", { data, domain, key });
 
   if (!data) notFound();
 
