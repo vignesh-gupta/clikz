@@ -44,14 +44,15 @@ const LinkMiddleware = async (req: NextRequest) => {
     setLinkToRedis(fullKey, domain, link);
   });
 
-  const finalUrl = getFinalUrl(link.url, req);
-
   if (link.proxy)
-    return NextResponse.redirect(`/proxy/${domain}/${fullKey}`, {
-      status: 302,
-    });
+    return NextResponse.redirect(
+      new URL(`/proxy/${domain}/${fullKey}`, req.url),
+      {
+        status: 302,
+      }
+    );
 
-  return NextResponse.redirect(finalUrl, {
+  return NextResponse.redirect(getFinalUrl(link.url, req), {
     status: 302,
   });
 };
