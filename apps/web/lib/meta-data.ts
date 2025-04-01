@@ -1,49 +1,100 @@
 import { Metadata } from "next";
 
+import { BASE_URL } from "./constants";
+
 type MetaTagProps = {
   title?: string;
+  fullTitle?: string;
   description?: string;
-  SITE_URL?: string;
+  image?: string | null;
+  video?: string | null;
+  icons?: Metadata["icons"];
+  url?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
+  manifest?: string | URL | null;
   keywords?: string[];
 };
 
-export function constructMetaTags({
-  SITE_URL = "https://clikz.live/",
-  description = "Boost your marketing efforts with Clikz! Create, manage, and track your links effortlessly—collaborate with your team and gain powerful insights to maximize reach and engagement!",
-  title = "Clikz - Manage your links effortlessly!",
-  keywords = [],
-}: MetaTagProps): Metadata {
-  return {
-    title,
-    description,
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      creator: "@vigneshfixes",
-      images: {
-        url: "/thumbnail.jpeg",
-        width: "100%",
-        height: "auto",
-        alt: title,
-      },
+export function constructMetadata({
+  title,
+  fullTitle,
+  description = "Reduce your marketing efforts with Clikz! Create, manage, and track your links effortlessly—collaborate with your team and gain powerful insights to maximize reach and engagement!",
+  image = "https://www.clikz.live/thumbnail.jpeg",
+  video,
+  icons = [
+    {
+      rel: "apple-touch-icon",
+      sizes: "32x32",
+      url: "https://www.clikz.live/favicons/apple-touch-icon.png",
     },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      url: "https://www.clikz.live/favicons/favicon-32x32.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      url: "https://www.clikz.live/favicons/favicon-16x16.png",
+    },
+  ],
+  url,
+  canonicalUrl,
+  noIndex = false,
+  manifest,
+  keywords = [],
+}: MetaTagProps = {}): Metadata {
+  return {
+    title:
+      fullTitle ||
+      (title ? `${title} | Clikz` : "Clikz - Manage your links effortlessly!"),
+    description,
     openGraph: {
       title,
       description,
-      images: {
-        url: "/thumbnail.jpeg",
-        alt: title,
-      },
-      type: "website",
-      url: SITE_URL,
+      ...(image && {
+        images: image,
+      }),
+      url,
+      ...(video && {
+        videos: video,
+      }),
     },
-    metadataBase: new URL(SITE_URL),
+    twitter: {
+      title,
+      description,
+      ...(image && {
+        card: "summary_large_image",
+        images: [image],
+      }),
+      ...(video && {
+        player: video,
+      }),
+      creator: "@vigneshfixes",
+    },
     authors: {
       name: "Vighnesh Gupta",
       url: new URL("https://vigneshgupta.me/"),
     },
-    creator: "Vighnesh Gupta",
+    icons,
+    metadataBase: new URL(BASE_URL),
+    ...((url || canonicalUrl) && {
+      alternates: {
+        canonical: url || canonicalUrl,
+      },
+    }),
+    ...(noIndex && {
+      robots: {
+        index: false,
+        follow: false,
+      },
+    }),
+    ...(manifest && {
+      manifest,
+    }),
     keywords: [
       "nextjs",
       "frontend",

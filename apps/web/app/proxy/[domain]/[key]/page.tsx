@@ -1,10 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
+import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 import { unescape } from "html-escaper";
 
 import { BlurImage } from "~/components/blur-image";
-import { BASE_URL, GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
+import { BASE_DOMAIN, BASE_URL, GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
+import { constructMetadata } from "~/lib/meta-data";
 import { getLinkViaEdgeWithKey } from "~/lib/middleware/utils";
 import { getApexDomain } from "~/lib/utils/url";
 
@@ -12,7 +14,9 @@ type ProxyPageParams = {
   params: Promise<{ domain: string; key: string }>;
 };
 
-export async function generateMetadata({ params }: ProxyPageParams) {
+export async function generateMetadata({
+  params,
+}: ProxyPageParams): Promise<Metadata> {
   const { domain, key } = await params;
 
   const data = await getLinkViaEdgeWithKey({
@@ -20,19 +24,18 @@ export async function generateMetadata({ params }: ProxyPageParams) {
     key: decodeURIComponent(key), // decode key in case it's encoded
   });
   if (!data || !data.proxy) {
-    return;
+    return {};
   }
 
   const apexDomain = getApexDomain(data.url);
 
-  return {
+  return constructMetadata({
     title: unescape(data.title || ""),
     description: unescape(data.description || ""),
-    image: data.image,
-    video: data.video,
-    icons: `${GOOGLE_FAVICON_URL_V2}${apexDomain}`,
-    noIndex: true,
-  };
+    image: data.image ?? "/thumbnail.jpeg",
+    icons: `${GOOGLE_FAVICON_URL_V2}${apexDomain ?? BASE_DOMAIN}`,
+    keywords: apexDomain ? [apexDomain, domain] : [domain],
+  });
 }
 
 const ProxyPage = async ({ params }: ProxyPageParams) => {

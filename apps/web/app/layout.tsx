@@ -2,10 +2,10 @@ import TailwindSizeUtil from "@clikz/ui/components/tailwind-size-util";
 import "@clikz/ui/globals.css";
 
 import Providers from "~/components/provider";
-import { constructMetaTags } from "~/lib/meta-data";
+import { constructMetadata } from "~/lib/meta-data";
 import { inter } from "~/styles/font";
 
-export const metadata = constructMetaTags({});
+export const metadata = constructMetadata();
 
 export default function RootLayout({
   children,
