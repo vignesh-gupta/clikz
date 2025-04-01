@@ -10,6 +10,8 @@ import { constructMetadata } from "~/lib/meta-data";
 import { getLinkViaEdgeWithKey } from "~/lib/middleware/utils";
 import { getApexDomain } from "~/lib/utils/url";
 
+import RedirectionToDest from "./redirection";
+
 type ProxyPageParams = {
   params: Promise<{ domain: string; key: string }>;
 };
@@ -52,6 +54,7 @@ const ProxyPage = async ({ params }: ProxyPageParams) => {
 
   return (
     <main className="flex h-screen w-screen items-center justify-center">
+      <RedirectionToDest url={data.url} />
       <div className="mx-5 w-full max-w-lg overflow-hidden rounded-lg border border-neutral-200 sm:mx-0">
         <img
           src={data.image || `${BASE_URL}/logo-dark.png`}

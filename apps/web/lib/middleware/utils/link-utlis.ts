@@ -7,7 +7,7 @@ export const detectBot = (req: NextRequest) => {
   if (ua) {
     /* Note:
      * - bot is for most bots & crawlers
-     * - metatags is for Dub.co Metatags API (https://api.dub.co/metatags)
+     * - metatags is for Clikz.live Metatags API
      * - ChatGPT is for ChatGPT
      * - bluesky is for Bluesky crawler
      * - facebookexternalhit is for Facebook crawler

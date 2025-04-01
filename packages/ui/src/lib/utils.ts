@@ -28,7 +28,7 @@ export function getQRData({
     margin,
     ...(!hideLogo && {
       imageSettings: {
-        src: logo || "https://assets.dub.co/logo.png",
+        src: logo || "https://www.clikz.live/logo.png",
         height: 256,
         width: 256,
         excavate: true,
