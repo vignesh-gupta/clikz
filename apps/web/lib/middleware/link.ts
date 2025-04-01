@@ -4,6 +4,7 @@ import { Link } from "@prisma/client";
 
 import { recordClickEvent } from "../analytics/click-events";
 import { getLinkViaRedis, setLinkToRedis } from "../cache/link";
+import { BASE_DOMAIN } from "../constants";
 import { getLinkViaEdgeWithKey, parse } from "./utils";
 import { getFinalUrl } from "./utils/final-url";
 
@@ -44,13 +45,14 @@ const LinkMiddleware = async (req: NextRequest) => {
     setLinkToRedis(fullKey, domain, link);
   });
 
-  if (link.proxy)
-    return NextResponse.redirect(
-      new URL(`/proxy/${domain}/${fullKey}`, req.url),
-      {
-        status: 302,
-      }
-    );
+  if (link.proxy) {
+    const finalUrl = new URL(`${BASE_DOMAIN}/proxy/${domain}/${fullKey}`);
+    console.log("Proxying to", finalUrl.toString());
+
+    return NextResponse.rewrite(finalUrl, {
+      status: 302,
+    });
+  }
 
   return NextResponse.redirect(getFinalUrl(link.url, req), {
     status: 302,

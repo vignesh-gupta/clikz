@@ -19,7 +19,7 @@ export const getFinalUrl = (url: string, req: NextRequest) => {
     searchParams.get(REDIRECTS_PARAMS) || ""
   );
 
-  const urlObj = redirectUrl ? new URL(redirectUrl) : new URL(url);
+  const urlObj = redirectUrl ? new URL(redirectUrl) : new URL(url, req.url);
 
   if (searchParams.size > 0) {
     for (const [key, value] of searchParams.entries()) {
