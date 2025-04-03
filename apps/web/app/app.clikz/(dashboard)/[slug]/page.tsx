@@ -25,7 +25,7 @@ const WorkspaceLinkPage = async ({
   });
 
   return (
-    <div className="flex h-full flex-col flex-1 gap-y-2">
+    <div className="flex flex-col flex-1 h-full gap-y-2">
       <PageHeader title="Links" />
       <div className="flex-1 space-y-4">
         <PageFilters />

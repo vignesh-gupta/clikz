@@ -84,7 +84,7 @@ const LinkForm = () => {
   };
 
   return (
-    <Card className="bg-transparent border-0 text-gray-800">
+    <Card className="text-gray-800 bg-transparent border-0">
       <CardContent className="p-0">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -97,7 +97,7 @@ const LinkForm = () => {
                   <FormControl>
                     <Input placeholder="https://www.example.com" {...field} />
                   </FormControl>
-                  <FormMessage className="text-xs ml-2" />
+                  <FormMessage className="ml-2 text-xs" />
                 </FormItem>
               )}
             />
@@ -106,7 +106,7 @@ const LinkForm = () => {
               name="slug"
               render={({ field }) => (
                 <FormItem>
-                  <div className="flex justify-between items-center">
+                  <div className="flex items-center justify-between">
                     <FormLabel>Short Link</FormLabel>
                     <Button
                       variant="ghost"
@@ -120,7 +120,7 @@ const LinkForm = () => {
                   </div>
                   <FormControl className="flex">
                     <div className="flex rounded-md shadow-sm">
-                      <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                      <span className="inline-flex items-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
                         {`${BASE_DOMAIN}/`}
                       </span>
                       <Input
@@ -130,7 +130,7 @@ const LinkForm = () => {
                       />
                     </div>
                   </FormControl>
-                  <FormMessage className="text-xs ml-2" />
+                  <FormMessage className="ml-2 text-xs" />
                 </FormItem>
               )}
             />
@@ -146,7 +146,7 @@ const LinkForm = () => {
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Creating...
                 </>
               ) : (

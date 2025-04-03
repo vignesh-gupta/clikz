@@ -39,7 +39,7 @@ const WorkspaceIcon = ({
     <Avatar className={className}>
       <AvatarImage
         src={image || defaultIconUrl}
-        className="size-full object-cover"
+        className="object-cover size-full"
         height={height}
         width={width}
       />

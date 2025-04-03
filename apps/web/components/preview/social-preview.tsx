@@ -18,34 +18,32 @@ export const ImagePreview = ({
   className?: string;
 }) => {
   return (
-    <>
-      <div
-        className={cn(
-          "relative aspect-[2/1] w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100",
-          className
-        )}
-      >
-        {image ? (
-          <img
-            src={image}
-            alt="Preview"
-            className="relative size-full rounded-[inherit] object-cover"
-          />
-        ) : (
-          <div className="flex flex-col items-center justify-center space-y-4 bg-white size-full">
-            <ImageIcon className="text-gray-400 size-8" />
-            <p className="text-sm text-gray-400">
-              Enter a link to generate a preview.
-            </p>
-          </div>
-        )}
-        {loading && (
-          <div className="absolute inset-0 z-[5] flex items-center justify-center rounded-[inherit] bg-white">
-            <LoaderCircle className="animate-spin size-5" />
-          </div>
-        )}
-      </div>
-    </>
+    <div
+      className={cn(
+        "relative aspect-[2/1] w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100",
+        className
+      )}
+    >
+      {image ? (
+        <img
+          src={image}
+          alt="Preview"
+          className="relative size-full rounded-[inherit] object-cover"
+        />
+      ) : (
+        <div className="flex flex-col items-center justify-center space-y-4 bg-white size-full">
+          <ImageIcon className="text-gray-400 size-8" />
+          <p className="text-sm text-gray-400">
+            Enter a link to generate a preview.
+          </p>
+        </div>
+      )}
+      {loading && (
+        <div className="absolute inset-0 z-[5] flex items-center justify-center rounded-[inherit] bg-white">
+          <LoaderCircle className="animate-spin size-5" />
+        </div>
+      )}
+    </div>
   );
 };
 

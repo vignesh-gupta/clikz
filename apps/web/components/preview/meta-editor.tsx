@@ -1,8 +1,10 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { EditIcon } from "lucide-react";
+import { IKUpload } from "imagekitio-next";
+import { IKUploadResponse } from "imagekitio-next/dist/types/components/IKUpload/props";
+import { EditIcon, ImageIcon, Upload } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -15,10 +17,10 @@ import {
   FormMessage,
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
+import { Skeleton } from "@clikz/ui/components/ui/skeleton";
+import { cn } from "@clikz/ui/lib/utils";
 
 import { LinkSchema } from "~/lib/zod/schemas";
-
-import { ImagePreview } from "./social-preview";
 
 type MetaEditorProps = {
   url?: string;
@@ -49,8 +51,10 @@ const MetaEditor = ({ loading, url }: MetaEditorProps) => {
     });
   }, [title, description, image]);
 
-  const handleUpdate = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleUpdate = (
+    name: "title" | "description" | "image",
+    value: string
+  ) => {
     setMetadata((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -77,7 +81,11 @@ const MetaEditor = ({ loading, url }: MetaEditorProps) => {
         </Button>
       }
     >
-      <ImagePreview loading={loading} image={url} />
+      <MetaImagePreview
+        loading={loading}
+        image={url}
+        onUpload={(url) => handleUpdate("image", url)}
+      />
       <div className="flex flex-col space-y-4">
         <FormItem>
           <FormLabel>Title</FormLabel>
@@ -85,7 +93,7 @@ const MetaEditor = ({ loading, url }: MetaEditorProps) => {
             <Input
               value={metadata.title}
               name="title"
-              onChange={handleUpdate}
+              onChange={(e) => handleUpdate("title", e.target.value)}
               placeholder="Enter a title"
               maxLength={100}
             />
@@ -98,7 +106,7 @@ const MetaEditor = ({ loading, url }: MetaEditorProps) => {
             <Input
               value={metadata.description}
               name="description"
-              onChange={handleUpdate}
+              onChange={(e) => handleUpdate("description", e.target.value)}
               placeholder="Enter a description"
               maxLength={200}
             />
@@ -115,3 +123,76 @@ const MetaEditor = ({ loading, url }: MetaEditorProps) => {
 };
 
 export default MetaEditor;
+
+type ImagePreviewProps = {
+  image?: string;
+  loading: boolean;
+  className?: string;
+  // eslint-disable-next-line no-unused-vars
+  onUpload: (url: string) => void;
+};
+
+const MetaImagePreview = ({
+  image,
+  loading,
+  className,
+  onUpload,
+}: ImagePreviewProps) => {
+  const [isUploading, setIsUploading] = useState(false);
+
+  const onError = (err: any) => {
+    console.log("Error", err);
+    toast.error("Failed to upload image. Please try again.");
+    setIsUploading(false);
+  };
+
+  const onSuccess = (res: IKUploadResponse) => {
+    onUpload(res.url);
+    setIsUploading(false);
+  };
+
+  if (loading || isUploading) {
+    return <Skeleton className="w-full h-48 aspect-[2/1]" />;
+  }
+
+  return (
+    <div className="relative overflow-hidden border-2 rounded-lg group shrink-0">
+      <div
+        className={cn(
+          "relative aspect-[2/1] w-full overflow-hidden  border border-gray-300 bg-gray-100",
+          className
+        )}
+      >
+        {image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt="Preview"
+            className="relative size-full rounded-[inherit] object-cover"
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center space-y-4 bg-white size-full">
+            <ImageIcon className="text-gray-400 size-8" />
+            <p className="text-sm text-gray-400">No Image</p>
+          </div>
+        )}
+      </div>
+
+      <div className="absolute inset-0 items-center justify-center hidden bg-gray-500/30 group-hover:flex">
+        <label htmlFor="avatar-upload" className="cursor-pointer">
+          <Upload className="text-white size-6" />
+          <span className="sr-only">Upload new avatar</span>
+        </label>
+      </div>
+      <IKUpload
+        useUniqueFileName
+        className="absolute inset-0 opacity-0 cursor-pointer size-full"
+        onError={onError}
+        onSuccess={onSuccess}
+        onUploadStart={() => setIsUploading(true)}
+        accept="image/png,image/jpeg"
+        validateFile={(file) => file.size < 2 * 1024 * 1024} // 2MB
+      />
+    </div>
+  );
+};
