@@ -44,7 +44,7 @@ const ResponsiveModel = ({
         {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
         <DrawerClose className="bg-gray-700" />
         <DrawerContent className={cn("px-2", className)}>
-          <ScrollArea className="overflow-y-auto hide-scrollbar inset-x-0">
+          <ScrollArea className="inset-x-0 overflow-y-auto hide-scrollbar">
             {title && <DrawerTitle className="mb-2">{title}</DrawerTitle>}
             {children}
           </ScrollArea>
@@ -57,7 +57,7 @@ const ResponsiveModel = ({
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent
         className={cn(
-          "w-auto max-w-screen-lg border-none overflow-y-auto hide-scrollbar px-8 ",
+          "w-auto max-w-screen-lg border-none overflow-y-auto hide-scrollbar px-8 rounded-lg",
           className,
         )}
         aria-describedby="responsive-dialog"

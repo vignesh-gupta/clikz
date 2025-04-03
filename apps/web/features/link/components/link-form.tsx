@@ -46,8 +46,8 @@ const LinkForm = () => {
       comment: linkData?.comment ?? "",
       domain: linkData?.domain ?? BASE_DOMAIN ?? "",
       proxy: linkData?.proxy ?? false,
-      title: linkData?.title ?? "",
-      description: linkData?.description ?? "",
+      title: linkData?.title ?? "No title",
+      description: linkData?.description ?? "No description",
       image: linkData?.image ?? "",
       video: linkData?.video ?? "",
     },
@@ -82,12 +82,12 @@ const LinkForm = () => {
   };
 
   return (
-    <Card className="rounded-xl border-0 p-0">
+    <Card className="p-0 border-0 rounded-xl">
       <CardContent className="p-0">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-4 col-span-2">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="col-span-2 space-y-4">
                 <FormField
                   control={form.control}
                   name="destination"
@@ -148,7 +148,7 @@ const LinkForm = () => {
                   )}
                 />
               </div>
-              <div className="space-y-4 flex flex-col items-center">
+              <div className="flex flex-col items-center space-y-4">
                 <QRPreview slug={slug} domain={domain} />
                 <LinkPreview url={destination} />
               </div>

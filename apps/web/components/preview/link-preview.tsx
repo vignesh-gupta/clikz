@@ -56,11 +56,8 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
   useEffect(() => {
     if (!debouncedUrl || linkId !== "new") return;
 
-    const controller = new AbortController();
     startTransaction(() =>
-      fetch(`/api/metadata?url=${encodeURIComponent(debouncedUrl)}`, {
-        signal: controller.signal,
-      })
+      fetch(`/api/metadata?url=${encodeURIComponent(debouncedUrl)}`)
         .then(async (res) => {
           if (!res.ok) {
             throw new Error("Failed to fetch metadata");
@@ -77,13 +74,13 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
   }, [debouncedUrl]);
 
   return (
-    <Card className="w-full max-w-md overflow-hidden bg-transparent border-0">
-      <CardHeader className="p-0 flex-row justify-between items-center">
+    <Card className="w-full max-w-md overflow-hidden bg-transparent border-0 ">
+      <CardHeader className="flex-row items-center justify-between p-0">
         <FormField
           control={form.control}
           name="proxy"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm flex-1 px-1 py-0">
+            <FormItem className="flex flex-row items-center justify-between flex-1 px-1 py-0">
               <FormLabel>Custom Preview</FormLabel>
               <FormControl>
                 <Switch
@@ -98,8 +95,8 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
         />
       </CardHeader>
       <CardContent className="p-0">
-        <Tabs defaultValue="default">
-          <TabsList className="w-full grid grid-cols-4 gap-1 bg-transparent">
+        <Tabs defaultValue="default" className="relative">
+          <TabsList className="grid w-full grid-cols-4 gap-1 bg-transparent">
             <TabsTrigger value="default">
               <FaGlobe className="size-4" />
             </TabsTrigger>
@@ -116,7 +113,7 @@ const LinkPreview = ({ url }: LinkPreviewProps) => {
           {loading ? (
             <div className="mt-4 space-y-4">
               <Skeleton className="w-full h-48" />
-              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="w-2/3 h-4" />
             </div>
           ) : (
             <>

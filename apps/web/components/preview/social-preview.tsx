@@ -1,6 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { PropsWithChildren } from "react";
-
 import { ImageIcon, LoaderCircle } from "lucide-react";
 
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
@@ -8,18 +6,19 @@ import { cn } from "@clikz/ui/lib/utils";
 
 import { isValidUrl } from "~/lib/utils/url";
 
-const ImagePreview = ({
+import MetaEditor from "./meta-editor";
+
+export const ImagePreview = ({
   image,
   loading,
-  children,
   className,
-}: PropsWithChildren<{
+}: {
   image?: string;
   loading: boolean;
   className?: string;
-}>) => {
+}) => {
   return (
-    <div className="relative">
+    <>
       <div
         className={cn(
           "relative aspect-[2/1] w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100",
@@ -34,7 +33,7 @@ const ImagePreview = ({
           />
         ) : (
           <div className="flex flex-col items-center justify-center space-y-4 bg-white size-full">
-            <ImageIcon className="size-8 text-gray-400" />
+            <ImageIcon className="text-gray-400 size-8" />
             <p className="text-sm text-gray-400">
               Enter a link to generate a preview.
             </p>
@@ -46,8 +45,7 @@ const ImagePreview = ({
           </div>
         )}
       </div>
-      {children}
-    </div>
+    </>
   );
 };
 
@@ -68,24 +66,27 @@ export const WebPreview = ({
   image,
 }: WebPreviewProps) => {
   return (
-    <ImagePreview image={image} loading={loading}>
+    <div className="relative group">
+      <MetaEditor loading={loading} url={image} />
+      <ImagePreview image={image} loading={loading} />
       <div className="px-1 pt-2 space-y-1">
         <h3 className="text-sm line-clamp-1">{title}</h3>
         <p className="text-xs line-clamp-2">{description}</p>
       </div>
-    </ImagePreview>
+    </div>
   );
 };
 
 export const XPreview = ({ loading, title, image }: BasePreviewProps) => {
   return (
-    <ImagePreview image={image} loading={loading} className="rounded-2xl">
+    <>
+      <ImagePreview image={image} loading={loading} className="rounded-2xl" />
       <div className="absolute space-y-1 left-2 bottom-2">
         <h3 className="px-2 py-1 text-sm text-white rounded-md bg-gray-900/35 line-clamp-1">
           {title}
         </h3>
       </div>
-    </ImagePreview>
+    </>
   );
 };
 
@@ -100,12 +101,13 @@ export const FacebookPreview = ({
   image,
 }: FacebookPreviewProps) => {
   return (
-    <ImagePreview image={image} loading={loading} className="rounded-none">
+    <>
+      <ImagePreview image={image} loading={loading} className="rounded-none" />
       <div className="p-3 space-y-1 bg-gray-100 border-t-0 border-gray-800 rounded-none border-1 line-clamp-1">
         <h3 className="text-sm">{title}</h3>
         <p className="text-xs line-clamp-2">{description}</p>
       </div>
-    </ImagePreview>
+    </>
   );
 };
 
