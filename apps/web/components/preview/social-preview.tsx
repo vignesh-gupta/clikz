@@ -65,7 +65,7 @@ export const WebPreview = ({
 }: WebPreviewProps) => {
   return (
     <div className="relative group">
-      <MetaEditor loading={loading} url={image} />
+      <MetaEditor loading={loading} />
       <ImagePreview image={image} loading={loading} />
       <div className="px-1 pt-2 space-y-1">
         <h3 className="text-sm line-clamp-1">{title}</h3>

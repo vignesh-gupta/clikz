@@ -23,11 +23,10 @@ import { cn } from "@clikz/ui/lib/utils";
 import { LinkSchema } from "~/lib/zod/schemas";
 
 type MetaEditorProps = {
-  url?: string;
   loading: boolean;
 };
 
-const MetaEditor = ({ loading, url }: MetaEditorProps) => {
+const MetaEditor = ({ loading }: MetaEditorProps) => {
   const form = useFormContext<LinkSchema>();
 
   const [open, setOpen] = useState(false);
@@ -83,7 +82,7 @@ const MetaEditor = ({ loading, url }: MetaEditorProps) => {
     >
       <MetaImagePreview
         loading={loading}
-        image={url}
+        image={metadata.image}
         onUpload={(url) => handleUpdate("image", url)}
       />
       <div className="flex flex-col space-y-4">
@@ -156,7 +155,7 @@ const MetaImagePreview = ({
   }
 
   return (
-    <div className="relative overflow-hidden border-2 rounded-lg group shrink-0">
+    <div className="relative overflow-hidden rounded-xl group shrink-0 w-full h-48 aspect-[2/1]">
       <div
         className={cn(
           "relative aspect-[2/1] w-full overflow-hidden  border border-gray-300 bg-gray-100",
@@ -178,11 +177,9 @@ const MetaImagePreview = ({
         )}
       </div>
 
-      <div className="absolute inset-0 items-center justify-center hidden bg-gray-500/30 group-hover:flex">
-        <label htmlFor="avatar-upload" className="cursor-pointer">
-          <Upload className="text-white size-6" />
-          <span className="sr-only">Upload new avatar</span>
-        </label>
+      <div className="absolute inset-0 items-center justify-center flex-col text-white hidden bg-gray-500/30 group-hover:flex">
+        <Upload className="size-6" />
+        <span>Upload thumbnail</span>
       </div>
       <IKUpload
         useUniqueFileName
