@@ -83,8 +83,7 @@ const RegionAnalytics = ({ data }: AnalyticsDataProp) => {
                 className="size-4 object-contain"
               />
             ),
-            label:
-              COUNTRIES[data.country as keyof typeof COUNTRIES] ?? "Unknown",
+            label: COUNTRIES[data.country] ?? "Unknown",
             amt: data.amt,
           }))}
         />
@@ -95,9 +94,7 @@ const RegionAnalytics = ({ data }: AnalyticsDataProp) => {
           filledBarClassName="bg-blue-500"
           items={groupByContinent.map((data) => ({
             icon: <Globe2Icon className="size-4 " />,
-            label:
-              CONTINENTS[data.continent as keyof typeof CONTINENTS] ??
-              "Unknown",
+            label: CONTINENTS[data.continent] ?? "Unknown",
             amt: data.amt,
           }))}
         />
