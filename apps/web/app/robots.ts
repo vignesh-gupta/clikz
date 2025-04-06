@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-import { BASE_URL } from "~/lib/constants";
+import { BASE_URL } from "@clikz/utils/constants";
 
 export default function robots(): MetadataRoute.Robots {
   return {

@@ -22,11 +22,11 @@ import {
   SelectValue,
 } from "@clikz/ui/components/ui/select";
 import { Skeleton } from "@clikz/ui/components/ui/skeleton";
+import { BASE_DOMAIN } from "@clikz/utils/constants";
+import { generateRandomSlug } from "@clikz/utils/functions";
 
 import { useGetDomains } from "~/features/domain/api/use-get-domains";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { BASE_DOMAIN } from "~/lib/constants";
-import { generateRandomSlug } from "~/lib/utils/generate";
 
 type LinkFormSlugProps = {
   disabled?: boolean;

@@ -3,14 +3,12 @@ import Image from "next/image";
 import { Globe2Icon } from "lucide-react";
 
 import { TabsContent } from "@clikz/ui/components/ui/tabs";
+import { CONTINENTS, COUNTRIES, REGIONS } from "@clikz/utils/constants";
+import { groupByParam } from "@clikz/utils/functions";
 
 import AnalyticsCard from "~/components/analytics/analytics-card";
 import { MetricBarChart } from "~/components/analytics/metric-chart";
-import { CONTINENTS } from "~/lib/constants/continents";
-import { COUNTRIES } from "~/lib/constants/countries";
-import { REGIONS } from "~/lib/constants/region";
 import { AnalyticsDataProp } from "~/lib/types";
-import { groupByParam } from "~/lib/utils";
 
 const RegionAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByCity = groupByParam(data, "city");
@@ -85,7 +83,8 @@ const RegionAnalytics = ({ data }: AnalyticsDataProp) => {
                 className="size-4 object-contain"
               />
             ),
-            label: COUNTRIES[data.country] ?? "Unknown",
+            label:
+              COUNTRIES[data.country as keyof typeof COUNTRIES] ?? "Unknown",
             amt: data.amt,
           }))}
         />
@@ -96,7 +95,9 @@ const RegionAnalytics = ({ data }: AnalyticsDataProp) => {
           filledBarClassName="bg-blue-500"
           items={groupByContinent.map((data) => ({
             icon: <Globe2Icon className="size-4 " />,
-            label: CONTINENTS[data.continent] ?? "Unknown",
+            label:
+              CONTINENTS[data.continent as keyof typeof CONTINENTS] ??
+              "Unknown",
             amt: data.amt,
           }))}
         />

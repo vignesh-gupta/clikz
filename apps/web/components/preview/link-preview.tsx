@@ -24,9 +24,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "@clikz/ui/components/ui/tabs";
+import { getUrlWithoutUTMParams } from "@clikz/utils/functions";
 
 import { useLinkModel } from "~/features/link/hooks/use-link-modal";
-import { getUrlWithoutUTMParams } from "~/lib/utils/url";
 import { LinkSchema } from "~/lib/zod/schemas";
 
 import {

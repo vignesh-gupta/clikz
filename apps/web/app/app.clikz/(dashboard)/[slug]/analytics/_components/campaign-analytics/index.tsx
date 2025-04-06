@@ -1,7 +1,7 @@
 import { TabsContent } from "@clikz/ui/components/ui/tabs";
+import { APP_DOMAIN } from "@clikz/utils/constants";
 
 import AnalyticsCard from "~/components/analytics/analytics-card";
-import { APP_DOMAIN } from "~/lib/constants";
 import { AnalyticsDataProp } from "~/lib/types";
 
 import ReferrerAnalytics from "./referrer-analytics";

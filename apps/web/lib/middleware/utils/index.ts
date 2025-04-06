@@ -4,7 +4,8 @@ import { Link, Workspace } from "@prisma/client";
 import { User } from "next-auth";
 import { getToken } from "next-auth/jwt";
 
-import { BASE_DOMAIN } from "~/lib/constants";
+import { BASE_DOMAIN } from "@clikz/utils/constants";
+
 import { conn } from "~/lib/edge-db";
 
 export const parse = (req: NextRequest) => {

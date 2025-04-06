@@ -6,10 +6,10 @@ import {
   AvatarImage,
 } from "@clikz/ui/components/ui/avatar";
 import { capitalizeFirstLetter } from "@clikz/ui/lib/utils";
+import { AVATAR_URL } from "@clikz/utils/constants";
 
 import { useGetMembers } from "~/features/workspace/api/members/use-get-members";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { AVATAR_URL } from "~/lib/constants";
 
 import MemberAction from "./member-action";
 import { TeamsLoading } from "./team-settings";

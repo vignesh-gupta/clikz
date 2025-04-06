@@ -1,7 +1,7 @@
 import { MemberRole } from "@prisma/client";
 
-import { Continent } from "./constants/continents";
-import { CountryCode } from "./constants/countries";
+import { CountryCode } from "./";
+import { Continent } from "./constants";
 
 export type WorkspaceMember = {
   id: string;

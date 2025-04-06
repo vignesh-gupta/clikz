@@ -4,8 +4,7 @@ import { MousePointerClickIcon, MoveRightIcon } from "lucide-react";
 
 import { CopyButton } from "@clikz/ui/components/copy-button";
 import { Card, CardContent, CardFooter } from "@clikz/ui/components/ui/card";
-
-import { BASE_DOMAIN } from "~/lib/constants";
+import { BASE_DOMAIN } from "@clikz/utils/constants";
 
 import LinkActions from "./link-actions";
 import { LinkDataProps } from "./link-card";

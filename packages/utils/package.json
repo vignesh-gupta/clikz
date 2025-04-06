@@ -1,0 +1,32 @@
+{
+  "name": "@clikz/utils",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {},
+  "exports": {
+    "./functions": "./src/functions/index.ts",
+    "./constants": "./src/constants/index.ts"
+  },
+  "dependencies": {
+    "@sindresorhus/slugify": "^2.2.1",
+    "clsx": "^2.1.1",
+    "ms": "^2.1.3",
+    "nanoid": "^5.0.1",
+    "punycode": "^2.3.0",
+    "tailwind-merge": "^2.4.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "@clikz/eslint-config": "workspace:*",
+    "@clikz/typescript-config": "workspace:*",
+    "next": "catalog:",
+    "react": "catalog:react19",
+    "typescript": "catalog:",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "catalog:"
+  },
+  "peerDependencies": {
+    "next": "catalog:",
+    "react": "catalog:react19"
+  }
+}

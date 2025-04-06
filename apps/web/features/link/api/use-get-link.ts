@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { QUERY_KEYS } from "~/lib/constants";
+import { QUERY_KEYS } from "@clikz/utils/constants";
+
 import { client } from "~/lib/rpc";
 
 type GetLink = {

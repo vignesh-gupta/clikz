@@ -16,9 +16,8 @@ import {
 } from "@clikz/ui/components/ui/dialog";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
-
-import { APP_DOMAIN } from "~/lib/constants";
-import { getApexDomain } from "~/lib/utils/url";
+import { APP_DOMAIN } from "@clikz/utils/constants";
+import { getApexDomain } from "@clikz/utils/functions";
 
 import { useCreateDomain } from "../api/use-create-domain";
 

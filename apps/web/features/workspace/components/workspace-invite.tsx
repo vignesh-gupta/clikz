@@ -13,8 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@clikz/ui/components/ui/dialog";
-
-import { DATA_PREFIX } from "~/lib/constants";
+import { DATA_PREFIX } from "@clikz/utils/constants";
 
 import { useGetWorkspace } from "../api/workspace/use-get-workspace";
 import { useResetWorkspaceInvite } from "../api/workspace/use-reset-wsinvite";

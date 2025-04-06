@@ -13,9 +13,8 @@ import {
   FormMessage,
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
-
-import { APP_DOMAIN } from "~/lib/constants";
-import { textToSlug } from "~/lib/utils";
+import { APP_DOMAIN } from "@clikz/utils/constants";
+import { textToSlug } from "@clikz/utils/functions";
 
 type WorkspaceSlugFieldProps = {
   setSlugAvailable: Dispatch<SetStateAction<boolean>>;

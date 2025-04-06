@@ -4,12 +4,12 @@ import { Link } from "@prisma/client";
 import { geolocation, ipAddress } from "@vercel/functions";
 
 import { capitalize } from "@clikz/ui/lib/utils";
+import { getDomainWithoutWWW } from "@clikz/utils/functions";
 
-import { EU_COUNTRY_CODES } from "../constants/countries";
+import { EU_COUNTRY_CODES } from "../";
 import { conn } from "../edge-db";
 import { getFinalUrlForAnalytics } from "../middleware/utils/final-url";
 import { detectBot, detectQR } from "../middleware/utils/link-utlis";
-import { getDomainWithoutWWW } from "../utils/url";
 
 type RecordClickEventProps = {
   req: NextRequest;

@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { parse } from "~/lib/middleware/utils";
-
 import {
   APP_NAMES,
   BASE_DOMAIN,
   BASE_URL,
   DEFAULT_REDIRECTS,
-} from "./lib/constants";
+} from "@clikz/utils/constants";
+
+import { parse } from "~/lib/middleware/utils";
+
 import AppMiddleware from "./lib/middleware/app";
 import LinkMiddleware from "./lib/middleware/link";
 import { ALLOWED_EXTENSIONS, PUBLIC_ROUTE } from "./routes";

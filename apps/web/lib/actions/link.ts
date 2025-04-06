@@ -1,7 +1,8 @@
 "use server";
 
+import { generateRandomSlug } from "@clikz/utils/functions";
+
 import { db } from "~/lib/db";
-import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema } from "~/lib/zod/schemas";
 
 import { BASE_DOMAIN, BASE_URL } from "../constants";

@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-import { getUrlFromStringIfValid } from "~/lib/utils/url";
+import { getUrlFromStringIfValid } from "@clikz/utils/functions";
 
 export const REDIRECTS_PARAMS = "redirect_url";
 export const ALLOWED_QUERY_PARAMS = [

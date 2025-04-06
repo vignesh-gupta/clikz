@@ -1,11 +1,11 @@
 import { LinkIcon, UsersIcon } from "lucide-react";
 
 import { Card } from "@clikz/ui/components/ui/card";
+import { groupByParam } from "@clikz/utils/functions";
 
 import PageHeader from "~/components/page-header";
 import { getAnalytics } from "~/lib/analytics/fetch-analytics";
 import { PageWithSlugParams } from "~/lib/types";
-import { groupByParam } from "~/lib/utils";
 
 import {
   CampaignAnalytics,

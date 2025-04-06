@@ -6,11 +6,12 @@ import { useState } from "react";
 
 import { useMotionValueEvent, useScroll } from "motion/react";
 import * as motion from "motion/react-client";
+import { useSession } from "next-auth/react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { cn } from "@clikz/ui/lib/utils";
+import { APP_DOMAIN } from "@clikz/utils/constants";
 
-import { APP_DOMAIN } from "~/lib/constants";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 const navItems = [
@@ -40,6 +41,8 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
   const [hidden, setHidden] = useState(false);
 
   const { scrollY } = useScroll();
+
+  const { status } = useSession();
 
   useMotionValueEvent(scrollY, "change", (latest: number) => {
     const prev = scrollY.getPrevious() || 0;

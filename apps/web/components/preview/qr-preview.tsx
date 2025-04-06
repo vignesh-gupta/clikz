@@ -4,9 +4,8 @@ import { useDebounce } from "use-debounce";
 
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
 import { Label } from "@clikz/ui/components/ui/label";
-
-import { BASE_URL } from "~/lib/constants";
-import { getUrlWithoutUTMParams } from "~/lib/utils/url";
+import { BASE_URL } from "@clikz/utils/constants";
+import { getUrlWithoutUTMParams } from "@clikz/utils/functions";
 
 import { QRCode } from "./qr-code";
 

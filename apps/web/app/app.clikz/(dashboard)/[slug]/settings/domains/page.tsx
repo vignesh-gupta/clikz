@@ -1,7 +1,11 @@
+import {
+  DEFAULT_PAGE_LIMIT,
+  DEFAULT_PAGE_NUMBER,
+} from "@clikz/utils/constants";
+
 import PageHeader from "~/components/page-header";
 import { DomainManagement } from "~/features/domain/components/domain-management";
 import { getDomains } from "~/features/domain/data";
-import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from "~/lib/constants";
 import { PageWithSlugParams } from "~/lib/types";
 import { FetchParamsSchema } from "~/lib/zod/schemas";
 

@@ -21,12 +21,12 @@ import {
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
+import { BASE_DOMAIN } from "@clikz/utils/constants";
+import { generateRandomSlug } from "@clikz/utils/functions";
 
 import LinkPreview from "~/components/preview/link-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 import { createLink } from "~/lib/actions/onboarding";
-import { BASE_DOMAIN } from "~/lib/constants";
-import { generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema, linkSchema } from "~/lib/zod/schemas";
 
 const LinkForm = () => {

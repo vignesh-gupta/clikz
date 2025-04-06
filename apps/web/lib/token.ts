@@ -1,5 +1,6 @@
+import { generateOTP } from "@clikz/utils/functions";
+
 import { db } from "./db";
-import { generateOTP } from "./utils/generate";
 
 export const generatePasscode = async (email: string) => {
   const passcode = generateOTP();

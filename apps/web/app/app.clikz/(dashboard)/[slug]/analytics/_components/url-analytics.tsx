@@ -1,12 +1,12 @@
 "use client";
 
 import { TabsContent } from "@clikz/ui/components/ui/tabs";
+import { groupByParam } from "@clikz/utils/functions";
 
 import AnalyticsCard from "~/components/analytics/analytics-card";
 import { MetricBarChart } from "~/components/analytics/metric-chart";
 import LinkFavIcon from "~/features/link/components/link-fav-icon";
 import { AnalyticsDataProp } from "~/lib/types";
-import { groupByParam } from "~/lib/utils";
 
 const UrlAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByLinkId = groupByParam(data, "link_id");

@@ -1,8 +1,9 @@
 import { DomainStatus } from "@prisma/client";
 
+import { getApexDomain, getSubdomain } from "@clikz/utils/functions";
+
 import { db } from "~/lib/db";
 import { DomainVerification } from "~/lib/types";
-import { getApexDomain, getSubdomain } from "~/lib/utils/url";
 import { VERCEL_PROJECT_ID, VERCEL_TEAM_ID, vercel } from "~/lib/vercel";
 import { FetchParamsSchema } from "~/lib/zod/schemas";
 

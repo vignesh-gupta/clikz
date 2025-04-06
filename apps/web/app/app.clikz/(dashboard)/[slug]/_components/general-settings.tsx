@@ -18,12 +18,12 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
+import { DATA_PREFIX } from "@clikz/utils/constants";
 
 import InputWithCopy from "~/components/input-with-copy";
 import { useGetWorkspace } from "~/features/workspace/api/workspace/use-get-workspace";
 import { useUpdateWorkspace } from "~/features/workspace/api/workspace/use-update-workspace";
 import WorkspaceIconUpload from "~/features/workspace/components/workspace-icon-upload";
-import { DATA_PREFIX } from "~/lib/constants";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod/schemas";
 
 import DeleteWorkspace from "./delete-workspace";

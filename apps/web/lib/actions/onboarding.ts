@@ -2,8 +2,9 @@
 
 import { MemberRole } from "@prisma/client";
 
+import { generateInviteCode, generateRandomSlug } from "@clikz/utils/functions";
+
 import { auth, signOut } from "~/auth";
-import { generateInviteCode, generateRandomSlug } from "~/lib/utils/generate";
 import { LinkSchema } from "~/lib/zod/schemas";
 
 import { BASE_DOMAIN, BASE_URL } from "../constants";

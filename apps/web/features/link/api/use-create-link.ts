@@ -2,8 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
+import { QUERY_KEYS } from "@clikz/utils/constants";
+
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type ResponseType = InferResponseType<(typeof client.api.links)["$post"]>;

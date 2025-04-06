@@ -1,10 +1,6 @@
-export const textToSlug = (name: string) => {
-  return name.toLowerCase().replace(/ /g, "-");
-};
-
 export const groupByParam = <T extends Record<string, any>>(
   data: T[] = [],
-  param: keyof T
+  param: keyof T,
 ) => {
   // Group by given param and return short_url, url, linkId, amt (count of param)
 
@@ -23,10 +19,4 @@ export const groupByParam = <T extends Record<string, any>>(
   });
 
   return Array.from(group.values());
-};
-
-export const truncate = (str: string | undefined, length: number) => {
-  if (!str) return undefined;
-
-  return str.length > length ? `${str.slice(0, length)}...` : str;
 };

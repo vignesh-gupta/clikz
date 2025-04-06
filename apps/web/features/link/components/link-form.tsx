@@ -17,11 +17,11 @@ import {
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Textarea } from "@clikz/ui/components/ui/textarea";
+import { BASE_DOMAIN } from "@clikz/utils/constants";
 
 import LinkPreview from "~/components/preview/link-preview";
 import QRPreview from "~/components/preview/qr-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { BASE_DOMAIN } from "~/lib/constants";
 import { LinkSchema, linkSchema } from "~/lib/zod/schemas";
 
 import { useCreateLink } from "../api/use-create-link";

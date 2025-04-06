@@ -4,10 +4,10 @@ import { memo } from "react";
 import { Globe2 } from "lucide-react";
 
 import { cn } from "@clikz/ui/lib/utils";
+import { GOOGLE_FAVICON_URL_V2 } from "@clikz/utils/constants";
+import { getDomainWithoutWWW } from "@clikz/utils/functions";
 
 import { BlurImage } from "~/components/blur-image";
-import { GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
-import { getDomainWithoutWWW } from "~/lib/utils/url";
 
 function LinkFavIcon({
   url,

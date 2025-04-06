@@ -3,11 +3,11 @@ import { redirect } from "next/navigation";
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
 import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
+import { DATA_PREFIX } from "@clikz/utils/constants";
 
 import { auth } from "~/auth";
 import InputWithCopy from "~/components/input-with-copy";
 import PageHeader from "~/components/page-header";
-import { DATA_PREFIX } from "~/lib/constants";
 import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 import UserAvatarUpload from "./_components/avatar-upload";

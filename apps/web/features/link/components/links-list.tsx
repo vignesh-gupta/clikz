@@ -4,9 +4,13 @@ import { useSearchParams } from "next/navigation";
 
 import { Link } from "@prisma/client";
 
+import {
+  DEFAULT_PAGE_LIMIT,
+  DEFAULT_PAGE_NUMBER,
+} from "@clikz/utils/constants";
+
 import NoLinks from "~/app/app.clikz/(dashboard)/[slug]/_components/link/no-links";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from "~/lib/constants";
 import { useView } from "~/lib/hooks/use-view";
 
 import { useGetLinks } from "../api/use-get-links";

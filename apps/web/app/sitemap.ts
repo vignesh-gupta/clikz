@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-import { BASE_URL } from "~/lib/constants";
+import { BASE_URL } from "@clikz/utils/constants";
 
 const host = BASE_URL ?? "https://clikz.live";
 

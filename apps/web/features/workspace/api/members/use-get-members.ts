@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { QUERY_KEYS } from "~/lib/constants";
+import { QUERY_KEYS } from "@clikz/utils/constants";
+
 import { client } from "~/lib/rpc";
 import { WorkspaceMember } from "~/lib/types";
 

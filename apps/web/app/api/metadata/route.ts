@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { AxiomRequest } from "next-axiom";
 
-import { getUrlFromStringIfValid } from "~/lib/utils/url";
+import { getUrlFromStringIfValid } from "@clikz/utils/functions";
 
 export type MetadataResponse = {
   status: "success" | "error";

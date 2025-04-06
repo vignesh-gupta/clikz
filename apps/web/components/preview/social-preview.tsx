@@ -3,8 +3,7 @@ import { ImageIcon, LoaderCircle } from "lucide-react";
 
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
 import { cn } from "@clikz/ui/lib/utils";
-
-import { isValidUrl } from "~/lib/utils/url";
+import { isValidUrl } from "@clikz/utils/functions";
 
 import MetaEditor from "./meta-editor";
 

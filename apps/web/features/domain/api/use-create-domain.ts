@@ -2,10 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
+import { APP_DOMAIN, QUERY_KEYS } from "@clikz/utils/constants";
+import { getApexDomain } from "@clikz/utils/functions";
+
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { APP_DOMAIN, QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
-import { getApexDomain } from "~/lib/utils/url";
 
 type ResponseType = InferResponseType<
   (typeof client.api.domains)["$post"],

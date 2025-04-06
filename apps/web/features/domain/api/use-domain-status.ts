@@ -1,8 +1,9 @@
 import { DomainStatus } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
+import { QUERY_KEYS } from "@clikz/utils/constants";
+
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { QUERY_KEYS } from "~/lib/constants";
 import { client } from "~/lib/rpc";
 
 type GetDomainStatus = {

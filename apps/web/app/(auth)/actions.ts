@@ -2,12 +2,13 @@
 
 import { AuthError } from "next-auth";
 
+import { saltAndHash } from "@clikz/utils/functions";
+
 import { signIn } from "~/auth";
 import { getUserByEmail } from "~/features/auth/data";
 import { db } from "~/lib/db";
 import { sendVerificationEmail } from "~/lib/email";
 import { generatePasscode } from "~/lib/token";
-import { saltAndHash } from "~/lib/utils/password";
 import {
   SignInSchema,
   SignUpSchema,

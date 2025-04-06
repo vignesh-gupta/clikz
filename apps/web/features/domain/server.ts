@@ -1,11 +1,12 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
+import { APP_DOMAIN } from "@clikz/utils/constants";
+import { getApexDomain } from "@clikz/utils/functions";
+
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
-import { APP_DOMAIN } from "~/lib/constants";
 import { db } from "~/lib/db";
-import { getApexDomain } from "~/lib/utils/url";
 import { VERCEL_PROJECT_ID, vercel } from "~/lib/vercel";
 import {
   domainFilterSchema,

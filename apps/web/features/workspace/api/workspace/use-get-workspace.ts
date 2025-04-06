@@ -1,7 +1,8 @@
 import { Workspace } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
-import { QUERY_KEYS } from "~/lib/constants";
+import { QUERY_KEYS } from "@clikz/utils/constants";
+
 import { client } from "~/lib/rpc";
 
 type GetWorkspace = {

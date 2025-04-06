@@ -4,11 +4,16 @@ import { notFound, redirect } from "next/navigation";
 
 import { unescape } from "html-escaper";
 
+import {
+  BASE_DOMAIN,
+  BASE_URL,
+  GOOGLE_FAVICON_URL_V2,
+} from "@clikz/utils/constants";
+import { getApexDomain } from "@clikz/utils/functions";
+
 import { BlurImage } from "~/components/blur-image";
-import { BASE_DOMAIN, BASE_URL, GOOGLE_FAVICON_URL_V2 } from "~/lib/constants";
 import { constructMetadata } from "~/lib/meta-data";
 import { getLinkViaEdgeWithKey } from "~/lib/middleware/utils";
-import { getApexDomain } from "~/lib/utils/url";
 
 import RedirectionToDest from "./redirection";
 

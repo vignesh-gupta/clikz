@@ -6,9 +6,9 @@ import { GlobeIcon, RefreshCwIcon, TrashIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { cn } from "@clikz/ui/lib/utils";
+import { QUERY_KEYS } from "@clikz/utils/constants";
 
 import InputWithCopy from "~/components/input-with-copy";
-import { QUERY_KEYS } from "~/lib/constants";
 
 import { useDeleteDomain } from "../api/use-delete-domain";
 import { useGetDomainStatus } from "../api/use-domain-status";
