@@ -8,8 +8,8 @@ const MemberInviteDialog = () => {
     <ResponsiveModel
       trigger={<Button>Invite</Button>}
       className="p-6 rounded-lg"
+      title="Invite Team Members"
     >
-      <h3 className="text-lg font-semibold">Invite Team Members</h3>
       <MemberInviteForm />
     </ResponsiveModel>
   );
