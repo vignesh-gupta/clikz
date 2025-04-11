@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 
-import { APP_URL } from "./constants";
+import { APP_URL } from "@clikz/utils/constants";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 export const resend = new Resend(process.env.AUTH_RESEND_KEY || "re_123");

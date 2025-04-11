@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { BASE_URL } from "./constants";
+import { BASE_URL } from "@clikz/utils/constants";
 
 type MetaTagProps = {
   title?: string;

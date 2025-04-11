@@ -1,11 +1,11 @@
 "use server";
 
+import { BASE_DOMAIN, BASE_URL } from "@clikz/utils/constants";
 import { generateRandomSlug } from "@clikz/utils/functions";
 
 import { db } from "~/lib/db";
 import { LinkSchema } from "~/lib/zod/schemas";
 
-import { BASE_DOMAIN, BASE_URL } from "../constants";
 import { checkUser } from "./utils";
 
 export const createLink = async (

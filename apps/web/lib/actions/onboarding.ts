@@ -2,12 +2,12 @@
 
 import { MemberRole } from "@prisma/client";
 
+import { BASE_DOMAIN, BASE_URL } from "@clikz/utils/constants";
 import { generateInviteCode, generateRandomSlug } from "@clikz/utils/functions";
 
 import { auth, signOut } from "~/auth";
 import { LinkSchema } from "~/lib/zod/schemas";
 
-import { BASE_DOMAIN, BASE_URL } from "../constants";
 import { db } from "../db";
 import { sendWorkspaceInvite } from "../email";
 import { WorkspaceSchema } from "../zod/schemas";

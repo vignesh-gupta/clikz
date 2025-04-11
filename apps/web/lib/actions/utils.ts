@@ -3,9 +3,11 @@ import { auth } from "~/auth";
 export const checkUser = async () => {
   const session = await auth();
 
-  if (!session || !session.user || !session.user.id) {
+  const currentUser = session?.user;
+
+  if (!session || !currentUser || !currentUser.id || !currentUser.email) {
     return null;
   }
 
-  return session.user;
+  return currentUser;
 };

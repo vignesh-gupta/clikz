@@ -1,7 +1,7 @@
 import { hc } from "hono/client";
 
-import { AppType } from "~/app/api/[[...route]]/route";
+import { APP_URL } from "@clikz/utils/constants";
 
-import { APP_URL } from "./constants";
+import { AppType } from "~/app/api/[[...route]]/route";
 
 export const client = hc<AppType>(APP_URL);
