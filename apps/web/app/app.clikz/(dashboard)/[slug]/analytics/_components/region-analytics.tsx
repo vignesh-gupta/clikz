@@ -8,7 +8,7 @@ import { groupByParam } from "@clikz/utils/functions";
 
 import AnalyticsCard from "~/components/analytics/analytics-card";
 import { MetricBarChart } from "~/components/analytics/metric-chart";
-import { AnalyticsDataProp } from "~/lib/types";
+import { AnalyticsDataProp } from "~/types/pages.types";
 
 const RegionAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByCity = groupByParam(data, "city");

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import PageHeader from "~/components/page-header";
 import { db } from "~/lib/db";
-import { PageWithSlugParams } from "~/lib/types";
+import { PageWithSlugParams } from "~/types/pages.types";
 
 import GeneralSettings from "../_components/general-settings";
 

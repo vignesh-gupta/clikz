@@ -18,7 +18,7 @@ import {
 import { useDeleteMember } from "~/features/workspace/api/members/use-delete-member";
 import { useLeaveWorkspace } from "~/features/workspace/api/members/use-leave-workspace";
 import { useUpdateMember } from "~/features/workspace/api/members/use-update-member";
-import { WorkspaceMember } from "~/lib/types";
+import { WorkspaceMember } from "~/types/model.types";
 
 type MemberActionProps = {
   member: WorkspaceMember;

@@ -6,8 +6,8 @@ import {
 import PageHeader from "~/components/page-header";
 import LinkList from "~/features/link/components/links-list";
 import { getLinks } from "~/features/link/data";
-import { PageWithSlugParams } from "~/lib/types";
 import { FetchParamsSchema } from "~/lib/zod/schemas";
+import { PageWithSlugParams } from "~/types/pages.types";
 
 import PageFilters from "./_components/filter";
 

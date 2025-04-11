@@ -6,7 +6,7 @@ import { groupByParam } from "@clikz/utils/functions";
 import AnalyticsCard from "~/components/analytics/analytics-card";
 import { MetricBarChart } from "~/components/analytics/metric-chart";
 import LinkFavIcon from "~/features/link/components/link-fav-icon";
-import { AnalyticsDataProp } from "~/lib/types";
+import { AnalyticsDataProp } from "~/types/pages.types";
 
 const UrlAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByLinkId = groupByParam(data, "link_id");

@@ -6,8 +6,8 @@ import {
 import PageHeader from "~/components/page-header";
 import { DomainManagement } from "~/features/domain/components/domain-management";
 import { getDomains } from "~/features/domain/data";
-import { PageWithSlugParams } from "~/lib/types";
 import { FetchParamsSchema } from "~/lib/zod/schemas";
+import { PageWithSlugParams } from "~/types/pages.types";
 
 type WorkspaceDomainPageProp = PageWithSlugParams & {
   searchParams: Promise<FetchParamsSchema>;

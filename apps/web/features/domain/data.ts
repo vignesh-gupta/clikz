@@ -3,9 +3,9 @@ import { DomainStatus } from "@prisma/client";
 import { getApexDomain, getSubdomain } from "@clikz/utils/functions";
 
 import { db } from "~/lib/db";
-import { DomainVerification } from "~/lib/types";
 import { VERCEL_PROJECT_ID, VERCEL_TEAM_ID, vercel } from "~/lib/vercel";
 import { FetchParamsSchema } from "~/lib/zod/schemas";
+import { DomainVerification } from "~/types/model.types";
 
 type GetWorkspaceDomains = FetchParamsSchema & {
   workspaceSlug: string;

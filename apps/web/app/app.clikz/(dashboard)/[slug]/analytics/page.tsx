@@ -5,7 +5,7 @@ import { groupByParam } from "@clikz/utils/functions";
 
 import PageHeader from "~/components/page-header";
 import { getAnalytics } from "~/lib/analytics/fetch-analytics";
-import { PageWithSlugParams } from "~/lib/types";
+import { PageWithSlugParams } from "~/types/pages.types";
 
 import {
   CampaignAnalytics,

@@ -1,13 +1,13 @@
 import "server-only";
 
-import { TINYBIRD_API_KEY, TINYBIRD_PIPES_ENDPOINT } from "~/lib/analytics";
-
 import {
   GRANULARITY,
   INTERVAL_DATA,
   INTERVAL_TIMES,
-} from "../constants/date-time";
-import { RawAnalyticsData } from "../types";
+} from "@clikz/utils/constants";
+
+import { TINYBIRD_API_KEY, TINYBIRD_PIPES_ENDPOINT } from "~/lib/analytics";
+import { RawAnalyticsData } from "~/types/analytics.types";
 
 // Either start and end dates are provided or interval is provided
 // If start and end dates are provided, ignore interval

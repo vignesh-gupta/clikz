@@ -11,7 +11,7 @@ import { groupByParam } from "@clikz/utils/functions";
 
 import { MetricBarChart } from "~/components/analytics/metric-chart";
 import LinkFavIcon from "~/features/link/components/link-fav-icon";
-import { AnalyticsDataProp } from "~/lib/types";
+import { AnalyticsDataProp } from "~/types/pages.types";
 
 const ReferrerAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByReferrer = groupByParam(data, "referer")?.map((item) => ({

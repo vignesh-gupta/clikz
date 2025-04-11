@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@clikz/utils/constants";
 
 import { client } from "~/lib/rpc";
-import { WorkspaceMember } from "~/lib/types";
+import { WorkspaceMember } from "~/types/model.types";
 
 type GetMembers = {
   idOrSlug: string;

@@ -13,7 +13,7 @@ import { groupByParam } from "@clikz/utils/functions";
 import AnalyticsCard from "~/components/analytics/analytics-card";
 import { MetricBarChart } from "~/components/analytics/metric-chart";
 import { BlurImage } from "~/components/blur-image";
-import { AnalyticsDataProp } from "~/lib/types";
+import { AnalyticsDataProp } from "~/types/pages.types";
 
 const DeviceAnalytics = ({ data }: AnalyticsDataProp) => {
   const groupByDevice = groupByParam(data, "device");
