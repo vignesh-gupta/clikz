@@ -1,13 +1,15 @@
 import { GlobeIcon } from "lucide-react";
 
+import { BubbleIcon } from "@clikz/ui/components/bubble-icon";
+
 const Link404Page = () => {
   return (
     <div className="relative flex flex-col items-center w-full max-w-xl pt-10 mx-auto sm:pt-20 ">
       <div className="rounded-full [perspective:500px]">
         <div className="relative rounded-full bg-gradient-to-b from-neutral-100 to-neutral-300 p-px transition-[transform] duration-75">
-          <div className="p-5 text-black bg-white rounded-full">
+          <BubbleIcon>
             <GlobeIcon size={50} />
-          </div>
+          </BubbleIcon>
           <div className="absolute inset-0 rounded-full bg-gradient-to-t from-[#fff8]"></div>
         </div>
       </div>

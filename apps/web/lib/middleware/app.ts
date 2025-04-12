@@ -39,6 +39,9 @@ export const AppMiddleware = async (req: NextRequest) => {
     );
   }
 
+  if (fullKey.startsWith("invite"))
+    return NextResponse.rewrite(appRedirect(fullPath, req));
+
   if (fullPath.includes("/onboarding")) {
     return NextResponse.rewrite(appRedirect(fullPath, req));
   }

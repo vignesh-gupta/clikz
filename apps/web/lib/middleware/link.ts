@@ -21,7 +21,7 @@ const LinkMiddleware = async (req: NextRequest) => {
   link = await getLinkViaRedis(fullKey, domain);
 
   if (!link) {
-    console.log(
+    console.info(
       `Link not found in Redis, fetching from Edge DB for  ${domain}/${fullKey}`
     );
     link = await getLinkViaEdgeWithKey({ domain, key: fullKey });

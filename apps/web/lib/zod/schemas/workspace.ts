@@ -26,3 +26,10 @@ export type MembershipSchema = z.infer<typeof membershipSchema>;
 export const inviteSchema = z.object({
   emails: z.array(z.string().email()),
 });
+
+export const inviteActionSchema = z.object({
+  action: z.enum(["accept", "decline"]),
+  token: z.string(),
+});
+
+export type InviteActionSchema = z.infer<typeof inviteActionSchema>;

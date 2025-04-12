@@ -146,10 +146,7 @@ export function handleApiError(error: any): ErrorResponse & { status: number } {
     return {
       error: {
         code: "not_found",
-        message:
-          error?.meta?.cause ||
-          error.message ||
-          "The requested resource was not found.",
+        message: "Resource not found.",
       },
       status: 404,
     };
