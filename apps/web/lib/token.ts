@@ -34,6 +34,10 @@ export async function validateInviteToken(token: string) {
   const invitation = await db.invite.findFirst({
     where: {
       token,
+      email: session.user.email,
+      expires: {
+        gte: new Date(),
+      },
     },
     include: {
       Workspace: {
