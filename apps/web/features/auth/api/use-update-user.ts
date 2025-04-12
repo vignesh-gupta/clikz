@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { useSession } from "next-auth/react";
-import { toast } from "sonner";
 
 import { client } from "~/lib/rpc";
 
@@ -29,10 +28,7 @@ export const useUpdateUser = () => {
     },
     onSuccess: (user) => {
       update(user);
-      toast.success("Updated your details!");
     },
-    onError: (error) =>
-      toast.error(error.message ?? "Failed to update your details"),
   });
 
   return mutation;

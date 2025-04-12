@@ -10,7 +10,7 @@ import { Button } from "@clikz/ui/components/ui/button";
 import { Input } from "@clikz/ui/components/ui/input";
 import { Label } from "@clikz/ui/components/ui/label";
 
-import { inviteUser } from "~/lib/actions/onboarding";
+import { inviteUser } from "~/lib/actions/member";
 
 export function InviteTeamForm() {
   const searchParams = useSearchParams();

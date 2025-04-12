@@ -20,14 +20,17 @@ import {
 } from "@clikz/ui/components/ui/form";
 import { Input } from "@clikz/ui/components/ui/input";
 
-import { createWorkspace } from "~/lib/actions/onboarding";
+import { createWorkspace } from "~/lib/actions/workspace";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod/schemas";
 
+import { useWorkspaceModel } from "../hooks/use-workspace-modal";
 import WorkspaceSlugField from "./workspace-slug-field";
 
 const CreateWorkspaceForm = () => {
   const [isLoading, startTransaction] = useTransition();
   const [isSlugAvailable, setSlugAvailable] = useState<boolean>(false);
+
+  const { close } = useWorkspaceModel();
 
   const form = useForm<WorkspaceSchema>({
     resolver: zodResolver(workspaceSchema),
@@ -37,18 +40,21 @@ const CreateWorkspaceForm = () => {
     },
   });
 
-  const onSubmit = (values: WorkspaceSchema) => {
+  const onSubmit = async (values: WorkspaceSchema) => {
     startTransaction(async () => {
-      const res = await createWorkspace(values);
-
-      if (res.error) {
-        toast.error(res.error);
-      } else if (res.success) {
-        toast.success("Workspace created successfully");
-      }
-
-      setSlugAvailable(false);
+      toast.promise(createWorkspace(values), {
+        loading: "Creating your workspace...",
+        success: () => {
+          close();
+          return "Workspace created successfully!";
+        },
+        error: (error) => {
+          return error.message;
+        },
+      });
     });
+
+    setSlugAvailable(false);
   };
 
   return (

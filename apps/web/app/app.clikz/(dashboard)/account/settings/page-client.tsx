@@ -1,9 +1,8 @@
 "use client";
 
-import { useTransition } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent } from "@clikz/ui/components/ui/card";
@@ -30,25 +29,34 @@ const AccountSettingsClientPage = ({
   email,
   id,
 }: AccountSettingsClientPageProps) => {
-  const { mutate: updateDetails } = useUpdateUser();
-  const [isPending, startTransition] = useTransition();
+  const { mutateAsync: updateDetails, isPending } = useUpdateUser();
 
   const form = useForm<UserAccountSchema>({
     resolver: zodResolver(userAccountSchema),
     disabled: isPending,
-    values: {
+    defaultValues: {
       name: name || "",
       email,
     },
   });
 
   const onSubmit = (values: UserAccountSchema) => {
-    startTransition(() => {
+    toast.promise(
       updateDetails({
         json: values,
         param: { userId: id },
-      });
-    });
+      }),
+      {
+        loading: "Updating your details...",
+        success: () => {
+          form.reset(values);
+          return "Your details have been updated.";
+        },
+        error: (error) => {
+          return error.message;
+        },
+      }
+    );
   };
 
   return (
@@ -61,7 +69,7 @@ const AccountSettingsClientPage = ({
             <FormItem>
               <Card>
                 <CardContent className="p-4 space-y-2">
-                  <FormLabel>Workspace Name</FormLabel>
+                  <FormLabel>Your Name</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>

@@ -3,7 +3,7 @@ model Workspace {
   name          String
   slug          String
   Owner         User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ownerId       String   @unique
+  ownerId       String
   defaultInvite String   @unique @default(cuid())
   icon          String?
   createdAt     DateTime @default(now())

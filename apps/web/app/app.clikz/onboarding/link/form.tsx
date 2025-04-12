@@ -26,7 +26,7 @@ import { generateRandomSlug } from "@clikz/utils/functions";
 
 import LinkPreview from "~/components/preview/link-preview";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
-import { createLink } from "~/lib/actions/onboarding";
+import { createLink } from "~/lib/actions/link";
 import { LinkSchema, linkSchema } from "~/lib/zod/schemas";
 
 const LinkForm = () => {

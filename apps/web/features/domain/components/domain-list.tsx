@@ -20,6 +20,14 @@ export function DomainList({ domains, isLoading }: DomainListProps) {
     );
   }
 
+  if (domains.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-10 text-sm text-muted-foreground">
+        No domains found
+      </div>
+    );
+  }
+
   return (
     <div className="divide-y">
       {domains.map((domain) => (

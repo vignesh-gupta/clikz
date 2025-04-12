@@ -6,6 +6,7 @@ import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import {
   Alert,
@@ -25,7 +26,7 @@ import {
 import { Input } from "@clikz/ui/components/ui/input";
 
 import WorkspaceSlugField from "~/features/workspace/components/workspace-slug-field";
-import { createWorkspace } from "~/lib/actions/onboarding";
+import { createWorkspace } from "~/lib/actions/workspace";
 import { WorkspaceSchema, workspaceSchema } from "~/lib/zod/schemas";
 
 const WorkspaceForm = () => {
@@ -45,16 +46,20 @@ const WorkspaceForm = () => {
 
   const onSubmit = (values: WorkspaceSchema) => {
     startTransaction(async () => {
-      const res = await createWorkspace(values);
-
-      if (res.error) {
-        setError(res.error);
-      } else if (res.success) {
-        router.push(`/onboarding/invite?workspace=${values.slug}`);
-      }
-
-      setSlugAvailable(false);
+      toast.promise(createWorkspace(values), {
+        loading: "Creating your workspace...",
+        success: () => {
+          router.push(`/onboarding/invite?workspace=${values.slug}`);
+          return "Workspace created successfully!";
+        },
+        error: (error) => {
+          setError(error.message ?? error);
+          return error.message;
+        },
+      });
     });
+
+    setSlugAvailable(false);
   };
 
   return (
