@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -11,18 +11,23 @@ type CopyButtonProps = {
   value: string;
   className?: string;
   variant?: VariantProps<typeof buttonVariants>["variant"];
+  onCopy?: () => void;
 };
 
 export const CopyButton = ({
   value,
   variant = "secondary",
   className,
+  onCopy,
 }: CopyButtonProps) => {
   const [isCopied, setIsCopied] = useState(false);
 
-  const copyToClipboard = () => {
+  const copyToClipboard = (e: MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    if (onCopy) return onCopy();
+
     navigator.clipboard.writeText(value);
-    toast.success("Copied to clipboard");
+    toast.success("Copied to clipboard  btn successfully");
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 500);
   };

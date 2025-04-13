@@ -1,12 +1,13 @@
 {
-  "name": "@clikz/transactional",
+  "name": "@clikz/emails",
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "email:dev": "email dev -p 3001 -d src",
     "export": "email export"
   },
   "exports": {
-    "./*": "./emails/*.tsx"
+    "./*": "./src/*.tsx"
   },
   "dependencies": {
     "@react-email/components": "0.0.36",
