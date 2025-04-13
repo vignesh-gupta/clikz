@@ -56,6 +56,7 @@
     "@clikz/eslint-config": "workspace:*",
     "@clikz/typescript-config": "workspace:*",
     "@clikz/utils": "workspace:*",
+    "@clikz/transactional": "workspace:*",
     "@next/bundle-analyzer": "^15.1.3",
     "@next/eslint-plugin-next": "catalog:",
     "@tanstack/react-query-devtools": "^5.62.10",

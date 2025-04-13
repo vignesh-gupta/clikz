@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 
+import { InviteMember } from "@clikz/transactional/invite-member.jsx";
 import { APP_URL } from "@clikz/utils/constants";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -29,6 +30,11 @@ export const sendWorkspaceInvite = async (
     from: AUTH_MAIL_SENDER,
     to: email,
     subject: "You've been invited to a workspace",
-    html: `<p>Hi there,</p><p>You've been invited to a workspace. Click on the link below to join:</p><p><a href="${workspaceLink}">Click here</a></p>`,
+    react: InviteMember({
+      inviteeName: email,
+      inviterName: "Clikz",
+      teamName: "Clikz",
+      href: workspaceLink,
+    }),
   });
 };
