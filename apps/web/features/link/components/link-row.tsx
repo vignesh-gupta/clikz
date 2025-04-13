@@ -42,25 +42,19 @@ export function LinkRow({
           </div>
           <div className="flex items-center flex-1 max-w-[50%]">
             <MoveRightIcon className="mr-1 size-4 text-muted-foreground/40 shrink-0" />
-            <Link
-              href={longUrl}
-              target="_blank"
-              className="truncate text-muted-foreground hover:underline underline-offset-2"
-            >
-              {longUrl ? (
-                <Link
-                  href={longUrl}
-                  target="_blank"
-                  className=" truncate text-muted-foreground hover:underline underline-offset-2"
-                >
-                  {longUrl}
-                </Link>
-              ) : (
-                <span className=" truncate text-muted-foreground">
-                  No Redirect configured
-                </span>
-              )}
-            </Link>
+            {longUrl ? (
+              <Link
+                href={longUrl}
+                target="_blank"
+                className=" truncate text-muted-foreground hover:underline underline-offset-2"
+              >
+                {longUrl}
+              </Link>
+            ) : (
+              <span className=" truncate text-muted-foreground">
+                No Redirect configured
+              </span>
+            )}
           </div>
         </div>
       </CardContent>

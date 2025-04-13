@@ -21,7 +21,7 @@ type LinksListProps = {
   initialLinks?: Link[];
 };
 
-const LinkList = ({ initialLinks }: LinksListProps) => {
+const LinksList = ({ initialLinks }: LinksListProps) => {
   const workspaceSlug = useWorkspaceSlug();
 
   const searchParams = useSearchParams();
@@ -76,4 +76,4 @@ const LinkList = ({ initialLinks }: LinksListProps) => {
   }
 };
 
-export default LinkList;
+export default LinksList;

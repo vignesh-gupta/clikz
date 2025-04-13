@@ -4,7 +4,7 @@ import {
 } from "@clikz/utils/constants";
 
 import PageHeader from "~/components/page-header";
-import LinkList from "~/features/link/components/links-list";
+import LinksList from "~/features/link/components/links-list";
 import { getLinks } from "~/features/link/data";
 import { FetchParamsSchema } from "~/lib/zod/schemas";
 import { PageWithSlugParams } from "~/types/pages.types";
@@ -33,7 +33,7 @@ const WorkspaceLinkPage = async ({
       <PageHeader title="Links" />
       <div className="flex-1 space-y-4">
         <PageFilters />
-        <LinkList initialLinks={links} />
+        <LinksList initialLinks={links} />
       </div>
     </div>
   );

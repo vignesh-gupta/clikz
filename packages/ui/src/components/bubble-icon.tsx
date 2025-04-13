@@ -40,7 +40,7 @@ export function BubbleIcon({ children }: PropsWithChildren) {
       }}
     >
       <div
-        className="relative rounded-full bg-gradient-to-b from-neutral-100 to-neutral-300 p-px transition-[transform] duration-[50ms]"
+        className="relative rounded-full bg-gradient-to-b from-neutral-100 to-neutral-300 p-px transition-[transform] duration-75"
         style={{
           transform: `rotateY(clamp(-20deg, calc(var(--mx, 0.5) * 4deg), 20deg)) rotateX(clamp(-20deg, calc(var(--my, 0.5) * -4deg), 20deg))`,
         }}
