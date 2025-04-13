@@ -71,7 +71,7 @@ export const getSubdomain = (url: string) => {
   return null;
 };
 
-export const getWorkspaceURL = (slug: string, icon?: string | null) => {
+export const getWorkspaceIconURL = (slug: string, icon?: string | null) => {
   if (icon) return icon;
 
   return `${WORKSPACE_DEFAULT_ICON_URL}${slug}`;

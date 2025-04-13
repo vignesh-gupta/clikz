@@ -3,7 +3,7 @@ import { memo } from "react";
 import { Avatar, AvatarImage } from "@clikz/ui/components/ui/avatar";
 import { Skeleton } from "@clikz/ui/components/ui/skeleton";
 import { cn } from "@clikz/ui/lib/utils";
-import { getWorkspaceURL } from "@clikz/utils/functions";
+import { getWorkspaceIconURL } from "@clikz/utils/functions";
 
 type WorkspaceIconProps = {
   image?: string | null;
@@ -37,7 +37,7 @@ const WorkspaceIcon = ({
   return (
     <Avatar className={className}>
       <AvatarImage
-        src={getWorkspaceURL(name, image)}
+        src={getWorkspaceIconURL(name, image)}
         className="object-cover size-full"
         height={height}
         width={width}

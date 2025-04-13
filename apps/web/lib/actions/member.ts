@@ -2,7 +2,10 @@
 
 import { MemberRole } from "@prisma/client";
 
-import { generateInviteCode } from "@clikz/utils/functions";
+import {
+  generateInviteCode,
+  getWorkspaceIconURL,
+} from "@clikz/utils/functions";
 
 import { auth } from "~/auth";
 
@@ -66,7 +69,13 @@ export const inviteUser = async (emails: string[], workspaceSlug: string) => {
     );
 
     await Promise.all(
-      invites.map((invite) => sendWorkspaceInvite(invite.email, invite.token))
+      invites.map((invite) =>
+        sendWorkspaceInvite(
+          invite.email,
+          invite.token,
+          getWorkspaceIconURL(workspace.slug, workspace.icon)
+        )
+      )
     );
     return { success: "Invites sent successfully" };
   } catch (error) {

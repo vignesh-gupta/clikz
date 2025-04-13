@@ -1,7 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
-import { generateInviteCode, getWorkspaceURL } from "@clikz/utils/functions";
+import {
+  generateInviteCode,
+  getWorkspaceIconURL,
+} from "@clikz/utils/functions";
 
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
@@ -81,7 +84,7 @@ const workspaceInviteApp = new Hono()
           sendWorkspaceInvite(
             invite.email,
             invite.token,
-            getWorkspaceURL(workspace.slug, workspace.icon)
+            getWorkspaceIconURL(workspace.slug, workspace.icon)
           )
         )
       );
@@ -121,7 +124,7 @@ const workspaceInviteApp = new Hono()
       const res = await sendWorkspaceInvite(
         invite.email,
         invite.token,
-        getWorkspaceURL(invite.Workspace.slug, invite.Workspace.icon)
+        getWorkspaceIconURL(invite.Workspace.slug, invite.Workspace.icon)
       );
 
       if (res.error) {
