@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 
-import { InviteMember } from "@clikz/transactional/invite-member.jsx";
+import { InviteMember } from "@clikz/transactional/invite-member";
 import { APP_URL } from "@clikz/utils/constants";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
