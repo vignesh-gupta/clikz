@@ -1,3 +1,5 @@
+import { WORKSPACE_DEFAULT_ICON_URL } from "../constants";
+
 export const paramsMetadata = [
   { display: "UTM Source", key: "utm_source", examples: "twitter, facebook" },
   { display: "UTM Medium", key: "utm_medium", examples: "social, email" },
@@ -67,4 +69,10 @@ export const getSubdomain = (url: string) => {
     return parts.slice(0, parts.length - 2).join(".");
   }
   return null;
+};
+
+export const getWorkspaceURL = (slug: string, icon?: string | null) => {
+  if (icon) return icon;
+
+  return `${WORKSPACE_DEFAULT_ICON_URL}${slug}`;
 };

@@ -22,10 +22,9 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
 export const sendWorkspaceInvite = async (
   email: string,
-  inviteCode: string
+  inviteCode: string,
+  workspaceImage: string
 ) => {
-  const workspaceLink = `${APP_URL}/invite/${inviteCode}`;
-
   return await resend.emails.send({
     from: AUTH_MAIL_SENDER,
     to: email,
@@ -34,7 +33,8 @@ export const sendWorkspaceInvite = async (
       inviteeName: email,
       inviterName: "Clikz",
       teamName: "Clikz",
-      href: workspaceLink,
+      acceptUrl: `${APP_URL}/invite/${inviteCode}`,
+      teamImageUrl: workspaceImage,
     }),
   });
 };

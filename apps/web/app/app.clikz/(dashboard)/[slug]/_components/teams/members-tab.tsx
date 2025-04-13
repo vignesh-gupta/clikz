@@ -1,13 +1,8 @@
 import { useSession } from "next-auth/react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@clikz/ui/components/ui/avatar";
 import { capitalizeFirstLetter } from "@clikz/ui/lib/utils";
-import { AVATAR_URL } from "@clikz/utils/constants";
 
+import UserAvatar from "~/features/auth/components/user-avatar";
 import { useGetMembers } from "~/features/workspace/api/members/use-get-members";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 
@@ -40,21 +35,7 @@ const MembersTab = () => {
           className="flex items-center justify-between w-full px-4"
         >
           <div className="flex items-center gap-2 overflow-hidden sm:gap-4 grow">
-            <Avatar>
-              <AvatarImage
-                className="rounded-full"
-                src={
-                  member.image ?? `${AVATAR_URL}${member.name || member.email}`
-                }
-              />
-              <AvatarFallback>
-                {(member.name || member.email)
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-                  .toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
+            <UserAvatar email={member.email} image={member.image} />
             <div>
               <p className="text-sm font-medium">
                 {member.name}{" "}

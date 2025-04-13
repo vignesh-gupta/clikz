@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
-import { generateInviteCode } from "@clikz/utils/functions";
+import { generateInviteCode, getWorkspaceURL } from "@clikz/utils/functions";
 
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
@@ -77,7 +77,13 @@ const workspaceInviteApp = new Hono()
       );
 
       await Promise.all(
-        invites.map((invite) => sendWorkspaceInvite(invite.email, invite.token))
+        invites.map((invite) =>
+          sendWorkspaceInvite(
+            invite.email,
+            invite.token,
+            getWorkspaceURL(workspace.slug, workspace.icon)
+          )
+        )
       );
 
       return c.json({ success: true, emails });
@@ -94,6 +100,14 @@ const workspaceInviteApp = new Hono()
         where: {
           id: inviteId,
         },
+        include: {
+          Workspace: {
+            select: {
+              slug: true,
+              icon: true,
+            },
+          },
+        },
       });
 
       if (!invite) {
@@ -104,7 +118,11 @@ const workspaceInviteApp = new Hono()
         return c.json({ error: "Invite has expired" }, 400);
       }
 
-      const res = await sendWorkspaceInvite(invite.email, invite.token);
+      const res = await sendWorkspaceInvite(
+        invite.email,
+        invite.token,
+        getWorkspaceURL(invite.Workspace.slug, invite.Workspace.icon)
+      );
 
       if (res.error) {
         return c.json(

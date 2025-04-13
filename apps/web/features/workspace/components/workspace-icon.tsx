@@ -3,6 +3,7 @@ import { memo } from "react";
 import { Avatar, AvatarImage } from "@clikz/ui/components/ui/avatar";
 import { Skeleton } from "@clikz/ui/components/ui/skeleton";
 import { cn } from "@clikz/ui/lib/utils";
+import { getWorkspaceURL } from "@clikz/utils/functions";
 
 type WorkspaceIconProps = {
   image?: string | null;
@@ -33,12 +34,10 @@ const WorkspaceIcon = ({
     );
   }
 
-  const defaultIconUrl = `https://api.dicebear.com/9.x/thumbs/svg?seed=${name}`;
-
   return (
     <Avatar className={className}>
       <AvatarImage
-        src={image || defaultIconUrl}
+        src={getWorkspaceURL(name, image)}
         className="object-cover size-full"
         height={height}
         width={width}

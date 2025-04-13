@@ -1,23 +1,28 @@
 import {
   Body,
   Button,
+  Column,
   Container,
   Head,
   Heading,
   Hr,
   Html,
+  Img,
   Link,
   Preview,
+  Row,
   Section,
   Tailwind,
   Text,
 } from "@react-email/components";
+import { XIcon } from "lucide-react";
 
 export const InviteMember = ({
   inviterName = "Alex Chen",
   inviteeName = "Taylor",
   teamName = "Design Collective",
-  href = "https://example.com/accept-invite",
+  teamImageUrl = "https://api.dicebear.com/9.x/thumbs/svg?seed=test",
+  acceptUrl = "https://example.com/accept-invite",
 }) => {
   return (
     <Html>
@@ -28,8 +33,33 @@ export const InviteMember = ({
       <Tailwind>
         <Body className="bg-[#f5f5f7] font-sans py-[40px]">
           <Container className="bg-white rounded-[12px] mx-auto my-0 p-[32px] max-w-[600px] shadow-sm">
+            <Section className="flex items-center justify-center mb-[32px]">
+              <Row>
+                <Column align="right">
+                  <Img
+                    src={teamImageUrl}
+                    width="75"
+                    height="75"
+                    alt="Clikz Logo"
+                    className="object-cover rounded-full"
+                  />
+                </Column>
+                <Column align="center" className="px-4">
+                  <XIcon className="text-[#e5e5e5]" size={24} />
+                </Column>
+                <Column align="left">
+                  <Img
+                    src="https://www.clikz.live/logo-dark.png"
+                    width="75"
+                    height="75"
+                    alt="Clikz Logo"
+                    className="object-cover rounded-full"
+                  />
+                </Column>
+              </Row>
+            </Section>
             <Section>
-              <Heading className="text-[24px] font-semibold text-[#1d1d1f] m-0 mb-[24px]">
+              <Heading className="text-[24px] font-semibold text-[#1d1d1f] m-0 mb-[24px] text-center">
                 You've been invited to join a team
               </Heading>
 
@@ -38,14 +68,15 @@ export const InviteMember = ({
               </Text>
 
               <Text className="text-[16px] leading-[24px] text-[#424245] mb-[24px]">
-                <span className="font-semibold">{inviterName}</span> has invited
-                you to join <span className="font-semibold">{teamName}</span> as
-                a team member. Join now to start collaborating.
+                You have been invited to join{" "}
+                <span className="font-semibold">{teamName}</span> as a team
+                member on <span className="font-semibold">Clikz</span>. Join now
+                to start collaborating.
               </Text>
 
               <Section className="text-center my-[32px]">
                 <Button
-                  href={href}
+                  href={acceptUrl}
                   className="bg-[#000000] text-white rounded-[8px] py-[12px] px-[24px] text-[16px] font-medium no-underline text-center box-border"
                 >
                   Accept Invitation
@@ -56,13 +87,13 @@ export const InviteMember = ({
                 If the button doesn't work, you can also accept the invitation
                 by clicking this link:
                 <br />
-                <Link href={href} className="text-[#0066cc] no-underline">
-                  {href}
+                <Link href={acceptUrl} className="text-[#0066cc] no-underline">
+                  {acceptUrl}
                 </Link>
               </Text>
 
               <Text className="text-[14px] leading-[20px] text-[#6e6e73] mb-[8px]">
-                This invitation will expire in 7 days.
+                This invitation will expire in 14 days.
               </Text>
             </Section>
 
@@ -78,10 +109,7 @@ export const InviteMember = ({
 
           <Container className="max-w-[600px] mx-auto mt-[32px] text-center">
             <Text className="text-[12px] leading-[16px] text-[#86868b] m-0">
-              © {new Date().getFullYear()} {teamName}. All rights reserved.
-            </Text>
-            <Text className="text-[12px] leading-[16px] text-[#86868b] m-0">
-              123 Team Street, Suite 100, San Francisco, CA 94107
+              © {new Date().getFullYear()} Clikz. All rights reserved.
             </Text>
             <Text className="text-[12px] leading-[16px] text-[#86868b] mt-[8px]">
               <Link

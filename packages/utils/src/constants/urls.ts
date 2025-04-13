@@ -33,3 +33,6 @@ export const AVATAR_URL = "https://api.dicebear.com/9.x/open-peeps/svg?seed=";
 export const GOOGLE_FAVICON_URL = "https://www.google.com/s2/favicons?domain=";
 export const GOOGLE_FAVICON_URL_V2 =
   "https://www.google.com/s2/favicons?sz=64&domain_url=https://";
+
+export const WORKSPACE_DEFAULT_ICON_URL =
+  "https://api.dicebear.com/9.x/thumbs/svg?seed=";
