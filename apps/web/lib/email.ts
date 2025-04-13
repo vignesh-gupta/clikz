@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 
 import { InviteMember } from "@clikz/emails/invite-member";
+import VerifyEmail from "@clikz/emails/verify-email";
 import { APP_URL } from "@clikz/utils/constants";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -16,7 +17,11 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     from: AUTH_MAIL_SENDER,
     to: email,
     subject: "Verify your email address",
-    html: `<p>Hi there,</p><p>Please verify your email address by clicking on the link below:</p><p><a href="${confirmLink}">Click here</a></p>`,
+    react: VerifyEmail({
+      name: email,
+      verificationCode: token,
+      verificationLink: confirmLink,
+    }),
   });
 };
 
@@ -31,7 +36,6 @@ export const sendWorkspaceInvite = async (
     subject: "You've been invited to a workspace",
     react: InviteMember({
       inviteeName: email,
-      inviterName: "Clikz",
       teamName: "Clikz",
       acceptUrl: `${APP_URL}/invite/${inviteCode}`,
       teamImageUrl: workspaceImage,

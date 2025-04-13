@@ -17,19 +17,23 @@ import {
 } from "@react-email/components";
 import { XIcon } from "lucide-react";
 
+type InviteMemberProps = {
+  inviteeName: string;
+  teamName: string;
+  teamImageUrl?: string;
+  acceptUrl: string;
+};
+
 export const InviteMember = ({
-  inviterName = "Alex Chen",
-  inviteeName = "Taylor",
+  inviteeName,
   teamName = "Design Collective",
-  teamImageUrl = "https://api.dicebear.com/9.x/thumbs/svg?seed=test",
-  acceptUrl = "https://example.com/accept-invite",
-}) => {
+  teamImageUrl,
+  acceptUrl,
+}: InviteMemberProps) => {
   return (
     <Html>
       <Head />
-      <Preview>
-        You've been invited to join {teamName} by {inviterName}
-      </Preview>
+      <Preview>You've been invited to join {teamName}</Preview>
       <Tailwind>
         <Body className="bg-[#f5f5f7] font-sans py-[40px]">
           <Container className="bg-white rounded-[12px] mx-auto my-0 p-[32px] max-w-[600px] shadow-sm">

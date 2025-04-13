@@ -19,7 +19,7 @@ export const generatePasscode = async (email: string) => {
     data: {
       email,
       otp: passcode,
-      expiresAt: new Date(Date.now() + 1000 * 60 * 5),
+      expiresAt: new Date(Date.now() + 1000 * 60 * 10), // 10 minutes
     },
   });
 };
