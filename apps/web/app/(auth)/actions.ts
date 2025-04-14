@@ -2,6 +2,7 @@
 
 import { AuthError } from "next-auth";
 
+import { DEFAULT_LOGIN_REDIRECT } from "@clikz/utils/constants";
 import { saltAndHash } from "@clikz/utils/functions";
 
 import { signIn } from "~/auth";
@@ -15,7 +16,6 @@ import {
   signInSchema,
   signUpSchema,
 } from "~/lib/zod/schemas";
-import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 export const register = async (values: SignUpSchema) => {
   const validatedFields = signUpSchema.parse(values);

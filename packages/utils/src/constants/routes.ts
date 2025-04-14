@@ -1,7 +1,22 @@
 /**
- * An array of routes that are public and do not require authentication.
+ * An array of regex patterns for routes that are public and do not require authentication.
  */
-export const PUBLIC_ROUTE = ["/contact"];
+// Define an array of public route patterns without leading slashes
+export const PUBLIC_ROUTES = [
+  // Exact routes
+  "about",
+  "contact",
+  "terms",
+  "privacy",
+
+  // Pattern routes (using wildcards)
+  "blog/*", // All blog pages
+  "products/*", // All product pages
+  "api/public/*", // All public API endpoints
+  "assets/*", // All static assets
+  "docs/v[0-9]/*", // Documentation routes with version numbers
+  "subscriptions/*", // All subscription related pages
+];
 
 /**
  * An array of routes that are used for authentication.

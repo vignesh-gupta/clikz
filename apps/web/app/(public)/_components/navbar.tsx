@@ -11,8 +11,7 @@ import { useSession } from "next-auth/react";
 import { Button } from "@clikz/ui/components/ui/button";
 import { cn } from "@clikz/ui/lib/utils";
 import { APP_DOMAIN } from "@clikz/utils/constants";
-
-import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
+import { DEFAULT_LOGIN_REDIRECT } from "@clikz/utils/constants";
 
 const navItems = [
   {

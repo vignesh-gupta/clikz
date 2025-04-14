@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { AUTH_API_ROUTE, AUTH_ROUTES, DEFAULT_LOGIN_REDIRECT } from "~/routes";
+import {
+  AUTH_API_ROUTE,
+  AUTH_ROUTES,
+  DEFAULT_LOGIN_REDIRECT,
+} from "@clikz/utils/constants";
 
 import {
   getUserDefaultWorkspaceViaEdge,
