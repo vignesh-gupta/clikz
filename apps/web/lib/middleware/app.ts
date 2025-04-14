@@ -2,11 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { AUTH_API_ROUTE, AUTH_ROUTES, DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
-import {
-  getUserDefaultWorkspaceViaEdge,
-  getUserViaToken,
-  parse,
-} from "./utils";
+import { getUser, getUserDefaultWorkspaceViaEdge, parse } from "./utils";
 
 const appRedirect = (path: string, req: NextRequest) =>
   new URL(`/app.clikz${path}`, req.nextUrl);
@@ -18,7 +14,7 @@ export const AppMiddleware = async (req: NextRequest) => {
     return NextResponse.next();
   }
 
-  const user = await getUserViaToken(req);
+  const user = await getUser();
 
   if (AUTH_ROUTES.includes(fullKey)) {
     if (user?.id) {

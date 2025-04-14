@@ -33,16 +33,14 @@ const navItems = [
   },
 ];
 
-type NavbarProps = {
-  isLoggedIn: boolean;
-};
-
-const Navbar = ({ isLoggedIn }: NavbarProps) => {
+const Navbar = () => {
   const [hidden, setHidden] = useState(false);
 
   const { scrollY } = useScroll();
 
-  const { status } = useSession();
+  const { data, status } = useSession();
+
+  console.log("status", { status, data });
 
   useMotionValueEvent(scrollY, "change", (latest: number) => {
     const prev = scrollY.getPrevious() || 0;
@@ -95,7 +93,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
             </li>
           ))}
         </ul>
-        {isLoggedIn ? (
+        {status === "authenticated" ? (
           <Button className="rounded-full " size="sm" asChild>
             <Link
               href={{

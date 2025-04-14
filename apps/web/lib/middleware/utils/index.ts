@@ -1,11 +1,10 @@
 import { NextRequest } from "next/server";
 
 import { Link, Workspace } from "@prisma/client";
-import { User } from "next-auth";
-import { getToken } from "next-auth/jwt";
 
 import { BASE_DOMAIN } from "@clikz/utils/constants";
 
+import { auth } from "~/auth";
 import { conn } from "~/lib/edge-db";
 
 export const parse = (req: NextRequest) => {
@@ -33,13 +32,9 @@ export const parse = (req: NextRequest) => {
   };
 };
 
-export async function getUserViaToken(req: NextRequest) {
-  const session = await getToken({
-    req,
-    secret: process.env.AUTH_SECRET,
-    secureCookie: process.env.NODE_ENV === "production",
-  });
-  return session?.user as User | null;
+export async function getUser() {
+  const session = await auth();
+  return session?.user;
 }
 
 export const getUserDefaultWorkspaceViaEdge = async (userId: string) => {

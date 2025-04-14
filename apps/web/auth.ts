@@ -13,7 +13,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
     maxAge: 60 * 60 * 24 * 30, // 30 days
   },
-
+  cookies: {
+    sessionToken: {
+      name: `${process.env.NODE_ENV === "production" ? "__Secure-" : ""}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
+        domain:
+          process.env.NODE_ENV === "production" ? `.clikz.live` : undefined,
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   events: {
     linkAccount: async ({ user }) => {
       await db.user.update({
