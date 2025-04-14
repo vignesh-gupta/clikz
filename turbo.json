@@ -24,7 +24,9 @@
     "UPSTASH_REDIS_REST_TOKEN",
     "VERCEL_TOKEN",
     "VERCEL_PROJECT_ID",
-    "VERCEL_TEAM_ID"
+    "VERCEL_TEAM_ID",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+    "STRIPE_SECRET_KEY"
   ],
   "tasks": {
     "build": {
