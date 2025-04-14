@@ -17,9 +17,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@clikz/ui/components/ui/sidebar";
+import { DEFAULT_LOGIN_REDIRECT } from "@clikz/utils/constants";
 
 import { UserButton } from "~/features/auth/components/user-button";
-import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 const navItems = [
   {

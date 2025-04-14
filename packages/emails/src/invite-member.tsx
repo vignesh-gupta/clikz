@@ -130,4 +130,11 @@ export const InviteMember = ({
   );
 };
 
+InviteMember.PreviewProps = {
+  inviteeName: "johm.doe@test.com",
+  teamName: "Design Collective",
+  teamImageUrl: "https://api.dicebear.com/9.x/thumbs/svg?seed=test-team",
+  acceptUrl: "https://clikz.com/accept-invitation?code=000000",
+};
+
 export default InviteMember;

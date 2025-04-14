@@ -16,10 +16,10 @@ import { toast } from "sonner";
 
 import { BubbleIcon } from "@clikz/ui/components/bubble-icon";
 import { Button } from "@clikz/ui/components/ui/button";
+import { DEFAULT_LOGIN_REDIRECT } from "@clikz/utils/constants";
 
 import { LINK_QUERY_PARAM } from "~/features/link/hooks/use-link-modal";
 import { useInvitesAction } from "~/features/workspace/api/invite/use-invite-action";
-import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 type ViewState = "initial" | "accepted" | "declined" | "invalid";
 

@@ -1,17 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import {
+  ALLOWED_EXTENSIONS,
   APP_NAMES,
   BASE_DOMAIN,
   BASE_URL,
   DEFAULT_REDIRECTS,
 } from "@clikz/utils/constants";
+import { isPublicRoute } from "@clikz/utils/functions";
 
 import { parse } from "~/lib/middleware/utils";
 
 import AppMiddleware from "./lib/middleware/app";
 import LinkMiddleware from "./lib/middleware/link";
-import { ALLOWED_EXTENSIONS, PUBLIC_ROUTE } from "./routes";
 
 export const config = {
   matcher: [
@@ -39,7 +40,7 @@ export default async function middleware(req: NextRequest) {
   if (domain === BASE_DOMAIN && fullPath === "/") return NextResponse.next();
 
   // Public routes
-  if (PUBLIC_ROUTE.includes(req.nextUrl.pathname)) {
+  if (isPublicRoute(fullKey)) {
     // Redirect to base domain if not already there
     if (domain !== BASE_DOMAIN)
       return NextResponse.redirect(`${BASE_URL}${fullPath}`, 302);

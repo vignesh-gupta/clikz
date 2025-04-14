@@ -4,11 +4,11 @@ import { Card, CardContent } from "@clikz/ui/components/ui/card";
 import { Label } from "@clikz/ui/components/ui/label";
 import { Separator } from "@clikz/ui/components/ui/separator";
 import { DATA_PREFIX } from "@clikz/utils/constants";
+import { DEFAULT_LOGIN_REDIRECT } from "@clikz/utils/constants";
 
 import { auth } from "~/auth";
 import InputWithCopy from "~/components/input-with-copy";
 import PageHeader from "~/components/page-header";
-import { DEFAULT_LOGIN_REDIRECT } from "~/routes";
 
 import UserAvatarUpload from "./_components/avatar-upload";
 import DeleteAccount from "./_components/delete-account";
