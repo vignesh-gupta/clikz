@@ -2,64 +2,63 @@
 
 import { MemberRole } from "@prisma/client";
 
-import { auth, signOut } from "~/auth";
+import { signOut } from "~/auth";
 
 import { db } from "../db";
 import { WorkspaceSchema } from "../zod/schemas";
+import { getUser } from "./utils";
 
 export const createWorkspace = async (data: WorkspaceSchema) => {
-  const session = await auth();
+  try {
+    const currentUser = await getUser();
+    const user = await db.user.findUnique({
+      where: {
+        id: currentUser.id,
+      },
+    });
 
-  if (!session || !session.user || !session.user.id) {
-    throw new Error("You must be signed in to create a workspace");
+    if (!user) {
+      signOut();
+      throw new Error("User not found, please sign in again");
+    }
+
+    const workspace = await db.workspace.create({
+      data: {
+        name: data.name,
+        slug: data.slug,
+        ownerId: user.id,
+      },
+    });
+
+    await db.membership.create({
+      data: {
+        userId: user.id,
+        workspaceId: workspace.id,
+        role: MemberRole.ADMIN,
+        email: user.email,
+      },
+    });
+
+    if (!user.defaultWorkspace) {
+      await setUserDefaultWorkspace(workspace.slug, user.id);
+    }
+
+    return { success: "Workspace create successfully", workspace };
+  } catch (error) {
+    console.error("Error creating workspace:", error);
+    return { error: "Error creating workspace" };
   }
-
-  const user = await db.user.findUnique({
-    where: {
-      id: session.user.id,
-    },
-  });
-
-  if (!user) {
-    signOut();
-    throw new Error("User not found, please sign in again");
-  }
-
-  const workspace = await db.workspace.create({
-    data: {
-      name: data.name,
-      slug: data.slug,
-      ownerId: user.id,
-    },
-  });
-
-  await db.membership.create({
-    data: {
-      userId: user.id,
-      workspaceId: workspace.id,
-      role: MemberRole.ADMIN,
-      email: user.email,
-    },
-  });
-
-  if (!user.defaultWorkspace) {
-    await setUserDefaultWorkspace(workspace.slug);
-  }
-
-  return { success: "Workspace create successfully", workspace };
 };
 
-export const setUserDefaultWorkspace = async (workspaceSlug: string) => {
-  const session = await auth();
-
-  if (!session || !session.user || !session.user.id) return;
-
+export const setUserDefaultWorkspace = async (
+  workspaceSlug: string,
+  userId: string
+) =>
   await db.user.update({
     where: {
-      id: session.user.id,
+      id: userId,
     },
     data: {
       defaultWorkspace: workspaceSlug,
     },
   });
-};
