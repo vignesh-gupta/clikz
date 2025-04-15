@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
+import { sendWorkspaceInvite } from "@clikz/emails";
 import {
   generateInviteCode,
   getWorkspaceIconURL,
@@ -9,7 +10,6 @@ import {
 import { roleMiddleware } from "~/lib/backend/role-middleware";
 import { sessionMiddleware } from "~/lib/backend/session-middleware";
 import { db } from "~/lib/db";
-import { sendWorkspaceInvite } from "~/lib/email";
 import { inviteSchema } from "~/lib/zod/schemas";
 
 const workspaceInviteApp = new Hono()

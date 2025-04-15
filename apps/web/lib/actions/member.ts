@@ -2,13 +2,13 @@
 
 import { MemberRole } from "@prisma/client";
 
+import { sendWorkspaceInvite } from "@clikz/emails";
 import {
   generateInviteCode,
   getWorkspaceIconURL,
 } from "@clikz/utils/functions";
 
 import { db } from "../db";
-import { sendWorkspaceInvite } from "../email";
 import { getUser } from "./utils";
 
 export const inviteUser = async (emails: string[], workspaceSlug: string) => {

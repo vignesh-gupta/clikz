@@ -2,6 +2,7 @@
 
 import { AuthError } from "next-auth";
 
+import { sendVerificationEmail } from "@clikz/emails";
 import { DEFAULT_LOGIN_REDIRECT } from "@clikz/utils/constants";
 import { saltAndHash } from "@clikz/utils/functions";
 
@@ -9,7 +10,6 @@ import { signIn } from "~/auth";
 import { getUserByEmail } from "~/features/auth/data";
 import { generatePasscode } from "~/features/workspace/data/invite";
 import { db } from "~/lib/db";
-import { sendVerificationEmail } from "~/lib/email";
 import {
   SignInSchema,
   SignUpSchema,

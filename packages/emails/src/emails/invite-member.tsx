@@ -24,7 +24,7 @@ type InviteMemberProps = {
   acceptUrl: string;
 };
 
-export const InviteMember = ({
+const InviteMember = ({
   inviteeName,
   teamName = "Design Collective",
   teamImageUrl,
