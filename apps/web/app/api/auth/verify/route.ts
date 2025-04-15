@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { sendVerificationEmail } from "@clikz/emails";
+
 import { generatePasscode } from "~/features/workspace/data/invite";
 import { db } from "~/lib/db";
-import { sendVerificationEmail } from "~/lib/email";
 
 export const POST = async (req: NextRequest) => {
   const toEmail = (await req.json()).to;

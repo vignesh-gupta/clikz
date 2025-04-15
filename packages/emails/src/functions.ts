@@ -1,21 +1,37 @@
+import { ReactNode } from "react";
 import { Resend } from "resend";
+import { APP_URL } from "./constants";
+import InviteMember from "./emails/invite-member";
+import VerifyEmail from "./emails/verify-email";
 
-import { InviteMember } from "@clikz/emails/invite-member";
-import VerifyEmail from "@clikz/emails/verify-email";
-import { APP_URL } from "@clikz/utils/constants";
-
-// eslint-disable-next-line turbo/no-undeclared-env-vars
 export const resend = new Resend(process.env.AUTH_RESEND_KEY || "re_123");
 
-const AUTH_MAIL_SENDER =
-  process.env.RESEND_EMAIL_SENDER || "Clikz <auth@clikz.live>";
+const MAIL_SENDER =
+  process.env.RESEND_EMAIL_SENDER || "Clikz <hello@clikz.live>";
+
+export const sendEmail = async ({
+  email,
+  subject,
+  react,
+}: {
+  email: string;
+  subject: string;
+  react: ReactNode;
+}) => {
+  return await resend.emails.send({
+    from: MAIL_SENDER,
+    to: email,
+    replyTo: "vighneshgupta32@gmail.com",
+    subject,
+    react,
+  });
+};
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${APP_URL}/verify?to=${email}&code=${token}`;
 
-  await resend.emails.send({
-    from: AUTH_MAIL_SENDER,
-    to: email,
+  return await sendEmail({
+    email,
     subject: "Verify your email address",
     react: VerifyEmail({
       name: email,
@@ -28,11 +44,10 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 export const sendWorkspaceInvite = async (
   email: string,
   inviteCode: string,
-  workspaceImage: string
+  workspaceImage: string,
 ) => {
-  return await resend.emails.send({
-    from: AUTH_MAIL_SENDER,
-    to: email,
+  return await sendEmail({
+    email,
     subject: "You've been invited to a workspace",
     react: InviteMember({
       inviteeName: email,

@@ -7,17 +7,20 @@
     "export": "email export"
   },
   "exports": {
-    "./*": "./src/*.tsx"
+    "./emails*": "./src/emails/*.tsx",
+    ".": "./src/functions.ts"
   },
   "dependencies": {
     "@react-email/components": "0.0.36",
     "lucide-react": "^0.488.0",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "resend": "4.2.0"
   },
   "devDependencies": {
     "@clikz/eslint-config": "workspace:*",
     "@clikz/typescript-config": "workspace:*",
+    "@types/node": "^22.14.1",
     "@types/react": "^19.1.1",
     "react-email": "4.0.7"
   }
