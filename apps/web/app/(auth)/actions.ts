@@ -7,9 +7,9 @@ import { saltAndHash } from "@clikz/utils/functions";
 
 import { signIn } from "~/auth";
 import { getUserByEmail } from "~/features/auth/data";
+import { generatePasscode } from "~/features/workspace/data/invite";
 import { db } from "~/lib/db";
 import { sendVerificationEmail } from "~/lib/email";
-import { generatePasscode } from "~/lib/token";
 import {
   SignInSchema,
   SignUpSchema,

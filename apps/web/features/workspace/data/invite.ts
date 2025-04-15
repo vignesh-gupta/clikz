@@ -3,8 +3,7 @@ import { redirect } from "next/navigation";
 import { generateOTP } from "@clikz/utils/functions";
 
 import { auth } from "~/auth";
-
-import { db } from "./db";
+import { db } from "~/lib/db";
 
 export const generatePasscode = async (email: string) => {
   const passcode = generateOTP();

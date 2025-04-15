@@ -12,7 +12,7 @@ import {
 import { getApexDomain } from "@clikz/utils/functions";
 
 import { BlurImage } from "~/components/blur-image";
-import { constructMetadata } from "~/lib/meta-data";
+import { constructMetadata } from "~/lib/construct-metadata";
 import { getLinkViaEdgeWithKey } from "~/lib/middleware/utils";
 
 import RedirectionToDest from "./redirection";

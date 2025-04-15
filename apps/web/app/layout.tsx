@@ -2,7 +2,7 @@ import TailwindSizeUtil from "@clikz/ui/components/tailwind-size-util";
 import "@clikz/ui/globals.css";
 
 import Providers from "~/components/provider";
-import { constructMetadata } from "~/lib/meta-data";
+import { constructMetadata } from "~/lib/construct-metadata";
 import { inter } from "~/styles/font";
 
 export const metadata = constructMetadata();
