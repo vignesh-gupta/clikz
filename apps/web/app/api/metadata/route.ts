@@ -1,6 +1,4 @@
-import { NextResponse } from "next/server";
-
-import { AxiomRequest } from "next-axiom";
+import { NextRequest, NextResponse } from "next/server";
 
 import { getUrlFromStringIfValid } from "@clikz/utils/functions";
 
@@ -28,7 +26,7 @@ export type MetadataResponse = {
   statusCode: number;
 };
 
-export const GET = async (req: AxiomRequest) => {
+export const GET = async (req: NextRequest) => {
   try {
     const url = decodeURIComponent(req.nextUrl.searchParams.get("url") || "");
 
