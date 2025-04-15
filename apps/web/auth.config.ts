@@ -1,8 +1,9 @@
-import { compare } from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Discord from "next-auth/providers/discord";
 import GitHub from "next-auth/providers/github";
+
+import { compare } from "@clikz/utils/functions";
 
 import { getUserByEmail, getUserById } from "~/features/auth/data";
 

@@ -1,7 +1,6 @@
 import { FC, PropsWithChildren, Suspense } from "react";
 
 import { SessionProvider } from "next-auth/react";
-import { AxiomWebVitals } from "next-axiom";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "sonner";
 
@@ -26,7 +25,6 @@ const Provider: FC<PropsWithChildren> = ({ children }) => {
           </ImageKitProvider>
         </QueryProviders>
         <Toaster closeButton />
-        <AxiomWebVitals />
       </NuqsAdapter>
     </SessionProvider>
   );
