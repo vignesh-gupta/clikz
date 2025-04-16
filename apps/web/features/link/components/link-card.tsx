@@ -39,7 +39,11 @@ export function LinkCard({
           </div>
           <div className="flex-grow min-w-0">
             <div className="flex items-center">
-              <Link href={shortUrl} target="_blank" className="truncate">
+              <Link
+                href={shortUrl}
+                target="_blank"
+                className="truncate text-base"
+              >
                 {`${domain}/${slug === "_root" && domain !== BASE_DOMAIN ? "" : slug}`}
               </Link>
               <span className="sr-only">Copy</span>

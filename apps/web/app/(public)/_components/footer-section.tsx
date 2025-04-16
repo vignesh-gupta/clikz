@@ -65,7 +65,7 @@ export default function FooterSection() {
               <Image src="/logo-name.png" alt="Clikz" width={140} height={40} />
             </Link>
             <div>
-              <div className="flex space-x-6">
+              <div className="flex space-x-6 px-2">
                 {socialLinks.map((item) => (
                   <a
                     key={item.label}
@@ -79,13 +79,12 @@ export default function FooterSection() {
                   </a>
                 ))}
               </div>
-              <div className="mt-4 border border-muted">
-                <iframe
-                  src="https://status.clikz.live/badge"
-                  width="220"
-                  height="42"
-                />
-              </div>
+              <iframe
+                src="https://status.clikz.live/badge"
+                height={35}
+                width={220}
+                className="mt-4"
+              />
             </div>
           </div>
 

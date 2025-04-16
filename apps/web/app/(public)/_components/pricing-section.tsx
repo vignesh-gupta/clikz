@@ -3,6 +3,7 @@ import * as motion from "motion/react-client";
 
 import { buttonVariants } from "@clikz/ui/components/ui/button";
 import { cn } from "@clikz/ui/lib/utils";
+import { PLANS } from "@clikz/utils/constants";
 
 const PricingTier = ({
   name,
@@ -80,56 +81,6 @@ const PricingTier = ({
 );
 
 export default function PricingSection() {
-  const pricingTiers = [
-    {
-      name: "Free",
-      price: "$0",
-      description: "Perfect for trying out our service",
-      features: [
-        "3 workspaces",
-        "30-day analytics retention",
-        "5k tracked clicks/month",
-        "5 domains",
-        "3 users",
-        "Basic support",
-        "Community Access",
-        "API access",
-      ],
-    },
-    {
-      name: "Pro",
-      price: "$15",
-      description: "For professionals and growing teams",
-      features: [
-        "Everything in Free",
-        "Upto 10 workspaces",
-        "Upto 50k tracked clicks/month",
-        "1 year analytics retention",
-        "15 domains",
-        "10 users",
-        "Advanced Link features",
-        "Priority support",
-        "Team collaboration",
-      ],
-      isPopular: true,
-    },
-    {
-      name: "Business",
-      price: "$40",
-      description: "For large organizations with advanced needs",
-      features: [
-        "Everything in Pro",
-        "Upto 50 workspaces",
-        "Upto 100k tracked clicks/month",
-        "3 year analytics retention",
-        "50 domains",
-        "30 users",
-        "Real-time Event streaming",
-        "Real-time webhook",
-      ],
-    },
-  ];
-
   return (
     <section className="py-24">
       <div className="container mx-auto px-4">
@@ -147,7 +98,7 @@ export default function PricingSection() {
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {pricingTiers.map((tier) => (
+          {PLANS.map((tier) => (
             <PricingTier key={tier.name} {...tier} />
           ))}
         </div>

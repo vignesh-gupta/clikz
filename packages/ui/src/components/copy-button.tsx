@@ -27,7 +27,7 @@ export const CopyButton = ({
     if (onCopy) return onCopy();
 
     navigator.clipboard.writeText(value);
-    toast.success("Copied to clipboard  btn successfully");
+    toast.success("Copied");
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 500);
   };
