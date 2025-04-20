@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-import { ChevronLeft, CogIcon, Globe2Icon, UsersIcon } from "lucide-react";
+import {
+  ChevronLeft,
+  CogIcon,
+  GlobeIcon,
+  ReceiptTextIcon,
+  UsersIcon,
+} from "lucide-react";
 
 import { buttonVariants } from "@clikz/ui/components/ui/button";
 import { SidebarHeader } from "@clikz/ui/components/ui/sidebar";
@@ -41,8 +47,13 @@ export const settingsNavigation = [
     icon: UsersIcon,
   },
   {
+    title: "Billing",
+    href: "/settings/billing",
+    icon: ReceiptTextIcon,
+  },
+  {
     title: "Domains",
     href: "/settings/domains",
-    icon: Globe2Icon,
+    icon: GlobeIcon,
   },
 ];
