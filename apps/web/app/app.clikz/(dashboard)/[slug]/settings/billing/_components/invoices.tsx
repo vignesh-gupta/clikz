@@ -30,7 +30,7 @@ const Invoices = () => {
          */}
 
         <CardFooter className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full table-fixed">
             <thead>
               <tr className="border-b">
                 <th className="text-left py-3 px-4 font-medium">Date</th>

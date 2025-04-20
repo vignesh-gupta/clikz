@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent, CardHeader } from "@clikz/ui/components/ui/card";
 
@@ -18,6 +20,9 @@ const WorkspaceBillingPage = () => {
           </div>
           <div className="flex items-center gap-2">
             <Button size="sm">Upgrade</Button>
+            <Button size="sm" variant="outline" asChild>
+              <Link href="billing/invoices">View Invoices</Link>
+            </Button>
           </div>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-0">
