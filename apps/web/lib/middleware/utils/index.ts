@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, after } from "next/server";
 
 import { Link, Workspace } from "@prisma/client";
 
@@ -38,10 +38,25 @@ export async function getUser() {
 }
 
 export const getUserDefaultWorkspaceViaEdge = async (userId: string) => {
-  const query = `SELECT * FROM "Workspace" WHERE slug = (SELECT "defaultWorkspace" FROM "User" WHERE id = $1 LIMIT 1)`;
-  const result = await conn(query, [userId]);
+  const defaultWsQuery = `SELECT * FROM "Workspace" WHERE slug = (SELECT "defaultWorkspace" FROM "User" WHERE id = $1 LIMIT 1)`;
+  const defaultWsResult = await conn(defaultWsQuery, [userId]);
 
-  return result[0] as Workspace | null;
+  if (defaultWsResult && defaultWsResult[0]) {
+    return defaultWsResult[0] as Workspace;
+  }
+
+  const getFirstWsQuery = `SELECT w.* FROM "Workspace" w JOIN "Membership" m ON w.id = m."workspaceId" WHERE m."userId" = $1 LIMIT 1`;
+  const getFirstWsResult = await conn(getFirstWsQuery, [userId]);
+
+  if (getFirstWsResult && getFirstWsResult[0] && getFirstWsResult[0]?.slug) {
+    after(async () => {
+      const updateUserDefaultWsQuery = `UPDATE "User" SET "defaultWorkspace" = $1 WHERE id = $2`;
+
+      await conn(updateUserDefaultWsQuery, [getFirstWsResult[0]?.slug, userId]);
+    });
+  }
+
+  return getFirstWsResult[0] as Workspace | null;
 };
 
 export const getLinkViaEdgeWithKey = async ({

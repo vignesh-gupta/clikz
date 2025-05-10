@@ -37,6 +37,7 @@ const GeneralSettings = ({ initialWorkspace }: GeneralSettingsProps) => {
     idOrSlug: initialWorkspace.slug,
     initialData: initialWorkspace,
   });
+  const { mutate: updateWorkspace, isPending } = useUpdateWorkspace();
 
   if (!workspace) return notFound();
 
@@ -48,12 +49,24 @@ const GeneralSettings = ({ initialWorkspace }: GeneralSettingsProps) => {
       name,
       slug,
     },
+    disabled: isPending,
   });
-
-  const { mutate: updateWorkspace } = useUpdateWorkspace();
 
   const onSubmit = (values: WorkspaceSchema) =>
     updateWorkspace({ json: values, param: { idOrSlug: slug } });
+
+  const isDisabled =
+    isPending ||
+    (form.getValues().name === name && form.getValues().slug === slug);
+
+  console.log({
+    isDisabled,
+    name,
+    slug,
+    formValues: form.getValues(),
+    bool: form.getValues().name === name,
+    bool2: form.getValues().slug === slug,
+  });
 
   return (
     <div className="space-y-6">
@@ -107,7 +120,9 @@ const GeneralSettings = ({ initialWorkspace }: GeneralSettingsProps) => {
               </FormItem>
             )}
           />
-          <Button type="submit">Save</Button>
+          <Button type="submit" disabled={isDisabled}>
+            Save
+          </Button>
         </form>
       </Form>
 
