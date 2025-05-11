@@ -1,7 +1,7 @@
 export const PLANS = [
   {
-    name: "Free",
-    price: "$0",
+    name: "FREE",
+    price: 0,
     description: "Perfect for trying out our service",
     features: [
       "3 workspaces",
@@ -14,10 +14,12 @@ export const PLANS = [
       "API access",
     ],
     isPopular: false,
+    buttonText: "Get Started",
+    pricingButtonText: "Current Plan",
   },
   {
-    name: "Pro",
-    price: "$15",
+    name: "PRO",
+    price: 15,
     description: "For professionals and growing teams",
     features: [
       "Everything in Free",
@@ -31,10 +33,12 @@ export const PLANS = [
       "Team collaboration",
     ],
     isPopular: true,
+    buttonText: "Get Pro",
+    pricingButtonText: "Change to Pro",
   },
   {
-    name: "Business",
-    price: "$40",
+    name: "ENTERPRISE",
+    price: 40,
     description: "For large organizations with advanced needs",
     features: [
       "Everything in Pro",
@@ -47,5 +51,7 @@ export const PLANS = [
       "Real-time webhook",
     ],
     isPopular: false,
+    buttonText: "Get Business",
+    pricingButtonText: "Change to Enterprise",
   },
 ];

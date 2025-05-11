@@ -19,7 +19,9 @@ const WorkspaceBillingPage = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button size="sm">Upgrade</Button>
+            <Button size="sm" asChild>
+              <Link href="billing/upgrade">Upgrade</Link>
+            </Button>
             <Button size="sm" variant="outline" asChild>
               <Link href="billing/invoices">View Invoices</Link>
             </Button>

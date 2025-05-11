@@ -7,7 +7,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <BentoDemo />
-      <PricingSection />
+      <PricingSection showHeader />
     </>
   );
 }
