@@ -34,7 +34,7 @@ export const PLANS = [
     ],
     isPopular: true,
     buttonText: "Get Pro",
-    pricingButtonText: "Change to Pro",
+    pricingButtonText: "Upgrade to Pro",
   },
   {
     name: "ENTERPRISE",
@@ -52,6 +52,6 @@ export const PLANS = [
     ],
     isPopular: false,
     buttonText: "Get Business",
-    pricingButtonText: "Change to Enterprise",
+    pricingButtonText: "Upgrade to Enterprise",
   },
 ];

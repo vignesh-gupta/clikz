@@ -69,9 +69,18 @@ export const PricingCard = ({
             transition={{ duration: 0.3 }}
             className="flex items-baseline mt-2"
           >
-            <span className="text-3xl font-bold">
+            <span className="text-3xl font-bold flex">
               $
-              <AnimatedNumbers animateToNumber={price} />
+              <AnimatedNumbers
+                transitions={() => {
+                  return {
+                    from: 0,
+                    ease: "circIn",
+                  };
+                }}
+                animateToNumber={price}
+                key={`price-plan-${name}-${price}`}
+              />
             </span>
             <span className="ml-1 text-muted-foreground">/month</span>
           </motion.div>
