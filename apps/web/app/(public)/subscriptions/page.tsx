@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(
-  // eslint-disable-next-line turbo/no-undeclared-env-vars
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 

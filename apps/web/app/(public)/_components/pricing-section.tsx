@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { loadStripe } from "@stripe/stripe-js";
 import { Check } from "lucide-react";
 import * as motion from "motion/react-client";
 import AnimatedNumbers from "react-animated-numbers";
@@ -12,6 +13,10 @@ import { Tabs, TabsList, TabsTrigger } from "@clikz/ui/components/ui/tabs";
 import { capitalize } from "@clikz/ui/lib/utils";
 import { PLANS } from "@clikz/utils/constants";
 
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
+
 type PricingCardProps = {
   name: string;
   price: number;
@@ -21,6 +26,7 @@ type PricingCardProps = {
   buttonDisabled?: boolean;
   isCurrentPlan?: boolean;
   isPopular?: boolean;
+  priceId: string;
 };
 
 export const PricingCard = ({
@@ -32,7 +38,25 @@ export const PricingCard = ({
   buttonDisabled,
   isCurrentPlan,
   isPopular,
+  priceId,
 }: PricingCardProps) => {
+  const handleSubscribe = async () => {
+    const stripe = await stripePromise;
+    const { sessionId } = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ priceId }),
+    }).then((res) => res.json());
+
+    const result = await stripe?.redirectToCheckout({ sessionId });
+
+    if (result?.error) {
+      console.error(result?.error);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -93,6 +117,7 @@ export const PricingCard = ({
             className="w-full transition-all duration-300 hover:shadow-md my-4"
             disabled={buttonDisabled || isCurrentPlan}
             variant={isCurrentPlan ? "outline" : "default"}
+            onClick={handleSubscribe}
           >
             {buttonText}
           </Button>
@@ -173,6 +198,9 @@ export default function PricingSection({
             <PricingCard
               key={plan.name}
               {...plan}
+              priceId={
+                billingCycle === "monthly" ? plan.priceId : plan.priceIdAnnual
+              }
               buttonText={
                 isPricingPage ? plan.pricingButtonText : plan.buttonText
               }
@@ -180,7 +208,7 @@ export default function PricingSection({
               price={
                 billingCycle === "monthly"
                   ? plan.price
-                  : Math.floor((plan.price * 9) / 12)
+                  : Math.ceil((plan.price * 9) / 12)
               }
             />
           ))}
