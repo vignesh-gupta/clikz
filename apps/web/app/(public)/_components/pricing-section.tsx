@@ -69,7 +69,7 @@ export const PricingCard = ({
         priceId,
         userId: data.user.id,
         workspaceSlug,
-        name,
+        plan: name,
       }),
     }).then((res) => res.json());
 

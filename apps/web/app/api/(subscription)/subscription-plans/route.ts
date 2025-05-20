@@ -12,8 +12,6 @@ export async function GET() {
       type: "recurring",
     });
 
-    console.log("Fetched prices", prices.data.length);
-
     const plans = prices.data.map((price) => ({
       id: price.id,
       name:
@@ -28,8 +26,6 @@ export async function GET() {
       interval: price.recurring?.interval,
       price_id: price.id,
     }));
-
-    console.log("Mapped plans");
 
     return NextResponse.json(plans);
   } catch (error) {

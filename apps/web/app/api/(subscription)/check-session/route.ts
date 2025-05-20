@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    console.log(session);
     if (session.payment_status !== "paid") {
       throw new ClikzApiError({
         code: "internal_server_error",
