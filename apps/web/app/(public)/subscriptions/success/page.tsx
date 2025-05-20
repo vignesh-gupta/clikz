@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 export default function SuccessPage() {
-  const [status, setStatus] = useState('loading');
-  const [customerEmail, setCustomerEmail] = useState('');
+  const [status, setStatus] = useState("loading");
+  const [customerEmail, setCustomerEmail] = useState("");
   const searchParams = useSearchParams();
-  const sessionId = searchParams.get('session_id');
+  const sessionId = searchParams.get("session_id");
 
   useEffect(() => {
     if (sessionId) {
@@ -15,11 +15,11 @@ export default function SuccessPage() {
     }
   }, [sessionId]);
 
-  async function fetchSessionStatus() {
-    const response = await fetch('/api/check-session', {
-      method: 'POST',
+  const fetchSessionStatus = useCallback(async () => {
+    const response = await fetch("/api/check-session", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ sessionId }),
     });
@@ -27,27 +27,30 @@ export default function SuccessPage() {
     const { session, error } = await response.json();
 
     if (error) {
-      setStatus('failed');
+      setStatus("failed");
       console.error(error);
       return;
     }
 
     setStatus(session.status);
     setCustomerEmail(session.customer_email);
-  }
+  }, []);
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return <div>Loading...</div>;
   }
 
-  if (status === 'failed') {
+  if (status === "failed") {
     return <div>Failed to process subscription. Please try again.</div>;
   }
 
   return (
     <div>
       <h1>Subscription Successful!</h1>
-      <p>Thank you for your subscription. A confirmation email has been sent to {customerEmail}.</p>
+      <p>
+        Thank you for your subscription. A confirmation email has been sent to{" "}
+        {customerEmail}.
+      </p>
     </div>
   );
 }

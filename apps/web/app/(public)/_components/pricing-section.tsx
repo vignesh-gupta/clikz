@@ -1,24 +1,28 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { PlanName } from "@prisma/client";
 import { loadStripe } from "@stripe/stripe-js";
 import { Check } from "lucide-react";
 import * as motion from "motion/react-client";
-import AnimatedNumbers from "react-animated-numbers";
+import { useSession } from "next-auth/react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent, CardHeader } from "@clikz/ui/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@clikz/ui/components/ui/tabs";
 import { capitalize } from "@clikz/ui/lib/utils";
-import { PLANS } from "@clikz/utils/constants";
+import { APP_URL, DEFAULT_LOGIN_REDIRECT, PLANS } from "@clikz/utils/constants";
+
+import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
 type PricingCardProps = {
-  name: string;
+  name: PlanName;
   price: number;
   description: string;
   features: string[];
@@ -40,14 +44,33 @@ export const PricingCard = ({
   isPopular,
   priceId,
 }: PricingCardProps) => {
+  const { data } = useSession();
+
+  const router = useRouter();
+
+  const workspaceSlug = useWorkspaceSlug();
+
   const handleSubscribe = async () => {
+    if (!data?.user || !data.user.id) {
+      return router.push(`${APP_URL}/sign-up`);
+    }
+
+    if (!workspaceSlug) {
+      return router.push(`${APP_URL}${DEFAULT_LOGIN_REDIRECT}`);
+    }
+
     const stripe = await stripePromise;
     const { sessionId } = await fetch("/api/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ priceId }),
+      body: JSON.stringify({
+        priceId,
+        userId: data.user.id,
+        workspaceSlug,
+        name,
+      }),
     }).then((res) => res.json());
 
     const result = await stripe?.redirectToCheckout({ sessionId });
@@ -93,19 +116,7 @@ export const PricingCard = ({
             transition={{ duration: 0.3 }}
             className="flex items-baseline mt-2"
           >
-            <span className="text-3xl font-bold flex">
-              $
-              <AnimatedNumbers
-                transitions={() => {
-                  return {
-                    from: 0,
-                    ease: "circIn",
-                  };
-                }}
-                animateToNumber={price}
-                key={`price-plan-${name}-${price}`}
-              />
-            </span>
+            <span className="text-3xl font-bold flex">${price}</span>
             <span className="ml-1 text-muted-foreground">/month</span>
           </motion.div>
           <p className="text-muted-foreground mb-4 line-clamp-1">

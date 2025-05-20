@@ -1,4 +1,16 @@
-export const PLANS = [
+type TPlan = {
+  name: "FREE" | "PRO" | "ENTERPRISE";
+  price: number;
+  priceId: string;
+  priceIdAnnual: string;
+  description: string;
+  features: string[];
+  isPopular: boolean;
+  buttonText: string;
+  pricingButtonText: string;
+};
+
+export const PLANS: TPlan[] = [
   {
     name: "FREE",
     price: 0,

@@ -59,15 +59,6 @@ const GeneralSettings = ({ initialWorkspace }: GeneralSettingsProps) => {
     isPending ||
     (form.getValues().name === name && form.getValues().slug === slug);
 
-  console.log({
-    isDisabled,
-    name,
-    slug,
-    formValues: form.getValues(),
-    bool: form.getValues().name === name,
-    bool2: form.getValues().slug === slug,
-  });
-
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2 md:items-center md:justify-between md:flex-row">
