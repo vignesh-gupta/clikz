@@ -1,4 +1,4 @@
-type TPlanName = "FREE" | "PRO" | "ENTERPRISE";
+export type TPlanName = "FREE" | "PRO" | "ENTERPRISE";
 
 type TPlan = {
   name: TPlanName;
@@ -11,6 +11,8 @@ type TPlan = {
   buttonText: string;
   pricingButtonText: string;
 };
+
+export const PLAN_NAMES: TPlanName[] = ["FREE", "PRO", "ENTERPRISE"];
 
 export const PLANS: TPlan[] = [
   {
@@ -31,7 +33,7 @@ export const PLANS: TPlan[] = [
     ],
     isPopular: false,
     buttonText: "Get Started",
-    pricingButtonText: "Current Plan",
+    pricingButtonText: "Get Started",
   },
   {
     name: "PRO",

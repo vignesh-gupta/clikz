@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import Stripe from "stripe";
 
+import { getPlanByName } from "@clikz/utils/constants";
+
 import {
   ClikzApiError,
   handleAndReturnNextErrorResponse,
@@ -18,9 +20,9 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status !== "paid") {
-      throw new ClikzApiError({
-        code: "internal_server_error",
-        message: "Session is not paid.",
+      return NextResponse.json({
+        success: false,
+        error: "Payment not completed",
       });
     }
 
@@ -35,14 +37,26 @@ export async function POST(request: NextRequest) {
 
     const { workspaceSlug, plan } = data;
 
+    const plansDetails = getPlanByName(plan);
+
+    if (!plansDetails) {
+      throw new ClikzApiError({
+        code: "bad_request",
+        message: "Invalid plan name",
+      });
+    }
+
     await db.workspace.update({
       where: { slug: workspaceSlug },
       data: {
         plan,
+        linksLimit: plansDetails.maxLinks,
+        usersLimit: plansDetails.maxUsers,
+        domainsLimit: plansDetails.maxDomains,
       },
     });
 
-    return NextResponse.json({ session });
+    return NextResponse.json({ session, success: true });
   } catch (error) {
     return handleAndReturnNextErrorResponse(error);
   }

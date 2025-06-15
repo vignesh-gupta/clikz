@@ -44,17 +44,47 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const line_item =
+      priceId !== "0"
+        ? {
+            price: priceId,
+            quantity: 1,
+          }
+        : {
+            price_data: {
+              unit_amount: 0, // Set to 0 for free plans, or use the actual price amount
+              currency: "usd", // Change to your desired currency
+              product_data: {
+                name: data.plan,
+                description: `Subscription for ${data.plan} plan`,
+              },
+            },
+          };
+
+    console.log("Creating Stripe Checkout Session with line item:", line_item);
+
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
+        priceId !== "0"
+          ? {
+              price: priceId,
+              quantity: 1,
+            }
+          : {
+              price_data: {
+                unit_amount: 0, // Set to 0 for free plans, or use the actual price amount
+                currency: "usd", // Change to your desired currency
+                product_data: {
+                  name: data.plan,
+                  description: `Subscription for Free plan`,
+                },
+              },
+            },
       ],
-      success_url: `${APP_URL}/subscriptions/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${APP_URL}/`,
+      success_url: `${APP_URL}/subscriptions/complete?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${APP_URL}/subscriptions/cancelled`,
       metadata: data,
     });
 

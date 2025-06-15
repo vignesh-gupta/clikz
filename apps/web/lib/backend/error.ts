@@ -5,10 +5,9 @@ import { generateErrorMessage } from "zod-error";
 import { ZodOpenApiResponseObject } from "zod-openapi";
 
 import { capitalize } from "@clikz/ui/lib/utils";
+import { TPlanName } from "@clikz/utils/constants";
 
 import z from "~/lib/zod";
-
-type PlanProps = "free" | "pro" | "business" | "enterprise";
 
 export const ErrorCode = z.enum([
   "bad_request",
@@ -237,7 +236,7 @@ export const exceededLimitError = ({
   limit,
   type,
 }: {
-  plan: PlanProps;
+  plan: TPlanName;
   limit: number;
   type: "clicks" | "links" | "AI" | "domains" | "tags" | "users" | "folders";
 }) => {

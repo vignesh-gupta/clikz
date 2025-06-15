@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import NumberFlow from "@number-flow/react";
 import { PlanName } from "@prisma/client";
 import { loadStripe } from "@stripe/stripe-js";
 import { Check } from "lucide-react";
@@ -13,7 +14,13 @@ import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent, CardHeader } from "@clikz/ui/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@clikz/ui/components/ui/tabs";
 import { capitalize } from "@clikz/ui/lib/utils";
-import { APP_URL, DEFAULT_LOGIN_REDIRECT, PLANS } from "@clikz/utils/constants";
+import {
+  APP_URL,
+  DEFAULT_LOGIN_REDIRECT,
+  PLANS,
+  PLAN_NAMES,
+  TPlanName,
+} from "@clikz/utils/constants";
 
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
 
@@ -94,9 +101,9 @@ export const PricingCard = ({
       className="h-full"
     >
       <Card
-        className={`relative flex flex-col h-full transition-all duration-300 ${isPopular ? "border-blue-500 shadow-md" : ""}`}
+        className={`relative flex flex-col h-full transition-all duration-300 ${isPopular && !isCurrentPlan ? "border-blue-500 shadow-md" : ""}`}
       >
-        {isPopular && (
+        {isPopular && !isCurrentPlan && (
           <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 text-xs font-medium rounded-bl-lg rounded-tr-lg">
             Popular
           </div>
@@ -116,7 +123,16 @@ export const PricingCard = ({
             transition={{ duration: 0.3 }}
             className="flex items-baseline mt-2"
           >
-            <span className="text-3xl font-bold flex">${price}</span>
+            <NumberFlow
+              value={price}
+              className="text-3xl font-bold flex items-center"
+              format={{
+                style: "currency",
+                currency: "USD",
+                compactDisplay: "short",
+                maximumFractionDigits: 0,
+              }}
+            />
             <span className="ml-1 text-muted-foreground">/month</span>
           </motion.div>
           <p className="text-muted-foreground mb-4 line-clamp-1">
@@ -130,7 +146,7 @@ export const PricingCard = ({
             variant={isCurrentPlan ? "outline" : "default"}
             onClick={handleSubscribe}
           >
-            {buttonText}
+            {isCurrentPlan ? "Current Plan" : buttonText}
           </Button>
           <ul className="space-y-2">
             {features.map((feature, index) => (
@@ -155,7 +171,7 @@ export const PricingCard = ({
 type PricingSectionProps = {
   showHeader?: boolean;
   isPricingPage?: boolean;
-  currentPlan?: "FREE" | "PRO" | "ENTERPRISE";
+  currentPlan?: TPlanName;
 };
 
 export default function PricingSection({
@@ -205,24 +221,32 @@ export default function PricingSection({
           </Tabs>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {PLANS.map((plan) => (
-            <PricingCard
-              key={plan.name}
-              {...plan}
-              priceId={
-                billingCycle === "monthly" ? plan.priceId : plan.priceIdAnnual
-              }
-              buttonText={
-                isPricingPage ? plan.pricingButtonText : plan.buttonText
-              }
-              isCurrentPlan={plan.name === currentPlan}
-              price={
-                billingCycle === "monthly"
-                  ? plan.price
-                  : Math.ceil((plan.price * 9) / 12)
-              }
-            />
-          ))}
+          {PLANS.map((plan, idx) => {
+            const text =
+              !isPricingPage || !currentPlan
+                ? plan.buttonText
+                : PLAN_NAMES.indexOf(currentPlan) < idx
+                  ? `Upgrade to ${capitalize(plan.name)}`
+                  : `Back to ${capitalize(plan.name)}`;
+
+            const priceId =
+              billingCycle === "monthly" ? plan.priceId : plan.priceIdAnnual;
+
+            return (
+              <PricingCard
+                key={plan.name}
+                {...plan}
+                priceId={priceId}
+                buttonText={text}
+                isCurrentPlan={plan.name === currentPlan}
+                price={
+                  billingCycle === "monthly"
+                    ? plan.price
+                    : Math.ceil((plan.price * 9) / 12)
+                }
+              />
+            );
+          })}
         </div>
       </div>
     </section>
