@@ -1,5 +1,7 @@
+type TPlanName = "FREE" | "PRO" | "ENTERPRISE";
+
 type TPlan = {
-  name: "FREE" | "PRO" | "ENTERPRISE";
+  name: TPlanName;
   price: number;
   priceId: string;
   priceIdAnnual: string;
@@ -21,7 +23,7 @@ export const PLANS: TPlan[] = [
       "3 workspaces",
       "30-day analytics retention",
       "5k tracked clicks/month",
-      "5 domains",
+      "1 domains",
       "3 users",
       "Basic support",
       "Community Access",
@@ -42,7 +44,7 @@ export const PLANS: TPlan[] = [
       "Upto 10 workspaces",
       "Upto 50k tracked clicks/month",
       "1 year analytics retention",
-      "15 domains",
+      "5 domains",
       "10 users",
       "Advanced Link features",
       "Priority support",
@@ -63,7 +65,7 @@ export const PLANS: TPlan[] = [
       "Upto 50 workspaces",
       "Upto 100k tracked clicks/month",
       "3 year analytics retention",
-      "50 domains",
+      "10 domains",
       "30 users",
       "Real-time Event streaming",
       "Real-time webhook",
@@ -73,3 +75,16 @@ export const PLANS: TPlan[] = [
     pricingButtonText: "Upgrade to Enterprise",
   },
 ];
+
+const PLANS_BENEFITS: Record<
+  TPlanName,
+  { maxLinks: number; maxUsers: number; maxDomains: number }
+> = {
+  FREE: { maxLinks: 25, maxUsers: 3, maxDomains: 5 },
+  PRO: { maxLinks: 50000, maxUsers: 10, maxDomains: 15 },
+  ENTERPRISE: { maxLinks: 100000, maxUsers: 30, maxDomains: 50 },
+};
+
+export const getPlanByName = (name: TPlanName) => {
+  return PLANS_BENEFITS[name];
+};

@@ -15,7 +15,6 @@ export const PUBLIC_ROUTES = [
   "api/public/*", // All public API endpoints
   "assets/*", // All static assets
   "docs/v[0-9]/*", // Documentation routes with version numbers
-  "subscriptions/*", // All subscription related pages
 ];
 
 /**
