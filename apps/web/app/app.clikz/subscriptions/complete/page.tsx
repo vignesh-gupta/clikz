@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@clikz/ui/components/ui/card";
+import { capitalize } from "@clikz/ui/lib/utils";
 import { getStripeSessionDetails } from "@clikz/utils/functions";
 
 type SubscriptionCompletePageProps = {
@@ -37,8 +38,7 @@ const SubscriptionCompletePage = async ({
         return {
           icon: <CheckCircleIcon className="h-16 w-16 text-green-500" />,
           title: "Subscription Successful!",
-          description:
-            "Welcome to Clikz Pro! Your subscription is now active and you can start creating unlimited short links.",
+          description: `Welcome to Clikz ${capitalize(stripeSession.session?.metadata.plan)}! Your subscription is now active`,
           bgColor: "bg-green-50",
           borderColor: "border-green-200",
         };
@@ -63,13 +63,13 @@ const SubscriptionCompletePage = async ({
         <CardTitle className="text-2xl font-bold text-gray-900">
           {config.title}
         </CardTitle>
-        <CardDescription className="text-gray-600 text-base">
+        <CardDescription className="text-gray-600 text-base text-balance">
           {config.description}
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {stripeSession.success && (
+        {stripeSession.success ? (
           <div className="space-y-4">
             <div className="bg-white rounded-lg p-4 border border-green-200">
               <h3 className="font-semibold text-gray-900 mb-2">What's Next?</h3>
@@ -83,16 +83,24 @@ const SubscriptionCompletePage = async ({
 
             <div className="flex flex-col gap-2">
               <Button asChild className="w-full">
-                <Link href="/dashboard">Go to Dashboard</Link>
+                <Link
+                  href={
+                    stripeSession.session?.metadata.workspaceSlug
+                      ? `/${stripeSession.session.metadata.workspaceSlug}`
+                      : "/dashboard"
+                  }
+                >
+                  Go to{" "}
+                  {capitalize(stripeSession.session?.metadata.workspaceSlug) ??
+                    "Dashboard"}
+                </Link>
               </Button>
               <Button variant="outline" asChild className="w-full">
                 <Link href="/links/create">Create Your First Link</Link>
               </Button>
             </div>
           </div>
-        )}
-
-        {stripeSession.success && (
+        ) : (
           <div className="space-y-4">
             <div className="bg-white rounded-lg p-4 border border-red-200">
               <h3 className="font-semibold text-gray-900 mb-2">

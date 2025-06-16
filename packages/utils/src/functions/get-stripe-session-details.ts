@@ -1,5 +1,26 @@
 import { APP_URL } from "../constants";
 
+type StripeSession = {
+  id: string;
+  payment_status: string;
+  metadata: {
+    workspaceSlug: string;
+    plan: string;
+  };
+};
+
+type StripeSessionResponse =
+  | {
+      success: boolean;
+      session: StripeSession;
+      error?: null;
+    }
+  | {
+      success: boolean;
+      error: any;
+      session?: null;
+    };
+
 export const getStripeSessionDetails = async (sessionId: string) => {
   console.log("Checking subscription session with ID:", sessionId);
 
@@ -25,19 +46,7 @@ export const getStripeSessionDetails = async (sessionId: string) => {
 
     const data = await response.json();
 
-    console.log("Received response from check-session:", data);
-
-    if (data.success) {
-      return {
-        success: true,
-        session: data.session,
-      };
-    } else {
-      return {
-        success: false,
-        error: data.error || "Unknown error",
-      };
-    }
+    return data as StripeSessionResponse;
   } catch (error) {
     console.error("Error checking subscription session:", error);
     return {

@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
               },
             },
       ],
-      success_url: `${APP_URL}/subscriptions/complete?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${APP_URL}/subscriptions/complete?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${APP_URL}/subscriptions/cancelled`,
       metadata: data,
     });
