@@ -4,7 +4,7 @@ import { Link } from "@prisma/client";
 
 import { recordClickEvent } from "../analytics/click-events";
 import { getLinkViaRedis, setLinkToRedis } from "../cache/link";
-import { getLinkViaEdgeWithKey, parse } from "./utils";
+import { getLinkViaEdgeWithKey, incrementClicksCount, parse } from "./utils";
 import { getFinalUrl } from "./utils/final-url";
 
 const LinkMiddleware = async (req: NextRequest) => {
@@ -42,6 +42,7 @@ const LinkMiddleware = async (req: NextRequest) => {
       url: link.url,
     });
     setLinkToRedis(fullKey, domain, link);
+    incrementClicksCount(link.workspaceId);
   });
 
   if (link.proxy) {

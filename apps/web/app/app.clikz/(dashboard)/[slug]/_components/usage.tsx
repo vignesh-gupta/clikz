@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { LinkIcon, MousePointerClickIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
@@ -52,8 +54,8 @@ const WorkspaceUsage = () => {
           <Progress value={clickUsedPercentage} className="h-1" />
         </div>
       </div>
-      <Button className="w-full" size="sm">
-        Upgrade
+      <Button className="w-full" size="sm" asChild>
+        <Link href={`/${workspaceSlug}/settings/billing/upgrade`}>Upgrade</Link>
       </Button>
     </div>
   );

@@ -78,3 +78,8 @@ export const getDomainViaEdge = async (domain: string) => {
 
   return result[0];
 };
+
+export const incrementClicksCount = async (workspaceId: string) => {
+  const query = `UPDATE "Workspace" SET "totalClicks" = "totalClicks" + 1 WHERE id = $1`;
+  await conn(query, [workspaceId]);
+};

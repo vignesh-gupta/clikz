@@ -72,13 +72,13 @@ export const recordClickEvent = async ({
     short_url: `${link.domain}/${link.key}`,
     workspace_id: link.workspaceId,
     workspace_slug: link.workspaceSlug,
-    vercel_region: geo.region || "",
-    country: geo.country || "Unknown",
-    city: geo.city || "Unknown",
+    vercel_region: geo.region,
+    country: geo.country,
+    city: geo.city,
     region: region || "Unknown",
     continent: continent || "Unknown",
-    latitude: geo.latitude || "Unknown",
-    longitude: geo.longitude || "Unknown",
+    latitude: geo.latitude,
+    longitude: geo.longitude,
     device: capitalize(ua.device.type) || "Desktop",
     device_model: ua.device.model || "Unknown",
     device_vendor: ua.device.vendor || "Unknown",
@@ -97,15 +97,26 @@ export const recordClickEvent = async ({
     qr: isQR,
   };
 
+  console.log(JSON.stringify(clickData));
+
   return await Promise.allSettled([
-    fetch("https://api.tinybird.co/v0/events?name=clikz_click_events", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.TINYBIRD_API_KEY}`,
-      },
-      body: JSON.stringify(clickData),
-    })
-      .then(async (res) => res.json())
+    fetch(
+      "https://api.tinybird.co/v0/events?name=clikz_click_events&wait=true",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.TINYBIRD_API_KEY}`,
+        },
+        body: JSON.stringify(clickData),
+      }
+    )
+      .then(async (res) => {
+        console.log(
+          "Click event sent to Tinybird ",
+          res.status,
+          await res.text()
+        );
+      })
       .catch((err) =>
         console.error("Failed to send click event to Tinybird", err)
       ),

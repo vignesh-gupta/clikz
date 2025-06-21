@@ -83,33 +83,49 @@ const linksApp = new Hono()
 
         const user = c.get("user");
 
-        if (!user || !user.id) {
-          throw new ClikzApiError({
-            code: "unauthorized",
-            message: "User is not logged in",
-          });
-        }
-
         const domainURL = new URL(
           domain === BASE_DOMAIN ? BASE_URL : `https://${domain}`
         );
-        const link = await db.link.create({
-          data: {
-            domain: domain || BASE_DOMAIN,
-            key: slug,
-            shortLink: new URL(`/${slug}`, domainURL).toString(),
-            url: destination,
-            comment,
-            workspaceId: workspace.id,
-            workspaceSlug: workspace.slug,
-            userId: user.id,
-            title: truncate(title, 100),
-            description: truncate(description, 200),
-            ...rest,
-          },
+
+        db.$transaction(async (tx) => {
+          if (!user || !user.id) {
+            throw new ClikzApiError({
+              code: "unauthorized",
+              message: "User is not logged in",
+            });
+          }
+          await tx.link.create({
+            data: {
+              domain: domain || BASE_DOMAIN,
+              key: slug,
+              shortLink: new URL(`/${slug}`, domainURL).toString(),
+              url: destination,
+              comment,
+              workspaceId: workspace.id,
+              workspaceSlug: workspace.slug,
+              userId: user.id,
+              title: truncate(title, 100),
+              description: truncate(description, 200),
+              ...rest,
+            },
+          });
+
+          tx.workspace.update({
+            where: { id: workspace.id },
+            data: {
+              totalLinks: {
+                increment: 1,
+              },
+            },
+          });
         });
 
-        return c.json(generateAPIResponse(link), 201);
+        return c.json(
+          generateAPIResponse({
+            message: "Link created successfully",
+          }),
+          201
+        );
       } catch (err) {
         const { json, status, headers } = handleAndReturnAPIErrorResponse(err);
         return c.json(json, status, headers);
@@ -201,14 +217,14 @@ const linksApp = new Hono()
     const slug = c.req.param("slug");
     const domain = c.req.query("domain") ?? BASE_DOMAIN;
 
-    const link = await db.link.count({
+    const count = await db.link.count({
       where: {
         key: slug,
         domain,
       },
     });
 
-    return c.json({ exists: link > 0 });
+    return c.json({ exists: count > 0 });
   });
 
 export default linksApp;
