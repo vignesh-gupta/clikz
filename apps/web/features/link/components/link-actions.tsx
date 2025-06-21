@@ -17,9 +17,10 @@ import { useLinkModel } from "../hooks/use-link-modal";
 type LinkActionsProps = {
   linkId: string;
   shortUrl: string;
+  isRoot?: boolean;
 };
 
-const LinkActions = ({ linkId, shortUrl }: LinkActionsProps) => {
+const LinkActions = ({ linkId, shortUrl, isRoot }: LinkActionsProps) => {
   const { open } = useLinkModel();
 
   const { mutate: deleteLink } = useDeleteLink();
@@ -47,6 +48,7 @@ const LinkActions = ({ linkId, shortUrl }: LinkActionsProps) => {
         <DropdownMenuItem
           className="hover:bg-destructive hover:text-destructive-foreground"
           onClick={handleDelete}
+          disabled={isRoot}
         >
           Delete
         </DropdownMenuItem>

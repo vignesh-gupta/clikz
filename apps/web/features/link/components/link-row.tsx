@@ -66,7 +66,11 @@ export function LinkRow({
             {totalClicks === 1 ? "click" : "clicks"}
           </span>
         </div>
-        <LinkActions linkId={id} shortUrl={shortUrl} />
+        <LinkActions
+          linkId={id}
+          shortUrl={shortUrl}
+          isRoot={slug === "_root" && domain !== BASE_DOMAIN}
+        />
       </CardFooter>
     </Card>
   );

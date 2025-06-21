@@ -13,9 +13,7 @@ model Workspace {
   totalLinks  Int @default(0) // Total number of links in the workspace
   totalClicks Int @default(0) // Total number of clicks in the workspace
 
-  usage        Int @default(0)
-  usageLimit   Int @default(1000)
-  linksUsage   Int @default(0)
+  clicksLimit  Int @default(1000)
   linksLimit   Int @default(25)
   domainsLimit Int @default(3)
   usersLimit   Int @default(1)
@@ -27,6 +25,7 @@ model Workspace {
 
   @@unique([slug])
   @@unique([id, slug])
+  @@index([slug])
 }
 
 model Invite {

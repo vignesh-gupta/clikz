@@ -90,3 +90,16 @@ const PLANS_BENEFITS: Record<
 export const getPlanByName = (name: TPlanName) => {
   return PLANS_BENEFITS[name];
 };
+
+export const getNextPlan = (
+  currentPlan: TPlanName | undefined,
+): TPlan | undefined => {
+  if (!currentPlan || !PLAN_NAMES.includes(currentPlan)) {
+    return undefined; // Invalid or undefined current plan
+  }
+  const currentIndex = PLAN_NAMES.indexOf(currentPlan);
+  if (currentIndex === -1 || currentIndex === PLAN_NAMES.length - 1) {
+    return undefined; // No next plan available
+  }
+  return PLANS[currentIndex + 1];
+};
