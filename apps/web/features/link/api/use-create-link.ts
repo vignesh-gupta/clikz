@@ -27,13 +27,13 @@ export const useCreateLink = () => {
 
       return data;
     },
-    onSuccess: ({ data: link }) => {
+    onSuccess: ({ data }) => {
       toast.success("Link Created!");
       queryClient.invalidateQueries({
         queryKey: [...QUERY_KEYS.LINKS, workspaceSlug],
       });
       queryClient.invalidateQueries({
-        queryKey: [...QUERY_KEYS.LINK, link?.id],
+        queryKey: [...QUERY_KEYS.LINK, data?.link?.id],
       });
     },
     onError: (e) => toast.error(e.message || "Failed to create link"),

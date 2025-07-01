@@ -1,4 +1,5 @@
 import {
+  MutationCache,
   QueryClient,
   defaultShouldDehydrateQuery,
   isServer,
@@ -6,6 +7,21 @@ import {
 
 function makeQueryClient() {
   return new QueryClient({
+    mutationCache: new MutationCache({
+      onSuccess(_data, _variables, _context, mutation) {
+        console.log("Successful mutation:", mutation.meta);
+
+        if (
+          mutation.meta?.invalidateQueries &&
+          Array.isArray(mutation.meta.invalidateQueries) &&
+          browserQueryClient
+        ) {
+          mutation.meta.invalidateQueries.forEach((queryKey: unknown) => {
+            browserQueryClient?.invalidateQueries({ queryKey });
+          });
+        }
+      },
+    }),
     defaultOptions: {
       queries: {
         staleTime: 15 * 60 * 1000, // 15 minutes

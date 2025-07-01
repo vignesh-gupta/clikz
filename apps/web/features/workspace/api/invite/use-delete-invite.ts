@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
@@ -16,10 +16,12 @@ type RequestType = InferRequestType<
 >;
 
 export const useDeleteInvite = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
+    meta: {
+      invalidateQueries: [QUERY_KEYS.INVITES],
+    },
     mutationFn: async ({ param }) => {
       const res = await client.api.workspaces[":idOrSlug"].invites[
         ":inviteId"
@@ -35,7 +37,6 @@ export const useDeleteInvite = () => {
     },
     onSuccess: () => {
       toast.success("Invite deleted!");
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.INVITES });
       router.refresh();
     },
     onError: (error) => toast.error(error.message ?? "Failed to delete Invite"),

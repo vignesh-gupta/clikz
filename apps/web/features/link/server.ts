@@ -87,14 +87,15 @@ const linksApp = new Hono()
           domain === BASE_DOMAIN ? BASE_URL : `https://${domain}`
         );
 
-        db.$transaction(async (tx) => {
-          if (!user || !user.id) {
-            throw new ClikzApiError({
-              code: "unauthorized",
-              message: "User is not logged in",
-            });
-          }
-          await tx.link.create({
+        if (!user || !user.id) {
+          throw new ClikzApiError({
+            code: "unauthorized",
+            message: "User is not logged in",
+          });
+        }
+
+        const [link] = await db.$transaction([
+          db.link.create({
             data: {
               domain: domain || BASE_DOMAIN,
               key: slug,
@@ -108,21 +109,22 @@ const linksApp = new Hono()
               description: truncate(description, 200),
               ...rest,
             },
-          });
+          }),
 
-          tx.workspace.update({
+          db.workspace.update({
             where: { id: workspace.id },
             data: {
               totalLinks: {
                 increment: 1,
               },
             },
-          });
-        });
+          }),
+        ]);
 
         return c.json(
           generateAPIResponse({
             message: "Link created successfully",
+            link,
           }),
           201
         );

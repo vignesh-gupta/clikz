@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
@@ -16,10 +16,12 @@ type RequestType = InferRequestType<
 >;
 
 export const useCreateInvites = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
+    meta: {
+      invalidateQueries: [QUERY_KEYS.INVITES],
+    },
     mutationFn: async (args) => {
       const res =
         await client.api.workspaces[":idOrSlug"].invites["bulk-invite"].$post(
@@ -35,7 +37,6 @@ export const useCreateInvites = () => {
     },
     onSuccess: () => {
       toast.success("Invites created!");
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.INVITES });
       router.refresh();
     },
     onError: (error) =>
