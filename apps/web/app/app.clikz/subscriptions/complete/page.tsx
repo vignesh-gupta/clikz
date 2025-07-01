@@ -38,7 +38,7 @@ const SubscriptionCompletePage = async ({
         return {
           icon: <CheckCircleIcon className="h-16 w-16 text-green-500" />,
           title: "Subscription Successful!",
-          description: `Welcome to Clikz ${capitalize(stripeSession.session?.metadata.plan)}! Your subscription is now active`,
+          description: `Welcome to Clikz ${capitalize(stripeSession.session.metadata.plan)}! Your subscription is now active`,
           bgColor: "bg-green-50",
           borderColor: "border-green-200",
         };

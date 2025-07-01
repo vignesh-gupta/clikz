@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
             quantity: 1,
           }
         : {
+            quantity: 1,
             price_data: {
               unit_amount: 0, // Set to 0 for free plans, or use the actual price amount
               currency: "usd", // Change to your desired currency
@@ -66,23 +67,7 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
-      line_items: [
-        priceId !== "0"
-          ? {
-              price: priceId,
-              quantity: 1,
-            }
-          : {
-              price_data: {
-                unit_amount: 0, // Set to 0 for free plans, or use the actual price amount
-                currency: "usd", // Change to your desired currency
-                product_data: {
-                  name: data.plan,
-                  description: `Subscription for Free plan`,
-                },
-              },
-            },
-      ],
+      line_items: [line_item],
       success_url: `${APP_URL}/subscriptions/complete?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${APP_URL}/subscriptions/cancelled`,
       metadata: data,

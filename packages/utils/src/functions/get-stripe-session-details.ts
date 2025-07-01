@@ -11,17 +11,17 @@ type StripeSession = {
 
 type StripeSessionResponse =
   | {
-      success: boolean;
+      success: true;
       session: StripeSession;
-      error?: null;
     }
   | {
-      success: boolean;
-      error: any;
-      session?: null;
+      success: false;
+      error: string;
     };
 
-export const getStripeSessionDetails = async (sessionId: string) => {
+export const getStripeSessionDetails = async (
+  sessionId: string,
+): Promise<StripeSessionResponse> => {
   console.log("Checking subscription session with ID:", sessionId);
 
   if (!sessionId) {

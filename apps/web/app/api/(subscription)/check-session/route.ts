@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // TODO: Move this to webhooks
     await db.workspace.update({
       where: { slug: workspaceSlug },
       data: {
