@@ -11,6 +11,7 @@ import { isPublicRoute } from "@clikz/utils/functions";
 
 import { parse } from "~/lib/middleware/utils";
 
+import { NGROK_DOMAIN } from "../../packages/utils/src/constants/urls";
 import AppMiddleware from "./lib/middleware/app";
 import LinkMiddleware from "./lib/middleware/link";
 
@@ -30,7 +31,13 @@ export const config = {
 export default async function middleware(req: NextRequest) {
   // AxiomMiddleware(req, event);
 
-  const { domain, fullPath, fullKey } = parse(req);
+  const { domain: originalDomain, fullPath, fullKey } = parse(req);
+
+  let domain = originalDomain;
+
+  if (originalDomain === NGROK_DOMAIN) {
+    domain = BASE_DOMAIN; // Redirect ngrok domain to base domain
+  }
 
   if (ALLOWED_EXTENSIONS.some((ext) => fullPath.endsWith(ext))) {
     return NextResponse.next();

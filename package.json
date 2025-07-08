@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "webhook": "ngrok http --url=deep-ready-foal.ngrok-free.app 3000",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",

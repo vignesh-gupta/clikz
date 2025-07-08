@@ -8,6 +8,8 @@ export const APP_URL = APP_DOMAIN.includes("localhost")
   ? `http://${APP_DOMAIN}`
   : `https://${APP_DOMAIN}`;
 
+export const NGROK_DOMAIN = process.env.NEXT_PUBLIC_NGROK_DOMAIN || "";
+
 export const APP_NAMES = new Set([
   `${APP_DOMAIN}`,
   `preview.${BASE_DOMAIN}`,
@@ -36,3 +38,6 @@ export const GOOGLE_FAVICON_URL_V2 =
 
 export const WORKSPACE_DEFAULT_ICON_URL =
   "https://api.dicebear.com/9.x/thumbs/svg?seed=";
+
+export const STRIPE_BILLING_URL =
+  "https://billing.stripe.com/p/login/test_aFafZjgY341O1FybSabsc00";

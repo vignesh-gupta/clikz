@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Card, CardContent, CardHeader } from "@clikz/ui/components/ui/card";
+import { STRIPE_BILLING_URL } from "@clikz/utils/constants";
 
 import Invoices from "./_components/invoices";
 import Usage from "./_components/usage";
@@ -20,7 +21,9 @@ const WorkspaceBillingPage = () => {
           </div>
           <div className="flex items-center gap-2">
             <Button size="sm" asChild>
-              <Link href="billing/upgrade">Upgrade</Link>
+              <Link target="_blank" href={STRIPE_BILLING_URL}>
+                Upgrade
+              </Link>
             </Button>
             <Button size="sm" variant="outline" asChild>
               <Link href="billing/invoices">View Invoices</Link>

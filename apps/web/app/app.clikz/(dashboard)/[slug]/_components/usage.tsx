@@ -6,6 +6,7 @@ import { LinkIcon, MousePointerClickIcon } from "lucide-react";
 
 import { Button } from "@clikz/ui/components/ui/button";
 import { Progress } from "@clikz/ui/components/ui/progress";
+import { STRIPE_BILLING_URL } from "@clikz/utils/constants";
 
 import { useGetWorkspace } from "~/features/workspace/api/workspace/use-get-workspace";
 import { useWorkspaceSlug } from "~/features/workspace/hooks/use-workspace-slug";
@@ -55,7 +56,9 @@ const WorkspaceUsage = () => {
         </div>
       </div>
       <Button className="w-full" size="sm" asChild>
-        <Link href={`/${workspaceSlug}/settings/billing/upgrade`}>Upgrade</Link>
+        <Link target="_blank" href={STRIPE_BILLING_URL}>
+          Upgrade
+        </Link>
       </Button>
     </div>
   );

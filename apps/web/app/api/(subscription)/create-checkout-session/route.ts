@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
   try {
     const authSession = await auth();
 
-    if (!authSession || !authSession.user) {
+    if (!authSession || !authSession.user || !authSession.user.email) {
       throw new ClikzApiError({
         code: "unauthorized",
         message: "Please log in to continue.",
@@ -71,6 +71,7 @@ export async function POST(request: NextRequest) {
       success_url: `${APP_URL}/subscriptions/complete?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${APP_URL}/subscriptions/cancelled`,
       metadata: data,
+      customer_email: authSession.user.email,
     });
 
     return NextResponse.json({ sessionId: session.id });
