@@ -1,4 +1,4 @@
-import { validateInviteToken } from "~/lib/token";
+import { validateInviteToken } from "~/features/workspace/data/invite";
 
 import InviteAcceptance from "./_components/invite-acceptance";
 
